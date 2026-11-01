@@ -1,5 +1,7 @@
 # xcoze search
 
+[![Offline contract tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
+
 [GitHub](https://github.com/wjason/xcoze-search) · [安装指南](INSTALL.zh-CN.md) · [配置与排错](references/setup.md) · [验证记录](VALIDATION.md)
 
 **一个 Skill，连接 DeepSeek 与腾讯元宝官方搜索 API。** 配置任意一家 API Key 即可搜索，配置两家可按需交叉检索；同时提供 DeepSeek 网页正文抓取。

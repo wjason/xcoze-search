@@ -1,6 +1,8 @@
 # v0.1.0 验证记录
 
-日期：2026-10-24。代码与文档基于当日公开官方资料编写。
+日期：2026-10-24（接口研究与首次实测）；2026-11-02（GitHub 发布复核）。
+
+发布复核：本地离线测试现为 25 项，包含显式 XDG_CONFIG_HOME 在用户主目录不可用时仍能生效的回归检查。跨平台运行结果见 [GitHub Actions](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)，以下首次实测日期不代表持续在线监测。
 
 ## 已完成
 
@@ -26,7 +28,7 @@
 
 ## 尚未验证
 - 元宝真实服务 Key 的 SearchPro 在线成功响应、各账号服务版本的可选参数。
-- Windows/Linux 实际运行和 Windows ACL；已提供 CI 矩阵，但本地没有运行远程 GitHub Actions。
+- Windows ACL 与终端隐藏输入的人工实测；Windows/Linux 的离线契约检查由 GitHub Actions 覆盖，结果以对应运行记录为准。
 - 具体商城解析、审核、收录、认证和安装；商城尚未指定。
 - 真实信息检索质量、研究结论的事实准确性。
 
