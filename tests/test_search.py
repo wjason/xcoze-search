@@ -237,6 +237,15 @@ class SearchTests(unittest.TestCase):
             path.symlink_to(saved)
             with self.assertRaises(x.SearchError): x.read_config()
 
+    def test_explicit_config_root_does_not_require_home(self):
+        with patch.object(x.Path, "home", side_effect=RuntimeError("Home unavailable")) as home:
+            self.assertEqual(x.config_path(), Path(self.tmp.name) / "xcoze-search" / "config.json")
+            home.assert_not_called()
+            del os.environ["XDG_CONFIG_HOME"]
+            with self.assertRaises(x.SearchError) as caught:
+                x.config_path()
+            self.assertEqual(caught.exception.code, "invalid_config")
+
     def test_setup_rejects_captured_input_without_saving(self):
         with patch.object(x.sys.stdin, "isatty", return_value=False):
             with self.assertRaises(x.SearchError):

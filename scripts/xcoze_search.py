@@ -48,7 +48,11 @@ def invalid(message):
 
 
 def config_path():
-    root = Path(os.environ.get("XDG_CONFIG_HOME", str(Path.home() / ".config")))
+    configured_root = os.environ.get("XDG_CONFIG_HOME")
+    try:
+        root = Path(configured_root) if configured_root is not None else Path.home() / ".config"
+    except RuntimeError:
+        raise SearchError("invalid_config", "Cannot determine home directory; set an absolute XDG_CONFIG_HOME.") from None
     if not root.is_absolute():
         raise SearchError("unsafe_config", "XDG_CONFIG_HOME must be absolute.")
     return root / "xcoze-search" / "config.json"
