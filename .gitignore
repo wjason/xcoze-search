@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+._*
+.env
+.env.*
+config.json
+credentials.json
+dist/
+release/
+*.zip
+*.log
