@@ -4,21 +4,21 @@
 
 技能 ID：`xcoze-search`
 
-版本：`0.2.0` 预览版。上架时以实际提交的版本为准。
+版本：`0.3.0` 预览版。上架时以实际提交的版本为准。
 
 维护方：XCoze
 
-简述：一个 Skill 接入 DeepSeek 与腾讯元宝官方搜索 API，配置对应 API Key 后即可使用。
+简述：一个 Skill 接入 DeepSeek、元宝、Tavily、Exa、Brave、博查官方搜索 API，按需配置对应密钥。
 
 分类建议：搜索 / 研究 / 信息检索
 
-标签建议：search, research, deepseek, yuanbao, tencent, citations, web-fetch
+标签建议：search, research, deepseek, yuanbao, tavily, exa, brave, bocha, citations, web-fetch
 
 ## 详情介绍
 
-xcoze search 为支持本地 Python 的 Agent Skills 助手增加双供应商公开资料检索能力。用户可以只配置 DeepSeek 或元宝，也可以配置两家并明确发起交叉搜索。
+xcoze search 为支持本地 Python 的 Agent Skills 助手增加多供应商公开资料检索能力。用户按需配置服务，可选择单源或显式多源检索，旧 both 命令仍只表示 DeepSeek＋元宝。
 
-工具保留来源链接、可用日期、供应商与原始字段，帮助助手阅读证据、核实差异并给出带引用的回答。DeepSeek 支持公开网页正文抓取；元宝支持站点与相对时间等筛选，具体能力取决于账号版本。
+工具保留来源链接、可用日期、供应商与原始字段，帮助助手阅读证据、核实差异并给出带引用的回答。DeepSeek、Tavily、Exa 支持对应正文接口；摘要和摘录分开处理。能力可离线查询，提供实际 HTTP 次数预算，具体服务权限取决于账号。
 
 ## 使用前提与数据说明
 
@@ -41,4 +41,4 @@ xcoze search 为支持本地 Python 的 Agent Skills 助手增加双供应商公
 
 版本与发布资产：https://github.com/wjason/xcoze-search/releases（以实际已发布的 Release 为准）。联系渠道、商城要求的图标/截图与审核字段由发布者在确定平台后填写。
 
-当前验证口径：离线测试已通过；DeepSeek Search/Fetch 已于 2026-10-24 实测通过；元宝账号调用仍待配置 Key 后验证。上架前若完成实测，更新 VALIDATION.md 并仅记录脱敏结果。商城是否收录、是否认证、是否通过审核均不能由本包保证。
+当前验证口径：离线测试已通过；DeepSeek Search/Fetch 已于 2026-10-24 实测通过；元宝及四家新增服务账号调用仍待各自配置 Key 后验证。上架前若完成实测，更新 VALIDATION.md 并仅记录脱敏结果。商城是否收录、是否认证、是否通过审核均不能由本包保证。

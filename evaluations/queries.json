@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-02",
+  "description": "Bilingual public-source regression queries. Domains are review hints, not answer labels or a universal accuracy benchmark.",
+  "fetches": [
+    {"id": "python-asyncio", "url": "https://docs.python.org/3/library/asyncio-task.html", "expected_terms": ["TaskGroup", "asyncio"]},
+    {"id": "http-semantics", "url": "https://www.rfc-editor.org/rfc/rfc9110.html", "expected_terms": ["HTTP", "GET"]},
+    {"id": "deepseek-search", "url": "https://api-docs.deepseek.com/guides/search/", "expected_terms": ["Search", "Fetch"]}
+  ],
+  "queries": [
+    {"id": "zh-docs", "category": "technical", "language": "zh", "query": "Python 官方文档 asyncio TaskGroup 异常处理", "expected_domains": ["docs.python.org"]},
+    {"id": "en-docs", "category": "technical", "language": "en", "query": "Python official documentation asyncio TaskGroup exception handling", "expected_domains": ["docs.python.org"]},
+    {"id": "zh-standard", "category": "primary-source", "language": "zh", "query": "RFC 9110 HTTP Semantics 官方规范 GET POST", "expected_domains": ["rfc-editor.org", "datatracker.ietf.org"]},
+    {"id": "en-standard", "category": "primary-source", "language": "en", "query": "RFC 9110 HTTP Semantics official specification GET POST", "expected_domains": ["rfc-editor.org", "datatracker.ietf.org"]},
+    {"id": "zh-tavily", "category": "content-semantics", "language": "zh", "query": "Tavily Search Extract raw_content content 区别 官方文档", "expected_domains": ["docs.tavily.com"]},
+    {"id": "en-exa", "category": "content-semantics", "language": "en", "query": "Exa Contents text highlights summary official documentation", "expected_domains": ["exa.ai"]},
+    {"id": "zh-news", "category": "dated-news", "language": "zh", "query": "2026年10月 新闻 发布日期 原始来源 after:2026-10-01 before:2026-11-01", "expected_domains": []},
+    {"id": "en-news", "category": "dated-news", "language": "en", "query": "October 2026 technology announcement original publication date after:2026-10-01 before:2026-11-01", "expected_domains": []},
+    {"id": "zh-conflict", "category": "conflicting-information", "language": "zh", "query": "Python 字典是否保持插入顺序 版本差异 官方文档", "expected_domains": ["docs.python.org"]},
+    {"id": "en-conflict", "category": "conflicting-information", "language": "en", "query": "Python dictionary insertion order guarantee version difference official documentation", "expected_domains": ["docs.python.org"]},
+    {"id": "zh-changelog", "category": "version-history", "language": "zh", "query": "xcoze search v0.2.0 配置 窗口 GitHub Release", "expected_domains": ["github.com"]},
+    {"id": "en-changelog", "category": "version-history", "language": "en", "query": "xcoze search v0.2.0 release configuration local password dialog", "expected_domains": ["github.com"]}
+  ]
+}

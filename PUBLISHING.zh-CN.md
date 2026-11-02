@@ -18,7 +18,7 @@ python3 scripts/build_release.py --output-dir ../release
 
 本仓库根目录直接含 SKILL.md。后续修改在此仓库提交并推送，不要把最外层的 outputs 或 release 文件夹作为 Skill 根目录。
 
-当前版本为 `v0.2.0` 预览版。推送 `v*` 标签会触发 `.github/workflows/release.yml`，复用 Windows/Linux、Python 3.10/3.12 四组离线测试；全部通过后才进入发布步骤。
+当前版本为 `v0.3.0` 预览版。推送 `v*` 标签会触发 `.github/workflows/release.yml`，复用 Windows/Linux、Python 3.10/3.12 四组离线测试；全部通过后才进入发布步骤。
 
 发布步骤会核对标签、程序版本、Skill 元数据、打包版本和 CHANGELOG，提取当前版本的发布说明，生成 Skill ZIP、源码 ZIP 和 SHA256SUMS.txt，再核对校验值。先创建带完整附件的草稿，再公开为 Pre-release；不覆盖已有 Release 或旧附件。
 
@@ -32,12 +32,12 @@ python3 scripts/build_release.py --output-dir ../release
 4. 等待标签发布工作流成功，检查 Release 的 Pre-release 标记、三个附件及校验值，再确认发布完成。
 
 ```bash
-python3 scripts/prepare_release.py --tag v0.2.0 --output ../release-notes.md
+python3 scripts/prepare_release.py --tag v0.3.0 --output ../release-notes.md
 python3 -m unittest discover -s tests -v
 python3 scripts/build_release.py --output-dir ../release
 ```
 
-旧版 `v0.1.0` 的标签与附件保留，不用新版本文件覆盖。
+旧版 `v0.1.0`、`v0.2.0` 的标签与附件保留，不用新版本文件覆盖。
 
 若未完成真实账号验证，保留 Pre-release 标记，并在 Release 中声明待验证项。测试通过不代表供应商账号、余额、配额或商城兼容性已通过验收。
 

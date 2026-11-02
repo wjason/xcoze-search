@@ -1,39 +1,77 @@
-# 官方接口依据与能力矩阵
+# 官方接口与适配能力
 
-核对日期：2026-10-24。本文件概述适配决策，具体计费、配额、可选字段与版本以官方实时文档为准。
+核对日期：2026-11-02。下列为本工具开放的适配范围；账号权限、计费和服务端限制以官方文档为准。所有端点固定，鉴权请求不跟随重定向，不接受自定义代理 URL。
 
-| 能力 | DeepSeek | 腾讯元宝 |
-|---|---|---|
-| 官方端点 | `POST https://api.deepseek.com/v1/tools/search` | `POST https://api.wsa.cloud.tencent.com/SearchPro` |
-| 鉴权 | Bearer API Key | Bearer 元宝搜索服务 API Key |
-| 查询字段 | `query` | `Query` |
-| 查询限制 | 128 Unicode 字符，含追加 site 条件 | 本工具保守限制 1500 UTF-8 字节；依据官方 MCP 工具参数说明 |
-| 条数 | `count` 1–50 | 基线不发送 `Cnt`；count>10 时按 20/30/40/50 取整发送，再本地截取 |
-| 站点 | 追加 `site:域名` | `Site` 单域名；混合/垂直结果中的 VR 不保证受站点限制 |
-| 时效 | 查询词支持 `after:`/`before:`，由调用方显式编写 | `Freshness`；CLI 仅支持 d1..30/m1..12/y1..5 |
-| 垂域/模式 | 本工具不映射 | `Industry`/`Mode`，按服务版本可用 |
-| 正文 | search 可 `need_content`；另有 Fetch API | `passage` 标准摘要、`content` 动态摘要；不当作全文 |
-| 响应 | `results` 对象数组 | `Response.Pages` JSON 字符串数组；兼容对象条目 |
-| 评分 | 原样保留 0–3 相关性、-1..4 权威度 | 原样保留 0–1 相关性、0–5 权威度；部分版本缺字段 |
+## 能力矩阵
+
+| 服务 ID | Search | Fetch / Extract | 条数上限 | 本工具查询长度上限 | 站点条件 | 日期/相对时间 |
+|---|---|---|---|---|---|---|
+| `deepseek` | POST Search | POST Fetch | 50 | 128 Unicode 字符，含追加 site 条件 | 追加 site 操作符 | 时间操作符由调用者写进查询 |
+| `yuanbao` | POST SearchPro | 不支持 | 50 | 1500 UTF-8 字节 | Site | d1..30 / m1..12 / y1..5 |
+| `tavily` | POST Search | POST Extract | 20 | 本工具 4096 字符 | include_domains | day/week/month/year，或起止日期 |
+| `exa` | POST Search | POST Contents | 本工具 50 | 本工具 4096 字符 | includeDomains | 起止发布日期 |
+| `brave` | GET Web Search | 不支持 | 20 | 600 字符且 75 单词，含追加 site 条件 | 追加 site 操作符 | pd/pw/pm/py，或日期范围 |
+| `bocha` | POST Web Search | 不支持 | 50 | 本工具 4096 字符 | 未开放 --site | oneDay/oneWeek/oneMonth/oneYear，或日期范围 |
+
+Tavily、Exa、博查的 4096 字符是本工具校验策略，不表示平台承诺支持所有同长度查询。Exa 的公开 numResults 上限可高于本工具 50 条。本包不自动分页、追加搜索或为了补足条数提高请求次数。机器可读能力用 `capabilities` 获取。
 
 ## DeepSeek
 
-- [Search & Fetch 指南](https://api-docs.deepseek.com/guides/search/)
-- [Search 参考](https://api-docs.deepseek.com/api/search/)
+- Search：`POST https://api.deepseek.com/v1/tools/search`。
+- Fetch：`POST https://api.deepseek.com/v1/tools/fetch`。
+- Bearer Key；[官方指南](https://api-docs.deepseek.com/guides/search/) / [Search 参考](https://api-docs.deepseek.com/api/search/)。
 
-Fetch 端点固定为 `POST https://api.deepseek.com/v1/tools/fetch`，请求 `url`，返回 `title` 和 Markdown `content`。网页可能受站点策略限制。空内容/空结果与网络失败分别表达。
+请求保留 query/count/need_content；Fetch 请求 url，返回 title/content。搜索正文为可选，summary 与 content 分开；保留 rerank_score 和 authority 原生刻度，不跨源比较。
 
-## 元宝
+## 腾讯元宝
 
-- [服务 API KEY 方式](https://cloud.tencent.com/document/product/1806/130615)：单 Key 的 HTTPS REST 入口、响应包裹和业务错误。
-- [SearchPro 参数](https://cloud.tencent.com/document/product/1806/121811)：使用其中业务字段结构，不能把腾讯云标准签名入口当作 Bearer Key 入口。
-- [官方 MCP 工具说明](https://developer.cloud.tencent.com/mcp/server/11764)：补充查询字节限制；本包直接调用 REST，不要求安装 MCP。
-- [产品概述/版本差异](https://cloud.tencent.com/document/product/1806/121794)。
+- `POST https://api.wsa.cloud.tencent.com/SearchPro`，Bearer 元宝搜索服务 API Key。
+- [服务 API KEY 方式](https://cloud.tencent.com/document/product/1806/130615)、[SearchPro 参数](https://cloud.tencent.com/document/product/1806/121811)、[官方 MCP 工具说明](https://developer.cloud.tencent.com/mcp/server/11764)、[版本差异](https://cloud.tencent.com/document/product/1806/121794)。
 
-官方 MCP 页面曾把 Cnt 标成字符串，而 REST API 参数表明确是 Integer；本工具按 REST Integer 实现。时效日期范围在文档文字与例子存在顺序矛盾，v0.1.0 只开放无歧义的相对范围。极速版不支持部分参数，故基线请求只发送 Query 和用户显式要求的通用条件。响应版本、Msg 和 RequestId 会被保留，结果不足条数不补造。
+使用 Query、可选 Site/Freshness/Industry/Mode。count<=10 时不发送付费层可选 Cnt，超过 10 时按 20/30/40/50 向上取整发送整数，再本地截取。Response.Pages 支持 JSON 字符串和对象；HTTP 200 的 Error 仍是失败。passage 是标准摘要、content 是动态摘要，均不标为正文。资格、版本和额度相关参数可能被账号拒绝。
 
-## 费用与数据流
+相对时间仅开放无歧义的 d/m/y 范围，不映射旧文档中有顺序矛盾的绝对日期例子。保留 RequestId、Version、Msg 和供应商字段；Msg 是不可信资料。元宝未配置真实 Key，线上验证因暂无测试凭据保留待办。
 
-查询发送到选定供应商；both 发送两次，各自按平台计费。Fetch 把 URL 发给 DeepSeek。可能发生短期免费/配额优惠，本工具不承诺免费、不把某个客户端的免费政策推广到所有直接 REST 调用。
+## Tavily
 
-不调用聊天补全接口，不要求额外大模型 Key，无 XCoze 中转服务器、遥测或后台上传；只请求固定官方端点。调用方仍需遵守平台服务条款和网页内容使用规则。
+- `POST https://api.tavily.com/search` / `POST https://api.tavily.com/extract`，Bearer Key。
+- [Search 官方契约](https://docs.tavily.com/documentation/api-reference/endpoint/search)、[Extract 官方契约](https://docs.tavily.com/documentation/api-reference/endpoint/extract)。
+
+默认 general/basic、关闭 auto_parameters、include_answer 和 raw content，启用官方 usage 元数据。`--site` 映射 include_domains；`--freshness` 使用 day/week/month/year（兼容 d/w/m/y），与起止日期互斥。`--start-date` / `--end-date` 使用 YYYY-MM-DD；有时间条件时启用 filter_by_published_date，排除无可检测日期的结果。日期是服务商对发布或更新日期的估计，不补造日期。
+
+Search 的 content 是片段，不是全文；`--need-content` 才请求 Markdown raw_content。`--depth` 可显式选择 advanced/fast/ultra-fast，`--include-answer` 显式请求生成答案；答案放在请求元数据 generated_answer 中，不冒充来源或事实核实。
+
+Extract 每次只发送一个 URL，使用 basic、Markdown，检查 results 和 failed_results，即使 HTTP 200 也可能失败。保留平台返回的规范化 URL；它可能与输入 URL 有规范化差异。usage/request_id 原样保留。
+
+## Exa
+
+- `POST https://api.exa.ai/search` / `POST https://api.exa.ai/contents`，`x-api-key`。
+- [Search 官方契约](https://exa.ai/docs/reference/search)、[Contents 官方契约](https://exa.ai/docs/reference/get-contents)。
+
+默认 type:auto，只检索，不自动请求 contents。`--need-content`、`--highlights`、`--summary` 分别开启 text、highlights、summary；summary 使用对象形式，Search 以原查询作为摘要目标。`--site` 映射 includeDomains；日期映射 UTC 当天起止时间 startPublishedDate / endPublishedDate，保持 ISO 8601。
+
+Contents 每次只发送一个 URL，显式提取 text，可选 highlights/summary。URL 最多 2048 字符。检查逐 URL statuses；有失败或无法取得唯一有效页面时返回 extraction_failed，不能只凭 HTTP 200 判成功。text、highlights、summary 分别输出，保留 costDollars、warnings、requestId 和未知元数据。若平台明确报告 IGNORED_FIELD，返回约束未生效错误，避免把未应用的筛选当作成功。
+
+## Brave Search
+
+- `GET https://api.search.brave.com/res/v1/web/search`，`X-Subscription-Token`，Key 不进入 URL。
+- [官方介绍](https://api-dashboard.search.brave.com/app/documentation/web-search/query)、[完整参数和返回结构](https://api-dashboard.search.brave.com/api-reference/web/search/get)。
+
+q/count/result_filter:web；`--country` 映射两字母国家码，`--language` 映射 search_lang，具体允许值以官方枚举为准。freshness 支持 pd/pw/pm/py 或 YYYY-MM-DDtoYYYY-MM-DD；`--extra-snippets` 显式开启额外片段。
+
+只转换 web.results，不把广告、新闻卡片、位置卡等合成网页正文；其他顶层元数据保留。description 和 extra_snippets 是摘要/片段。page_age 可能是发布或修改时间，age 仅保留在原始字段，不自动换算发布日期。官方 Web Search 与 LLM Context 是不同接口，本次只实现前者。
+
+## 博查
+
+- `POST https://api.bochaai.com/v1/web-search`，Bearer Key。
+- [官方开放平台及返回示例](https://open.bochaai.com/)、[官方 MCP 接口实现](https://github.com/BochaAI/bocha-search-mcp/blob/master/src/bocha_search_mcp/server.py)。
+
+请求 query/count/freshness，默认 summary:false；`--summary` 才开启摘要。freshness 支持 noLimit、oneDay、oneWeek、oneMonth、oneYear、YYYY-MM-DD 或 YYYY-MM-DD..YYYY-MM-DD。不添加官方 MCP 示例中的渠道追踪参数。
+
+转换 data.webPages.value，name/url/snippet/summary/siteName/datePublished 分别保留；摘要不是全文。HTTP 200 内的非成功 code 仍为业务失败；不回显原始错误消息。不调用 AI Search 或结构化模态卡，也不承诺实时股价能力。
+
+## 用量、成本和数据流
+
+搜索、正文请求直接发往用户指定服务。各服务独立开通/计费；多源、重试、高级深度、正文和生成内容可能增加费用。预算只约束实际 HTTP 次数，不代表金额上限。只保留官方返回的用量和费用，未返回为 null；不根据当前价格估造费用。
+
+本轮四家新增服务未做真实账号调用；协议和离线验证记录不能替代账号权限、余额、可达性、检索质量或现场验收。

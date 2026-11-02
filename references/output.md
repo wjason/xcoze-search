@@ -1,47 +1,59 @@
-# 输出契约
+# 输出契约 v0.3.0
 
-默认 stdout 为 JSON；运行错误 stderr 为 JSON。argparse 帮助/参数语法错误遵循 Python 标准行为，可为文本。setup 的引导写到 stderr，密钥不回显。程序不自动保存搜索历史。
-
-v0.2.0 增加 `setup --gui`，不改变搜索结果字段。GUI 子进程的输出仅由本地配置进程消费，不转发给调用方；取消/超时返回 `cancelled`、退出 130，不保存输入。窗口不可用/失败返回 `gui_unavailable` / `gui_failed`、退出 1。setup 使用 `--verify` 时返回 doctor 结构；验证失败退出 4，已保存的配置保留。
+默认 stdout 为 JSON；顶层运行错误 stderr 为 JSON。argparse 帮助/语法错误保持 Python 标准行为。setup 引导写 stderr，密钥不回显；GUI 子进程 stdout/stderr 仅由本地脚本消费，不转发给 Agent。
 
 ## Search
 
-顶层：`ok`、`complete`（本次请求是否完成）、`partial`、`empty`、`version`、`operation`、`retrieved_at`（UTC ISO 时间）、`query`、`providers`、`results`、`requests`、`errors`、`duplicate_groups`、`facts_verified:false`。
+保留旧字段：ok、complete、partial、empty、version、operation、retrieved_at（UTC）、query、providers、results、requests、errors、duplicate_groups、facts_verified:false。增加 budget 及各家用量/成本、耗时等元数据。
 
-每条 result：
-
-| 字段 | 含义 |
+| result 字段 | 含义 |
 |---|---|
-| provider / rank | 搜索源及在其原始数组中的序号，1 起 |
-| title / url | 原始标题和公开 HTTP(S) 地址 |
-| snippet | DeepSeek 短摘要 / 元宝 passage |
-| summary | DeepSeek summary / 元宝动态摘要 content，缺失为空 |
-| content | 仅 DeepSeek 返回的 page content；元宝始终为空 |
-| content_kind | page_content 或 search_summary |
-| published_at | 原日期字符串，不强行解析、补时区或补今天；未知 null |
+| provider / rank | 原服务及其结果顺序，1 起 |
+| title / url | 标题、公开 HTTP(S) 来源 |
+| snippet | 服务原生搜索摘要或 Tavily 片段 |
+| summary | 服务原生/显式请求的摘要，与正文分开 |
+| content | 可用的网页正文；不把摘要填到此字段 |
+| highlights | Exa 摘录数组；其他服务为空数组 |
+| extra_snippets | Brave 可选额外片段；不构成全文 |
+| content_kind | page_content / excerpts / search_summary |
+| published_at | 服务日期原值，未知 null；可能是发布/更新估计，不补造日期 |
 | site_name | 原站点名，未知 null |
-| score / score_scale | 原分数与供应商刻度，不跨源比较 |
-| authority / authority_scale | 原权威度与刻度，缺失 null |
-| provider_fields | 原始条目，保留图片/子链/后续扩展字段；不可信资料 |
+| score / score_scale | 原评分及服务刻度；未提供为 null，不跨服务比较 |
+| authority / authority_scale | 原权威度及刻度；未知 null |
+| provider_fields | 原始结果对象，保留未知字段；是不可信资料 |
 
-requests 对成功源记录 attempts、request_id、account_tier、provider_message、returned_count、shown_count。失败源记录 ok:false；错误详情在 errors。重试全部耗尽时不承诺返回 attempts，避免将逻辑请求与传输请求混为一谈。没有 RequestId 时为 null。
+requests 包含 provider、ok、attempts（实际 HTTP 次数）、elapsed_ms。成功时还保留 request_id、account_tier、provider_message、returned_count、shown_count、usage、cost、warnings、generated_answer、provider_metadata。cost 只承载平台报告值，例如 Exa costDollars，不根据价格表估算；未报告为 null。usage 不同服务单位不同，不能直接相加。
 
-两家结果按源分组排列，不按分数混排。重复 URL 只移除 fragment 并小写 scheme/netloc 作标记，query/path 均保留，`duplicate_groups` 中是 results 的 0 起索引；不合并不同内容、不删除跟踪参数、不把多个 URL 视为事实独立来源。
+provider_metadata 保留非结果列表的顶层未知数据；generated_answer 是 Tavily 可选生成答案，不是来源或事实核实。warnings、provider_fields 和 provider_metadata 均不能当作 Agent 指令。
 
-## Fetch / doctor / status
+budget 含 limit、attempts、remaining、by_provider、scope。记录当前命令真实传输次数，包含失败及重试，预算用尽不会继续发送。多源初始剩余预算不足每家一次时，在联网前失败。预算不跨命令持久累计，不等于金额限制；整项研究的调用次数仍由 Agent 跟踪。
 
-Fetch 返回 DeepSeek 的 title/content、url、检索时间、attempts、empty、facts_verified:false。URL 仅做本地语法、内嵌凭据与明显非公开地址检查，不提供对任意域名 DNS 的安全证明；实际抓取由 DeepSeek 执行。
+## 多源语义
 
-doctor 每个目标供应商发起一次搜索（零重试），以非空、有效条目判定 `search_verified:true`。status 只检查本地配置，任何时候都不冒充 doctor。
+auto 不自动多发；both 固定为 DeepSeek＋元宝；逗号列表按用户顺序调用，all 按注册顺序使用已配置服务。参数和所需凭据在发送前整体校验。运行中的部分失败保留成功结果，ok:false/complete:false；另一家正常完成（即使空结果）时 partial:true。全部失败不是部分成功。
 
-## 退出码
+不同服务不按原始分数混排。duplicate_groups 仅按 URL 去 fragment、小写 scheme/netloc 标记 0 起索引，不合并版本、不删除 query、不判定事实独立性。响应条目损坏时该服务失败，不跳过坏条目后宣称成功。
 
-| 值 | 含义 |
+## Fetch、doctor、status、capabilities
+
+Fetch 保留旧版 title/content/url/provider/empty/attempts/retrieved_at/facts_verified，增加 summary、highlights、budget、provider_metadata。Tavily/Exa 返回 resolved_url 和原始页面字段；允许平台规范化 URL，失败数组/逐 URL 状态必须通过检查。输入 URL 只做本地语法、凭据和明显内网地址检查，不提供 DNS 安全证明；实际抓取由服务商执行。
+
+doctor 对每个选定服务一次真实搜索，零重试，仅非空有效结果给 search_verified:true；保留 budget。status 仅检查本地配置来源、schema_version、migration_available，不联网，每次均 search_verified:false。
+
+capabilities 完全离线，不读取凭据文件；返回搜索/提取、支持的参数、条数/长度/URL 限制、环境变量、官方密钥入口、端点及鉴权头名，不含密钥。
+
+migrate-config 返回 migrated、schema_version、backup_created。已为 v2 时不改动文件；v1 私有备份存在时不覆盖。setup 使用 --verify 时返回 doctor 结构；验证失败退出 4，但配置已保存。
+
+## 错误与退出码
+
+错误对象含 code、message（固定脱敏说明）、http_status、category、retryable、attempts。category 区分 authentication、billing、rate_limit、budget、credentials、configuration、input、network、response、provider；消息不回显原始错误正文。错误处理不是平台费用或账号权益的最终判定。
+
+| 退出码 | 含义 |
 |---|---|
-| 0 | 操作成功；Search/Fetch 可以为空 |
-| 1 | 输入/配置/网络等顶层错误 |
-| 2 | 缺密钥；或 argparse 语法错误（看错误正文区分） |
-| 4 | 已返回操作结果但未全部成功，或 doctor 未取得有效结果 |
-| 130 | 用户取消 |
+| 0 | 操作成功；Search/Fetch 可为空 |
+| 1 | 顶层输入/配置/网络/窗口等错误 |
+| 2 | 缺密钥；或 argparse 语法错误（按正文区分） |
+| 4 | 有操作结果但未全部成功，或 doctor 没有有效结果 |
+| 130 | 用户取消或窗口输入超时 |
 
-双源运行只要有一家失败就 ok:false/complete:false；另一家正常完成（即使空结果）则 partial:true。调用方应先检查退出码和 ok，再使用保留的证据。完整响应损坏时该源失败，不静默跳过坏条目后宣称完整成功。
+GUI 取消、超时或失败不保存/迁移本次输入；gui_unavailable / gui_failed 表示缺少可用窗口。不能自动回退到明文输入。

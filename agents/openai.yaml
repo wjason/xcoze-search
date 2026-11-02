@@ -1,4 +1,4 @@
 interface:
   display_name: "xcoze search"
-  short_description: "使用 DeepSeek 与元宝官方 API 搜索、交叉核实和引用公开资料"
+  short_description: "通过多家官方搜索 API 检索公开资料、提取正文并保留来源"
   default_prompt: "使用 $xcoze-search 搜索这个主题，优先原始来源，并为关键结论附上链接。"

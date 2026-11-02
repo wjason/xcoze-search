@@ -5,9 +5,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import getpass
-import ipaddress
 import json
-import math
 import os
 from pathlib import Path
 import re
@@ -22,31 +20,32 @@ import urllib.parse
 import urllib.request
 import warnings
 
-VERSION = "0.2.0"
-PROVIDERS = ("deepseek", "yuanbao")
-ENDPOINTS = {
-    "deepseek": "https://api.deepseek.com/v1/tools/search",
-    "yuanbao": "https://api.wsa.cloud.tencent.com/SearchPro",
-    "fetch": "https://api.deepseek.com/v1/tools/fetch",
-}
-ENV_KEYS = {"deepseek": ("DEEPSEEK_API_KEY",),
-            "yuanbao": ("YUANBAO_API_KEY", "TENCENTCLOUD_WSA_APIKEY")}
-KEY_URLS = {"deepseek": "https://platform.deepseek.com/api_keys",
-            "yuanbao": "https://console.cloud.tencent.com/wsapi/index"}
+SCRIPT_DIR = str(Path(__file__).resolve().parent)
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+from search_common import SearchError, RequestBudget, invalid, public_url, text_field, validate_site
+from search_providers import REGISTRY, get_provider
+
+VERSION = "0.3.0"
+PROVIDERS = tuple(REGISTRY)
+ENDPOINTS = {name: provider.endpoint for name, provider in REGISTRY.items()}
+ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in REGISTRY.items() if p.fetch_endpoint})
+ENDPOINTS["fetch"] = REGISTRY["deepseek"].fetch_endpoint
+ENV_KEYS = {name: p.env_keys for name, p in REGISTRY.items()}
+KEY_URLS = {name: p.key_url for name, p in REGISTRY.items()}
 MAX_RESPONSE = 16 * 1024 * 1024
+CONFIG_SCHEMA = 2
 
 
-class SearchError(Exception):
-    def __init__(self, code, message, *, status=None, retryable=False):
-        super().__init__(message)
-        self.code, self.status, self.retryable = code, status, retryable
-
-    def data(self):
-        return {"code": self.code, "message": str(self), "http_status": self.status}
-
-
-def invalid(message):
-    raise SearchError("invalid_input", message)
+def validate_config(data):
+    if (not isinstance(data, dict) or type(data.get("schema_version")) is not int
+            or data["schema_version"] not in (1, CONFIG_SCHEMA)
+            or not isinstance(data.get("providers"), dict)
+            or any(not isinstance(k, str) or not re.fullmatch(r"[a-z][a-z0-9-]*", k)
+                   or not isinstance(v, dict) for k, v in data["providers"].items())
+            or data.get("default_provider") not in (*PROVIDERS, None)):
+        raise SearchError("invalid_config", "Unsupported or invalid config; original file has not been changed.")
+    return data
 
 
 def config_path():
@@ -73,21 +72,16 @@ def read_config():
     path = config_path()
     check_config_path(path)
     if not path.exists():
-        return {"schema_version": 1, "providers": {}}
+        return {"schema_version": CONFIG_SCHEMA, "providers": {}}
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-        if (not isinstance(data, dict) or data.get("schema_version") != 1
-                or not isinstance(data.get("providers"), dict)
-                or any(k not in PROVIDERS or not isinstance(v, dict)
-                       for k, v in data["providers"].items())
-                or data.get("default_provider") not in (*PROVIDERS, None)):
-            raise ValueError
-        return data
+        return validate_config(json.loads(path.read_text(encoding="utf-8")))
     except (ValueError, OSError, UnicodeError):
-        raise SearchError("invalid_config", "Invalid local config; repair or remove it in your own terminal.") from None
+        raise SearchError("invalid_config", "Invalid local config; original file has not been changed.") from None
 
 
 def save_config(data):
+    validate_config(data)
+    data = {**data, "schema_version": CONFIG_SCHEMA}
     path = config_path()
     check_config_path(path)
     path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
@@ -101,6 +95,27 @@ def save_config(data):
         if os.path.exists(temporary):
             os.unlink(temporary)
     return path
+
+
+def migrate_config(config):
+    if config["schema_version"] == CONFIG_SCHEMA:
+        return {"ok": True, "operation": "migrate-config", "migrated": False, "schema_version": CONFIG_SCHEMA}
+    source = config_path()
+    backup = source.with_name("config.v1.backup.json")
+    check_config_path(backup)
+    # Exclusive backup: never replace an existing backup or follow its symlink.
+    try:
+        fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    except FileExistsError:
+        raise SearchError("invalid_config", "Migration backup already exists; inspect it locally before retrying.") from None
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(source.read_bytes())
+        save_config(config)
+    except (OSError, SearchError):
+        raise SearchError("invalid_config", "Migration failed; keep the original file and private backup for local recovery.") from None
+    return {"ok": True, "operation": "migrate-config", "migrated": True,
+            "schema_version": CONFIG_SCHEMA, "backup_created": True}
 
 
 def validate_key(value):
@@ -135,88 +150,42 @@ def configured_providers(config):
 
 
 def select_providers(requested, config):
-    if requested in PROVIDERS:
+    if requested in REGISTRY:
         return [requested]
     if requested == "both":
-        return list(PROVIDERS)
+        return ["deepseek", "yuanbao"]  # Backward-compatible meaning, even with six providers.
+    if requested == "all":
+        selected = configured_providers(config)
+        if not selected:
+            raise SearchError("missing_api_key", "Configure at least one provider using setup.")
+        return selected
+    if "," in requested:
+        selected = requested.split(",")
+        if len(selected) != len(set(selected)) or any(p not in REGISTRY for p in selected):
+            invalid("Use distinct registered provider names separated by commas.")
+        return selected
+    if requested != "auto":
+        invalid("Unknown provider; use capabilities to list services.")
     preferred = config.get("default_provider")
     if preferred:
-        credential(preferred, config)  # Never silently switch away from the chosen default.
+        credential(preferred, config)
         return [preferred]
     available = configured_providers(config)
     if not available:
         raise SearchError("missing_api_key", "Configure at least one provider using setup.")
-    return [available[0]]  # Stable documented order: deepseek, yuanbao.
+    return [available[0]]
 
 
 def validate_query(provider, query):
-    if not isinstance(query, str) or not query.strip():
-        invalid("Query must not be empty.")
-    if provider == "deepseek" and len(query) > 128:
-        invalid("DeepSeek query is limited to 128 Unicode characters; split it into shorter queries.")
-    if provider == "yuanbao" and len(query.encode("utf-8")) > 1500:
-        invalid("Yuanbao query is limited here to 1500 UTF-8 bytes; split it into shorter queries.")
-
-
-def validate_site(site):
-    if not site:
-        return
-    if len(site) > 253 or not re.fullmatch(r"(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,63}", site):
-        invalid("--site requires one public domain, e.g. example.com (use punycode for IDNs).")
+    get_provider(provider).validate_query(query)
 
 
 def search_payload(provider, args):
-    validate_query(provider, args.query)
-    if type(args.count) is not int or not 1 <= args.count <= 50:
-        invalid("--count must be 1..50 per provider.")
-    validate_site(args.site)
-    if provider == "deepseek":
-        if args.freshness or args.industry or args.mode is not None:
-            invalid("--freshness/--industry/--mode are Yuanbao-only. Use DeepSeek query operators separately.")
-        query = args.query + (" site:" + args.site if args.site else "")
-        validate_query(provider, query)
-        return {"query": query, "count": args.count, "need_content": args.need_content}
-    if args.need_content:
-        invalid("--need-content is DeepSeek-only; Yuanbao dynamic summaries are not full page content.")
-    payload = {"Query": args.query}
-    # Omit paid-tier options at their baseline defaults to support Yuanbao lite accounts.
-    if args.count > 10:
-        payload["Cnt"] = int(math.ceil(args.count / 10) * 10)
-    if args.site:
-        payload["Site"] = args.site
-    if args.freshness:
-        match = re.fullmatch(r"([dmy])(\d+)", args.freshness)
-        if not match or not 1 <= int(match[2]) <= {"d": 30, "m": 12, "y": 5}[match[1]]:
-            invalid("--freshness supports d1..d30, m1..m12, y1..y5.")
-        payload["Freshness"] = args.freshness
-    if args.industry:
-        if args.industry not in ("gov", "news", "acad", "finance"):
-            invalid("Invalid Yuanbao industry.")
-        payload["Industry"] = args.industry
-    if args.mode is not None:
-        if type(args.mode) is not int or args.mode not in (0, 1, 2):
-            invalid("--mode must be 0, 1, or 2.")
-        payload["Mode"] = args.mode
-    return payload
+    return get_provider(provider).search_payload(args)
 
 
-def public_url(url):
-    try:
-        parsed = urllib.parse.urlsplit(url)
-        if (len(url) > 8192 or parsed.scheme not in ("https", "http") or not parsed.hostname
-                or parsed.username is not None or parsed.password is not None
-                or any(c.isspace() or ord(c) < 32 for c in url)):
-            return False
-        parsed.port
-        host = parsed.hostname.lower().rstrip(".")
-        if host == "localhost" or host.endswith((".localhost", ".local", ".internal")):
-            return False
-        try:
-            return ipaddress.ip_address(host).is_global
-        except ValueError:
-            return "." in host
-    except (ValueError, TypeError):
-        return False
+def normalize(provider, raw, count):
+    return get_provider(provider).normalize(raw, count)
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -227,36 +196,28 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 def http_error(status):
     messages = {401: "API key is invalid or expired.", 402: "Provider account balance is insufficient.",
                 403: "Access denied; check permissions or target-site policy.",
-                404: "Endpoint or page content unavailable.", 429: "Rate limit reached; retry later."}
+                404: "Endpoint or page content unavailable.", 429: "Rate limit reached; retry later.",
+                432: "Provider plan usage limit reached.", 433: "Provider spending limit reached.",
+                434: "Provider capacity is temporarily unavailable."}
     return SearchError("http_error", messages.get(status, "Provider returned HTTP %s." % status),
-                       status=status, retryable=status in (408, 429) or 500 <= status <= 599)
+                       status=status, retryable=status in (408, 429, 434) or 500 <= status <= 599)
 
 
-def provider_error(code):
-    root = code.split(".")[0] if isinstance(code, str) else ""
-    messages = {"InternalError": "Yuanbao internal error.",
-                "RequestLimitExceeded": "Yuanbao rate limit exceeded.",
-                "UnauthorizedOperation": "Yuanbao API key invalid or not authorized.",
-                "ResourceNotFound": "Enable Yuanbao Search in the Tencent Cloud console.",
-                "ResourceUnavailable": "Yuanbao unavailable; check account balance and service status.",
-                "InvalidParameter": "Yuanbao rejected a parameter; check account tier and options.",
-                "InvalidParameterValue": "Yuanbao rejected a parameter value."}
-    # Do not echo arbitrary provider messages or unknown codes (may contain secrets/input).
-    safe_code = code if root in messages and re.fullmatch(r"[A-Za-z0-9_.]{1,100}", code) else "provider_error"
-    return SearchError(safe_code, messages.get(root, "Provider returned an application error."),
-                       retryable=root in ("InternalError", "RequestLimitExceeded"))
-
-
-def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, sleep=time.sleep):
+def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, sleep=time.sleep, budget=None):
     if operation not in ENDPOINTS or not 1 <= timeout <= 120 or retries not in (0, 1, 2):
         invalid("Invalid operation, timeout, or retry limit.")
+    fetching = operation == "fetch" or operation.endswith("_fetch")
+    name = "deepseek" if operation == "fetch" else operation.removesuffix("_fetch")
+    provider = get_provider(name)
     transport = opener or urllib.request.build_opener(NoRedirect())
-    req = urllib.request.Request(ENDPOINTS[operation],
-                                 data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-                                 headers={"Authorization": "Bearer " + validate_key(key),
-                                          "Content-Type": "application/json; charset=utf-8",
-                                          "User-Agent": "xcoze-search/" + VERSION}, method="POST")
+    req = provider.build_request(payload, validate_key(key), VERSION, fetch=fetching)
+    budget = budget or RequestBudget(retries + 1)
     for attempt in range(retries + 1):
+        try:
+            budget.consume(name)
+        except SearchError as error:
+            error.attempts = attempt
+            raise
         wait = min(2 ** attempt, 8)
         try:
             with transport.open(req, timeout=timeout) as response:
@@ -271,16 +232,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
                 raise SearchError("invalid_response", "Provider returned invalid JSON.") from None
             if not isinstance(data, dict):
                 raise SearchError("invalid_response", "Expected a JSON object.")
-            if operation == "yuanbao":
-                body = data.get("Response")
-                if isinstance(body, dict) and "Error" in body:
-                    err = body["Error"]
-                    raise provider_error(err.get("Code") if isinstance(err, dict) else None)
-                if "Error" in data:
-                    err = data["Error"]
-                    raise provider_error(err.get("Code") if isinstance(err, dict) else None)
-            elif "error" in data:
-                raise SearchError("provider_error", "Provider returned an application error.")
+            provider.check_error(data)
             return data, attempt + 1
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
@@ -294,88 +246,50 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
             error = SearchError("network_error", "Network/TLS failure or timeout.", retryable=True)
         except SearchError as exc:
             error = exc
+        error.attempts = attempt + 1
         if not error.retryable or attempt == retries:
             raise error from None
         if wait > 10:
-            raise SearchError("retry_later", "Server requires a longer wait; retry later.")
+            later = SearchError("retry_later", "Server requires a longer wait; retry later.")
+            later.attempts = attempt + 1
+            raise later
         sleep(wait)
     raise AssertionError("unreachable")
 
 
-def text_field(item, name, *, optional=False):
-    value = item.get(name)
-    if value is None and optional:
-        return ""
-    if not isinstance(value, str):
-        raise SearchError("invalid_response", "Invalid provider text field: " + name)
-    return value
-
-
-def normalize(provider, raw, count):
-    body = raw if provider == "deepseek" else raw.get("Response")
-    name = "results" if provider == "deepseek" else "Pages"
-    if not isinstance(body, dict) or not isinstance(body.get(name), list):
-        raise SearchError("invalid_response", "Expected provider result array: " + name)
-    results = []
-    for rank, item in enumerate(body[name], 1):
-        if provider == "yuanbao" and isinstance(item, str):
-            try:
-                item = json.loads(item)
-            except ValueError:
-                raise SearchError("invalid_response", "Yuanbao Pages contains invalid JSON.") from None
-        if not isinstance(item, dict):
-            raise SearchError("invalid_response", "Result must be an object.")
-        title, url = text_field(item, "title"), text_field(item, "url")
-        if not public_url(url):
-            raise SearchError("invalid_response", "Result URL is not a public HTTP(S) URL.")
-        is_ds = provider == "deepseek"
-        # Yuanbao content is a dynamic summary, never presented as fetched page content.
-        result = {"provider": provider, "rank": rank, "title": title, "url": url,
-                  "snippet": text_field(item, "snippet" if is_ds else "passage", optional=True),
-                  "summary": text_field(item, "summary" if is_ds else "content", optional=True),
-                  "content": text_field(item, "content", optional=True) if is_ds else "",
-                  "content_kind": "page_content" if is_ds and item.get("content") else "search_summary",
-                  "published_at": item.get("date") or None,
-                  "site_name": item.get("site_name" if is_ds else "site") or None,
-                  "score": item.get("rerank_score" if is_ds else "score"),
-                  "score_scale": "deepseek_0_3" if is_ds else "yuanbao_0_1",
-                  "authority": item.get("authority" if is_ds else "authority_level"),
-                  "authority_scale": "deepseek_-1_4" if is_ds else "yuanbao_0_5",
-                  "provider_fields": item}
-        results.append(result)
-    metadata = {"request_id": body.get("RequestId") if provider == "yuanbao" else None,
-                "account_tier": body.get("Version") if provider == "yuanbao" else None,
-                "provider_message": body.get("Msg") if provider == "yuanbao" else None,
-                "returned_count": len(results), "shown_count": min(len(results), count)}
-    return results[:count], metadata
-
-
-def run_search(args, config):
+def run_search(args, config, *, budget=None):
     providers = select_providers(args.provider, config)
-    # Validate all requests before ANY network I/O, including incompatible both-provider flags.
     payloads = {p: search_payload(p, args) for p in providers}
-    if len(providers) == 2:
-        for p in providers:
-            credential(p, config)  # Explicit both requires both credentials; no silent single-provider search.
+    for p in providers:
+        credential(p, config)  # Validate all selected keys before any network I/O.
+    budget = budget or RequestBudget(getattr(args, "max_requests", 12))
+    if budget.limit - budget.used < len(providers):
+        raise SearchError("budget_exhausted", "Budget must allow at least one HTTP attempt per selected provider.")
     output = {"ok": True, "operation": "search", "version": VERSION,
               "retrieved_at": datetime.now(timezone.utc).isoformat(),
               "query": args.query, "providers": providers, "results": [], "errors": [], "requests": [],
               "facts_verified": False}
     for p in providers:
+        started = time.monotonic()
         try:
             key, _ = credential(p, config)
-            raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries)
-            rows, meta = normalize(p, raw, args.count)
+            raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
+            try:
+                rows, meta = normalize(p, raw, args.count)
+            except SearchError as exc:
+                exc.attempts = attempts
+                raise
             output["results"].extend(rows)
             output["requests"].append({"provider": p, "ok": True, "attempts": attempts, **meta})
         except SearchError as exc:
             output["errors"].append({"provider": p, **exc.data()})
-            output["requests"].append({"provider": p, "ok": False})
+            output["requests"].append({"provider": p, "ok": False, "attempts": exc.attempts})
+        output["requests"][-1]["elapsed_ms"] = round((time.monotonic() - started) * 1000, 2)
     output["ok"] = not output["errors"]
     output["complete"] = output["ok"]
     output["empty"] = not output["results"]
     output["partial"] = bool(output["errors"]) and any(r["ok"] for r in output["requests"])
-    # Retain source versions and provider order. No cross-provider score sorting or destructive deduplication.
+    output["budget"] = budget.data()
     groups = {}
     for i, row in enumerate(output["results"]):
         parsed = urllib.parse.urlsplit(row["url"])
@@ -385,14 +299,27 @@ def run_search(args, config):
     return output
 
 
-def run_fetch(args, config):
+def run_fetch(args, config, *, budget=None):
     if not public_url(args.url):
         invalid("Fetch requires a public HTTP(S) URL, <=8192 characters, without embedded credentials.")
-    key, _ = credential("deepseek", config)
-    raw, attempts = request_api("fetch", {"url": args.url}, key, timeout=args.timeout, retries=args.retries)
-    title, content = text_field(raw, "title"), text_field(raw, "content")
-    return {"ok": True, "operation": "fetch", "provider": "deepseek", "url": args.url,
-            "title": title, "content": content, "empty": not content.strip(), "attempts": attempts,
+    name = getattr(args, "provider", "deepseek")
+    provider = get_provider(name)
+    if not provider.fetch_endpoint:
+        raise SearchError("unsupported_operation", provider.label + " does not support fetch.")
+    payload = provider.fetch_payload(args)
+    key, _ = credential(name, config)
+    budget = budget or RequestBudget(getattr(args, "max_requests", 3))
+    operation = "fetch" if name == "deepseek" else name + "_fetch"
+    raw, attempts = request_api(operation, payload, key, timeout=getattr(args, "timeout", 30),
+                                retries=getattr(args, "retries", 1), budget=budget)
+    try:
+        data = provider.normalize_fetch(raw, args.url)
+    except SearchError as error:
+        error.attempts = attempts
+        raise
+    return {"ok": True, "operation": "fetch", "provider": name, "url": args.url, **data,
+            "empty": not data["content"].strip(), "attempts": attempts, "budget": budget.data(),
+            "provider_metadata": provider.metadata(raw, [], 0),
             "retrieved_at": datetime.now(timezone.utc).isoformat(), "facts_verified": False}
 
 
@@ -406,13 +333,14 @@ def status(config):
             states[p] = {"configured": False, "search_verified": False, "error": exc.data()}
     return {"ok": all(s.get("error", {}).get("code", "missing_api_key") == "missing_api_key" for s in states.values()),
             "operation": "status", "version": VERSION, "default_provider": config.get("default_provider"),
+            "schema_version": config["schema_version"], "migration_available": config["schema_version"] == 1,
             "providers": states, "message": "Local inspection only; doctor performs a live billable search."}
 
 
 def doctor(args, config):
     query_args = argparse.Namespace(provider=args.provider, query="人工智能", count=1, site=None,
                                     freshness=None, industry=None, mode=None, need_content=False,
-                                    timeout=args.timeout, retries=0)
+                                    timeout=args.timeout, retries=0, max_requests=getattr(args, "max_requests", 12))
     result = run_search(query_args, config)
     checks = {}
     for p in result["providers"]:
@@ -420,7 +348,7 @@ def doctor(args, config):
         verified = entry["ok"] and any(r["provider"] == p for r in result["results"])
         checks[p] = {**entry, "search_verified": verified}
     good = all(x["search_verified"] for x in checks.values())
-    return {"ok": good, "operation": "doctor", "providers": checks, "errors": result["errors"],
+    return {"ok": good, "operation": "doctor", "providers": checks, "errors": result["errors"], "budget": result["budget"],
             "message": "Live search verified." if good else "Not all requested providers returned usable results."}
 
 
@@ -428,7 +356,7 @@ def gui_key_command(provider):
     """Build a local password dialog command. Arguments never contain a key."""
     if provider not in PROVIDERS:
         invalid("Unknown provider.")
-    label = "DeepSeek" if provider == "deepseek" else "腾讯元宝搜索"
+    label = REGISTRY[provider].label
     message = ("请输入 " + label + " API Key。密钥将以权限保护的明文保存在本机。"
                "如已选择验证，保存后将执行一次可能计费的搜索。")
     if sys.platform == "darwin":
@@ -530,8 +458,8 @@ def setup(args, config):
     if not graphical and not sys.stdin.isatty():
         raise SearchError("interactive_required", "Run setup in your own visible terminal; never send keys through chat or pipes.")
     print("官方密钥入口 / Official key console: " + KEY_URLS[p], file=sys.stderr)
-    if p == "yuanbao":
-        print("先开通元宝搜索，再在概览 > 服务 API KEY 方式创建密钥（不是腾讯云 SecretKey）。", file=sys.stderr)
+    if REGISTRY[p].setup_hint:
+        print(REGISTRY[p].setup_hint, file=sys.stderr)
     print("密钥仅输入到本机隐藏输入框；将以权限保护的明文保存在用户配置目录。", file=sys.stderr)
     if graphical:
         key = gui_key(p)
@@ -542,7 +470,9 @@ def setup(args, config):
                 key = validate_key(getpass.getpass(p + " API Key (hidden): "))
             except getpass.GetPassWarning:
                 raise SearchError("interactive_required", "This terminal cannot hide input.") from None
-    config["providers"][p] = {"api_key": key}
+    if config["schema_version"] == 1 and config_path().exists():
+        migrate_config(config)  # Only after successful input; cancellation never migrates.
+    config["providers"][p] = {**config["providers"].get(p, {}), "api_key": key}
     if args.default:
         config["default_provider"] = p
     path = save_config(config)
@@ -557,28 +487,45 @@ def setup(args, config):
 
 
 def parser():
-    root = argparse.ArgumentParser(description="xcoze search: DeepSeek + Tencent Yuanbao official APIs")
+    root = argparse.ArgumentParser(description="xcoze search: multi-provider official search and extraction APIs")
     root.add_argument("--version", action="version", version=VERSION)
     sub = root.add_subparsers(dest="command", required=True)
     sub.add_parser("status", help="Local-only credential status; never prints keys")
+    sub.add_parser("migrate-config", help="Back up and explicitly migrate v1 config to v2")
+    capabilities = sub.add_parser("capabilities", help="Offline provider capabilities, limits and key links")
+    capabilities.add_argument("--provider", choices=PROVIDERS)
     configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
     configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
     configure.add_argument("--default", action="store_true", help="Make this the auto provider")
     configure.add_argument("--verify", action="store_true", help="Run one live search after saving (may be billed)")
     diagnose = sub.add_parser("doctor", help="One live search per selected provider (may be billed)")
-    diagnose.add_argument("--provider", choices=(*PROVIDERS, "auto", "both"), default="auto")
+    diagnose.add_argument("--provider", default="auto", help="Name, comma-separated names, auto, both (DeepSeek/Yuanbao), or all configured")
     search = sub.add_parser("search", help="Search; count is per provider, maximum 50")
     search.add_argument("query")
-    search.add_argument("--provider", choices=(*PROVIDERS, "auto", "both"), default="auto")
+    search.add_argument("--provider", default="auto", help="Name, comma-separated names, auto, both (DeepSeek/Yuanbao), or all configured")
     search.add_argument("--count", type=int, default=10)
-    search.add_argument("--site", help="One public domain; applies to Yuanbao web results only")
-    search.add_argument("--need-content", action="store_true", help="DeepSeek only")
-    search.add_argument("--freshness", help="Yuanbao only: d7 / m3 / y1")
+    search.add_argument("--site", help="One public domain; see each provider's supported semantics")
+    search.add_argument("--need-content", action="store_true", help="Explicit page content: DeepSeek, Tavily or Exa")
+    search.add_argument("--freshness", help="Provider-native time filter; see capabilities and providers.md")
     search.add_argument("--industry", choices=("gov", "news", "acad", "finance"), help="Yuanbao paid tiers")
     search.add_argument("--mode", type=int, choices=(0, 1, 2), help="Yuanbao paid tiers: web / vertical / mixed")
-    fetch = sub.add_parser("fetch", help="Fetch page Markdown with DeepSeek (requires its key)")
+    search.add_argument("--start-date", help="Tavily/Exa: YYYY-MM-DD")
+    search.add_argument("--end-date", help="Tavily/Exa: YYYY-MM-DD")
+    search.add_argument("--country", help="Brave: country code")
+    search.add_argument("--language", help="Brave: search language")
+    search.add_argument("--extra-snippets", action="store_true", help="Brave: request additional snippets")
+    search.add_argument("--include-answer", action="store_true", help="Tavily: explicit generated answer, separately returned")
+    search.add_argument("--depth", help="Tavily: basic/advanced/fast/ultra-fast; default basic")
+    fetch = sub.add_parser("fetch", help="Fetch using DeepSeek (default), Tavily or Exa")
     fetch.add_argument("url")
+    fetch.add_argument("--provider", choices=PROVIDERS, default="deepseek")
+    for command in (search, fetch):
+        command.add_argument("--highlights", action="store_true", help="Exa: explicitly request excerpts")
+        command.add_argument("--summary", action="store_true", help="Exa/Bocha search or Exa fetch: explicit summary")
+    for command in (search, fetch, diagnose):
+        command.add_argument("--max-requests", type=int, choices=range(1, 1001), metavar="1..1000", default=12 if command != fetch else 3,
+                             help="Maximum HTTP attempts including retries in this invocation")
     for command in (search, fetch, diagnose):
         command.add_argument("--timeout", type=int, choices=range(1, 121), metavar="1..120", default=30)
     for command in (search, fetch):
@@ -589,8 +536,15 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "capabilities":
+            names = [args.provider] if args.provider else PROVIDERS
+            print(json.dumps({"ok": True, "operation": "capabilities", "version": VERSION,
+                              "providers": [REGISTRY[name].capabilities() for name in names]}, ensure_ascii=False, indent=2))
+            return 0
         config = read_config()
-        if args.command == "status":
+        if args.command == "migrate-config":
+            result = migrate_config(config)
+        elif args.command == "status":
             result = status(config)
         elif args.command == "setup":
             result = setup(args, config)

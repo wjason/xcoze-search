@@ -1,6 +1,6 @@
 # Agent 搜索服务调研
 
-调研日期：2026-11-02。下列信息来自服务商官方文档和项目文档，用于安排 xcoze search 的后续接入，不是使用量榜单或检索质量评测。未使用这些候选服务的真实 Key 发起测试；文档存在不等于已实现、账号已授权或结果质量已验证。
+调研日期：2026-11-02。下列信息来自服务商官方文档和项目文档，用于安排 xcoze search 的后续接入，不是使用量榜单或检索质量评测。P1 四家已完成接口适配和离线测试，但没有使用其真实 Key 发起调用；P2/P3 候选仍未实现。文档或实现存在不等于账号已授权或结果质量已验证。
 
 ## 接入路线
 
@@ -14,10 +14,14 @@
 
 | 服务 | 接入依据 | 当前状态 |
 |---|---|---|
-| DeepSeek Search / Fetch | [官方指南](https://api-docs.deepseek.com/guides/search/) | 已实现；2026-10-24 实测 Search / Fetch |
+| DeepSeek Search / Fetch | [官方指南](https://api-docs.deepseek.com/guides/search/) | 已实现；2026-11-02 本版 Search / Fetch 回归通过 |
 | 腾讯元宝 SearchPro | [服务 API KEY 方式](https://cloud.tencent.com/document/product/1806/130615) | 已实现；真实账号测试待完成 |
+| Tavily Search / Extract | [Search](https://docs.tavily.com/documentation/api-reference/endpoint/search) / [Extract](https://docs.tavily.com/documentation/api-reference/endpoint/extract) | v0.3.0 已实现；未做真实账号测试 |
+| Exa Search / Contents | [Search](https://exa.ai/docs/reference/search) / [Contents](https://exa.ai/docs/reference/get-contents) | v0.3.0 已实现；未做真实账号测试 |
+| Brave Web Search | [官方参数](https://api-dashboard.search.brave.com/api-reference/web/search/get) | v0.3.0 已实现；未做真实账号测试 |
+| 博查 Web Search | [官方 MCP 实现](https://github.com/BochaAI/bocha-search-mcp/blob/master/src/bocha_search_mcp/server.py) | v0.3.0 已实现；未做真实账号测试 |
 
-## 候选服务
+## 扩展服务（P1 已实现，P2/P3 为候选）
 
 表中的能力来自官方资料；优先级是项目判断，采用 API Key 的服务仍可能要求开通产品、购买额度或授予相应访问权限。
 

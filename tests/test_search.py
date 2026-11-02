@@ -69,7 +69,7 @@ class SearchTests(unittest.TestCase):
         self.tmp.cleanup()
 
     def test_bearer_and_fixed_official_endpoints(self):
-        for p in x.PROVIDERS:
+        for p in ("deepseek", "yuanbao"):
             transport = QueueTransport(ds() if p == "deepseek" else yb())
             x.request_api(p, {"query": "test"}, "synthetic-key", opener=transport)
             req = transport.requests[0]
@@ -226,7 +226,7 @@ class SearchTests(unittest.TestCase):
 
     def test_config_roundtrip_permissions_and_symlinks(self):
         path = x.save_config(self.config)
-        self.assertEqual(x.read_config(), self.config)
+        self.assertEqual(x.read_config(), {**self.config, "schema_version": 2})
         if os.name == "posix":
             self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
             self.assertEqual(stat.S_IMODE(path.parent.stat().st_mode), 0o700)

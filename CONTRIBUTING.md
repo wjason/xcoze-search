@@ -22,6 +22,14 @@ python3 -m unittest discover -s tests -v
 
 ## 新搜索源适配
 
+实现入口为 `scripts/search_providers.py`：继承 Provider，定义 name/label、固定官方端点、env_keys/key_url、鉴权头、能力和限制，实现 build_search、normalize；有提取接口时再实现 fetch_payload、normalize_fetch。最后把实例加入 REGISTRY。Brave 提供 GET 与专用鉴权头样例，Tavily/Exa 提供搜索和提取样例。
+
+主搜索流程按注册表执行，无需新增服务分支。共享错误、URL/字段校验和 HTTP 预算位于 search_common.py；密钥读取、请求传输和 CLI 位于 xcoze_search.py。新增服务必须在联网前拒绝不支持选项，不能通过任意 URL 替代固定鉴权目标。
+
+新增协议测试可参照 `tests/test_providers.py`：使用合成响应验证原生请求、鉴权、内容类型、空结果、业务错误、未知字段和逐 URL 失败；使用 QueueTransport 覆盖真实 request_api/规范化流程，不只 mock 主函数返回值。质量回归入口和语料位于 evaluations/，默认不联网。
+
+扩展时仍需：
+
 - 按当前官方接口实现，附文档地址和核对日期；官方 API、第三方代理和自建实例分别标明。
 - 声明实际支持的搜索、正文、片段、过滤和分页能力；不支持的选项不得静默忽略。
 - 保留来源、日期、供应商字段和评分语义，测试空结果、失败、限流和异常结构。
