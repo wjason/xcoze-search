@@ -9,27 +9,6 @@
 
 [Install](#installation) · [Configure](#api-key-setup) · [Usage](#usage) · [Roadmap](TODO.en.md) · [Contribute](CONTRIBUTING.en.md) · [Changelog](CHANGELOG.en.md)
 
-## Documentation languages
-
-Chinese is the default. Use the language links at the top of each page to switch. For English agent replies, say “Reply in English.”
-
-| Document | 简体中文 | English |
-|---|---|---|
-| Project overview | [中文](README.md) | [English](README.en.md) |
-| Agent instructions | [中文](SKILL.md) | [English](SKILL.en.md) |
-| Installation | [中文](INSTALL.zh-CN.md) | [English](INSTALL.en.md) |
-| Setup and troubleshooting | [中文](references/setup.md) | [English](references/setup.en.md) |
-| Provider contracts | [中文](references/providers.md) | [English](references/providers.en.md) |
-| Output contract | [中文](references/output.md) | [English](references/output.en.md) |
-| Service research | [中文](references/search-services.md) | [English](references/search-services.en.md) |
-| Roadmap | [中文](TODO.md) | [English](TODO.en.md) |
-| Contributing | [中文](CONTRIBUTING.md) | [English](CONTRIBUTING.en.md) |
-| Changelog | [中文](CHANGELOG.md) | [English](CHANGELOG.en.md) |
-| Validation records | [中文](VALIDATION.md) | [English](VALIDATION.en.md) |
-| Publishing | [中文](PUBLISHING.zh-CN.md) | [English](PUBLISHING.en.md) |
-| Marketplace listing | [中文](MARKETPLACE.zh-CN.md) | [English](MARKETPLACE.en.md) |
-| Regression guide | [中文](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md) | [English](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md) |
-
 ## Supported providers
 
 | Provider | Web search | Content support | Live account verification |

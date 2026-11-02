@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- Simplify both homepages by removing the language index table; retain the top language switch and keep document links within the selected language.
+
 - Add English versions of all documentation and agent instructions, keeping Chinese as default, with reciprocal links, bilingual packaging, and release notes.
 
 - Add agent installation instructions using “Install” plus the GitHub repository URL, followed by configuration examples, to the README and installation guide.
