@@ -11,7 +11,9 @@ import math
 import os
 from pathlib import Path
 import re
+import shutil
 import stat
+import subprocess
 import sys
 import tempfile
 import time
@@ -20,7 +22,7 @@ import urllib.parse
 import urllib.request
 import warnings
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 PROVIDERS = ("deepseek", "yuanbao")
 ENDPOINTS = {
     "deepseek": "https://api.deepseek.com/v1/tools/search",
@@ -422,21 +424,124 @@ def doctor(args, config):
             "message": "Live search verified." if good else "Not all requested providers returned usable results."}
 
 
+def gui_key_command(provider):
+    """Build a local password dialog command. Arguments never contain a key."""
+    if provider not in PROVIDERS:
+        invalid("Unknown provider.")
+    label = "DeepSeek" if provider == "deepseek" else "腾讯元宝搜索"
+    message = ("请输入 " + label + " API Key。密钥将以权限保护的明文保存在本机。"
+               "如已选择验证，保存后将执行一次可能计费的搜索。")
+    if sys.platform == "darwin":
+        script = '''try
+    set response to display dialog "%s" default answer "" with hidden answer with title "xcoze search" buttons {"取消", "保存"} default button "保存" cancel button "取消" giving up after 300
+    if gave up of response then return "cancelled"
+    return "ok:" & text returned of response
+on error number -128
+    return "cancelled"
+end try''' % message
+        return ["/usr/bin/osascript", "-e", script], "framed"
+    if sys.platform == "win32":
+        # Native Windows PowerShell + WinForms; no third-party Python GUI package.
+        script = r'''$ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+$form = New-Object System.Windows.Forms.Form
+$form.Text = 'xcoze search'
+$form.ClientSize = New-Object System.Drawing.Size(480, 180)
+$form.StartPosition = 'CenterScreen'
+$form.FormBorderStyle = 'FixedDialog'
+$form.MaximizeBox = $false
+$form.MinimizeBox = $false
+$form.TopMost = $true
+$label = New-Object System.Windows.Forms.Label
+$label.Text = '%s'
+$label.Location = New-Object System.Drawing.Point(15, 12)
+$label.Size = New-Object System.Drawing.Size(450, 65)
+$keyBox = New-Object System.Windows.Forms.TextBox
+$keyBox.Location = New-Object System.Drawing.Point(15, 82)
+$keyBox.Size = New-Object System.Drawing.Size(450, 25)
+$keyBox.UseSystemPasswordChar = $true
+$save = New-Object System.Windows.Forms.Button
+$save.Text = '保存'
+$save.Location = New-Object System.Drawing.Point(285, 130)
+$save.DialogResult = [System.Windows.Forms.DialogResult]::OK
+$cancel = New-Object System.Windows.Forms.Button
+$cancel.Text = '取消'
+$cancel.Location = New-Object System.Drawing.Point(375, 130)
+$cancel.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+$form.Controls.AddRange(@($label, $keyBox, $save, $cancel))
+$form.AcceptButton = $save
+$form.CancelButton = $cancel
+$form.Add_Shown({[void]$keyBox.Focus()})
+try {
+    if ($form.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        [Console]::Write('ok:' + $keyBox.Text)
+    } else {
+        [Console]::Write('cancelled')
+    }
+} finally {
+    $keyBox.Clear()
+    $form.Dispose()
+}''' % message
+        # Encode the script, not the secret, to avoid Windows PowerShell's ANSI
+        # command-line parsing corrupting the Chinese labels on some systems.
+        import base64
+        encoded = base64.b64encode(script.encode("utf-16le")).decode("ascii")
+        return ["powershell.exe", "-NoProfile", "-STA", "-NonInteractive", "-EncodedCommand", encoded], "framed"
+    if sys.platform.startswith("linux") and (os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY")):
+        executable = shutil.which("zenity")
+        if executable:
+            return [executable, "--entry", "--hide-text", "--title=xcoze search", "--text=" + message,
+                    "--timeout=300"], "raw"
+    raise SearchError("gui_unavailable", "No supported local desktop dialog. Use setup in your own visible terminal, or managed environment variables.")
+
+
+def gui_key(provider):
+    command, protocol = gui_key_command(provider)
+    try:
+        # Capture the dialog's output inside this process; never relay child
+        # stdout/stderr, even on failure. No shell, clipboard, or key argument.
+        reply = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, encoding="utf-8", timeout=310, check=False)
+    except FileNotFoundError:
+        raise SearchError("gui_unavailable", "Local dialog tool is unavailable; use your own visible terminal.") from None
+    except subprocess.TimeoutExpired:
+        raise SearchError("cancelled", "Local key input timed out; no changes saved.") from None
+    except (OSError, UnicodeError):
+        raise SearchError("gui_failed", "Local key dialog failed; no changes saved.") from None
+    if protocol == "raw" and reply.returncode in (1, 5):
+        raise SearchError("cancelled", "Local key input cancelled; no changes saved.")
+    if reply.returncode:
+        raise SearchError("gui_failed", "Local key dialog failed; no changes saved.")
+    value = reply.stdout.rstrip("\r\n")
+    if protocol == "framed":
+        if value == "cancelled":
+            raise SearchError("cancelled", "Local key input cancelled; no changes saved.")
+        if not value.startswith("ok:"):
+            raise SearchError("gui_failed", "Local key dialog returned an invalid response; no changes saved.")
+        value = value[3:]
+    return validate_key(value)
+
+
 def setup(args, config):
     p = args.provider
-    # setup deliberately emits no input or key value; only the user types in their own terminal.
-    if not sys.stdin.isatty():
+    graphical = getattr(args, "gui", False)
+    if not graphical and not sys.stdin.isatty():
         raise SearchError("interactive_required", "Run setup in your own visible terminal; never send keys through chat or pipes.")
     print("官方密钥入口 / Official key console: " + KEY_URLS[p], file=sys.stderr)
     if p == "yuanbao":
         print("先开通元宝搜索，再在概览 > 服务 API KEY 方式创建密钥（不是腾讯云 SecretKey）。", file=sys.stderr)
     print("密钥仅输入到本机隐藏输入框；将以权限保护的明文保存在用户配置目录。", file=sys.stderr)
-    with warnings.catch_warnings():
-        warnings.simplefilter("error", getpass.GetPassWarning)
-        try:
-            key = validate_key(getpass.getpass(p + " API Key (hidden): "))
-        except getpass.GetPassWarning:
-            raise SearchError("interactive_required", "This terminal cannot hide input.") from None
+    if graphical:
+        key = gui_key(p)
+    else:
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", getpass.GetPassWarning)
+            try:
+                key = validate_key(getpass.getpass(p + " API Key (hidden): "))
+            except getpass.GetPassWarning:
+                raise SearchError("interactive_required", "This terminal cannot hide input.") from None
     config["providers"][p] = {"api_key": key}
     if args.default:
         config["default_provider"] = p
@@ -456,8 +561,9 @@ def parser():
     root.add_argument("--version", action="version", version=VERSION)
     sub = root.add_subparsers(dest="command", required=True)
     sub.add_parser("status", help="Local-only credential status; never prints keys")
-    configure = sub.add_parser("setup", help="Hidden input in the user's visible terminal")
+    configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
+    configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
     configure.add_argument("--default", action="store_true", help="Make this the auto provider")
     configure.add_argument("--verify", action="store_true", help="Run one live search after saving (may be billed)")
     diagnose = sub.add_parser("doctor", help="One live search per selected provider (may be billed)")
@@ -498,7 +604,7 @@ def main(argv=None):
         return 0 if result["ok"] else 4
     except SearchError as exc:
         print(json.dumps({"ok": False, "error": exc.data()}, ensure_ascii=False), file=sys.stderr)
-        return 2 if exc.code == "missing_api_key" else 1
+        return 130 if exc.code == "cancelled" else 2 if exc.code == "missing_api_key" else 1
     except (KeyboardInterrupt, EOFError):
         print('{"ok":false,"error":{"code":"cancelled","message":"Cancelled."}}', file=sys.stderr)
         return 130

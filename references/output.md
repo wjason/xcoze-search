@@ -1,6 +1,8 @@
-# 输出契约 v0.1.0
+# 输出契约
 
 默认 stdout 为 JSON；运行错误 stderr 为 JSON。argparse 帮助/参数语法错误遵循 Python 标准行为，可为文本。setup 的引导写到 stderr，密钥不回显。程序不自动保存搜索历史。
+
+v0.2.0 开发版增加 `setup --gui`，不改变搜索结果字段。GUI 子进程的输出仅由本地配置进程消费，不转发给调用方；取消/超时返回 `cancelled`、退出 130，不保存输入。窗口不可用/失败返回 `gui_unavailable` / `gui_failed`、退出 1。setup 使用 `--verify` 时返回 doctor 结构；验证失败退出 4，已保存的配置保留。
 
 ## Search
 

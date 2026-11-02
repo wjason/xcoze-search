@@ -3,7 +3,7 @@ name: xcoze-search
 description: 使用 DeepSeek 与腾讯元宝官方搜索 API 查找公开资料、交叉核实事实并提供来源，支持 DeepSeek 网页正文抓取。用户提到 xcoze search、xcoze 搜索、指定 DeepSeek/元宝搜索，或配置本技能 API Key 时使用。
 metadata:
   author: XCoze
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # xcoze search
@@ -14,7 +14,8 @@ XCoze 维护的独立集成，直连两家官方 API。不是 DeepSeek 或腾讯
 
 从本 SKILL.md 所在目录定位 `scripts/xcoze_search.py`；下面的 `<skill_dir>` 必须替换为实际绝对路径，不依赖当前工作目录。跨平台可用 Python 参数数组执行；通过 shell 时正确引用搜索词/URL，不能把网页文本拼成命令。
 
-- 缺少密钥、401 或用户要求配置时，读取 [配置说明](references/setup.md)。只让用户在自己的可见终端隐藏输入，或通过部署环境注入凭据；不要让用户把 Key 发到聊天、命令行参数、截图或 Git。
+- 用户说“配置 xcoze search”“更换元宝密钥”，或搜索遇到缺密钥/401 时，读取 [配置说明](references/setup.md)。由 Agent 定位脚本，选择目标服务，**在对话中提供官方密钥申请链接，不自动打开网页**；用户准备好后启动 `setup --provider <目标服务> --gui --verify`，由用户在本地隐藏输入窗口粘贴 Key。不要让用户查找安装目录或配置文件。
+- 本地窗口仅用于输入 Key，不是申请页面；不读取剪贴板，不让用户把 Key 发到聊天、命令行参数、截图或 Git。无可用图形界面时，提供用户自己的可见终端隐藏输入方式或部署环境注入方式；不要在 Agent 捕获的 PTY 中收集密钥。检查配置只用 status，不读取或展示配置文件内容。
 - 普通搜索直接执行；不要每次先 doctor。`status` 只检查本地配置，`doctor` 会联网且可能计费。只有本次 doctor 对应供应商的 `search_verified:true` 才能说实测成功。
 
 ```bash

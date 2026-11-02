@@ -17,7 +17,7 @@
 | 腾讯元宝 | 支持 | 标准摘要 / 动态摘要 | 已实现；真实账号测试待完成 |
 | Tavily、Exa、Brave、博查等 | 计划中 | 按服务能力接入 | 尚未实现，见 [TODO](TODO.md) |
 
-目前发布版本为 [v0.1.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.1.0)。源码中的规划不代表发布包已经具备相应功能。服务能力、鉴权要求和接入依据见 [搜索服务调研](references/search-services.md)。
+目前发布版本为 [v0.1.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.1.0)。`main` 分支为 v0.2.0 开发版，已加入对话引导配置和本地隐藏输入窗口；v0.1.0 下载包不含这一更新。服务能力、鉴权要求和接入依据见 [搜索服务调研](references/search-services.md)。
 
 ## 安装
 
@@ -45,29 +45,50 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 安装后新建会话；如果尚未识别技能，重新启动助手。其他安装方式及升级方法见 [安装指南](INSTALL.zh-CN.md)。
 
+需要使用下方的对话配置流程，请通过 Skills CLI 安装当前 `main` 分支，或下载仓库当前源码；上述 v0.1.0 包使用终端配置。
+
 ## 配置 API Key
 
-在实际安装目录中打开终端，按需配置一家或两家服务。
+安装后直接在助手中输入：
 
-### DeepSeek
+```text
+帮我配置 xcoze search。
+更换 xcoze search 的元宝密钥。
+检查 xcoze search 的配置状态。
+```
 
-在 [DeepSeek 平台](https://platform.deepseek.com/api_keys) 创建 API Key，然后执行：
+助手会确认要配置的服务，并在对话中提供官方密钥申请链接。自行点击链接取得 Key 后，回复“准备好了，开始输入”，助手会启动本地隐藏输入窗口。粘贴并保存后，工具执行一次可能计费的真实搜索，助手据结果说明是否可用。已有 Key 时可以直接说“我已有 DeepSeek Key，开始配置”，无需重复申请。
+
+申请页面不会自动打开；输入 Key 的窗口由本地工具显示。整个流程无需查找安装目录或配置文件，也不用把 Key 发给助手。取消输入时不改动已有配置。只配置一家即可使用，两家可分别配置。
+
+窗口支持 macOS 系统对话框、Windows PowerShell/WinForms，以及已安装 Zenity 的 Linux 图形桌面。无图形界面或窗口工具不可用时，改用自己的可见终端隐藏输入或受控环境变量。当前仍需 Python 3.10+；独立可执行安装包尚未提供。
+
+### 官方密钥申请入口
+
+| 搜索源 | 申请入口 | 说明 |
+|---|---|---|
+| DeepSeek | [DeepSeek 平台](https://platform.deepseek.com/api_keys) | 创建 API Key，确认账号可调用 Search / Fetch |
+| 腾讯元宝 | [元宝搜索控制台](https://console.cloud.tencent.com/wsapi/index) | 开通搜索服务，在“概览 → 服务 API KEY 方式”创建搜索服务密钥 |
+
+元宝需要搜索服务的 API Key，与腾讯云 SecretId/SecretKey 及其他模型服务的密钥不通用。
+
+### 手动配置（可选）
+
+需要自行执行命令时，在实际安装目录打开自己的终端：
+
+DeepSeek：
 
 ```bash
 python3 scripts/xcoze_search.py setup --provider deepseek --default --verify
 ```
 
-### 腾讯元宝
-
-在 [元宝搜索控制台](https://console.cloud.tencent.com/wsapi/index) 开通服务，通过“概览 → 服务 API KEY 方式”创建搜索服务密钥，然后执行：
+腾讯元宝：
 
 ```bash
 python3 scripts/xcoze_search.py setup --provider yuanbao --verify
 ```
 
-元宝需要搜索服务的 API Key，与腾讯云 SecretId/SecretKey 及其他模型服务的密钥不通用。
-
-setup 在终端隐藏输入密钥。`--default` 设置默认搜索源；`--verify` 保存配置后执行一次可能计费的搜索。只配置一家时即可使用该服务。
+不带 `--gui` 时，setup 在终端隐藏输入密钥；加上 `--gui` 则使用本地输入窗口。`--default` 设置默认搜索源；`--verify` 保存配置后执行一次可能计费的搜索。验证失败时已保存的配置仍保留，应按错误原因处理，不能视为配置已验证通过。
 
 macOS 可双击 `scripts/setup.command` 完成配置。Windows 如果没有 `python3` 命令，可使用 `py -3`。
 
@@ -152,7 +173,7 @@ python3 scripts/xcoze_search.py doctor --provider yuanbao
 python3 -m unittest discover -s tests -v
 ```
 
-当前有 25 项离线测试，CI 覆盖 Windows/Linux、Python 3.10/3.12。真实服务验证状态见 [VALIDATION.md](VALIDATION.md)。
+当前有 33 项离线测试，CI 配置覆盖 Windows/Linux、Python 3.10/3.12。窗口流程使用合成输入测试，各桌面上的真实窗口验收状态见 [VALIDATION.md](VALIDATION.md)。
 
 ## 数据与费用
 

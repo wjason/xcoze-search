@@ -3,16 +3,26 @@
 1. 安装 Python 3.10 或更高版本，执行 `python3 --version`（Windows 可用 `py -3 --version`）。
 2. 解压 Skill 发布 ZIP，将其中的 `xcoze-search` 文件夹复制到助手的技能目录。
 3. 确认入口只有一层：`<skills>/xcoze-search/SKILL.md`。
-4. 在该目录打开自己的终端，运行以下任意一个配置命令，隐藏输入对应服务 API Key：
+4. 新建一轮对话，输入“帮我配置 xcoze search”；宿主未发现技能时重启/重新载入。
+5. 选择 DeepSeek 或元宝。助手在对话中给出官方密钥申请链接，不自动打开网页。自行点击链接取得 Key 后回复“准备好了，开始输入”；已有 Key 时可直接说明。
+6. 助手启动本地隐藏输入窗口，用户粘贴 Key 并保存，随后执行一次可能计费的搜索验证。助手根据实际结果报告是否可用。
+
+无需查找安装目录或配置文件，也不要把 Key 发到聊天中。只用一家就只配置一家。取消输入不改动已有配置；验证失败时密钥已保存，但服务尚未通过验证。密钥获取入口和具体服务要求见 [配置说明](references/setup.md)。
+
+上述对话配置与窗口入口包含在 `main` 的 v0.2.0 开发版中，尚未发布新的 Release；请用 Skills CLI 安装当前仓库或下载 `main` 源码。v0.1.0 发布包需使用终端配置。
+
+## 无图形界面时配置
+
+本地窗口使用 macOS 系统对话框、Windows PowerShell/WinForms，或已安装 Zenity 的 Linux 图形桌面。远程、无桌面或工具不可用时，助手应说明原因，提供已定位到实际脚本路径的命令，由用户在自己的可见终端隐藏输入，也可使用受控环境变量。
+
+手动配置命令（在安装目录执行）：
 
 ```bash
 python3 scripts/xcoze_search.py setup --provider deepseek --default --verify
 python3 scripts/xcoze_search.py setup --provider yuanbao --verify
 ```
 
-只用一家就只配置一家。`--verify` 会执行一次可能计费的搜索；输出 `search_verified:true` 才表示本次实测通过。密钥获取入口和具体服务要求见 [配置说明](references/setup.md)。
-
-5. 新建一轮对话，输入“用 xcoze search 搜索一个公开主题，附来源”；宿主未发现技能时重启/重新载入。
+`--verify` 会执行一次可能计费的搜索；输出 `search_verified:true` 才表示本次实测通过。之后直接输入“用 xcoze search 搜索一个公开主题，附来源”。
 
 ## Codex 目录示例
 

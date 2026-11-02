@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import stat
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -251,6 +252,107 @@ class SearchTests(unittest.TestCase):
             with self.assertRaises(x.SearchError):
                 x.setup(argparse.Namespace(provider="deepseek", default=False, verify=False), self.config)
         self.assertFalse(x.config_path().exists())
+
+    def test_gui_setup_saves_without_exposing_key_or_requiring_tty(self):
+        secret = "synthetic-dialog-key"
+        reply = subprocess.CompletedProcess([], 0, "ok:" + secret + "\n", "")
+        out, err = io.StringIO(), io.StringIO()
+        with patch.object(x.sys.stdin, "isatty", return_value=False), \
+                patch.object(x, "gui_key_command", return_value=(["dialog-tool"], "framed")), \
+                patch.object(x.subprocess, "run", return_value=reply) as launch, \
+                patch.object(x, "request_api") as request, redirect_stdout(out), redirect_stderr(err):
+            code = x.main(["setup", "--provider", "deepseek", "--gui", "--default"])
+        self.assertEqual(code, 0)
+        self.assertEqual(x.read_config()["providers"]["deepseek"]["api_key"], secret)
+        self.assertEqual(x.read_config()["default_provider"], "deepseek")
+        self.assertNotIn(secret, out.getvalue() + err.getvalue() + repr(launch.call_args))
+        self.assertEqual(launch.call_args.kwargs["stdin"], subprocess.DEVNULL)
+        self.assertEqual(launch.call_args.kwargs["stdout"], subprocess.PIPE)
+        self.assertFalse(launch.call_args.kwargs.get("shell", False))
+        request.assert_not_called()
+
+    def test_gui_cancel_preserves_existing_file_and_never_verifies(self):
+        path = x.save_config(self.config)
+        before = path.read_bytes()
+        reply = subprocess.CompletedProcess([], 0, "cancelled\n", "")
+        with patch.object(x, "gui_key_command", return_value=(["dialog-tool"], "framed")), \
+                patch.object(x.subprocess, "run", return_value=reply), \
+                patch.object(x, "request_api") as request, redirect_stdout(io.StringIO()), \
+                redirect_stderr(io.StringIO()):
+            code = x.main(["setup", "--provider", "deepseek", "--gui", "--verify"])
+        self.assertEqual(code, 130)
+        self.assertEqual(path.read_bytes(), before)
+        request.assert_not_called()
+
+    def test_gui_failures_redact_child_output_and_timeout_payload(self):
+        secret = "synthetic-sensitive-child-output"
+        cases = [subprocess.CompletedProcess([], 2, secret, secret),
+                 subprocess.CompletedProcess([], 0, secret, secret),
+                 subprocess.TimeoutExpired(["dialog-tool"], 310, output=secret, stderr=secret),
+                 FileNotFoundError(secret)]
+        for reply in cases:
+            out, err = io.StringIO(), io.StringIO()
+            with self.subTest(kind=type(reply).__name__), \
+                    patch.object(x, "gui_key_command", return_value=(["dialog-tool"], "framed")), \
+                    patch.object(x.subprocess, "run", **({"side_effect": reply} if isinstance(reply, Exception)
+                                                        else {"return_value": reply})), \
+                    redirect_stdout(out), redirect_stderr(err):
+                code = x.main(["setup", "--provider", "deepseek", "--gui"])
+            self.assertNotEqual(code, 0)
+            self.assertNotIn(secret, out.getvalue() + err.getvalue())
+            self.assertFalse(x.config_path().exists())
+
+    def test_gui_validation_rejects_empty_or_multiline_key_without_saving(self):
+        for value in ("", "synthetic-key\ninjected"):
+            reply = subprocess.CompletedProcess([], 0, "ok:" + value, "")
+            with patch.object(x, "gui_key_command", return_value=(["dialog-tool"], "framed")), \
+                    patch.object(x.subprocess, "run", return_value=reply), \
+                    redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(x.main(["setup", "--provider", "yuanbao", "--gui"]), 1)
+            self.assertFalse(x.config_path().exists())
+
+    def test_gui_verify_uses_effective_environment_and_preserves_other_provider(self):
+        x.save_config(self.config)
+        os.environ["DEEPSEEK_API_KEY"] = "synthetic-environment-key"
+        with patch.object(x, "gui_key", return_value="synthetic-new-key"), \
+                patch.object(x, "request_api", return_value=(ds(), 1)) as request, \
+                redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            code = x.main(["setup", "--provider", "deepseek", "--gui", "--verify"])
+        self.assertEqual(code, 0)
+        self.assertEqual(request.call_args.args[2], "synthetic-environment-key")
+        saved = x.read_config()
+        self.assertEqual(saved["providers"]["deepseek"]["api_key"], "synthetic-new-key")
+        self.assertEqual(saved["providers"]["yuanbao"], self.config["providers"]["yuanbao"])
+        self.assertNotIn("default_provider", saved)
+
+    def test_gui_failed_verification_is_reported_after_save(self):
+        with patch.object(x, "gui_key", return_value="synthetic-new-key"), \
+                patch.object(x, "request_api", side_effect=x.http_error(401)), \
+                redirect_stdout(io.StringIO()) as out, redirect_stderr(io.StringIO()):
+            code = x.main(["setup", "--provider", "deepseek", "--gui", "--verify"])
+        self.assertEqual(code, 4)
+        self.assertFalse(json.loads(out.getvalue())["providers"]["deepseek"]["search_verified"])
+        self.assertEqual(x.read_config()["providers"]["deepseek"]["api_key"], "synthetic-new-key")
+
+    def test_gui_headless_environment_fails_without_launching(self):
+        with patch.object(x.sys, "platform", "linux"), patch.object(x.subprocess, "run") as launch:
+            with self.assertRaises(x.SearchError) as caught:
+                x.gui_key("deepseek")
+        self.assertEqual(caught.exception.code, "gui_unavailable")
+        launch.assert_not_called()
+
+    def test_gui_zenity_supports_masked_input_and_cancel(self):
+        os.environ["DISPLAY"] = ":0"
+        for returncode, output in ((0, "synthetic-linux-key\n"), (1, ""), (5, "")):
+            with patch.object(x.sys, "platform", "linux"), patch.object(x.shutil, "which", return_value="/usr/bin/zenity"), \
+                    patch.object(x.subprocess, "run", return_value=subprocess.CompletedProcess([], returncode, output, "")) as launch:
+                if returncode:
+                    with self.assertRaises(x.SearchError) as caught:
+                        x.gui_key("yuanbao")
+                    self.assertEqual(caught.exception.code, "cancelled")
+                else:
+                    self.assertEqual(x.gui_key("yuanbao"), "synthetic-linux-key")
+                self.assertIn("--hide-text", launch.call_args.args[0])
 
     def test_cli_missing_credentials_and_no_key_echo(self):
         out, err = io.StringIO(), io.StringIO()

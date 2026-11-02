@@ -1,6 +1,30 @@
 # 配置与排错
 
-在用户自己的可见终端执行。路径按安装位置替换；Windows 没有 python3 时用 `py -3`。不通过 agent 捕获的 PTY、聊天、参数或管道输入密钥。
+## Agent 引导配置（默认入口）
+
+用户直接说“配置 xcoze search”“配置 DeepSeek”“更换元宝密钥”即可进入。由 Agent 从 SKILL.md 所在目录定位脚本，不要求用户查找安装目录或配置文件。
+
+1. 用 `status` 检查配置状态，仅展示是否配置及凭据来源，不读取配置文件内容。用户未指定服务时，询问 DeepSeek 或元宝；两家可分别配置。
+2. **在对话中输出对应的官方密钥申请链接，交由用户点击；不要自动打开浏览器、申请页面或充值页面。** 提醒使用正确服务的 Key，不让用户将 Key 回复到聊天。
+3. 用户准备好输入后，说明本地会出现隐藏输入窗口，密钥以权限保护的明文保存；保存后执行一次可能计费的搜索。已有环境变量时先提醒其优先于本地保存值；配置不会替用户修改环境变量。
+4. 运行以下命令启动输入窗口。密钥只从窗口进到本地配置脚本的内存中，不出现在 Agent 的 stdout/stderr、参数或聊天记录里。
+
+```bash
+python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider deepseek --gui --verify
+python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider yuanbao --gui --verify
+```
+
+只执行目标服务的一条命令。只有用户要求更改默认源时才加 `--default`。`<skill_dir>` 替换为实际绝对路径；Windows 没有 python3 时用 `py -3`。
+
+5. 等待用户完成窗口输入再读取结果。用户取消时不保存、不验证，也不自动重开窗口。验证成功需检查目标供应商 `search_verified:true`；保存成功不代表验证成功，验证失败时保存的配置仍在。报告服务、结果和可操作错误即可，不输出密钥。
+
+窗口实现：macOS 使用 AppleScript 隐藏输入；Windows 使用系统 Windows PowerShell/WinForms 密码框；Linux 图形桌面使用已有 Zenity。输入窗口约 5 分钟后超时。无可用桌面/工具时返回 `gui_unavailable` 或 `gui_failed`，不自动安装依赖或转用明文输入。Agent 应解释原因并提供定位到实际脚本的可见终端命令或环境变量方式，不把用户带进 Agent 捕获的 PTY。当前仍需 Python 3.10+，并非独立可执行版本。
+
+在远程 Agent 中，窗口显示在脚本实际运行的机器；只有用户能访问该桌面时才使用 `--gui`，否则走终端/部署凭据方式。
+
+## 官方申请入口与手动配置
+
+下面不带 `--gui` 的命令只在用户自己的可见终端执行。不通过 Agent 捕获的 PTY、聊天、参数或管道输入密钥；终端不能隐藏输入时拒绝继续。
 
 ## DeepSeek
 
@@ -52,6 +76,8 @@ status 不联网、不显示密钥，每次显示 `search_verified:false`；doct
 |---|---|
 | `missing_api_key` | 对目标供应商运行 setup，或向实际运行进程注入变量 |
 | `interactive_required` | 改在自己的可见终端运行 setup |
+| `gui_unavailable` / `gui_failed` | 当前桌面或窗口工具不可用，改用自己的可见终端/受控环境变量，不改成聊天或明文输入 |
+| `cancelled` | 用户取消或输入超时，未保存本次输入；准备好后由用户决定是否重新配置 |
 | `unsafe_config` | 核对专用目录 700、文件 600 和符号链接；不要放宽权限 |
 | `invalid_config` | 在用户终端备份/修复本技能配置，或移除后重新 setup；不要贴出文件内容 |
 | HTTP 401 / `UnauthorizedOperation` | 核对实际生效的密钥、开通状态及授权 |

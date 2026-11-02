@@ -18,11 +18,11 @@ python3 scripts/build_release.py --output-dir ../release
 
 本仓库根目录直接含 SKILL.md。后续修改在此仓库提交并推送，不要把最外层的 outputs 或 release 文件夹作为 Skill 根目录。
 
-推荐首次发布：tag `v0.1.0`，标题 `xcoze search v0.1.0`。GitHub Release 上传打包脚本生成的 Skill ZIP、源码 ZIP 和 SHA256SUMS.txt。CI 会运行 Python 3.10/3.12 的离线测试。
+首次预览版 `v0.1.0` 已发布，保留其标签和附件。当前 main 为 v0.2.0 开发版；完成该版本验收后，新建 `v0.2.0` 标签与 Release，上传对应提交生成的 Skill ZIP、源码 ZIP 和 SHA256SUMS.txt。不要用新文件覆盖旧版本附件。CI 会运行 Python 3.10/3.12 的离线测试。
 
 若未完成真实账号验证，保留 Pre-release 标记，并在 Release 中声明待验证项。测试通过不代表供应商账号、余额、配额或商城兼容性已通过验收。
 
-## 可直接使用的 Release 说明
+## v0.1.0 Release 说明（历史）
 
 xcoze search v0.1.0 增加 DeepSeek 与腾讯元宝官方 API 搜索集成，支持单源选择、显式双源检索、DeepSeek 网页 Markdown 抓取、隐藏输入密钥和环境变量配置。
 
