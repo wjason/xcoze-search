@@ -1,191 +1,165 @@
 # xcoze search
 
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-我把 DeepSeek 和元宝的搜索接口接进了同一个 Skill，叫 **xcoze search**。你可以只配置其中一家，也可以配好两家的 Key，在需要时一起搜索。
+**面向 AI Agent 的多搜索源工具。** 通过统一的 Skill 和命令行接口访问网页搜索与内容提取服务，为检索、研究和信息核实提供带来源的结果。
 
-搜索请求直接发给 DeepSeek 或腾讯云，不经过我的服务器。另外，我接入了 DeepSeek 的网页抓取接口，搜索之后还可以继续读原文。
+项目采用自带密钥（BYOK）的接入方式：配置所需服务的 API Key，选择搜索源后即可使用。搜索源持续扩展，已实现的功能和后续计划分别列在下方。
 
-这是我自己维护的开源项目，使用两家的官方 API，并非 DeepSeek 或腾讯官方发布的 Skill。
+[安装](#安装) · [配置](#配置-api-key) · [使用](#使用) · [开发计划](TODO.md) · [参与贡献](CONTRIBUTING.md) · [更新记录](CHANGELOG.md)
+
+## 支持状态
+
+| 搜索源 | 网页搜索 | 内容提取 | 状态 |
+|---|---|---|---|
+| DeepSeek | 支持 | Search 正文 / Fetch | 已实现；2026-10-24 完成真实账号测试 |
+| 腾讯元宝 | 支持 | 标准摘要 / 动态摘要 | 已实现；真实账号测试待完成 |
+| Tavily、Exa、Brave、博查等 | 计划中 | 按服务能力接入 | 尚未实现，见 [TODO](TODO.md) |
+
+目前发布版本为 [v0.1.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.1.0)。源码中的规划不代表发布包已经具备相应功能。服务能力、鉴权要求和接入依据见 [搜索服务调研](references/search-services.md)。
 
 ## 安装
 
-准备好 **Python 3.10 或更新版本**，不需要另外安装 Python 依赖。你的助手需要支持 Agent Skills，并且能够运行本地 Python 脚本。
+运行要求：
 
-如果电脑上有 Node.js，可以用下面这条命令安装，在安装器里选择你使用的助手：
+- Python 3.10+，无需额外 Python 依赖。
+- 支持 Agent Skills，并能执行本地 Python 的助手。
+- 使用 Skills CLI 安装时需要 Node.js；手动安装不需要。
+
+### Skills CLI
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可以直接下载 [v0.1.0 的 Skill 安装包](https://github.com/wjason/xcoze-search/releases/download/v0.1.0/xcoze-search-skill-v0.1.0.zip)。解压后，把 `xcoze-search` 文件夹放到助手的技能目录。Codex 默认使用 `~/.codex/skills/`，最终路径应当是：
+在安装器中选择所使用的助手。
+
+### 下载发布包
+
+下载 [Skill 安装包](https://github.com/wjason/xcoze-search/releases/download/v0.1.0/xcoze-search-skill-v0.1.0.zip)，解压后将 `xcoze-search/` 放入助手的技能目录。Codex 默认目录结构为：
 
 ```text
 ~/.codex/skills/xcoze-search/SKILL.md
 ```
 
-注意别多套一层同名文件夹。装好后新开一轮对话，如果还没出现，就重新启动助手。其他助手的目录设置可以看 [安装说明](INSTALL.zh-CN.md)。
+安装后新建会话；如果尚未识别技能，重新启动助手。其他安装方式及升级方法见 [安装指南](INSTALL.zh-CN.md)。
 
-<details>
-<summary>手动从 GitHub 安装到 Codex</summary>
+## 配置 API Key
 
-确认目标目录还没有安装这个 Skill，然后执行：
-
-```bash
-mkdir -p ~/.codex/skills
-git clone https://github.com/wjason/xcoze-search.git ~/.codex/skills/xcoze-search
-cd ~/.codex/skills/xcoze-search
-```
-
-如果设置过 `CODEX_HOME`，请把安装位置换成它下面的 `skills` 目录。已有安装的升级方法见 [安装说明](INSTALL.zh-CN.md#升级与卸载)。
-
-</details>
-
-## 填入你的 Key
-
-下面两种选一种就能开始用。想用双源搜索，再把另一家的 Key 配上即可。
-
-先在自己的终端里进入 Skill 的实际安装目录。手动按上面的路径安装到 Codex 时，可以执行：
-
-```bash
-cd ~/.codex/skills/xcoze-search
-```
+在实际安装目录中打开终端，按需配置一家或两家服务。
 
 ### DeepSeek
 
-在 [DeepSeek 平台](https://platform.deepseek.com/api_keys) 创建 API Key，然后运行：
+在 [DeepSeek 平台](https://platform.deepseek.com/api_keys) 创建 API Key，然后执行：
 
 ```bash
 python3 scripts/xcoze_search.py setup --provider deepseek --default --verify
 ```
 
-按提示粘贴 Key，回车就行。输入时不会显示字符，这是正常的。`--default` 会把 DeepSeek 设为默认搜索源；`--verify` 会在保存后试一次搜索，可能产生 API 费用。
+### 腾讯元宝
 
-### 元宝
-
-在 [腾讯云元宝搜索控制台](https://console.cloud.tencent.com/wsapi/index) 开通服务，再到“概览 → 服务 API KEY 方式”创建 Key，然后运行：
+在 [元宝搜索控制台](https://console.cloud.tencent.com/wsapi/index) 开通服务，通过“概览 → 服务 API KEY 方式”创建搜索服务密钥，然后执行：
 
 ```bash
 python3 scripts/xcoze_search.py setup --provider yuanbao --verify
 ```
 
-这里要填的是 **元宝搜索的服务 API Key**。腾讯云的 SecretId、SecretKey，以及其他模型产品的 Key 不能混用。
+元宝需要搜索服务的 API Key，与腾讯云 SecretId/SecretKey 及其他模型服务的密钥不通用。
 
-macOS 也可以双击 `scripts/setup.command`，按提示选一家再输入 Key。Windows 如果没有 `python3` 命令，可以把它换成 `py -3`。
+setup 在终端隐藏输入密钥。`--default` 设置默认搜索源；`--verify` 保存配置后执行一次可能计费的搜索。只配置一家时即可使用该服务。
 
-我没有把 Key 做成命令行参数，配置时请在自己的终端里输入，不要发到聊天或提交到 Git。Key 以明文保存在本机用户配置目录，macOS/Linux 下会限制目录和文件权限；详情见 [配置说明](references/setup.md)。
+macOS 可双击 `scripts/setup.command` 完成配置。Windows 如果没有 `python3` 命令，可使用 `py -3`。
 
-### 已经用环境变量管理 Key？
-
-也可以直接用下面这些变量，不必重复运行 setup。环境变量优先于本机保存的配置，记得让运行助手的进程能够读到它。
+### 环境变量
 
 | 搜索源 | 环境变量 |
 |---|---|
 | DeepSeek | `DEEPSEEK_API_KEY` |
-| 元宝 | `YUANBAO_API_KEY`，也兼容 `TENCENTCLOUD_WSA_APIKEY` |
+| 元宝 | `YUANBAO_API_KEY`，兼容 `TENCENTCLOUD_WSA_APIKEY` |
 
-## 怎么用
+环境变量优先于本地配置，并需对实际运行助手的进程可见。本地配置以权限保护的明文保存于用户目录，密钥不应提交到 Git 或发送到聊天。路径、权限和清理方法见 [配置说明](references/setup.md)。
 
-配好之后，直接在助手里说：
+## 使用
+
+在助手中直接提出搜索任务：
 
 ```text
-用 xcoze search 搜索这个主题，给我原始来源链接。
-用元宝搜索近七天的工业视觉行业报道。
-用 DeepSeek 找一下这个接口的官方文档，再读一下原文。
-用 DeepSeek 和元宝一起查这条消息，看看信息有没有出入。
+用 xcoze search 查找这个主题的官方资料，附上来源链接。
+用元宝搜索近七天的行业报道。
+用 DeepSeek 查找接口文档，再读取相关页面正文。
+用 DeepSeek 和元宝交叉搜索这条消息，比较来源和时间。
 ```
 
-支持显式调用的助手也可以用 `$xcoze-search`。是否会自动选中这个 Skill，取决于你使用的助手。
+支持显式调用的助手也可使用 `$xcoze-search`。自动选用技能的行为由助手决定。
 
-我保留了每条结果的来源、日期和供应商信息。两家返回同一个页面时，也会保留各自的摘要，方便继续比对。搜索能帮你找到材料；重要结论还是需要回到原文核对。
+### 命令行
 
-## 两家有什么区别
-
-| | DeepSeek | 元宝 |
-|---|---|---|
-| 网页搜索 | 支持 | 支持 |
-| 指定站点 | 支持 | 支持；垂直信息卡片可能不受站点条件限制 |
-| 时间筛选 | 在搜索词中使用 `after:` / `before:` 等语法 | 用 `--freshness d7` 等参数 |
-| 网页正文 | 可以请求搜索结果正文，也可以单独 Fetch | 返回标准摘要或动态摘要 |
-| 其他选项 | `--need-content` | `--industry`、`--mode` 等，取决于服务版本 |
-
-元宝返回的动态摘要不等于网页全文，所以我把它和正文分开存放。两家的评分刻度也不同，结果会保留各自的顺序，不拿分数直接混排。
-
-`auto` 默认先用你设好的搜索源；没设默认源时，只配哪家就用哪家，两家都配了则优先用 DeepSeek。请求失败会报错，不会自动换一家再发送你的问题。
-
-`both` 会分别调用两家。它只接受共同支持的参数；想用 DeepSeek 的正文选项或元宝的时间、垂域、模式选项时，请分开搜索。
-
-## 想直接跑命令
-
-以下命令都在 Skill 目录下执行。
+以下命令在 Skill 目录执行：
 
 ```bash
-# 用默认搜索源，最多显示 5 条结果
+# 默认搜索源
 python3 scripts/xcoze_search.py search '海上风电数字化' --count 5
 
-# DeepSeek：限定站点，并请求可用的正文
+# DeepSeek：限定站点并请求可用正文
 python3 scripts/xcoze_search.py search 'Search Fetch API' --provider deepseek --site api-docs.deepseek.com --need-content
 
-# 元宝：查近七天的结果
+# 元宝：最近七天
 python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao --freshness d7
 
-# 两家一起查，每家最多显示 5 条
+# 双源搜索，每家最多显示 5 条
 python3 scripts/xcoze_search.py search '海上风电数字化' --provider both --count 5
 
-# 用 DeepSeek 抓取一个公开网页
+# DeepSeek 网页内容提取
 python3 scripts/xcoze_search.py fetch 'https://api-docs.deepseek.com/guides/search/'
 ```
 
-`--count` 是每家显示的条数，最多 50 条。元宝请求超过 10 条时会按十位向上取整，再截取你需要的数量，能否使用取决于账号版本。DeepSeek 查询最多 128 个 Unicode 字符，元宝在这个工具里限制为 1500 个 UTF-8 字节；问题太长时需要拆开查。
+`auto` 使用已设置的默认源；未设置时使用已配置的服务，两家都配置则优先 DeepSeek。失败时返回错误，不自动向另一家发送查询。`both` 需要两家均已配置，并只接受共同支持的参数。
 
-命令返回 JSON。双源搜索有一家失败时，成功那家的结果会保留，同时返回 `ok:false`、`partial:true` 和错误信息。需要接到自己的程序里时，可以看 [输出字段说明](references/output.md)。
+输出保留供应商、来源链接、日期和原始字段。元宝动态摘要与网页正文分别处理；不同服务的分数不直接混排。双源部分失败会保留成功结果，同时返回 `ok:false` 和 `partial:true`。
 
-## 没搜出来，怎么检查
+参数差异、条数和查询长度限制见 [接口说明](references/providers.md)，JSON 字段及退出码见 [输出契约](references/output.md)。
 
-先看看本机配置：
+## 检查配置
 
 ```bash
+# 仅检查本地配置，不联网
 python3 scripts/xcoze_search.py status
-```
 
-再对已经配好 Key 的那一家做一次实际搜索：
-
-```bash
+# 对已经配置的服务发起真实搜索
 python3 scripts/xcoze_search.py doctor --provider deepseek
-# 如果配的是元宝，就用这条
 python3 scripts/xcoze_search.py doctor --provider yuanbao
 ```
 
-`status` 不联网，只检查配置。`doctor` 返回 `search_verified: true`，才说明这次确实拿到了搜索结果。遇到 Key 无效、服务未开通、余额不足或限流，可以对照 [配置与排错](references/setup.md) 处理。
+`search_verified:true` 表示该次检查取得有效结果。Key 无效、服务未开通、余额不足和限流等问题见 [排错指南](references/setup.md)。
 
-## 目前测到哪一步
+## 开发计划
 
-我在 2026 年 10 月 24 日用真实账号跑通了 DeepSeek 的搜索和网页抓取。元宝的接口适配和离线测试已经写好，**真实账号调用还没有验证**，所以 v0.1.0 先作为预览版发布。
+接下来先完善供应商适配接口和元宝实测，再按优先级扩展搜索源：
 
-25 项离线测试已通过，GitHub Actions 也跑过了 Windows/Linux、Python 3.10/3.12 四组检查。它们能检查程序和接口适配逻辑，不能替代你自己的账号、额度和实际搜索效果验证。具体记录放在 [VALIDATION.md](VALIDATION.md)。
+- **P0**：供应商注册与能力声明、配置迁移方案、统一错误处理、元宝真实账号测试。
+- **P1**：Tavily、Exa、Brave Search、博查。
+- **P2**：Perplexity Search、Firecrawl、Parallel、Serper、SerpApi。
+- **P3**：Jina Search/Reader、SearXNG 自建实例。
 
-## 费用和数据
+详细任务、状态和完成条件见 [TODO.md](TODO.md)。优先级属于项目规划，不是服务质量排名；新增搜索源尚未实现，也未承诺发布日期。
 
-API 费用由 DeepSeek 或腾讯云按各自规则收取；双源搜索会调用两家，重试和网页抓取也可能计费。使用前请确认自己的账号额度。
+## 参与贡献
 
-查询内容会发送给你选中的供应商，网页抓取会把 URL 发给 DeepSeek。不要把不方便外传的内容或带访问令牌的链接放进查询。
-
-这个项目没有中转服务器，不收集遥测，也不自动保存搜索历史。密钥只用于固定的官方接口，带鉴权的请求不会跟随重定向。程序不会额外调用聊天模型。
-
-## 源码与文档
-
-我把接口依据和两家参数的差异放在 [接口说明](references/providers.md) 里。想修改代码，可以在完整源码目录运行测试：
+欢迎提交问题、文档修正和搜索源适配。新增适配需附官方接口依据、参数与能力映射、错误处理和测试。提交方式见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ```bash
 python3 -m unittest discover -s tests -v
 ```
 
-打包命令是：
+当前有 25 项离线测试，CI 覆盖 Windows/Linux、Python 3.10/3.12。真实服务验证状态见 [VALIDATION.md](VALIDATION.md)。
 
-```bash
-python3 scripts/build_release.py --output-dir ../release
-```
+## 数据与费用
 
-完整源码包含测试、CI 和打包脚本；Skill 安装包只保留使用所需的内容。后续发布和商城上架可以参考 [发布说明](PUBLISHING.zh-CN.md) 与 [商城介绍](MARKETPLACE.zh-CN.md)。
+查询和 URL 直接发送给用户选择的服务，不经过项目维护方服务器。项目不收集遥测，不自动保存搜索历史。请避免发送未经授权的私密内容或带访问令牌的链接。
 
-项目使用 [MIT License](LICENSE)。DeepSeek、腾讯元宝的名称用于说明接口兼容性，搜索到的内容归原作者所有。
+各服务独立计费；双源查询、重试和正文提取可能产生费用，具体以服务商规则为准。本项目使用服务商官方 API，独立维护，不代表服务商的官方产品或认证。
+
+## 许可
+
+[MIT License](LICENSE)。搜索结果内容的权利归原权利人所有。

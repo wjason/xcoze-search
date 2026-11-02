@@ -10,7 +10,8 @@ VERSION = "0.1.0"
 RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents/openai.yaml",
                  "scripts/xcoze_search.py", "scripts/setup.command", "references/setup.md",
                  "references/providers.md", "references/output.md", "VALIDATION.md",
-                 "MARKETPLACE.zh-CN.md", "PUBLISHING.zh-CN.md"]
+                 "MARKETPLACE.zh-CN.md", "PUBLISHING.zh-CN.md", "TODO.md",
+                 "CONTRIBUTING.md", "CHANGELOG.md", "references/search-services.md"]
 SOURCE_EXTRA = [".gitignore",
                 ".github/workflows/test.yml", "scripts/build_release.py", "tests/test_search.py"]
 
