@@ -17,7 +17,7 @@
 | 腾讯元宝 | 支持 | 标准摘要 / 动态摘要 | 已实现；真实账号测试待完成 |
 | Tavily、Exa、Brave、博查等 | 计划中 | 按服务能力接入 | 尚未实现，见 [TODO](TODO.md) |
 
-目前发布版本为 [v0.1.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.1.0)。`main` 分支为 v0.2.0 开发版，已加入对话引导配置和本地隐藏输入窗口；v0.1.0 下载包不含这一更新。服务能力、鉴权要求和接入依据见 [搜索服务调研](references/search-services.md)。
+当前版本为 [v0.2.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.2.0)，加入对话引导配置和本地隐藏输入窗口。桌面实测及服务验证状态见 [验证记录](VALIDATION.md)，后续工作见 [开发计划](TODO.md)。服务能力、鉴权要求和接入依据见 [搜索服务调研](references/search-services.md)。
 
 ## 安装
 
@@ -37,7 +37,7 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 ### 下载发布包
 
-下载 [Skill 安装包](https://github.com/wjason/xcoze-search/releases/download/v0.1.0/xcoze-search-skill-v0.1.0.zip)，解压后将 `xcoze-search/` 放入助手的技能目录。Codex 默认目录结构为：
+下载 [v0.2.0 Skill 安装包](https://github.com/wjason/xcoze-search/releases/download/v0.2.0/xcoze-search-skill-v0.2.0.zip)，解压后将 `xcoze-search/` 放入助手的技能目录。Codex 默认目录结构为：
 
 ```text
 ~/.codex/skills/xcoze-search/SKILL.md
@@ -45,7 +45,7 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 安装后新建会话；如果尚未识别技能，重新启动助手。其他安装方式及升级方法见 [安装指南](INSTALL.zh-CN.md)。
 
-需要使用下方的对话配置流程，请通过 Skills CLI 安装当前 `main` 分支，或下载仓库当前源码；上述 v0.1.0 包使用终端配置。
+升级时替换 Skill 程序目录即可，原有密钥配置保存在用户目录。v0.1.0 用户升级到 v0.2.0 后可使用下方的对话配置流程。
 
 ## 配置 API Key
 
@@ -173,7 +173,7 @@ python3 scripts/xcoze_search.py doctor --provider yuanbao
 python3 -m unittest discover -s tests -v
 ```
 
-当前有 33 项离线测试，CI 配置覆盖 Windows/Linux、Python 3.10/3.12。窗口流程使用合成输入测试，各桌面上的真实窗口验收状态见 [VALIDATION.md](VALIDATION.md)。
+当前有 36 项离线测试（33 项搜索与配置测试、3 项发布检查），CI 覆盖 Windows/Linux、Python 3.10/3.12。窗口流程使用合成输入测试，各桌面上的真实窗口验收状态见 [VALIDATION.md](VALIDATION.md)。
 
 ## 数据与费用
 

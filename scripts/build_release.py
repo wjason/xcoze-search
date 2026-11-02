@@ -13,7 +13,9 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "MARKETPLACE.zh-CN.md", "PUBLISHING.zh-CN.md", "TODO.md",
                  "CONTRIBUTING.md", "CHANGELOG.md", "references/search-services.md"]
 SOURCE_EXTRA = [".gitignore",
-                ".github/workflows/test.yml", "scripts/build_release.py", "tests/test_search.py"]
+                ".github/workflows/test.yml", ".github/workflows/release.yml",
+                "scripts/build_release.py", "scripts/prepare_release.py",
+                "tests/test_search.py", "tests/test_release.py"]
 
 
 def main():
