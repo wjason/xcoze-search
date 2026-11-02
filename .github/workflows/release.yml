@@ -25,7 +25,7 @@ jobs:
       - name: Check versions and prepare release notes
         env:
           RELEASE_TAG: ${{ github.ref_name }}
-        run: python scripts/prepare_release.py --tag "$RELEASE_TAG" --output release-notes.md
+        run: python scripts/prepare_release.py --tag "$RELEASE_TAG" --language both --output release-notes.md
       - name: Build packages
         run: python scripts/build_release.py --output-dir release
       - name: Verify package hashes

@@ -1,11 +1,34 @@
 # xcoze search
 
+**简体中文** | [English](README.en.md)
+
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **面向 AI Agent 的多搜索源工具。** 使用各服务商的官方 API，提供网页搜索、内容提取和带来源的结构化结果。配置哪家服务的 Key，就使用哪家服务。
 
 [安装](#安装) · [配置](#配置-api-key) · [使用](#使用) · [开发计划](TODO.md) · [贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md)
+
+## 文档语言
+
+默认显示中文。每份文档顶部均可切换 English；需要 Agent 用英文说明时，可以说“请用英文回答”。
+
+| 文档 | 简体中文 | English |
+|---|---|---|
+| 项目介绍 | [中文](README.md) | [English](README.en.md) |
+| Agent 指令 | [中文](SKILL.md) | [English](SKILL.en.md) |
+| 安装教程 | [中文](INSTALL.zh-CN.md) | [English](INSTALL.en.md) |
+| 配置与排错 | [中文](references/setup.md) | [English](references/setup.en.md) |
+| 接口与能力 | [中文](references/providers.md) | [English](references/providers.en.md) |
+| 输出契约 | [中文](references/output.md) | [English](references/output.en.md) |
+| 搜索服务调研 | [中文](references/search-services.md) | [English](references/search-services.en.md) |
+| 开发计划 | [中文](TODO.md) | [English](TODO.en.md) |
+| 贡献指南 | [中文](CONTRIBUTING.md) | [English](CONTRIBUTING.en.md) |
+| 更新记录 | [中文](CHANGELOG.md) | [English](CHANGELOG.en.md) |
+| 验证记录 | [中文](VALIDATION.md) | [English](VALIDATION.en.md) |
+| 发布说明 | [中文](PUBLISHING.zh-CN.md) | [English](PUBLISHING.en.md) |
+| 商城资料 | [中文](MARKETPLACE.zh-CN.md) | [English](MARKETPLACE.en.md) |
+| 回归教程 | [中文](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md) | [English](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md) |
 
 ## 支持状态
 
@@ -156,7 +179,7 @@ status 不联网、不显示密钥。doctor 会真实搜索，`search_verified:t
 
 ## 开发与回归
 
-本节命令在仓库或源码包目录执行。当前 67 项离线测试，运行和测试只依赖 Python 标准库；CI 覆盖 Windows/Linux、Python 3.10/3.12。
+本节命令在仓库或源码包目录执行。当前源码有 68 项离线测试（v0.3.0 发布时为 67 项），运行和测试只依赖 Python 标准库；CI 覆盖 Windows/Linux、Python 3.10/3.12。
 
 ```bash
 python3 -m unittest discover -s tests -v

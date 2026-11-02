@@ -1,6 +1,10 @@
 # 更新记录
 
+**简体中文** | [English](CHANGELOG.en.md)
+
 ## Unreleased
+
+- 全套文档与 Agent 指令补齐英文版本，中文为默认入口；统一语言切换、双语打包和发布说明。
 
 - README 和安装指南增加“安装＋GitHub 仓库地址”的 Agent 安装教程，以及安装后进入配置的示例。
 

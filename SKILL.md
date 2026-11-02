@@ -1,6 +1,6 @@
 ---
 name: xcoze-search
-description: 通过 DeepSeek、元宝、Tavily、Exa、Brave、博查官方 API 搜索公开资料、核对来源并提取支持服务的网页正文。用户指定 xcoze search、上述搜索源，或配置本技能 API Key、检查搜索能力时使用。
+description: 通过 DeepSeek、元宝、Tavily、Exa、Brave、博查官方 API 搜索公开资料、核对来源并提取支持服务的网页正文。用户指定 xcoze search、上述搜索源，或配置本技能 API Key、检查搜索能力时使用。 Use for xcoze search, provider-specific search, API key setup, or capability checks.
 metadata:
   author: XCoze
   version: "0.3.0"
@@ -8,7 +8,11 @@ metadata:
 
 # xcoze search
 
+**简体中文** | [English](SKILL.en.md)
+
 面向 Agent 的多搜索源工具，直连官方 API；XCoze 独立维护。Python 3.10+，无 pip 运行依赖。
+
+默认使用简体中文。用户明确要求英文或用英文提问时，使用[英文 Agent 指令](SKILL.en.md)及对应英文参考文档；按需读取一种语言，不重复加载两套说明。
 
 ## 配置入口
 

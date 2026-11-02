@@ -1,5 +1,7 @@
 # 安装与首次使用
 
+**简体中文** | [English](INSTALL.en.md)
+
 ## 让 Agent 帮忙安装（推荐）
 
 将“安装＋仓库地址”直接发给支持 Skill 安装和本地命令执行的 Agent：

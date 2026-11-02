@@ -1,5 +1,7 @@
 # GitHub 与通用商城发布
 
+**简体中文** | [English](PUBLISHING.en.md)
+
 仓库：[wjason/xcoze-search](https://github.com/wjason/xcoze-search)。本文件说明后续版本维护与商城提交流程；实际上传状态以 GitHub 代码及 Release 页面为准，GitHub 上有源码不等于商城已审核收录。
 
 ## 发布前准备
@@ -48,6 +50,16 @@ xcoze search v0.1.0 增加 DeepSeek 与腾讯元宝官方 API 搜索集成，支
 统一结果保留供应商、来源和原生评分，区分元宝动态摘要与网页正文；双源部分失败时保留已有结果并明确报错。仅依赖 Python 3.10+ 标准库。
 
 验证状态以同版本 VALIDATION.md 为准。该项目为 XCoze 独立集成，非 DeepSeek/腾讯官方 Skill。API 可能计费。
+
+## 双语发布说明
+
+默认导出中文。`--language en` 导出英文；`--language both` 将中文放在正文，英文放入可展开的 English 区域。标签工作流使用 both，并核对中英文 CHANGELOG 都包含同版本日期段落；缺少英文记录时停止发布。
+
+```bash
+python3 scripts/prepare_release.py --tag v0.3.0 --language both --output ../release-notes.md
+```
+
+中英文文档及 Agent 指令已加入后续打包清单；现有已发布版本的标签和附件保持不变。
 
 ## 通用技能商城
 

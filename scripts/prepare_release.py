@@ -16,7 +16,13 @@ def source_version(path):
     raise ValueError("Missing VERSION: " + str(path))
 
 
-def prepare_notes(root, tag):
+def prepare_notes(root, tag, language="zh-CN"):
+    if language == "both":
+        chinese = prepare_notes(root, tag, "zh-CN")
+        english = prepare_notes(root, tag, "en")
+        return chinese + '\n<details>\n<summary>English</summary>\n\n' + english + '\n</details>\n'
+    if language not in ("zh-CN", "en"):
+        raise ValueError("Language must be zh-CN, en or both.")
     if not re.fullmatch(r"v\d+\.\d+\.\d+", tag):
         raise ValueError("Expected a version tag such as v0.2.0.")
     version = tag[1:]
@@ -29,7 +35,8 @@ def prepare_notes(root, tag):
     versions.append(match[1])
     if any(value != version for value in versions):
         raise ValueError("Tag, runtime, Skill metadata and package versions must match.")
-    changelog = (root / "CHANGELOG.md").read_text(encoding="utf-8")
+    changelog_name = "CHANGELOG.md" if language == "zh-CN" else "CHANGELOG.en.md"
+    changelog = (root / changelog_name).read_text(encoding="utf-8")
     heading = re.search(r"^## " + re.escape(tag) + r" — \d{4}-\d{2}-\d{2}\s*$", changelog, re.MULTILINE)
     if not heading:
         raise ValueError("Missing dated CHANGELOG section for " + tag)
@@ -43,11 +50,13 @@ def prepare_notes(root, tag):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tag", help="Expected Git tag; defaults to the runtime version for local checks")
+    parser.add_argument("--language", choices=("zh-CN", "en", "both"), default="zh-CN",
+                        help="Chinese by default; both puts English in a collapsed details block")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     try:
         tag = args.tag or "v" + source_version(ROOT / "scripts/xcoze_search.py")
-        notes = prepare_notes(ROOT, tag)
+        notes = prepare_notes(ROOT, tag, args.language)
     except (ValueError, IndexError, OSError, SyntaxError) as error:
         parser.exit(1, "Release check failed: " + str(error) + "\n")
     args.output.parent.mkdir(parents=True, exist_ok=True)

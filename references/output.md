@@ -1,5 +1,7 @@
 # 输出契约 v0.3.0
 
+**简体中文** | [English](output.en.md)
+
 默认 stdout 为 JSON；顶层运行错误 stderr 为 JSON。argparse 帮助/语法错误保持 Python 标准行为。setup 引导写 stderr，密钥不回显；GUI 子进程 stdout/stderr 仅由本地脚本消费，不转发给 Agent。
 
 ## Search

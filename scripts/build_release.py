@@ -21,6 +21,14 @@ SOURCE_EXTRA = [".gitignore",
                 "evaluations/README.md"]
 
 
+RUNTIME_FILES += ["README.en.md", "SKILL.en.md", "INSTALL.en.md", "TODO.en.md",
+                  "CONTRIBUTING.en.md", "CHANGELOG.en.md", "VALIDATION.en.md",
+                  "PUBLISHING.en.md", "MARKETPLACE.en.md", "references/setup.en.md",
+                  "references/providers.en.md", "references/output.en.md",
+                  "references/search-services.en.md"]
+SOURCE_EXTRA += ["evaluations/README.en.md"]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, required=True)

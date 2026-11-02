@@ -46,6 +46,22 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 release.prepare_notes(self.root, "v0.2.0")
 
+    def test_language_selection_defaults_to_chinese_and_checks_english_version(self):
+        (self.root / "CHANGELOG.md").write_text('## v0.2.0 — 2026-11-02\n\n中文说明。\n', encoding="utf-8")
+        english = self.root / "CHANGELOG.en.md"
+        english.write_text('## v0.2.0 — 2026-11-02\n\nEnglish notes.\n', encoding="utf-8")
+        default = release.prepare_notes(self.root, "v0.2.0")
+        self.assertIn("中文说明", default)
+        self.assertNotIn("English notes", default)
+        self.assertIn("English notes", release.prepare_notes(self.root, "v0.2.0", "en"))
+        both = release.prepare_notes(self.root, "v0.2.0", "both")
+        self.assertLess(both.index("中文说明"), both.index("<details>"))
+        self.assertIn("<summary>English</summary>", both)
+        self.assertIn("English notes", both)
+        english.write_text('## v0.1.0 — 2026-10-24\n\nOutdated.\n', encoding="utf-8")
+        with self.assertRaises(ValueError):
+            release.prepare_notes(self.root, "v0.2.0", "both")
+
 
 if __name__ == "__main__":
     unittest.main()

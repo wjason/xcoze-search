@@ -1,5 +1,7 @@
 # 通用商城上架资料
 
+**简体中文** | [English](MARKETPLACE.en.md)
+
 名称：**xcoze search**
 
 技能 ID：`xcoze-search`
