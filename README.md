@@ -24,6 +24,31 @@
 
 要求 Python 3.10+，运行不需要额外 Python 包；助手须支持 Agent Skills 并能执行本地脚本。Skills CLI 安装方式还需要 Node.js，手动解压不需要。
 
+### 让 Agent 帮忙安装（推荐）
+
+在支持安装 Skill、能够执行本地命令的 Agent 对话中，直接复制发送：
+
+```text
+安装 https://github.com/wjason/xcoze-search
+```
+
+也可以说得更具体：
+
+```text
+帮我安装这个 Skill：https://github.com/wjason/xcoze-search
+请检查 Python 运行环境，并安装到当前助手的技能目录。
+```
+
+安装完成后，按助手提示新建会话或重新载入，再发送：
+
+```text
+帮我配置 xcoze search 的 DeepSeek 搜索。
+```
+
+可将 DeepSeek 换成其他已支持的服务。助手会提供官方密钥申请链接，并在准备好后启动本地隐藏输入窗口。安装这一步不用提供 API Key，也不要把密钥发到聊天里。若当前 Agent 不支持安装或执行本地命令，可使用下面的安装方式。
+
+### 命令行或手动安装
+
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```

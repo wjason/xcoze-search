@@ -1,5 +1,26 @@
 # 安装与首次使用
 
+## 让 Agent 帮忙安装（推荐）
+
+将“安装＋仓库地址”直接发给支持 Skill 安装和本地命令执行的 Agent：
+
+```text
+安装 https://github.com/wjason/xcoze-search
+```
+
+需要明确安装要求时，可以发送：
+
+```text
+帮我安装这个 Skill：https://github.com/wjason/xcoze-search
+请检查 Python 3.10+ 是否可用，并安装到当前助手的技能目录。
+```
+
+安装完成后，按助手提示新建会话或重新载入，再发送“帮我配置 xcoze search 的 DeepSeek 搜索”。也可以选择元宝、Tavily、Exa、Brave 或博查。配置流程见 [配置说明](references/setup.md)，安装时不用提供 Key，密钥不要发到聊天中。
+
+如果当前 Agent 不支持安装或执行本地脚本，按下面的手动步骤操作。
+
+## 手动安装与首次使用
+
 1. 安装 Python 3.10+；Windows 可使用 `py -3`，macOS/Linux 通常为 `python3`。
 2. 用 Skills CLI 安装仓库，或下载 [v0.3.0 安装包](https://github.com/wjason/xcoze-search/releases/tag/v0.3.0)，将 xcoze-search 文件夹放进助手技能目录。
 3. 确认入口只有一层：`<skills>/xcoze-search/SKILL.md`。Codex 默认 `~/.codex/skills/xcoze-search/`；设置过 CODEX_HOME 时按对应 skills 子目录。
