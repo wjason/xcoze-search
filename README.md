@@ -23,7 +23,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.7.1 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.7.1/xcoze-search-skill-v0.7.1.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.7.2 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 支持的来源
 
@@ -82,7 +82,7 @@ Exa 匿名额度耗尽会记录冷却，后续调用跳过该源；遵守 Retry-
 
 浏览器只在没有 API 可用结果时按需启动，需要已有 agent-browser 和本机 Chrome 运行条件，不自动安装、登录或复用个人会话。默认 API 每源最多 8 秒，浏览器工作预算最多 15 秒，另有最多 6 秒关闭宽限；普通查询不做联网体检。可对 Agent 说“关闭浏览器兜底”，或用 preferences --browser off。免费模式始终不调用带 Key 服务。
 
-v0.7.1 修正了浏览器加载判断，区分明确无匹配、隐藏占位和超时。浏览器兜底默认使用 360 搜索，也可指定 Bing/Google。三道真实问题分别取得 Python 文档、国家统计局 CPI 发布页和上市公司公告转载，约 3.4–3.8 秒；真实 DDG 验证响应后也成功自动兜底，付费接口调用为零。另有一道 GitHub 索引题无匹配，平台题继续优先原生接口。[真实测试报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)保留了失败和较弱查询；这些观察不代表所有网络都可用。
+v0.7.2 用六道中文新闻、英文文档和 GitHub 项目问题比较免费、DeepSeek、Smart，并单独检查 360。Exa 正常时免费 API 可以直接取得官方资料；限额时 360 只能应急补线索，英文官方文档和 GitHub 索引有缺口。已修正跑题/旧年份结果误判成功、反复请求 DDG 验证页、弱来源互补和 GitHub 浏览器位置预留。[对照报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)保留失败、耗时、费用估算和不同轮次的条件；不据此宣传通用准确率。
 
 ## 配置 Key
 

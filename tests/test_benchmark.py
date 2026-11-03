@@ -62,6 +62,37 @@ class BenchmarkTests(unittest.TestCase):
         self.assertEqual(order, ['free', 'deepseek', 'smart', 'deepseek', 'smart', 'free', 'smart', 'free', 'deepseek'])
         self.assertTrue(report['ok'])
 
+    def test_strict_scraped_rows_require_code_topic_and_reject_wrong_year(self):
+        from search_quality import filter_experimental
+        query = 'PostgreSQL 18 uuidv7 shift interval documentation'
+        weak = {'title':'PostgreSQL Downloads','url':'https://www.postgresql.org/download/'}
+        good = {'title':'UUID functions','url':'https://www.postgresql.org/docs/18/functions-uuid.html','snippet':'uuidv7 uses a shift interval'}
+        self.assertEqual(filter_experimental(query,[weak,good]),([good],1))
+        old = {'title':'2023年前三季度可再生能源','url':'https://example.com/2023/','snippet':'新增装机'}
+        current = {'title':'2026年前三季度可再生能源','url':'https://example.com/2026/','snippet':'新增装机'}
+        self.assertEqual(filter_experimental('2026年前三季度 可再生能源 新增装机 国家能源局',[old,current]),([current],1))
+        self.assertEqual(filter_experimental('国家能源局 可再生能源 新增装机',[{'title':'2026 Calendar','url':'https://example.com'}]),([],1))
+        rust = {'title':'Rust Mutex','url':'https://doc.rust-lang.org/','snippet':'recover PoisonError with into_inner'}
+        self.assertEqual(filter_experimental('Rust std Mutex PoisonError into_inner',[rust]),([rust],0))
+        self.assertEqual(filter_experimental('2026年 可再生能源',[{'title':'可再生能源发布','url':'https://example.com/202309/t20230915_1.html'}]),([],1))
+        self.assertEqual(filter_experimental('2026年10月 制造业 PMI',[{'title':'2026年9月制造业PMI','url':'https://example.com'}]),([],1))
+        self.assertEqual(filter_experimental('2026年前三季度 可再生能源',[{'title':'2026年上半年可再生能源','url':'https://example.com'}]),([],1))
+        self.assertEqual(filter_experimental('Node.js LTS',[{'title':'Nodejs LTS','url':'https://nodejs.org'}])[1],0)
+
+    def test_free_benchmark_guard_rejects_paid_dispatch_before_transport(self):
+        def faulty(args,config,budget):
+            return b.search.request_api('deepseek',{},'synthetic-only',budget=budget)
+        with patch.object(b.search,'run_search',side_effect=faulty), \
+                patch.object(b.search.urllib.request,'build_opener',side_effect=AssertionError('must not reach transport')):
+            with self.assertRaisesRegex(AssertionError,'rejected a keyed API'):
+                b.run_cell({'id':'one','query':'test'},'free',{'providers':{}},b.search.RequestBudget(2))
+
+    def test_explicit_browser_diagnostic_is_free_and_not_in_default_modes(self):
+        case = {'id':'doc','query':'test'}
+        browser = b.query_args(case,'browser')
+        self.assertEqual(browser.provider,'browser'); self.assertEqual(browser.strategy,'free')
+        self.assertEqual(b.execute({'cases':[case]})['modes'],['free','deepseek','smart'])
+
     def test_mismatch_is_zero_overlap_only_and_skips_short_or_nonlatin_queries(self):
         bad = [{'title': 'Windows Get Help', 'url': 'https://microsoft.com/help'}]
         good = [{'title': 'TaskGroup semantics', 'url': 'https://docs.python.org/'}]

@@ -2,6 +2,12 @@
 
 **简体中文** | [English](VALIDATION.en.md)
 
+## v0.7.2 — 2026-11-04
+
+149 项离线测试通过。真实六题、同题 360、官方域和短查询探测、修改后的同题回放、Exa 实际限额/自然恢复、受控偏好的弱互补检查分别记录。免费与 browser 诊断在 API 传输前拒绝带 Key 请求；没有清除实际暂停，也没有修改用户密钥和偏好。
+
+浏览器仍有英文官方文档/GitHub 索引缺口；搜索、原始来源定位、正文事实支持及端到端耗时分开评审，不给统一准确率。Chrome 关闭曾占约 5.4 秒，不能只报结果就绪时间冒充总耗时。[完整对照](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)。
+
 ## v0.7.1 — 2026-11-03
 
 141 项离线测试通过；本机 agent-browser 0.27.0、Chrome 156.0.8078.80、macOS ARM64。真实浏览器检索三题约 3.4–3.8 秒，真实 DDG 验证响应后自动 browser 兜底约 3.61 秒；带 Key API 尝试均为零，关闭均正常确认。三条结果的正文通过 Jina/Exa 免 Key 阅读另行核对。GitHub 小众仓库题在 360 明确无匹配，不计为通过；较弱的 TaskGroup 查询和历史空壳/超时未抹去。

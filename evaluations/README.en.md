@@ -68,3 +68,16 @@ python3 scripts/evaluate_browser.py --live --output ../browser-live.json
 Explicit --live is required. All search pages/HTTP responses are real. Synthetic in-memory keys and temporary cache avoid user credential files/saved preference changes; a pre-transmission guard rejects keyed APIs. Three docs/statistical-release/filing-reproduction tasks plus a GitHub coverage probe run, followed by a real DDG-to-browser route with Exa/Bing temporarily disabled in test preferences. Successful DDG evidence without browser execution does not pass the browser-fallback check.
 
 accepted indicates an expected source/topic and acknowledged close, not factual accuracy. The GitHub coverage probe is required:false and remains a failed coverage check when empty; overall ok must not hide it. Overall ok requires the three core tasks, real automatic recovery and zero keyed attempts. Every failure remains reported. Public indexes/network conditions may change. Keep the historical [quota report](reports/2026-11-03-fallback.en.md) separate from [real browser evidence](reports/2026-11-03-browser.en.md).
+
+## Six-task comparison and independent 360 probes (v0.7.2)
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/browser-comparison-cases.json --output ../comparison-plan.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-cases.json --max-requests 36 --output ../comparison.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-cases.json --modes browser --max-requests 6 --output ../browser-probe.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-scoped.json --limit 4 --max-requests 24 --output ../scoped.json
+```
+
+The default three modes remain; browser is an explicit free diagnostic, never automatically added. Free/browser guards reject keyed APIs before transmission. Live runs use normal config/cache state without clearing limits, rotate mode order and run serially. Scoped/short variants change query conditions and cannot be claimed as unchanged-query algorithm gains. Overall ok means planned cells ran, even if individual cells fail/return no matches or insufficient evidence. Local evidence is bounded to 1800 characters; missing text after clipping does not establish absence in the full response. Remove bodies before publication and review source/time/answer support manually. Keyed calls may cost money; browser requires an existing installation. Model cost is unknown.
+
+The [bilingual report](reports/2026-11-03-comparison.en.md) retains stages, natural Exa recovery and unresolved English coverage; it is not blinded accuracy or a stable latency ranking.

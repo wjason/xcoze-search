@@ -1,4 +1,4 @@
-# Output contract v0.7.1
+# Output contract v0.7.2
 
 [简体中文](output.md) | **English**
 
@@ -83,3 +83,5 @@ routing adds execution_candidates, skipped_unavailable and browser_mode. Exa app
 execution_summary separates api_http_attempts, keyed_api_attempts, browser_navigation_attempts, browser_commands and browser_http_requests. The last is null after navigation, 0 without it. budget.unit=provider_api_http_attempts; browser page/resource subrequests are outside that observable count. Browser requests.attempts=0 means no API transport call, not no network; execution is local_browser. browser_cleanup_verified records a normal close acknowledgment, never assumed after failure.
 
 Browser requests may also expose browser_engine, browser_stage_timings_ms (launch/navigate/wait/extract/close in milliseconds), and browser_failure_stage on failure. browser_explicit_no_matches:true with empty results is distinct from a shell/timeout, not proof of complete index coverage. Failures/cleanup retain actual command/navigation counts without page bodies or upstream error text.
+
+v0.7.2 adds routing.browser_slot_policy and complementary_timeout_seconds. Experimental requests may include dropped_irrelevant_count; shown_count counts retained rows without renumbering ranks. Literal/code/partial-time checks do not set facts_verified:true or replace native date filters. Topic rejection is not service unavailability; DDG verification pauses appear in skipped_unavailable.

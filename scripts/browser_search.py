@@ -14,7 +14,7 @@ import uuid
 from search_common import SearchError, public_url
 from search_providers import Provider, result, option
 from public_access import request_slot
-from search_quality import obvious_mismatch
+from search_quality import filter_experimental
 
 DEFAULT_ENGINE = '360'
 ENGINES = {'360': 'https://www.so.com/s', 'google': 'https://www.google.com/search', 'bing': 'https://www.bing.com/search'}
@@ -194,13 +194,15 @@ def _search(payload, *, timeout=15, engine=DEFAULT_ENGINE):
                 try: page = json.loads(page)
                 except ValueError: page = None
             rows = parse_page(page, engine)
-            if obvious_mismatch(payload['query'], rows, include_cjk=True):
-                raise SearchError('irrelevant_results', 'Browser source returned no recognizable query topic; no results accepted.', category='response')
+            had_rows = bool(rows)
+            rows, dropped = filter_experimental(payload['query'], rows)
+            if had_rows and not rows:
+                raise SearchError('irrelevant_results', 'Browser results lacked the requested topic, code identifier or year; no results accepted.', category='response')
             output = {'results': rows[:payload['count']], 'browser_engine': engine,
                     'browser_navigation_attempts': navigations, 'browser_commands': commands,
                     'browser_http_requests': None, 'browser_time_budget_seconds': timeout,
                     'browser_stage_timings_ms': timings,
-                    'browser_explicit_no_matches': page.get('explicit_no_matches', False)}
+                    'browser_explicit_no_matches': page.get('explicit_no_matches', False), 'dropped_irrelevant_count': dropped}
             return output
         except SearchError as error:
             failure = error
@@ -251,6 +253,7 @@ class Browser(Provider):
                               'browser_commands': raw['browser_commands'], 'browser_http_requests': None,
                               'browser_cleanup_verified': raw.get('browser_cleanup_verified', False),
                               'browser_stage_timings_ms': raw.get('browser_stage_timings_ms', {}),
+                              'dropped_irrelevant_count': raw.get('dropped_irrelevant_count', 0),
                               'browser_explicit_no_matches': raw.get('browser_explicit_no_matches', False),
                               'user_api_key_used': False}
 

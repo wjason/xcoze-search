@@ -2,6 +2,12 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.7.2 — 2026-11-04
+
+149 offline tests pass. Six-task live comparison, same-query 360, official-site/short-query probes, changed-code replay, real Exa limit/natural recovery and controlled-preference weak-complement checks are recorded separately. Free/browser diagnostics reject keyed calls before API transport; no live pause reset or saved key/preference change.
+
+English primary-doc/GitHub index gaps remain. Retrieval, primary-source location, body support and end-to-end timings are reviewed separately without a universal accuracy score. Chrome close sometimes added about 5.4 seconds; result-readiness time is not total latency. [Full comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.en.md).
+
 ## v0.7.1 — 2026-11-03
 
 141 offline tests pass. This machine: agent-browser 0.27.0, Chrome 156.0.8078.80, macOS ARM64. Three real browser retrieval tasks took around 3.4–3.8 seconds; real DDG verification-to-browser recovery took about 3.61 seconds. All had zero keyed API attempts and acknowledged close. Three source bodies were separately checked with Jina/keyless Exa. A GitHub repository query explicitly had no matches on 360 and is not counted as a pass; weaker TaskGroup queries and earlier shells/timeouts remain recorded.

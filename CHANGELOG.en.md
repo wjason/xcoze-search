@@ -2,6 +2,14 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.7.2 — 2026-11-04
+
+- Compare free/DeepSeek/Smart on six real tasks, with same-query 360, official-site, concise-query and real limit/recovery observations. Publish bilingual evidence without equating nonempty output with correctness.
+- Filter experimental RSS/HTML/browser rows for obvious Chinese mismatch, missing code identifiers and some explicit time conflicts. Record removals and retain ranks; semantic APIs/native metadata remain outside this lexical rule.
+- Pause DDG verification for 15 minutes and skip it automatically; query-specific browser relevance failures no longer pause the whole source.
+- Do not reserve browser slots for GitHub. Complement existing quality evidence only with configured services or Exa, skipping extra weak RSS/HTML calls and capping automatic complement request timeouts at 3 seconds. Preserve failure fallback, free isolation, explicit sources and lower budgets.
+- Keep 360 as emergency leads; retain English-doc/GitHub gaps, stale content and close tail latency. 149 offline tests pass; measured calls/timings/costs are in the report.
+
 ## v0.7.1 — 2026-11-03
 
 - Default browser fallback to 360 Search, retaining explicit Bing/Google. Extract visible organic destinations, excluding ads/AI cards.

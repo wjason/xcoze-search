@@ -60,3 +60,5 @@ python3 scripts/xcoze_search.py preferences --browser off
 python3 scripts/xcoze_search.py preferences --browser auto
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```
+
+v0.7.2 对照表明：360 适合补线索，不承担英文官方文档或 GitHub 索引完整性承诺。GitHub 优先 API 且不预留浏览器名额；DDG 验证暂停与逐条相关性/明显时间冲突检查见[调度](routing.md)。[新对照记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)保留 Exa 真实限额及到期后的正常成功，不清除暂停制造恢复。

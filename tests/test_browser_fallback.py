@@ -265,7 +265,7 @@ class LocalBrowserTests(unittest.TestCase):
         with self.assertRaises(x.SearchError): browser.parse_page({**data,'url':'https://['}, '360')
         self.assertEqual(x.parser().parse_args(['search','query']).browser_engine, '360')
 
-    def test_browser_chinese_mismatch_rejected_inside_cooldown_and_without_retry(self):
+    def test_browser_chinese_mismatch_rejected_without_service_cooldown_or_retry(self):
         from search_quality import obvious_mismatch
         self.assertTrue(obvious_mismatch('新能泰山 最新公告', [{'title':'ChatGPT release','url':'https://github.com/example'}], include_cjk=True))
         self.assertFalse(obvious_mismatch('新能泰山 最新公告', [{'title':'新能泰山三季报','url':'https://example.com'}], include_cjk=True))
@@ -278,7 +278,7 @@ class LocalBrowserTests(unittest.TestCase):
             with self.assertRaises(x.SearchError) as caught:
                 browser.search({'query':'新能泰山 最新公告','count':3},engine='bing')
         self.assertEqual(caught.exception.code, 'irrelevant_results')
-        self.assertIsNotNone(public_access.pause_status('browser'))
+        self.assertIsNone(public_access.pause_status('browser'))
 
     def test_cli_timeout_and_navigation_errors_keep_stage_without_upstream_text(self):
         for detail, code in [('Wait timed out after 6000ms synthetic-secret','browser_timeout'),

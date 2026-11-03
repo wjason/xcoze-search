@@ -60,3 +60,5 @@ python3 scripts/xcoze_search.py preferences --browser off
 python3 scripts/xcoze_search.py preferences --browser auto
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```
+
+v0.7.2 observations support 360 as a lead fallback, without complete English-doc/GitHub indexing. GitHub keeps API priority without reserving a browser slot. DDG pauses and per-row topic/explicit-time-conflict checks are in [routing](routing.en.md). [Evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.en.md) retains real Exa limits and later normal recovery without clearing pauses.

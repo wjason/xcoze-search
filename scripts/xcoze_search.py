@@ -30,13 +30,13 @@ if SCRIPT_DIR not in sys.path:
 from search_common import SearchError, RequestBudget, invalid, public_url, text_field, validate_site
 from search_providers import REGISTRY, get_provider as get_key_provider
 from public_providers import PUBLIC_REGISTRY, domain_matches
-from search_quality import obvious_mismatch
+from search_quality import filter_experimental
 from public_access import request_slot
 from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.7.1"
+VERSION = "0.7.2"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -329,9 +329,13 @@ def run_search(args, config, *, budget=None):
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
-                if p in ("bing", "duckduckgo", "browser") and obvious_mismatch(args.query, rows):
-                    raise SearchError("irrelevant_results", "Experimental source returned no recognizable query topic; use another allowed source.",
-                                      category="response")
+                if p in ("bing", "duckduckgo", "browser"):
+                    had_rows = bool(rows)
+                    rows, dropped = filter_experimental(args.query, rows)
+                    meta["dropped_irrelevant_count"] = dropped + (raw.get("dropped_irrelevant_count", 0) if p == "browser" else 0)
+                    meta["shown_count"] = len(rows)
+                    if had_rows and not rows:
+                        raise SearchError("irrelevant_results", "Experimental results lacked the requested topic, code identifier or year; use another allowed source.", category="response")
             except SearchError as exc:
                 exc.attempts = attempts
                 if p == "browser":
@@ -428,6 +432,8 @@ def run_routed(args, config, *, budget=None, fetch=False):
         one.timeout = min(getattr(args, "timeout", 30), remaining)
         if not fetch:
             one.timeout = min(one.timeout, getattr(args, "browser_timeout", 15) if name == "browser" else 8)
+            if rows and complement:
+                one.timeout = min(one.timeout, route["complementary_timeout_seconds"])
         one.retries = 0  # Smart fallback uses a different allowed source, not repeated retries.
         call_started = time.monotonic()
         before = budget.used

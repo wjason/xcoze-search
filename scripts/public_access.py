@@ -14,7 +14,7 @@ import urllib.error
 from search_common import SearchError
 
 INTERVALS = {"wikipedia": 1, "stackexchange": 1, "arxiv": 3, "crossref": 1,
-             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "exa-free": 1, "browser": 0}
+             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "exa-free": 1, "duckduckgo": 1, "browser": 0}
 
 
 def pause_status(name):
@@ -139,9 +139,10 @@ def request_slot(name, url, *, max_wait=0):
     except SearchError as error:
         if error.status in (429, 503): slot.defer(900 if name == "exa-free" else 60)
         if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
+        if name == "duckduckgo" and error.code == "access_challenge": slot.defer(900)
         if name == "browser":
             if error.code in ("access_challenge", "browser_navigation_blocked"): slot.defer(900)
-            elif error.code in ("browser_timeout", "browser_no_results", "browser_results_hidden", "browser_navigation_failed", "browser_failed", "browser_unavailable", "irrelevant_results"): slot.defer(60)
+            elif error.code in ("browser_timeout", "browser_no_results", "browser_results_hidden", "browser_navigation_failed", "browser_failed", "browser_unavailable"): slot.defer(60)
         raise
     finally:
         # OS locks are released on close, including process exit; no stale lock deletion needed.

@@ -68,6 +68,23 @@ class RoutingTests(unittest.TestCase):
         with self.assertRaises(x.SearchError):
             x.plan(args(platform="zhihu", site="github.com"), self.config, x.credential)
 
+    def test_github_keeps_api_slots_instead_of_reserving_browser(self):
+        self.keyed()
+        with patch('search_routing.browser_available', return_value=True):
+            route = x.plan(args(query='markitdown',platform='github'),self.config,x.credential)
+            self.assertEqual(route['execution_candidates'],['github','deepseek','exa-free'])
+            self.assertEqual(route['browser_slot_policy'],'api_priority_for_github')
+            free = x.plan(args(query='markitdown',platform='github',strategy='free'),self.config,x.credential)
+            self.assertEqual(free['execution_candidates'],['github','exa-free','bing'])
+            generic = x.plan(args(query='example'),self.config,x.credential)
+            self.assertEqual(generic['execution_candidates'],['deepseek','exa-free','browser'])
+            explicit = x.plan(args(query='markitdown',platform='github',provider='browser'),self.config,x.credential)
+            self.assertEqual(explicit['execution_candidates'],['browser'])
+        transport = QueueTransport(urllib.error.HTTPError('',503,'',{},io.BytesIO()),ds(url='https://github.com/microsoft/markitdown'))
+        with patch('search_routing.browser_available',return_value=True),patch.object(x.urllib.request,'build_opener',return_value=transport),patch.object(x,'run_browser_search') as local:
+            result=x.run_search(args(query='markitdown',platform='github'),self.config)
+        self.assertTrue(result['ok']);self.assertEqual(result['providers'],['github','deepseek']);local.assert_not_called()
+
     def test_constraint_matching_never_drops_requested_option(self):
         route = x.plan(args(start_date="2026-11-01", platform="hackernews"), self.config, x.credential)
         self.assertEqual(route["candidates"], ["hackernews"])
@@ -157,6 +174,33 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(output["duplicate_groups"], [[0, 1]])
         self.assertEqual([r["rank"] for r in output["results"]], [1, 1])
 
+    def test_reference_skips_weak_complement_but_retains_failure_fallback(self):
+        self.keyed();self.config['search_preferences']={'disabled_providers':['exa-free']}
+        route=x.plan(args(query='Rust Mutex documentation'),self.config,x.credential)
+        self.assertFalse(route['complementary_search'])
+        transport=QueueTransport(ds())
+        with patch.object(x.urllib.request,'build_opener',return_value=transport):
+            out=x.run_search(args(query='Rust Mutex documentation'),self.config)
+        self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek'])
+        self.assertEqual(len(transport.requests),1)
+        self.config['search_preferences']={'disabled_providers':['exa-free','bing']}
+        body=b'<a class="result__a" href="https://example.com/rust">Rust Mutex reference</a>'
+        transport=QueueTransport({'results':[]},body)
+        with patch.object(x.urllib.request,'build_opener',return_value=transport):
+            out=x.run_search(args(query='Rust Mutex documentation'),self.config)
+        self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek','duckduckgo'])
+
+    def test_healthy_primary_caps_only_automatic_complement_at_three_seconds(self):
+        self.keyed();transport=QueueTransport(ds(),EXA);timeouts=[];original=transport.open
+        def capture(request,timeout):
+            timeouts.append(timeout);return original(request,timeout)
+        transport.open=capture
+        with patch.object(x.urllib.request,'build_opener',return_value=transport):
+            out=x.run_search(args(query='Python documentation',timeout=30),self.config)
+        self.assertTrue(out['ok']);self.assertEqual(len(timeouts),2)
+        self.assertEqual(timeouts[0],8);self.assertLessEqual(timeouts[1],3)
+        self.assertEqual(out['routing']['complementary_timeout_seconds'],3)
+
     def test_complement_failure_keeps_first_results_and_reports_partial(self):
         self.keyed()
         transport = QueueTransport(ds(), urllib.error.HTTPError("", 429, "", {}, io.BytesIO()))
@@ -225,6 +269,32 @@ class RoutingTests(unittest.TestCase):
             output = x.run_search(args(max_seconds=2), self.config)
         self.assertLessEqual(call.call_args.kwargs["timeout"], 2)
         self.assertFalse(output["ok"])
+
+    def test_chinese_rows_drop_noise_preserve_rank_and_reject_empty_complement(self):
+        self.keyed()
+        raw = '<rss><channel><item><title>2026 calendar</title><link>https://example.com/calendar</link></item><item><title>2026年可再生能源新增装机</title><link>https://example.com/energy</link></item></channel></rss>'.encode('utf-8')
+        transport = QueueTransport(raw)
+        with patch.object(x.urllib.request,'build_opener',return_value=transport):
+            out=x.run_search(args(query='2026年 可再生能源 新增装机',provider='bing'),self.config)
+        self.assertTrue(out['ok']);self.assertEqual(len(out['results']),1)
+        self.assertEqual(out['results'][0]['rank'],2)
+        self.assertEqual(out['requests'][0]['dropped_irrelevant_count'],1)
+        self.assertEqual(out['requests'][0]['shown_count'],1)
+
+    def test_ddg_real_challenge_protocol_pauses_later_routes_without_http(self):
+        self.config['search_preferences']={'disabled_providers':['exa-free','bing']}
+        transport=QueueTransport(b'<form id="challenge-form">verify you are human</form>')
+        with patch.object(x.urllib.request,'build_opener',return_value=transport):
+            out=x.run_search(args(strategy='free'),self.config)
+        self.assertFalse(out['ok']);self.assertEqual(len(transport.requests),1)
+        self.assertEqual(out['errors'][0]['code'],'access_challenge')
+        with self.assertRaises(x.SearchError) as caught:
+            x.plan(args(strategy='free'),self.config,x.credential)
+        self.assertEqual(caught.exception.code,'no_compatible_provider')
+        with patch('search_routing.browser_available',return_value=True):
+            route=x.plan(args(strategy='free'),self.config,x.credential)
+        self.assertEqual(route['execution_candidates'],['browser'])
+        self.assertEqual(route['skipped_unavailable'][0]['provider'],'duckduckgo')
 
     def test_platform_scope_is_checked_on_returned_urls(self):
         self.keyed()

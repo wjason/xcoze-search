@@ -23,7 +23,7 @@ Python 3.10+ is required. Runtime uses only the standard library: no browser, No
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.7.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.1/xcoze-search-skill-v0.7.1.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.7.2 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Sources
 
@@ -82,7 +82,7 @@ An exhausted anonymous Exa source is paused and skipped on later calls. Retry-Af
 
 Browser search launches lazily only without usable API results. It requires an existing agent-browser/working local Chrome, with no installation/login/personal-session reuse. Automatic APIs cap each source at 8 seconds; browser work at 15 seconds plus up to 6 seconds close grace. Ordinary searches do not run live health checks. Ask the Agent to disable browser fallback, or use preferences --browser off. Free strategy never calls keyed providers.
 
-v0.7.1 fixes browser readiness and distinguishes explicit no-match pages from hidden placeholders and timeouts. The fallback now defaults to 360 Search, with Bing/Google available explicitly. Three real tasks retrieved Python docs, an NBS CPI release and a listed-company filing reproduction in about 3.4–3.8 seconds. A real DDG verification response also fell back to the browser successfully, with zero keyed API attempts. One GitHub public-index probe had no matches; use native platform APIs for their coverage. [Live report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md) records failed/weak queries as well. These observations do not promise universal availability.
+v0.7.2 compares free, DeepSeek and Smart on six Chinese news, English-doc and GitHub tasks, with separate 360 probes. Healthy anonymous Exa can retrieve primary sources directly; under limits, 360 is an emergency lead source with English-doc/GitHub coverage gaps. Fixes reject irrelevant/old-year rows, pause repeated DDG challenges, skip weak complements and preserve API slots for GitHub. The [comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.en.md) retains failures, timings, cost estimates and changing conditions, not a universal accuracy claim.
 
 ## Configure keys
 

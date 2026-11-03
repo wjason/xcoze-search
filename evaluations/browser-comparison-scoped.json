@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "price_reference": {
+    "url": "https://api-docs.deepseek.com/guides/search/#billing",
+    "checked_on": "2026-11-03",
+    "deepseek_usd_per_successful_request": 0.00075
+  },
+  "notice": "Scoped variant of the same questions. Official domains were verified separately; no response mocks or quota reset.",
+  "cases": [
+    {
+      "id": "cn-pmi",
+      "category": "Chinese news",
+      "question": "2026年10月中国制造业PMI是多少，比上月如何变化？找原始发布。",
+      "query": "2026年10月 制造业 PMI 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Correct October 2026 release, not 2025 or September",
+        "49.3 percent; down 0.8 percentage points"
+      ],
+      "reference_urls": [
+        "https://www.stats.gov.cn/zwfwck/sjfb/202610/t20261031_1965718.html"
+      ],
+      "site": "stats.gov.cn"
+    },
+    {
+      "id": "cn-renewables",
+      "category": "Chinese news",
+      "question": "国家能源局最新公布的2026年前三季度可再生能源新增装机及占全部新增装机比重是多少？",
+      "query": "2026年前三季度 可再生能源 新增装机 国家能源局",
+      "intent": "current",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "Correct Q1-Q3 2026 release, distinguish additions from cumulative capacity",
+        "180 million kW and 71.7 percent"
+      ],
+      "reference_urls": [
+        "https://www.nea.gov.cn/20261030/28a6f818b9f843a995952940301590bd/c.html"
+      ],
+      "site": "nea.gov.cn"
+    },
+    {
+      "id": "en-postgres-uuid",
+      "category": "English docs",
+      "question": "In PostgreSQL 18, how is uuidv7() ordered and what does the optional shift argument do?",
+      "query": "PostgreSQL 18 uuidv7 shift interval documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "postgresql.org"
+      ],
+      "criteria": [
+        "Official PostgreSQL 18 UUID functions",
+        "Time-ordered UUID version 7; shift offsets computed timestamp by interval"
+      ],
+      "reference_urls": [
+        "https://www.postgresql.org/docs/18/functions-uuid.html"
+      ],
+      "site": "postgresql.org"
+    },
+    {
+      "id": "en-rust-mutex",
+      "category": "English docs",
+      "question": "Does a poisoned Rust std::sync::Mutex prevent access permanently, and how can PoisonError::into_inner recover the guard?",
+      "query": "Rust std Mutex poisoning PoisonError into_inner documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "doc.rust-lang.org"
+      ],
+      "criteria": [
+        "Official Rust Mutex poisoning documentation",
+        "Poisoning is advisory; into_inner can recover the guard, not a blanket safety guarantee"
+      ],
+      "reference_urls": [
+        "https://doc.rust-lang.org/std/sync/struct.Mutex.html"
+      ],
+      "site": "doc.rust-lang.org"
+    }
+  ]
+}

@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.7.1"
+VERSION = "0.7.2"
 RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents/openai.yaml",
                  "scripts/xcoze_search.py", "scripts/setup.command", "references/setup.md",
                  "references/providers.md", "references/output.md", "VALIDATION.md",
@@ -36,7 +36,10 @@ SOURCE_EXTRA += ["evaluations/README.en.md", "scripts/benchmark.py", "tests/test
                  "evaluations/reports/2026-11-03-open-sources.en.md", "evaluations/reports/2026-11-03-open-sources.data.json", "scripts/evaluate_fallback.py",
                  "tests/test_browser_fallback.py", "scripts/evaluate_browser.py",
                  "evaluations/reports/2026-11-03-browser.md", "evaluations/reports/2026-11-03-browser.en.md",
-                 "evaluations/reports/2026-11-03-browser.data.json", "evaluations/reports/2026-11-03-fallback.md",
+                 "evaluations/reports/2026-11-03-browser.data.json",
+                 "evaluations/browser-comparison-cases.json", "evaluations/browser-comparison-scoped.json", "evaluations/browser-comparison-short.json",
+                 "evaluations/reports/2026-11-03-comparison.md", "evaluations/reports/2026-11-03-comparison.en.md",
+                 "evaluations/reports/2026-11-03-comparison.data.json", "evaluations/reports/2026-11-03-fallback.md",
                  "evaluations/reports/2026-11-03-fallback.en.md", "evaluations/reports/2026-11-03-fallback.data.json"]
 
 

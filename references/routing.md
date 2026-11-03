@@ -90,3 +90,14 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 明确无匹配返回空列表和 browser_explicit_no_matches:true，不设置失败冷却，也不代表全网没有资料。隐藏结果报告 browser_results_hidden；命令超时保留 browser_timeout，网络错误页为 browser_navigation_failed。后者与空壳等暂缓 60 秒；验证码仍暂缓 900 秒。browser_failure_stage 和 browser_stage_timings_ms 记录失败阶段与启动/导航/等待/提取/关闭耗时，不保存网页正文或上游错误文本。中英文明显无主题重合可拒绝，但这不是语义质量分类器。
 
 API 优先、免费隔离、来源和等待上限保持不变。真实检索约 3–5 秒，仍比健康 API 更重，所以不会让浏览器补充已成功的 API 结果。三题检索和真实 DDG 到浏览器的兜底通过；公开索引 GitHub 无匹配和较弱文档查询仍保留在[测试报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)，多网络与多操作系统运行时验收继续保留待办。
+
+## v0.7.2：实测后的来源和延迟控制
+
+- 360 继续作为应急兜底，不提升为通用主源。本机真实比较中，它能补中文新闻线索，英文官方文档和 GitHub 公开索引仍有缺口。接口成功不启动浏览器，不因主接口结果需要进一步阅读就自动转浏览器。
+- GitHub 任务不强制预留 browser 位置，按已有顺序用原生/通用 API 填满最多三源预算。更低上限、禁用和显式 browser 选择仍有效；若 API 数量不足，browser 仍可能使用剩余位置。browser_slot_policy 解释本次策略。
+- quality 的 reference/current 仅在下一候选为已配置服务或 Exa 免 Key 时自动互补。下一项只有 Bing/DDG/browser 时，主源有结果就停止；主源失败仍按现有预算备用。互补在已有证据后最多给 3 秒请求超时，主 API 仍为 8 秒；显式多源不受这条自动互补上限影响。网络/DNS 不因此成为硬截止或服务等级保证。
+- RSS/HTML/browser 逐条拒绝明显中文跑题、缺失查询中函数/代码标识、显式冲突年份及部分月份/半年期间；紧凑 /YYYYMM/ 路径也参与年份检查。缺日期保持未知。dropped_irrelevant_count 记录丢弃数量，保留其余原始 rank，不用跨源分数重排。不影响语义 API 或原生仓库结果，也不等于事实、版本、完整时间筛选或语义质量验证；有漏判/误拒可能，Agent 继续核验。
+- DDG 验证响应暂停 900 秒，自动 plan 在本机冷却内跳过，减少重复 HTTP。浏览器的相关性拒绝属于本次查询质量，不再触发全源冷却；空壳/网络超时/验证码仍按其恢复规则处理。
+- 要求原始来源且已知官方域名时，Agent 应使用 --site 和短查询；官网无索引时读取已经定位的官方 URL/相关页导航，不能把增加浏览器重试当作补齐证据。
+
+[六题真实对照、限额与恢复](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)。

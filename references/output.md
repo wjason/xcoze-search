@@ -1,4 +1,4 @@
-# 输出契约 v0.7.1
+# 输出契约 v0.7.2
 
 **简体中文** | [English](output.en.md)
 
@@ -83,3 +83,5 @@ routing 新增 execution_candidates、skipped_unavailable、browser_mode。Exa �
 execution_summary 分别记录 api_http_attempts、keyed_api_attempts、browser_navigation_attempts、browser_commands、browser_http_requests。浏览器启动后最后一项 null，未启动为 0。budget.unit=provider_api_http_attempts；所有浏览器页面/资源子请求均不在该可观测 API 计数内。浏览器 requests.attempts=0 表示没有调用本工具 HTTP API 传输，不代表没有联网；其 execution 为 local_browser。browser_cleanup_verified 只说明关闭命令正常确认，失败不会伪报关闭成功。
 
 浏览器请求还可包含 browser_engine、browser_stage_timings_ms（launch/navigate/wait/extract/close 毫秒值）、失败时的 browser_failure_stage。明确无匹配以 browser_explicit_no_matches:true 和空 results 表达；这不是空壳、超时或完整索引覆盖证明。失败和关闭仍保留实际命令/导航计数，不含网页正文和上游错误文本。
+
+v0.7.2：routing 增加 browser_slot_policy 和 complementary_timeout_seconds。实验性搜索 requests 可包含 dropped_irrelevant_count；shown_count 对应保留行数，rank 保持源内原始值。词/代码/部分时间冲突筛查不设置 facts_verified:true，也不覆盖原生日期过滤。相关性拒绝不代表服务不可用；DDG 验证冷却出现在 skipped_unavailable 中。

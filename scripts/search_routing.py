@@ -158,7 +158,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "browser"):
+        if not explicit and name in ("exa-free", "duckduckgo", "browser"):
             pause = pause_status(name)
             if pause:
                 unavailable.append({"provider": name, **pause})
@@ -186,19 +186,22 @@ def plan(args, config, credential, *, fetch=False):
     if type(limit) is not int or not 1 <= limit <= 3: invalid("--max-sources must be 1..3.")
     names = [x["provider"] for x in eligible]
     execution = names if explicit else names[:limit]
-    if not explicit and "browser" in names and limit > 1 and preferred != "browser":
+    if not explicit and "browser" in names and limit > 1 and preferred != "browser" and specialized != "github":
         execution = [p for p in names if p != "browser"][:limit - 1] + ["browser"]
     return {"requested_strategy": requested_strategy, "strategy": strategy, "automatic": not explicit,
             "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
             "candidates": names, "execution_candidates": execution, "skipped_incompatible": skipped,
             "skipped_unavailable": unavailable, "browser_mode": browser_mode,
+            "browser_slot_policy": "api_priority_for_github" if not explicit and specialized == "github" else "failure_fallback",
             "max_sources": len(eligible) if explicit else limit,
             "payloads": {x["provider"]: x["payload"] for x in eligible},
             "platform": getattr(args, "platform", None),
             "intent": intent, "specialized_source": specialized if not explicit else None,
+            "complementary_timeout_seconds": 3,
             "complementary_search": (not fetch and not explicit and strategy == "quality"
                                      and intent in ("reference", "current") and not specialized
-                                     and limit > 1 and len(eligible) > 1),
+                                     and limit > 1 and len(execution) > 1
+                                     and (execution[1] in REGISTRY or execution[1] == "exa-free")),
             "semantic_quality_verified": False}
 
 

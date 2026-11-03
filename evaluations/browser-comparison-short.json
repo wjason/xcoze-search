@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "price_reference": {
+    "url": "https://api-docs.deepseek.com/guides/search/#billing",
+    "checked_on": "2026-11-03",
+    "deepseek_usd_per_successful_request": 0.00075
+  },
+  "notice": "Same English documentation questions, concise section queries with independently verified official sites. Separate Agent query-rewrite probe, not an unchanged-query comparison.",
+  "cases": [
+    {
+      "id": "en-postgres-uuid",
+      "category": "English docs",
+      "question": "In PostgreSQL 18, how is uuidv7() ordered and what does the optional shift argument do?",
+      "query": "PostgreSQL UUID functions",
+      "intent": "reference",
+      "expected_domains": [
+        "postgresql.org"
+      ],
+      "criteria": [
+        "Official PostgreSQL 18 UUID functions",
+        "Time-ordered UUID version 7; shift offsets computed timestamp by interval"
+      ],
+      "reference_urls": [
+        "https://www.postgresql.org/docs/18/functions-uuid.html"
+      ],
+      "site": "postgresql.org"
+    },
+    {
+      "id": "en-rust-mutex",
+      "category": "English docs",
+      "question": "Does a poisoned Rust std::sync::Mutex prevent access permanently, and how can PoisonError::into_inner recover the guard?",
+      "query": "Mutex poisoning",
+      "intent": "reference",
+      "expected_domains": [
+        "doc.rust-lang.org"
+      ],
+      "criteria": [
+        "Official Rust Mutex poisoning documentation",
+        "Poisoning is advisory; into_inner can recover the guard, not a blanket safety guarantee"
+      ],
+      "reference_urls": [
+        "https://doc.rust-lang.org/std/sync/struct.Mutex.html"
+      ],
+      "site": "doc.rust-lang.org"
+    }
+  ]
+}

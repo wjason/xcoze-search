@@ -68,3 +68,16 @@ python3 scripts/evaluate_browser.py --live --output ../browser-live.json
 仅显式 --live 才执行；全部搜索页面/HTTP 响应均真实，不模拟。使用内存合成 Key、临时缓存，不读取用户凭据或保存偏好，传输前守卫拒绝带 Key API。测试三道文档/统计发布/公告转载检索、一道 GitHub 覆盖探测，再以临时禁用 Exa/Bing 的偏好运行真实 DDG 到浏览器的自动链路。若 DDG 自身取得足够证据而未启动浏览器，也不算浏览器兜底通过。
 
 accepted 只表示取得预期来源/主题且关闭确认；不是事实正确性评分。GitHub 探测 required:false，明确记录为未通过覆盖检查，不能用总体 ok 隐藏该缺口。总体 ok 仅要求核心三题、真实自动兜底和零带 Key 调用；每项失败仍保留。运行结果受公开索引更新和网络影响。历史[限额报告](reports/2026-11-03-fallback.md)与[真实浏览器报告](reports/2026-11-03-browser.md)分别维护，不把模拟当在线成功。
+
+## 六题对照与 360 独立检查（v0.7.2）
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/browser-comparison-cases.json --output ../comparison-plan.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-cases.json --max-requests 36 --output ../comparison.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-cases.json --modes browser --max-requests 6 --output ../browser-probe.json
+python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-scoped.json --limit 4 --max-requests 24 --output ../scoped.json
+```
+
+默认三模式不变；browser 只是显式免费诊断，绝不自动加入对比。free/browser 在传输前拒绝带 Key API。在线使用正常配置和缓存状态，不清除真实限额；模式顺序轮换，串行执行。scoped/short 是不同查询条件，不能混作原样同题的算法提升。结果 ok 只表示计划单元执行完，单元仍可能失败/无匹配/不支持答案。每次报告最多保存 1800 字符证据供本地复核，截断后未见某词不证明完整响应没有它；对外发布前移除证据正文并补充来源/时间/答案支持的人工说明。带 Key 调用可能计费，浏览器只需已有工具；模型成本未知。
+
+[本轮双语报告](reports/2026-11-03-comparison.md)保留多个阶段、Exa 自然恢复和未解决的英文覆盖缺口；不是盲评或稳定延迟排名。

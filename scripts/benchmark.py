@@ -9,7 +9,8 @@ import time
 import xcoze_search as search
 
 ROOT = Path(__file__).resolve().parents[1]
-MODES = ("free", "deepseek", "smart")
+DEFAULT_MODES = ("free", "deepseek", "smart")
+MODES = DEFAULT_MODES + ("browser",)
 
 
 def load_cases(path):
@@ -30,7 +31,9 @@ def query_args(case, mode, *, count=5, timeout=15):
     if case.get("intent"): argv.extend(["--intent", case["intent"]])
     for field in ("language", "site"):
         if case.get(field): argv.extend(["--" + field, case[field]])
-    if mode == "deepseek":
+    if mode == "browser":
+        argv.extend(["--provider", "browser", "--strategy", "free"])
+    elif mode == "deepseek":
         argv.extend(["--provider", "deepseek"])
         if case.get("deepseek_query"): argv[1] = case["deepseek_query"]
     else:
@@ -48,6 +51,9 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
 
     def trace(operation, payload, key, **kwargs):
         # Never retain or print the key, payload or raw provider response.
+        name = "deepseek" if operation == "fetch" else operation.removesuffix("_fetch")
+        if mode in ("free", "browser") and (search.get_provider(name).requires_key or key):
+            raise AssertionError("Free benchmark rejected a keyed API before transmission.")
         started = time.perf_counter()
         try:
             raw, attempts = original(operation, payload, key, **kwargs)
@@ -84,13 +90,18 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
             "elapsed_ms": elapsed, "receipts": receipts, "sources": rows,
             "routing": result.get("routing"), "errors": result.get("errors", []),
             "execution_summary": result.get("execution_summary"),
+            "requests": [{k: r[k] for k in ("provider", "ok", "attempts", "elapsed_ms", "execution",
+                         "browser_engine", "browser_navigation_attempts", "browser_commands", "browser_cleanup_verified",
+                         "dropped_irrelevant_count", "shown_count", "returned_count",
+                         "browser_failure_stage", "browser_explicit_no_matches", "browser_stage_timings_ms") if k in r}
+                         for r in result.get("requests", [])],
             "semantic_quality_assessed": False}
 
 
-def execute(corpus, *, live=False, modes=MODES, rounds=1, limit=6, count=5,
+def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count=5,
             max_requests=36, timeout=15, progress=None):
     if not modes or len(set(modes)) != len(modes) or any(m not in MODES for m in modes):
-        raise ValueError("Choose distinct free, deepseek and/or smart modes.")
+        raise ValueError("Choose distinct free, deepseek, smart and/or explicit browser diagnostic modes.")
     if not 1 <= rounds <= 3 or not 1 <= limit <= 100 or not 1 <= count <= 10 or not 1 <= timeout <= 60:
         raise ValueError("Invalid benchmark limits.")
     cases = corpus["cases"][:limit]

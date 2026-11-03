@@ -16,7 +16,7 @@ Agent 检查 Python 3.10+，把 Skill 装到当前宿主技能目录，再按宿
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-这条可选安装方式需要 Node.js。也可下载 [v0.7.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.1/xcoze-search-skill-v0.7.1.zip)，解压 xcoze-search 文件夹到技能目录；手动解压不需要 Node.js。
+这条可选安装方式需要 Node.js。也可下载 [v0.7.2 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip)，解压 xcoze-search 文件夹到技能目录；手动解压不需要 Node.js。
 
 Codex 默认目录为 `~/.codex/skills/xcoze-search/`；设置 CODEX_HOME 时使用其 skills 子目录。其他宿主按其技能发现规则安装。本包不适用于无法执行本地脚本的纯聊天环境，独立可执行安装包仍在计划中。
 
