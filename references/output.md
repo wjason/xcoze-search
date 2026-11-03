@@ -1,10 +1,10 @@
-# 输出契约 v0.4.0
+# 输出契约 v0.5.0
 
 **简体中文** | [English](output.en.md)
 
 ## 自动路由的新增契约
 
-自动 Search / Fetch 增加 routing：requested_strategy、strategy、automatic、selection_basis、candidates、attempted_providers、skipped_incompatible、max_sources、stop_reason、semantic_quality_verified:false。候选存在不等于已执行或已验证，运行中以 requests 和 budget 为准。plan 只返回路由公开字段，network_requests:0，不包含凭据或请求体。
+自动 Search / Fetch 增加 routing：requested_strategy、strategy、automatic、selection_basis、candidates、attempted_providers、skipped_incompatible、max_sources、intent、specialized_source、complementary_search、stop_reason、semantic_quality_verified:false。候选存在不等于已执行或已验证，运行中以 requests 和 budget 为准。plan 只返回路由公开字段，network_requests:0，不包含凭据或请求体。
 
 自动备用得到非空可用结果时 ok:true，即使 errors 中保留之前失败；此时 partial:true，退出码 0。自动耗尽候选/预算且无可用结果时 ok:false，退出码 4。显式多源部分失败的旧契约不变：ok:false、partial:true、退出码 4。complete 仅描述本次执行，不代表问题已充分研究；facts_verified 始终 false。
 

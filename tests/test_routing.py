@@ -17,6 +17,8 @@ RSS = b'<rss><channel><item><title>Python</title><link>https://docs.python.org/3
 JINA = {"code": 200, "data": {"title": "Example", "url": "https://example.com", "content": "Public article text."}}
 GH = {"items": [{"full_name": "python/cpython", "html_url": "https://github.com/python/cpython", "description": "Python"}], "incomplete_results": False}
 HN = {"hits": [{"objectID": "123", "title": "Python", "url": "https://python.org", "created_at": "2026-11-01"}]}
+EXA = {"jsonrpc": "2.0", "id": 1, "result": {"structuredContent": {
+    "results": [{"title": "Python", "url": "https://docs.python.org/3/", "text": "Official docs"}]}}}
 
 
 class RoutingTests(unittest.TestCase):
@@ -47,7 +49,7 @@ class RoutingTests(unittest.TestCase):
     def test_balanced_public_first_and_explicit_override_precedence(self):
         self.keyed(); self.config["search_preferences"] = {"strategy": "balanced"}
         route = x.plan(args(), self.config, x.credential)
-        self.assertEqual(route["candidates"][0], "bing")
+        self.assertEqual(route["candidates"][0], "exa-free")
         self.assertIn("deepseek", route["candidates"])
         self.config["search_preferences"] = {"strategy": "free"}
         self.assertEqual(x.plan(args(provider="deepseek"), self.config, x.credential)["candidates"], ["deepseek"])
@@ -104,11 +106,11 @@ class RoutingTests(unittest.TestCase):
 
     def test_free_mode_executes_with_no_auth_even_when_key_is_configured(self):
         self.keyed()
-        transport = QueueTransport(RSS)
+        transport = QueueTransport(EXA)
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(strategy="free"), self.config)
         self.assertTrue(output["ok"])
-        self.assertEqual(output["providers"], ["bing"])
+        self.assertEqual(output["providers"], ["exa-free"])
         self.assertEqual(output["budget"]["attempts"], 1)
         self.assertIsNone(transport.requests[0].get_header("Authorization"))
 
@@ -118,15 +120,15 @@ class RoutingTests(unittest.TestCase):
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(), self.config)
         self.assertTrue(output["ok"]); self.assertEqual(len(transport.requests), 1)
-        transport = QueueTransport(urllib.error.HTTPError("", 402, "", {}, io.BytesIO()), RSS)
+        transport = QueueTransport(urllib.error.HTTPError("", 402, "", {}, io.BytesIO()), EXA)
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(), self.config)
         self.assertTrue(output["ok"]); self.assertTrue(output["partial"])
-        self.assertEqual(output["routing"]["attempted_providers"], ["deepseek", "bing"])
+        self.assertEqual(output["routing"]["attempted_providers"], ["deepseek", "exa-free"])
         self.assertEqual(output["errors"][0]["category"], "billing")
 
     def test_empty_results_fallback_but_do_not_claim_semantic_quality(self):
-        self.keyed(); transport = QueueTransport({"results": []}, RSS)
+        self.keyed(); transport = QueueTransport({"results": []}, EXA)
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(), self.config)
         self.assertTrue(output["ok"])
@@ -139,8 +141,60 @@ class RoutingTests(unittest.TestCase):
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(strategy="balanced"), self.config)
         self.assertTrue(output["ok"])
-        self.assertEqual(output["routing"]["attempted_providers"], ["bing", "deepseek"])
+        self.assertEqual(output["routing"]["attempted_providers"], ["exa-free", "deepseek"])
         self.assertEqual(output["budget"]["attempts"], 2)
+
+    def test_reference_quality_combines_sources_and_marks_duplicates(self):
+        self.keyed()
+        transport = QueueTransport(ds(url="https://docs.python.org/3/#section"), EXA)
+        with patch.object(x.urllib.request, "build_opener", return_value=transport):
+            output = x.run_search(args(query="Python documentation"), self.config)
+        self.assertEqual(output["routing"]["intent"], "reference")
+        self.assertTrue(output["routing"]["complementary_search"])
+        self.assertEqual(output["providers"], ["deepseek", "exa-free"])
+        self.assertEqual(output["duplicate_groups"], [[0, 1]])
+        self.assertEqual([r["rank"] for r in output["results"]], [1, 1])
+
+    def test_complement_failure_keeps_first_results_and_reports_partial(self):
+        self.keyed()
+        transport = QueueTransport(ds(), urllib.error.HTTPError("", 429, "", {}, io.BytesIO()))
+        with patch.object(x.urllib.request, "build_opener", return_value=transport):
+            output = x.run_search(args(query="latest Python", max_sources=3), self.config)
+        self.assertTrue(output["ok"]); self.assertTrue(output["partial"])
+        self.assertEqual(len(output["results"]), 1)
+        self.assertEqual(output["errors"][0]["category"], "rate_limit")
+        self.assertEqual(len(transport.requests), 2)
+
+    def test_intent_limits_overrides_and_platform_avoid_unrequested_fanout(self):
+        self.keyed()
+        cases = [(args(query="latest Python", max_sources=1), ds()),
+                 (args(query="latest Python", intent="general"), ds()),
+                 (args(query="latest Python", provider="deepseek"), ds()),
+                 (args(query="latest Python", platform="github"), GH),
+                 (args(query="Python API", strategy="free"), EXA)]
+        for arguments, response in cases:
+            transport = QueueTransport(response)
+            with self.subTest(args=arguments), patch.object(x.urllib.request, "build_opener", return_value=transport):
+                output = x.run_search(arguments, self.config)
+                self.assertTrue(output["ok"])
+                self.assertEqual(len(transport.requests), 1)
+        route = x.plan(args(query="普通问题", intent="current"), self.config, x.credential)
+        self.assertEqual(route["intent"], "current")
+
+    def test_scraped_topic_mismatch_falls_back_and_explicit_source_does_not_expand(self):
+        bad = RSS.replace(b'Python', b'Windows help').replace(b'python.org', b'microsoft.com')
+        self.config["search_preferences"] = {"disabled_providers": ["exa-free"]}
+        good = b'<a class="result__a" href="https://docs.python.org/3/">Python TaskGroup</a>'
+        transport = QueueTransport(bad, good)
+        with patch.object(x.urllib.request, "build_opener", return_value=transport):
+            output = x.run_search(args(query="Python asyncio TaskGroup"), self.config)
+        self.assertTrue(output["ok"]); self.assertTrue(output["partial"])
+        self.assertEqual(output["providers"], ["bing", "duckduckgo"])
+        self.assertEqual(output["errors"][0]["code"], "irrelevant_results")
+        transport = QueueTransport(bad)
+        with patch.object(x.urllib.request, "build_opener", return_value=transport):
+            output = x.run_search(args(query="Python asyncio TaskGroup", provider="bing"), self.config)
+        self.assertFalse(output["ok"]); self.assertEqual(len(transport.requests), 1)
 
     def test_saved_free_fetch_never_reaches_keyed_api_after_reader_failure(self):
         self.keyed(); self.config["search_preferences"] = {"strategy": "free"}

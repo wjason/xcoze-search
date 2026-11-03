@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "price_reference": {
+    "url": "https://api-docs.deepseek.com/guides/search/#billing",
+    "checked_on": "2026-11-03",
+    "deepseek_usd_per_successful_request": 0.00075
+  },
+  "notice": "Frozen public tasks; expected facts are a dated review baseline, not a live accuracy oracle.",
+  "cases": [
+    {
+      "id": "ds-billing",
+      "question": "DeepSeek Search API 当前怎么收费？空结果和失败请求收费吗？",
+      "query": "DeepSeek Search Fetch API pricing empty results billing",
+      "expected_domains": [
+        "api-docs.deepseek.com"
+      ],
+      "criteria": [
+        "Find official Search/Fetch billing page",
+        "Evidence supports USD 0.75 per 1000 successful requests and no charge for empty/failed requests"
+      ],
+      "freshness": "current_document",
+      "reference_urls": [
+        "https://api-docs.deepseek.com/guides/search/"
+      ],
+      "intent": "reference"
+    },
+    {
+      "id": "python-release",
+      "question": "截至 2026-11-03，Python 最新稳定版本及发布日期是什么？",
+      "query": "Python latest stable release November 2026",
+      "expected_domains": [
+        "python.org"
+      ],
+      "criteria": [
+        "Locate current official release/download page",
+        "Distinguish stable release from prerelease and older branches; dated baseline 3.15.2 on 2026-10-25"
+      ],
+      "freshness": "current_version",
+      "reference_urls": [
+        "https://www.python.org/downloads/"
+      ],
+      "intent": "current"
+    },
+    {
+      "id": "taskgroup",
+      "question": "Python asyncio.TaskGroup 中一个任务抛错时，其他任务会怎样？最终异常怎么抛出？",
+      "query": "Python asyncio TaskGroup exception cancellation ExceptionGroup",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Find official TaskGroup documentation",
+        "Support cancellation of remaining tasks for non-CancelledError and eventual ExceptionGroup/BaseExceptionGroup"
+      ],
+      "freshness": "current_document",
+      "reference_urls": [
+        "https://docs.python.org/3/library/asyncio-task.html#task-groups"
+      ],
+      "intent": "reference"
+    },
+    {
+      "id": "github-anomalib",
+      "question": "在 GitHub 找 anomalib 官方项目，确认它是否支持 OpenVINO 部署。",
+      "query": "anomalib OpenVINO",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Identify open-edge-platform/anomalib rather than an unrelated fork",
+        "Official repository/README supports OpenVINO deployment"
+      ],
+      "freshness": "current_repository",
+      "reference_urls": [
+        "https://github.com/open-edge-platform/anomalib"
+      ],
+      "intent": "general"
+    },
+    {
+      "id": "hn-recent-ai",
+      "question": "找最近七天 Hacker News 上关于 AI 的三条讨论，提供讨论链接和发布日期。",
+      "query": "AI",
+      "platform": "hackernews",
+      "start_date": "2026-10-27",
+      "end_date": "2026-11-03",
+      "deepseek_query": "Hacker News AI discussions after:2026-10-27 before:2026-11-04",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Return at least three actual HN discussion item URLs",
+        "Publication dates lie in the requested UTC calendar interval; distinguish stories from profiles"
+      ],
+      "freshness": "bounded_dates",
+      "reference_urls": [
+        "https://hn.algolia.com/api",
+        "https://github.com/HackerNews/API"
+      ],
+      "intent": "current"
+    },
+    {
+      "id": "node-lts",
+      "question": "截至 2026-11-03，Node.js 最新 LTS 主版本及代号是什么？",
+      "query": "Node.js latest LTS version codename November 2026",
+      "expected_domains": [
+        "nodejs.org"
+      ],
+      "criteria": [
+        "Find official current releases/schedule",
+        "Distinguish LTS from alpha/current and older LTS branches; dated baseline v26 Lithium"
+      ],
+      "freshness": "current_version",
+      "reference_urls": [
+        "https://nodejs.org/en/about/previous-releases"
+      ],
+      "intent": "current"
+    }
+  ]
+}

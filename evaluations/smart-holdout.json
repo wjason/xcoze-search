@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "price_reference": {
+    "url": "https://api-docs.deepseek.com/guides/search/#billing",
+    "checked_on": "2026-11-03",
+    "deepseek_usd_per_successful_request": 0.00075
+  },
+  "notice": "Frozen public tasks; expected facts are a dated review baseline, not a live accuracy oracle.",
+  "cases": [
+    {
+      "id": "sqlite-wal",
+      "question": "SQLite WAL 模式允许多个写事务同时写入吗，读写能否并行？",
+      "query": "SQLite WAL 官方文档 多个写事务 同时写入 读写并行",
+      "expected_domains": [
+        "sqlite.org"
+      ],
+      "criteria": [
+        "Distinguish concurrent readers/writer from multiple simultaneous writers; find official WAL concurrency section"
+      ],
+      "freshness": "current_document",
+      "reference_urls": [
+        "https://www.sqlite.org/wal.html"
+      ],
+      "intent": "reference"
+    },
+    {
+      "id": "github-actions-billing",
+      "question": "GitHub Actions 私有仓库目前如何计费？免费套餐是否仍直接按固定分钟计算？",
+      "query": "GitHub Actions 私有仓库 当前 官方 计费 免费套餐 分钟 compute usage",
+      "expected_domains": [
+        "docs.github.com"
+      ],
+      "criteria": [
+        "Locate current GitHub billing docs; check included compute usage and distinguish public/private and runner types; do not repeat historic fixed-minute allowance without verification"
+      ],
+      "freshness": "current_document",
+      "reference_urls": [
+        "https://docs.github.com/en/billing/concepts/product-billing/github-actions"
+      ],
+      "intent": "current"
+    }
+  ]
+}

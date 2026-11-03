@@ -23,7 +23,7 @@ Python 3.10+ is required. Runtime uses only the standard library: no browser, No
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.4.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.1/xcoze-search-skill-v0.4.1.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.5.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.5.0/xcoze-search-skill-v0.5.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Sources
 
@@ -59,10 +59,12 @@ Implementation, account verification and search quality are separate. Local chec
 
 - **Smart by default:** no syntactically usable keys selects keyless routes; available keys select quality-first routing. Key presence does not establish live account access.
 - **Task-aware:** GitHub/HN targets prefer structured platform interfaces. Known URLs should use native readers when useful; script auto-reading starts with Jina/Exa keyless readers.
-- **Bounded fallback:** empty/failed responses advance to a compatible route, at most two sources and 45 seconds by default, within the HTTP budget. Usable results return immediately; the Agent assesses relevance, freshness and remaining evidence gaps before further searching.
+- **Bounded complement/fallback:** general keyless search starts with Exa MCP, with Bing/DDG fallbacks. Quality reference/current tasks may consult a complementary source within the existing two-source cap. General tasks and successful GitHub/HN routes return immediately; empty/failed calls may fall back. Defaults remain two sources and 45 seconds within the HTTP budget. The Agent checks gaps and reads current primary pages for prices, rules, versions and conflicts.
 - **Optional controls:** quality, balanced, free, or a named source. Per-request choices override saved preferences; explicit `--strategy free` conflicts with keyed sources.
 
 Smart combines transparent capability/source rules and Agent judgment. It does not train a router, compare native scores across providers or claim a quality leaderboard. Initial keyed-provider order is configuration policy, not a performance ranking. See [routing](references/routing.en.md).
+
+Six live tasks and two Chinese holdouts on 2026-11-03 found paid retrieval faster in this sample, with keyless/native routes adding useful primary and dated evidence. Routing was revised accordingly. See the [dated comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md), including latency, estimated costs and limitations; this is not a general accuracy claim.
 
 ## Configure keys
 

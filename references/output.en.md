@@ -1,10 +1,10 @@
-# Output contract v0.4.0
+# Output contract v0.5.0
 
 [简体中文](output.md) | **English**
 
 ## Automatic-routing additions
 
-Auto Search/Fetch adds routing: requested_strategy, strategy, automatic, selection_basis, candidates, attempted_providers, skipped_incompatible, max_sources, stop_reason and semantic_quality_verified:false. Candidates are not executed/verified sources; requests and budget describe actual calls. Plan returns public routing fields and network_requests:0 without credentials or request bodies.
+Auto Search/Fetch adds routing: requested_strategy, strategy, automatic, selection_basis, candidates, attempted_providers, skipped_incompatible, max_sources, intent, specialized_source, complementary_search, stop_reason and semantic_quality_verified:false. Candidates are not executed/verified sources; requests and budget describe actual calls. Plan returns public routing fields and network_requests:0 without credentials or request bodies.
 
 Successful nonempty automatic recovery returns ok:true even with earlier errors; partial:true and exit 0 apply. Exhausted auto routes/budgets without usable results return ok:false and exit 4. Explicit multi-source partial failure retains ok:false, partial:true and exit 4. Complete only describes execution, never research sufficiency; facts_verified remains false.
 

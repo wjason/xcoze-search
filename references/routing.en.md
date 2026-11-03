@@ -10,9 +10,9 @@ Smart selects quality when a syntactically valid, enabled key exists, otherwise 
 
 | Strategy | General search candidate order |
 |---|---|
-| quality | Configured default/other configured sources, followed by keyless general sources |
-| balanced | Bing, configured sources, then remaining keyless sources |
-| free | Keyless adapters only; all keyed adapters excluded |
+| quality | First configured source, keyless Exa, other configured sources, then Bing/DDG |
+| balanced | Keyless Exa, configured sources, then Bing/DDG |
+| free | Keyless Exa, Bing, DuckDuckGo; excludes keyed adapters |
 
 GitHub repository/HN story targets prefer their platform adapters. A saved default may take priority; disabled sources stay excluded. Bootstrap order is transparent configuration policy, not a benchmark ranking. No persistent learned success history is implemented.
 
@@ -20,9 +20,19 @@ GitHub repository/HN story targets prefer their platform adapters. A saved defau
 
 The script preflights constraints. Incompatible auto candidates appear in skipped_incompatible without dropping time/site conditions. Explicit multi-source calls fail preflight if any selected source is incompatible. Native freshness expressions are not translated to another provider's different semantics; use supported start/end dates or separate Agent queries when appropriate.
 
-Auto tries at most two sources (configurable 1–3) within 45 seconds by default. This is a scheduling budget, not a hard process deadline for DNS/network reads. Remaining time is checked before calls and each timeout is clipped accordingly; automatic sources have zero retries, and max-requests caps actual HTTP attempts. Nonempty usable results return immediately, preserving failure history. The Agent evaluates relevance, freshness, coverage and independence, then searches remaining compatible sources or revises queries only for evidence gaps. Script scores never replace fact checking.
+Auto tries at most two sources (configurable 1–3) within 45 seconds by default. This is a scheduling budget, not a hard process deadline for DNS/network reads. Remaining time is checked before calls and each timeout is clipped accordingly; automatic sources have zero retries, and max-requests caps actual HTTP attempts. General tasks return on usable nonempty results. Quality reference/current general tasks may consult one more candidate and accumulate both result sets, retaining the first if the second fails. Successful GitHub/HN routes, explicit selections and free/balanced strategies do not force a complement. Failure history is retained. The Agent evaluates relevance, freshness, coverage and independence, then searches remaining compatible sources or revises queries only for evidence gaps. Script scores never replace fact checking.
 
 The script does not accumulate time or currency across commands; the Agent must track task-wide calls. There is no quality guarantee, universal cross-provider score, real-time stock quote guarantee or index-delay promise. Successful fallback establishes access to results, not factual truth.
+
+## Task intent and evidence checks
+
+`--intent auto|general|reference|current` applies to this invocation, default auto. Latest/recent/current/LTS terms select current; official/pricing/docs/API terms select reference; other queries select general. The Agent should derive intent from the original question when a short query loses a time or primary-source requirement. Users need not choose intent. Intent does not relax constraints, enable disabled sources, cross free-mode boundaries or increase budgets.
+
+`routing.intent`, `specialized_source` and `complementary_search` describe the policy; requests record actual attempts. Results retain per-source order without score comparison; duplicate URLs are marked. Two services may share an index and do not guarantee correctness.
+
+Experimental Bing/DDG nonempty results with zero overlap against at least two informative Latin topic tokens produce irrelevant_results and may fall back. Short/non-Latin queries skip this signal; it is not a relevance classifier. Read current primary pages for prices, versions, rules and conflicting snippets; an official domain does not guarantee a fresh excerpt.
+
+[Live tasks and tradeoffs](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md).
 
 ## Platform coverage
 

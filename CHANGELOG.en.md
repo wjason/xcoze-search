@@ -2,6 +2,14 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.5.0 — 2026-11-03
+
+- Compared keyless, DeepSeek and Smart on six live tasks plus two Chinese holdouts, with bilingual reports, sanitized receipts and a reproducible runner.
+- General keyless search now starts with Exa MCP, with Bing/DDG fallbacks. Obvious zero-topic-overlap experimental RSS/HTML results may trigger bounded fallback.
+- **Behavior change:** quality reference/current tasks may consult a complementary source within the existing two-source cap, accumulating results. General tasks, platform routes, explicit selection and free/balanced do not force two sources. Internal --intent does not require user mode selection.
+- Preserve first-source results and errors if a complement fails; mark duplicate URLs without cross-provider score ranking. Read current official pages for prices, rules, versions and conflicts.
+- 103 local offline tests passed. Live runs used 66 search HTTP attempts; known DeepSeek search estimate USD 0.02325, not an invoice, with model costs unknown. Keyless/complementary search does not guarantee truth, index freshness or availability.
+
 ## v0.4.1 — 2026-11-03
 
 - Correct GitHub capabilities: repository update dates are not article publication filters; unsupported date filters are no longer advertised.

@@ -23,7 +23,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.4.1 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.4.1/xcoze-search-skill-v0.4.1.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.5.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.5.0/xcoze-search-skill-v0.5.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 支持的来源
 
@@ -59,10 +59,12 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 - **默认 Smart**：没有可用格式的 Key 时选免 Key 路径；存在 Key 时按效果优先策略选路。Key 的存在不等于账号在线可用。
 - **按任务选择**：GitHub、HN 定向任务优先平台结构化接口。已知 URL 优先复用宿主读取；脚本自动读取优先 Jina/Exa 免 Key 阅读路径。
-- **有限补充**：脚本在空结果或失败时尝试下一条兼容路径，默认最多 2 个来源、45 秒，受 HTTP 预算约束。有可用结果即返回，由 Agent 判断相关性、时效和证据缺口，再决定是否补搜。
+- **有限补充**：通用免 Key 优先 Exa MCP，Bing/DDG 备用；quality 的官方资料、最新信息任务可在原有两源预算内补一个来源。普通任务和 GitHub/HN 专用路线有可用结果即返回，空结果/失败时备用。默认最多 2 个来源、45 秒，受 HTTP 预算约束。Agent 判断缺口，价格、规则、最新版本与冲突信息继续读当前原文。
 - **可选设置**：支持效果优先、平衡、免费，以及指定来源。本次指定优先于已保存设置；明确 `--strategy free` 时不能同时指定带 Key 来源。
 
 Smart 当前采用透明的能力/来源规则与 Agent 的语义判断，没有跨供应商评分比较、检索质量排行榜或自动训练路由。元宝、DeepSeek 等通用 API 的初始顺序是配置规则，不代表质量排名。详见 [调度说明](references/routing.md)。
+
+2026-11-03 用六道真实任务和两道中文留出题做了同题比较：付费源更快，但官方资料与近期平台讨论并非每题更好，已据此调整默认选路。查看[实测报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.md)（含耗时、费用估算和局限）；结果不代表通用准确率。
 
 ## 配置 Key
 

@@ -4,7 +4,7 @@
 
 名称：**xcoze search**
 ID：`xcoze-search`
-版本：`0.4.1` 预览版
+版本：`0.5.0` 预览版
 维护方：XCoze
 仓库：[wjason/xcoze-search](https://github.com/wjason/xcoze-search)
 

@@ -27,10 +27,11 @@ if SCRIPT_DIR not in sys.path:
 from search_common import SearchError, RequestBudget, invalid, public_url, text_field, validate_site
 from search_providers import REGISTRY, get_provider as get_key_provider
 from public_providers import PUBLIC_REGISTRY, domain_matches
+from search_quality import obvious_mismatch
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan)
 
-VERSION = "0.4.1"
+VERSION = "0.5.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search}
@@ -299,6 +300,9 @@ def run_search(args, config, *, budget=None):
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
+                if p in ("bing", "duckduckgo") and obvious_mismatch(args.query, rows):
+                    raise SearchError("irrelevant_results", "Experimental source returned no recognizable query topic; use another allowed source.",
+                                      category="response")
             except SearchError as exc:
                 exc.attempts = attempts
                 raise
@@ -356,8 +360,9 @@ def run_routed(args, config, *, budget=None, fetch=False):
     budget = budget or RequestBudget(getattr(args, "max_requests", 3 if fetch else 12))
     started = time.monotonic()
     seconds = getattr(args, "max_seconds", 45)
-    requests, errors, rows, content, duplicates = [], [], [], None, []
-    for name in route["candidates"][:route["max_sources"]]:
+    requests, errors, rows, content = [], [], [], None
+    complement = route["complementary_search"]
+    for index, name in enumerate(route["candidates"][:route["max_sources"]]):
         remaining = seconds - (time.monotonic() - started)
         if remaining < 1 or not budget.data()["remaining"]:
             errors.append({"provider": name, "code": "budget_exhausted", "category": "budget",
@@ -379,23 +384,31 @@ def run_routed(args, config, *, budget=None, fetch=False):
                 output = run_search(one, config, budget=budget)
                 requests.extend(output["requests"])
                 errors.extend(output["errors"])
-                rows = output["results"]
-                duplicates = output["duplicate_groups"]
-                usable = bool(rows)
-            if usable:
+                rows.extend(output["results"])
+                usable = bool(output["results"])
+            if usable and (not complement or index > 0):
                 requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
                 break
         except SearchError as exc:
             errors.append({"provider": name, **exc.data()})
             requests.append({"provider": name, "ok": False, "attempts": budget.used - before})
         requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
+        if rows and complement and index > 0:
+            break  # A failed complement must not discard evidence or trigger extra paid fan-out.
         # An access challenge is not proof of no matches. No browser or challenge solver is launched.
     routing = {**public_plan(route), "attempted_providers": [r["provider"] for r in requests],
+               "complementary_search": complement,
                "stop_reason": "usable_results" if rows or content else "no_usable_results_within_limits",
                "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."}
     if content:
         return {**content, "routing": routing, "requests": requests, "errors": errors,
                 "partial": bool(errors), "budget": budget.data()}
+    groups = {}
+    for i, row in enumerate(rows):
+        parsed = urllib.parse.urlsplit(row["url"])
+        canonical = urllib.parse.urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), parsed.path, parsed.query, ""))
+        groups.setdefault(canonical, []).append(i)
+    duplicates = [group for group in groups.values() if len(group) > 1]
     return {"ok": bool(rows), "operation": "fetch" if fetch else "search", "version": VERSION,
             "retrieved_at": datetime.now(timezone.utc).isoformat(), "query": getattr(args, "query", None),
             "url": getattr(args, "url", None), "providers": [r["provider"] for r in requests],
@@ -625,6 +638,8 @@ def parser():
     search.add_argument("--count", type=int, default=10)
     search.add_argument("--site", help="One public domain; see each provider's supported semantics")
     search.add_argument("--platform", choices=tuple(PLATFORMS), help="Target platform; public-index coverage is not a native site search")
+    search.add_argument("--intent", choices=("auto", "general", "reference", "current"), default="auto",
+                        help="Agent task intent; quality reference/current may consult a complementary source within existing limits")
     search.add_argument("--need-content", action="store_true", help="Explicit page content: DeepSeek, Tavily or Exa")
     search.add_argument("--freshness", help="Provider-native time filter; see capabilities and providers.md")
     search.add_argument("--industry", choices=("gov", "news", "acad", "finance"), help="Yuanbao paid tiers")

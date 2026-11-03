@@ -2,6 +2,16 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.5.0 — 2026-11-03
+
+103 local offline tests passed, covering complementary accumulation, duplicate URLs, retaining first results after complement failure, intent/explicit/free/platform boundaries, RSS mismatch fallback, offline-default benchmarking, request budgets, empty-result billing and execution-order rotation.
+
+Three six-task/three-mode rounds (baseline, keyless order, intent complement), plus two Chinese holdouts: 60 mode cells, 66 search HTTP attempts, 31 nonempty DeepSeek successes, known cost estimate USD 0.02325 at the dated official price, without invoice reconciliation. Five separate page validations used six HTTP calls (five Jina, one GitHub 403), no keyed Fetch. Credentials and preferences were unchanged. Retrieval, evidence, freshness and unknown model cost are reported separately in the [live study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md).
+
+Bing baseline returned unrelated nonempty results for three tasks; earlier connectivity observations do not establish relevance. Exa complements added primary sources. GitHub Actions official-domain indexed excerpts still contained old wording; current-page reading revealed the conflict. GitHub README still returned 403; Jina fallback read the repository page. Platform capability must be assessed separately.
+
+Runtime records retained 0.4.1 during development; the same routing behavior is released as 0.5.0. This is not blind quality assessment; caching/network affect latency. Other keyed services, multiple hosts and real desktop input acceptance remain unverified.
+
 ## v0.4.1 — 2026-11-03
 
 94 offline tests passed. The patch corrects capabilities, plan/all parity and access classification. Live examples reuse the v0.4.0 observations below, without counting them as new checks. Runtime, Skill and packages are version 0.4.1.

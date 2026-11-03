@@ -1,5 +1,6 @@
 """Offline route planning. The calling Agent evaluates relevance and evidence."""
 from copy import copy
+import re
 
 from search_common import SearchError, invalid
 from search_providers import REGISTRY
@@ -10,6 +11,15 @@ STRATEGIES = ("smart", "quality", "balanced", "free")
 PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhihu": "zhihu.com",
              "xiaohongshu": "xiaohongshu.com", "weibo": "weibo.com"}
 DEFAULTS = {"strategy": "smart", "max_sources": 2, "disabled_providers": []}
+
+
+def query_intent(query, requested="auto"):
+    if requested != "auto": return requested
+    if re.search(r"最新|近期|最近|截至|当前|\b(?:latest|recent|current|as of|LTS)\b", query, re.I):
+        return "current"
+    if re.search(r"官方|文档|收费|计费|\b(?:documentation|docs|official|pricing|billing|API)\b", query, re.I):
+        return "reference"
+    return "general"
 
 
 def preferences(config):
@@ -37,6 +47,7 @@ def scoped_args(args):
 
 def plan(args, config, credential, *, fetch=False):
     scoped = scoped_args(args)
+    intent = "reading" if fetch else query_intent(args.query, getattr(args, "intent", "auto"))
     prefs = preferences(config)
     requested_strategy = getattr(args, "strategy", None) or prefs["strategy"]
     if requested_strategy not in STRATEGIES: invalid("Unknown search strategy.")
@@ -75,7 +86,7 @@ def plan(args, config, credential, *, fetch=False):
         if getattr(args, "strategy", None) == "free" and any(ALL[p].requires_key for p in candidates):
             invalid("--strategy free conflicts with a keyed provider. Remove the keyed provider or change this invocation's strategy.")
     else:
-        public = ["jina", "exa-free"] if fetch else ["bing", "exa-free", "duckduckgo"]
+        public = ["jina", "exa-free"] if fetch else ["exa-free", "bing", "duckduckgo"]
         specialized = None
         if fetch:
             from urllib.parse import urlsplit
@@ -90,7 +101,7 @@ def plan(args, config, credential, *, fetch=False):
             site = getattr(scoped, "site", None)
             if site == "github.com": specialized = "github"
             elif site == "news.ycombinator.com": specialized = "hackernews"
-            candidates = (available + public if strategy == "quality" else
+            candidates = (available[:1] + public[:1] + available[1:] + public[1:] if strategy == "quality" else
                           public[:1] + available + public[1:] if strategy == "balanced" else public)
         if specialized: candidates.insert(0, specialized)
         if preferred in candidates and preferred not in disabled and not specialized:
@@ -119,11 +130,15 @@ def plan(args, config, credential, *, fetch=False):
     limit = getattr(args, "max_sources", None) or prefs["max_sources"]
     if type(limit) is not int or not 1 <= limit <= 3: invalid("--max-sources must be 1..3.")
     return {"requested_strategy": requested_strategy, "strategy": strategy, "automatic": not explicit,
-            "selection_basis": "capabilities, target scope, configured default and access policy; no benchmark ranking",
+            "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
             "candidates": [x["provider"] for x in eligible], "skipped_incompatible": skipped,
             "max_sources": len(eligible) if explicit else limit,
             "payloads": {x["provider"]: x["payload"] for x in eligible},
             "platform": getattr(args, "platform", None),
+            "intent": intent, "specialized_source": specialized if not explicit else None,
+            "complementary_search": (not fetch and not explicit and strategy == "quality"
+                                     and intent in ("reference", "current") and not specialized
+                                     and limit > 1 and len(eligible) > 1),
             "semantic_quality_verified": False}
 
 

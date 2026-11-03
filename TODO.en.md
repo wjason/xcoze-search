@@ -15,9 +15,14 @@ Updated 2026-11-03. Focus: Agent web search and source reading. Default automati
 - [x] Chinese/English instructions, setup, routing contracts and competitor implementation research.
 - [x] Per-source local connectivity checks; successes and restrictions in [validation](VALIDATION.en.md) do not promise availability or accuracy.
 
+## v0.5.0: measured routing revision
+
+- [x] Exa-first keyless search, conservative experimental RSS/HTML mismatch fallback and bounded quality reference/current complements.
+- [x] Current primary-page verification guidance and bilingual reproducible observations.
+
 ## P0: task quality and reliability
 
-- [ ] Compare keyless, single API and Smart on the same Chinese/English tasks: evidence support, primary sources, freshness, latency, request/model cost.
+- [x] Initial six-task plus two-Chinese-holdout comparison of keyless/DeepSeek/Smart, with evidence/freshness review, timings and API estimates. [Report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md); model cost and invoice reconciliation remain pending.
 - [ ] Expand Chinese current-information cases; check feed relevance, platform coverage and unknown dates.
 - [ ] Monitor GitHub anonymous quotas, DDG challenges, Exa keyless limits and network changes; no challenge bypass or identity rotation.
 - [ ] Yuanbao real-account verification remains deferred because the user has no test key. Four additional keyed sources also retain separate real-account/quality verification work.
