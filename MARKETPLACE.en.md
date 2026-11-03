@@ -1,46 +1,33 @@
-# Marketplace listing material
+# Generic marketplace materials
 
 [简体中文](MARKETPLACE.zh-CN.md) | **English**
 
 Name: **xcoze search**
-
-Skill ID: `xcoze-search`
-
-Version: `0.3.0` preview; use the actual submitted version.
-
+ID: `xcoze-search`
+Version: `0.4.0` preview
 Maintainer: XCoze
+Repository: [wjason/xcoze-search](https://github.com/wjason/xcoze-search)
 
-Short description: One Skill for official DeepSeek, Yuanbao, Tavily, Exa, Brave, and Bocha search APIs, using your own provider keys.
+## Short description
 
-Suggested categories: Search / Research / Information retrieval
-
-Suggested tags: search, research, deepseek, yuanbao, tavily, exa, brave, bocha, citations, web-fetch
+Automatically select keyless and commercial sources for Agent web search, page reading and traceable citations.
 
 ## Description
 
-xcoze search adds multi-provider public-source retrieval to Agent Skills hosts that can run local Python. Configure providers as needed, then choose single or explicit multi-provider retrieval. The legacy both command still means DeepSeek plus Yuanbao.
+Ask normally after installation. No keys use public routes; configured keys default to quality-first. Balanced/free/default-source preferences are optional. Source/HTTP/time budgets bound automatic fallback; the Agent assesses evidence gaps and checks originals.
 
-Results preserve source URLs, available dates, providers, and native fields for evidence review and cited answers. DeepSeek, Tavily, and Exa expose their content APIs; summaries and highlights remain distinct. Capabilities are inspectable offline, with actual HTTP-attempt budgets. Account access depends on each provider.
+Keyless routes: Bing RSS, DuckDuckGo HTML, Exa hosted MCP, GitHub public repositories and Hacker News; Jina Reader extracts pages. BYOK: DeepSeek, Yuanbao, Tavily, Exa, Brave and Bocha. Zhihu/Xiaohongshu/Weibo have scoped public-index search, not guaranteed native search, complete text or comments.
 
-## Prerequisites and data
+## Installation and requirements
 
-- Python 3.10+, no pip runtime dependencies, and local script execution by the host.
-- Users activate official API services and provide their own keys. Yuanbao needs a Search Service API Key.
-- Keys use local hidden input and must not be sent through chat. Queries go directly to selected providers.
-- Conversational setup provides official links for users to open themselves, followed by local key input without locating config files. Dialogs depend on an accessible desktop; terminal setup remains available. See VALIDATION.en.md for desktop acceptance status.
-- Calls may incur charges; provider pricing, quotas, and terms apply.
-- This is an independent XCoze integration, not an official/certified DeepSeek or Tencent Skill.
+```text
+Install https://github.com/wjason/xcoze-search
+```
 
-## Example prompts
+Python 3.10+, no pip/browser runtime dependency; a host with Agent Skills and local execution. Optional Skills CLI installation requires Node.js. Keys use local hidden input, never chat; signup links are printed without opening pages. See [installation](INSTALL.en.md), [setup](references/setup.en.md).
 
-- “Use xcoze search to find current public technical documentation, preferring official sources.”
-- “Use Yuanbao to find industry reports from the past seven days and cite originals.”
-- “Cross-check this report using DeepSeek and Yuanbao.”
+## Data and boundaries
 
-## Submission fields
+Queries/URLs go to the selected source without an XCoze relay. Keyless still uses external services and their limits. Credentials are permission-protected plaintext without OS credential-store integration. Search success is not factual verification; live retrieval does not promise immediate indexing. Self-hosted search, enterprise documents and full-site crawling are outside scope.
 
-Repository: [wjason/xcoze-search](https://github.com/wjason/xcoze-search)
-
-Versions/assets: [GitHub Releases](https://github.com/wjason/xcoze-search/releases). Use actual published assets. Add maintainer contact details, icons/screenshots, and review fields when a marketplace is selected.
-
-Validation basis: offline tests passed; DeepSeek Search/Fetch were live-tested on 2026-10-24. Yuanbao and the four added providers still require their respective test keys for live verification. If live checks are completed before submission, update VALIDATION.en.md with redacted metadata only. Marketplace listing, certification, or approval cannot be guaranteed by the package.
+See [validation](VALIDATION.en.md) for offline/live evidence and unverified items. No marketplace is selected; this file does not establish listing, certification or approval. Suggested tags: search, agent, keyless, research, citations, web-fetch.

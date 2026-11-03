@@ -2,6 +2,21 @@
 
 **简体中文** | [English](providers.en.md)
 
+## v0.4.0 免 Key 路径
+
+| ID | 固定入口 | 能力和限制 |
+|---|---|---|
+| bing | https://www.bing.com/search?format=rss | 实验性 RSS 搜索，最多 10 条；site 操作符后再检查返回 URL 主机；不将 RSS 日期当作文章发布日期 |
+| duckduckgo | https://html.duckduckgo.com/html/ | 实验性 HTML 搜索，最多 20 条；拒绝验证页与无法识别的页面 |
+| exa-free | https://mcp.exa.ai/mcp | [官方免 Key 限额入口](https://exa.ai/docs/get-started/exa-mcp)，tools/call Search/Fetch，JSON/SSE；正文读取上限 24000 字符 |
+| github | https://api.github.com/search/repositories | [公开仓库接口](https://docs.github.com/en/rest/search/search)，最多 20 条；不含代码搜索，默认 README 读取走固定 repos 接口 |
+| hackernews | https://hn.algolia.com/api/v1/search | 帖子检索，支持起止日期；[官方单条接口](https://github.com/HackerNews/API)读帖子/评论，保留子评论 ID 而不自动遍历 |
+| jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/)固定服务转取公开 URL；仅阅读、不搜索；最多返回 24000 字符并标明截断 |
+
+所有免 Key 适配器不读取或发送其他凭据。它们仍向外部服务发送查询或 URL；公开页面、匿名额度与可用性没有 SLA。DNS 与页面访问由固定上游服务处理，脚本不直连任意用户目标地址。过滤不支持时拒绝或在自动计划中排除该来源，不能静默忽略条件。自动规则见 [调度](routing.md)。
+
+以下是既有六家带 Key API 的具体契约。
+
 核对日期：2026-11-02。下列为本工具开放的适配范围；账号权限、计费和服务端限制以官方文档为准。所有端点固定，鉴权请求不跟随重定向，不接受自定义代理 URL。
 
 ## 能力矩阵

@@ -5,176 +5,106 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**面向 AI Agent 的多搜索源工具。** 使用各服务商的官方 API，提供网页搜索、内容提取和带来源的结构化结果。配置哪家服务的 Key，就使用哪家服务。
+**给 Agent 一个开箱即用的联网搜索入口。** 无 Key 时使用公开渠道；配置 Key 后默认效果优先。Agent 根据问题选择来源、读取原文、补充搜索，取得足够证据后停止。日常提问即可，模式和搜索源都是可选设置。
 
-[安装](#安装) · [配置](#配置-api-key) · [使用](#使用) · [开发计划](TODO.md) · [贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md)
-
-## 支持状态
-
-| 搜索源 | 网页搜索 | 内容能力 | 账号验证 |
-|---|---|---|---|
-| DeepSeek | 已实现 | Search 正文、Fetch | 2026-11-02 Search/Fetch 回归通过 |
-| 腾讯元宝 | 已实现 | 标准摘要、动态摘要 | 尚未配置，在线验证待办 |
-| Tavily | 已实现 | Search 片段/可选正文、Extract | 未做真实账号测试 |
-| Exa | 已实现 | Search/Contents 的正文、摘录、摘要分别处理 | 未做真实账号测试 |
-| Brave Search | 已实现 | 网页摘要、可选额外片段 | 未做真实账号测试 |
-| 博查 | 已实现 | Web Search、可选摘要 | 未做真实账号测试 |
-
-当前版本：[v0.3.0 预览版](https://github.com/wjason/xcoze-search/releases/tag/v0.3.0)。新增搜索源的协议实现和离线测试已完成，真实账号状态分别记录，不能据此推断账号权限或检索质量。官方依据、参数和限制见 [接口说明](references/providers.md)，测试范围见 [验证记录](VALIDATION.md)。
+[安装](#安装) · [支持的来源](#支持的来源) · [配置 Key](#配置-key) · [自动调度](references/routing.md) · [开发计划](TODO.md)
 
 ## 安装
 
-要求 Python 3.10+，运行不需要额外 Python 包；助手须支持 Agent Skills 并能执行本地脚本。Skills CLI 安装方式还需要 Node.js，手动解压不需要。
-
-### 让 Agent 帮忙安装（推荐）
-
-在支持安装 Skill、能够执行本地命令的 Agent 对话中，直接复制发送：
+在能够安装 Skill、执行本地脚本的 Agent 中发送：
 
 ```text
 安装 https://github.com/wjason/xcoze-search
 ```
 
-也可以说得更具体：
-
-```text
-帮我安装这个 Skill：https://github.com/wjason/xcoze-search
-请检查 Python 运行环境，并安装到当前助手的技能目录。
-```
-
-安装完成后，按助手提示新建会话或重新载入，再发送：
-
-```text
-帮我配置 xcoze search 的 DeepSeek 搜索。
-```
-
-可将 DeepSeek 换成其他已支持的服务。助手会提供官方密钥申请链接，并在准备好后启动本地隐藏输入窗口。安装这一步不用提供 API Key，也不要把密钥发到聊天里。若当前 Agent 不支持安装或执行本地命令，可使用下面的安装方式。
-
-### 命令行或手动安装
+要求 Python 3.10+；运行只使用标准库，无需安装浏览器、Node.js 或额外 Python 包。使用 Skills CLI 安装时另需 Node.js：
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.3.0 Skill 安装包](https://github.com/wjason/xcoze-search/releases/download/v0.3.0/xcoze-search-skill-v0.3.0.zip)，将 `xcoze-search/` 放进助手的技能目录。Codex 默认入口为 `~/.codex/skills/xcoze-search/SKILL.md`；设置过 CODEX_HOME 时使用对应的 skills 子目录。
+也可下载 [v0.4.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
-安装或升级后新建会话，尚未识别时重新载入助手。升级、配置格式和卸载说明见 [安装指南](INSTALL.zh-CN.md)。当前 ZIP 是 Python Skill 包，独立可执行安装包仍在计划中。
+## 支持的来源
 
-## 配置 API Key
+### 无需 Key
 
-直接对助手说：
-
-```text
-帮我配置 xcoze search 的 Tavily 搜索。
-我已有 Exa Key，开始配置。
-更换 xcoze search 的元宝密钥。
-检查 xcoze search 的配置状态。
-```
-
-助手提供官方申请链接，由用户自行点击，不自动打开网页。取得 Key 后回复“准备好了，开始输入”，助手会启动本地隐藏输入窗口；粘贴保存后执行一次可能计费的搜索，并按实际结果报告是否可用。无需找安装目录或配置文件，也不要把 Key 发到聊天里。
-
-窗口使用 macOS 系统对话框、Windows PowerShell/WinForms，或已有 Zenity 的 Linux 图形桌面。无可用桌面时改用自己的可见终端隐藏输入或受控环境变量。各桌面的人工验收仍待完成。
-
-| 服务 | 官方密钥入口 | 环境变量 |
+| 来源 | 已实现能力 | 边界 |
 |---|---|---|
-| DeepSeek | [平台](https://platform.deepseek.com/api_keys) | `DEEPSEEK_API_KEY` |
-| 元宝 | [搜索控制台](https://console.cloud.tencent.com/wsapi/index) | `YUANBAO_API_KEY`，兼容 `TENCENTCLOUD_WSA_APIKEY` |
-| Tavily | [控制台](https://app.tavily.com/home) | `TAVILY_API_KEY` |
-| Exa | [控制台](https://dashboard.exa.ai/api-keys) | `EXA_API_KEY` |
-| Brave | [控制台](https://api-dashboard.search.brave.com/app/keys) | `BRAVE_API_KEY` |
-| 博查 | [开放平台](https://open.bochaai.com/) | `BOCHA_API_KEY` |
+| Bing RSS | 通用公开网页搜索 | 实验性公开 RSS 路径；最多 10 条，结果可能缺日期或不够相关 |
+| DuckDuckGo HTML | 通用公开网页搜索 | 实验性 HTML 解析；验证页和改版会导致不可用 |
+| Exa 托管 MCP | 搜索、网页读取 | 官方有限免 Key 入口，仍依赖 Exa 服务和限额；与 Exa API 独立 |
+| GitHub | 公开仓库搜索、默认分支 README 读取 | 匿名接口有限流；不包含代码搜索、私有仓库或完整 Issue/PR 适配 |
+| Hacker News | Algolia 帖子搜索、官方接口读取单条帖子或评论 | 保留讨论地址和外链；子评论 ID 不等于已读取评论树 |
+| Jina Reader | 网页正文读取 | 官方限额内免 Key；本项目未接入 Jina Search |
 
-元宝须使用搜索服务 API Key，与腾讯云 SecretId/SecretKey 等密钥不通用。每家服务独立开通、授权和计费。
+宿主已有搜索、网页读取及浏览器工具由 Agent 按需复用，Skill 不安装或接管宿主工具。知乎、小红书、微博支持公开索引定向搜索；这不等同站内搜索、完整正文或评论读取。需要站内能力时，可使用环境中已有且已授权的平台工具。
 
-手动配置时，在自己的可见终端执行，路径替换为实际安装目录：
+### 使用自己的 Key
 
-```bash
-python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider tavily --verify
-python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider exa --gui --verify
-```
+| 服务 | 已实现能力 | 环境变量 |
+|---|---|---|
+| DeepSeek | Search、Fetch | `DEEPSEEK_API_KEY` |
+| 腾讯元宝 | SearchPro，标准/动态摘要 | `YUANBAO_API_KEY`，兼容 `TENCENTCLOUD_WSA_APIKEY` |
+| Tavily | Search、Extract | `TAVILY_API_KEY` |
+| Exa | Search、Contents | `EXA_API_KEY` |
+| Brave Search | Web Search | `BRAVE_API_KEY` |
+| 博查 | Web Search | `BOCHA_API_KEY` |
 
-不带 `--gui` 使用终端隐藏输入；带上则使用本地窗口。取消输入不改动配置；`--verify` 验证失败时配置已保存，但不能声称已可用。只有显式 `--default` 才改变默认源。Windows 可把 `python3` 换为 `py -3`；macOS 也保留 `scripts/setup.command` 作为手动入口。
+各服务独立开通和计费。配置且未禁用的 Key 会参与默认效果优先选路；免费模式排除全部带 Key 的适配器，即使账号仍有赠送额度。服务能力和参数见 [接口说明](references/providers.md)。
 
-环境变量优先于本地保存值，并须对助手实际运行进程可见。凭据目前以权限保护的明文保存在用户目录，尚未接入系统钥匙串。旧 v1 配置可直接使用，普通搜索不会改写它；迁移或保存新配置时保留私人备份，详情见 [配置与排错](references/setup.md)。
+实现、账号验证和检索质量分别记录。2026-11-03 本机验证中，Bing RSS、GitHub、HN、Jina 返回可用内容；Exa 免 Key MCP 初次 403、后续搜索通过，DuckDuckGo 返回验证响应；GitHub README 本次 403。这些是当时网络的调用结果，不是所有用户的可用性承诺。六家带 Key 服务的验证范围见 [验证记录](VALIDATION.md)。
 
-## 使用
+## 自动调度
+
+- **默认 Smart**：没有可用格式的 Key 时选免 Key 路径；存在 Key 时按效果优先策略选路。Key 的存在不等于账号在线可用。
+- **按任务选择**：GitHub、HN 定向任务优先平台结构化接口。已知 URL 优先复用宿主读取；脚本自动读取优先 Jina/Exa 免 Key 阅读路径。
+- **有限补充**：脚本在空结果或失败时尝试下一条兼容路径，默认最多 2 个来源、45 秒，受 HTTP 预算约束。有可用结果即返回，由 Agent 判断相关性、时效和证据缺口，再决定是否补搜。
+- **可选设置**：支持效果优先、平衡、免费，以及指定来源。本次指定优先于已保存设置；明确 `--strategy free` 时不能同时指定带 Key 来源。
+
+Smart 当前采用透明的能力/来源规则与 Agent 的语义判断，没有跨供应商评分比较、检索质量排行榜或自动训练路由。元宝、DeepSeek 等通用 API 的初始顺序是配置规则，不代表质量排名。详见 [调度说明](references/routing.md)。
+
+## 配置 Key
+
+不配置也能开始搜索。需要增加商用服务时，对 Agent 说：
 
 ```text
-用 xcoze search 查找这个主题的官方资料，附上来源。
-用 Tavily 搜索最近一周的相关报道。
-用 Exa 查找文档，再读取原文，分别保留摘要和摘录。
-用 Brave 搜索英国的英文资料。
-用博查搜索最近一周的行业新闻。
-用 DeepSeek、Tavily 和 Exa 交叉查找，比较原始来源和时间。
+帮我配置 xcoze search 的 DeepSeek 搜索。
 ```
 
-命令行示例（在 Skill 目录执行）：
+Agent 只提供官方申请链接，不自动打开网页；准备好后启动本地隐藏输入窗口。不要把 Key 发到聊天里。保存后可执行一次可能计费的验证。元宝须使用搜索服务 Key，与腾讯云 SecretId/SecretKey 不通用。详见 [配置与排错](references/setup.md)。
+
+凭据目前以权限保护的明文保存在用户配置目录，尚未接入系统凭据库。环境变量优先。v1 读取保持兼容，保存时按原迁移流程保留私人备份。
+
+## 使用示例
+
+```text
+查一下最近一周相关政策的官方原文。
+在 GitHub 找几个开源工业视觉项目，对比它们的部署要求。
+看看 Hacker News 对这个项目有哪些讨论。
+搜索知乎上关于这个问题的公开资料。
+```
+
+以下命令通常由 Agent 定位 Skill 后执行，用户无需查找文件：
 
 ```bash
-# 查看每家支持的选项、条数、长度限制和密钥入口；不联网
-python3 scripts/xcoze_search.py capabilities
-
-# 单源及日期条件
-python3 scripts/xcoze_search.py search 'industrial vision' --provider tavily --freshness week --count 5
-python3 scripts/xcoze_search.py search 'Python TaskGroup' --provider exa --site docs.python.org --start-date 2026-01-01 --highlights
-python3 scripts/xcoze_search.py search 'energy storage' --provider brave --country GB --language en --freshness pw --extra-snippets
-python3 scripts/xcoze_search.py search '工业视觉' --provider bocha --freshness oneWeek --summary
-
-# 多源，最多 6 次 HTTP 请求（含重试）
-python3 scripts/xcoze_search.py search '海上风电数字化' --provider deepseek,tavily,exa --count 5 --max-requests 6
-
-# 显式内容提取
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio-task.html' --provider exa --highlights
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio-task.html' --provider tavily
+python3 scripts/xcoze_search.py search 'Python asyncio 官方文档'
+python3 scripts/xcoze_search.py search 'industrial vision' --platform github
+python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01
+python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html'
+python3 scripts/xcoze_search.py preferences --strategy free
+python3 scripts/xcoze_search.py preferences --strategy balanced
+python3 scripts/xcoze_search.py preferences --reset
+python3 scripts/xcoze_search.py search '海上风电数字化' --provider deepseek,yuanbao --max-requests 4
+python3 scripts/xcoze_search.py plan 'Python asyncio' --platform github
 ```
 
-选择规则：
+`plan`、`status`、`capabilities` 不联网；普通搜索无需先运行 doctor。`--mode` 保留元宝原生参数含义，调度模式使用 `--strategy`。
 
-- `auto` 使用默认源；未设置时按 DeepSeek、元宝、Tavily、Exa、Brave、博查的顺序选择第一家已配置服务。失败不暗中切换。
-- `both` 仍只表示 DeepSeek＋元宝；新接入不会改变旧命令的含义。
-- 逗号列表表示指定多家服务；`all` 表示全部已配置服务。新配 Key 不会自动增加普通查询的发送对象。
-- 多源在联网前校验全部参数及密钥；各家能力不同，不支持的条件会报错。Tavily/Brave 最多 20 条，其余本工具最多 50 条，不自动分页。
-- Fetch 默认仍使用 DeepSeek；Tavily/Exa 必须显式指定。其余三家只有搜索适配，不自动借用其他服务提取正文。
+`auto` 在 v0.4.0 改为自动选路，Fetch 默认也改为 `auto`；需要旧行为时显式指定服务。`both` 仍只表示 DeepSeek＋元宝；显式多源不自动扩大发送范围。自动备用成功可返回 `ok:true`，之前失败保留在 errors/requests；显式多源部分失败仍为退出码 4。见 [输出契约](references/output.md)。
 
-Tavily 的 `content` 是片段，`raw_content` 才是正文；Exa 的 `text`、`highlights`、`summary` 分别返回。元宝、Brave、博查的摘要不标记成全文。`--include-answer` 只为 Tavily 显式请求生成答案，结果与来源列表分开保存。
+## 开发与范围
 
-## 预算、用量和错误
+运行离线测试：`python3 -m unittest discover -s tests -v`。结果保留原生顺序与分数、摘要与正文分别处理，不把脚本返回成功当作事实核实完成。
 
-`--max-requests` 限制当前命令的实际 HTTP 次数，包括失败和重试。Search/doctor 默认 12，Fetch 默认 3；每次请求最多重试 2 次，默认重试 1 次，doctor 零重试。多源至少要留出每家一次的预算。此限制不跨命令持久累计，也不是金额上限。
-
-结果保留各家排序、评分和原始字段，不按不同服务的分数混排。输出包含各服务实际请求次数、耗时及平台返回的用量/费用；未返回时为 `null`，不估造费用。多源运行中某家失败会保留成功结果，返回 `ok:false`、`partial:true` 和退出码 4。
-
-空结果、鉴权失败、计费/配额问题、限流、网络问题、预算用尽和异常响应分别报告。HTTP 200 的内容提取仍检查逐 URL 失败状态。字段和退出码见 [输出契约](references/output.md)。
-
-## 检查与配置迁移
-
-```bash
-python3 scripts/xcoze_search.py status
-python3 scripts/xcoze_search.py doctor --provider tavily
-python3 scripts/xcoze_search.py doctor --provider deepseek,exa --max-requests 2
-python3 scripts/xcoze_search.py migrate-config
-```
-
-status 不联网、不显示密钥。doctor 会真实搜索，`search_verified:true` 只代表该次检查取得有效结果。迁移命令把 v1 配置升级到 v2，并保留权限受控的 v1 原文件备份；新格式保留已有 Key、默认源及扩展字段。详细失败与回退说明见 [配置说明](references/setup.md)。
-
-## 开发与回归
-
-本节命令在仓库或源码包目录执行。当前源码有 68 项离线测试（v0.3.0 发布时为 67 项），运行和测试只依赖 Python 标准库；CI 覆盖 Windows/Linux、Python 3.10/3.12。
-
-```bash
-python3 -m unittest discover -s tests -v
-# 默认只生成计划，不读取凭据、不发送查询
-python3 scripts/evaluate.py --provider deepseek,tavily,exa
-python3 scripts/evaluate.py --operation fetch --provider deepseek,tavily,exa
-```
-
-源码包包含 12 个中英文搜索查询、3 个正文提取 URL 及显式在线运行入口，分别覆盖技术文档、原始规范、日期、版本和冲突信息。域名命中仅作人工复核线索，不能视为事实准确率或服务质量排名。在线调用需显式 `--live`，并受整轮请求预算限制；见 [回归说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md)（仅源码包包含）。
-
-P0 基础代码和 P1 四家适配已实现；元宝在线验证按当前账号条件保留待办。P2/P3 新服务、独立安装包和系统凭据库等后续工作见 [TODO](TODO.md)。参与方式见 [CONTRIBUTING](CONTRIBUTING.md)。
-
-## 数据、费用与许可
-
-查询和 URL 直接发送到选定的服务商，不经过项目维护方服务器。项目不收集遥测、不自动保存搜索历史；回归工具只有用户显式指定输出文件时才写报告。
-
-多源查询、重试、内容提取、生成摘要或高级搜索选项可能增加费用，以服务商实际计费为准。本项目独立维护，使用官方 API，不代表服务商官方产品或认证。请避免发送未经授权的私密查询及带访问令牌的 URL。
-
-[MIT License](LICENSE)。搜索结果内容的权利归原权利人所有。
+当前聚焦联网搜索和阅读。自建 SearXNG、网页索引、企业资料搜索不在当前范围；站点登录、验证码处理和整站爬取也不是基础安装的一部分。[贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md) · [竞品与服务调研](references/search-services.md)

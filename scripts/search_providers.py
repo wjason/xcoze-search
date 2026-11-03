@@ -68,9 +68,12 @@ class Provider:
     setup_hint = ""
     options = frozenset()
     max_count, query_limit, query_unit = 50, 4096, "characters"
+    requires_key = True
+    supports_search = True
 
     def capabilities(self):
-        return {"provider": self.name, "label": self.label, "search": True,
+        return {"provider": self.name, "label": self.label, "search": self.supports_search,
+                "requires_key": self.requires_key,
                 "fetch": bool(self.fetch_endpoint), "search_content": "need_content" in self.options,
                 "site": "site" in self.options,
                 "time_filters": sorted(self.options & {"freshness", "start_date", "end_date"}),
@@ -82,6 +85,15 @@ class Provider:
                 "environment_variables": list(self.env_keys), "key_url": self.key_url,
                 "endpoint": self.endpoint, "fetch_endpoint": self.fetch_endpoint,
                 "auth_header": self.auth_header, "method": self.method}
+
+    def decode_response(self, raw):
+        try:
+            data = json.loads(raw)
+        except (ValueError, UnicodeError):
+            raise SearchError("invalid_response", "Provider returned invalid JSON.") from None
+        if not isinstance(data, dict):
+            raise SearchError("invalid_response", "Expected a JSON object.")
+        return data
 
     def validate_query(self, query):
         if not isinstance(query, str) or not query.strip():

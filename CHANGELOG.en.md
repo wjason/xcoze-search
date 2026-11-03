@@ -2,7 +2,15 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
-## Unreleased
+## v0.4.0 — 2026-11-03
+
+- Add keyless Bing RSS, DuckDuckGo HTML, Exa MCP, GitHub, HN and Jina Reader. Public feeds/HTML are experimental; official keyless services retain access limits.
+- Default Smart: keyless without keys, quality-first with configured keys, structured GitHub/HN routes first. Bounded fallback handles failed/empty calls; the Agent evaluates semantic evidence gaps.
+- Add saved preferences, free/balanced/quality strategies, per-call overrides, offline plan, source disabling and reset. Free excludes keyed adapters; ordinary searches never rewrite config.
+- Bound automatic source count, HTTP attempts and waiting; retain constraints and report routing/failure history.
+- **Behavior changes:** auto now has bounded fallback instead of fixed single-source selection; Fetch defaults to auto instead of DeepSeek. Pin sources for older behavior; both and explicit multi-source semantics remain.
+- Add scoped public-index search for Zhihu/Xiaohongshu/Weibo with coverage boundaries. Remove SearXNG, self-built indexes and enterprise document search from current scope.
+- Record local keyless/keyed auto and recovery checks separately; no universal quality ranking, and Yuanbao real-account testing still awaits credentials.
 
 - Simplify both homepages by removing the language index table; retain the top language switch and keep document links within the selected language.
 

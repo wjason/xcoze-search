@@ -353,7 +353,8 @@ class ProviderTests(unittest.TestCase):
                 redirect_stdout(io.StringIO()) as out:
             self.assertEqual(x.main(["capabilities"]), 0)
         data = json.loads(out.getvalue())
-        self.assertEqual(len(data["providers"]), 6)
+        self.assertEqual({p["provider"] for p in data["providers"]}, set(x.ALL_PROVIDERS))
+        self.assertEqual(sum(p["requires_key"] for p in data["providers"]), 6)
         self.assertTrue(next(p for p in data["providers"] if p["provider"] == "exa")["fetch"])
         self.assertFalse(next(p for p in data["providers"] if p["provider"] == "brave")["fetch"])
 

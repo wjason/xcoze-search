@@ -206,7 +206,7 @@ class SearchTests(unittest.TestCase):
                 request.assert_not_called()
         del self.config["providers"]["deepseek"]
         with self.assertRaises(x.SearchError):
-            x.run_fetch(argparse.Namespace(url="https://example.com/a"), self.config)
+            x.run_fetch(argparse.Namespace(url="https://example.com/a", provider="deepseek"), self.config)
 
     def test_doctor_empty_is_not_verified(self):
         with patch.object(x, "request_api", return_value=({"results": []}, 1)):
@@ -357,7 +357,7 @@ class SearchTests(unittest.TestCase):
     def test_cli_missing_credentials_and_no_key_echo(self):
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
-            code = x.main(["search", "test"])
+            code = x.main(["search", "test", "--provider", "deepseek"])
         self.assertEqual(code, 2)
         self.assertEqual(json.loads(err.getvalue())["error"]["code"], "missing_api_key")
         self.assertEqual(out.getvalue(), "")

@@ -3,44 +3,31 @@
 **简体中文** | [English](MARKETPLACE.en.md)
 
 名称：**xcoze search**
-
-技能 ID：`xcoze-search`
-
-版本：`0.3.0` 预览版。上架时以实际提交的版本为准。
-
+ID：`xcoze-search`
+版本：`0.4.0` 预览版
 维护方：XCoze
+仓库：[wjason/xcoze-search](https://github.com/wjason/xcoze-search)
 
-简述：一个 Skill 接入 DeepSeek、元宝、Tavily、Exa、Brave、博查官方搜索 API，按需配置对应密钥。
+## 简述
 
-分类建议：搜索 / 研究 / 信息检索
+为 Agent 自动选择免 Key 与商用搜索来源，检索最新公开资料、读取网页并保留出处。
 
-标签建议：search, research, deepseek, yuanbao, tavily, exa, brave, bocha, citations, web-fetch
+## 功能说明
 
-## 详情介绍
+安装后日常提问即可。无 Key 使用公开渠道，有 Key 默认效果优先；需要调整时可保存平衡、免费或默认来源偏好。自动失败备用受来源数、HTTP 次数和等待预算限制，Agent 负责判断信息缺口并核对原文。
 
-xcoze search 为支持本地 Python 的 Agent Skills 助手增加多供应商公开资料检索能力。用户按需配置服务，可选择单源或显式多源检索，旧 both 命令仍只表示 DeepSeek＋元宝。
+免 Key 支持 Bing RSS、DuckDuckGo HTML、Exa 托管 MCP、GitHub 公开仓库、Hacker News；Jina Reader 用于正文读取。支持自带 Key 的 DeepSeek、元宝、Tavily、Exa、Brave、博查。知乎、小红书、微博为公开索引定向搜索，不承诺站内搜索、完整正文或评论。
 
-工具保留来源链接、可用日期、供应商与原始字段，帮助助手阅读证据、核实差异并给出带引用的回答。DeepSeek、Tavily、Exa 支持对应正文接口；摘要和摘录分开处理。能力可离线查询，提供实际 HTTP 次数预算，具体服务权限取决于账号。
+## 安装与依赖
 
-## 使用前提与数据说明
+```text
+安装 https://github.com/wjason/xcoze-search
+```
 
-- Python 3.10+，无需 pip 运行依赖；宿主可以执行本地脚本。
-- 用户自行开通对应官方 API 服务并提供自己的 Key。元宝需要“元宝搜索服务 API Key”。
-- Key 在用户本机隐藏输入，不应发到聊天；查询直接发送到所选供应商。
-- 支持在对话中发起配置：助手提供官方申请链接，用户自行点击；取得 Key 后在本地窗口输入，无需查找配置文件。窗口依赖操作系统桌面能力，无桌面时保留终端配置方式；各桌面人工验收状态见 VALIDATION.md。
-- API 调用可能计费；费用、配额和条款以官方平台为准。
-- 本技能是 XCoze 独立开发的集成，不是 DeepSeek 或腾讯官方发布/认证的技能。
+Python 3.10+，运行无 pip 或浏览器依赖；宿主需要 Agent Skills 和本地命令能力。可选 Skills CLI 安装需 Node.js。Key 在本机隐藏输入，不发到聊天；只输出申请链接，不自动打开页面。详见 [安装](INSTALL.zh-CN.md)、[配置](references/setup.md)。
 
-## 示例提示词
+## 数据与边界
 
-- “用 xcoze search 搜索最新公开技术文档，优先官方来源。”
-- “用元宝搜索近七天的行业报道，附原文链接。”
-- “用 DeepSeek 和元宝交叉核实这条消息。”
+查询与目标 URL 发往所选来源，不经过 XCoze 自建中转。免 Key 仍使用外部服务和各自限额。凭据当前为权限保护的明文文件；没有系统凭据库。搜索成功不等于事实正确，实时检索不保证索引即时更新。自建搜索、企业资料、整站爬取不在当前范围。
 
-## 提交时填写
-
-仓库：https://github.com/wjason/xcoze-search
-
-版本与发布资产：https://github.com/wjason/xcoze-search/releases（以实际已发布的 Release 为准）。联系渠道、商城要求的图标/截图与审核字段由发布者在确定平台后填写。
-
-当前验证口径：离线测试已通过；DeepSeek Search/Fetch 已于 2026-10-24 实测通过；元宝及四家新增服务账号调用仍待各自配置 Key 后验证。上架前若完成实测，更新 VALIDATION.md 并仅记录脱敏结果。商城是否收录、是否认证、是否通过审核均不能由本包保证。
+离线测试、逐来源在线结果和未验证项目见 [验证记录](VALIDATION.md)。商城未确定，本文件不表示已上架、认证或通过审核。标签可用：search, agent, keyless, research, citations, web-fetch。

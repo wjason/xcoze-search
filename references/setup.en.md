@@ -2,6 +2,12 @@
 
 [简体中文](setup.md) | **English**
 
+## Start without keys; optional preferences
+
+Ordinary search needs no key setup. Install and ask normally; use the setup flow below only to add/replace a commercial service. Configured, enabled keys make default Smart quality-first. Saved free/balanced preferences retain precedence after adding a key.
+
+The Agent saves preferences with `preferences --strategy free|balanced|quality`; the same search/fetch flag affects one call only. `preferences --reset` restores Smart and clears the default source while keeping keys. `preferences --disable <ID>` excludes an automatic source and `--enable` restores it. See [routing](routing.en.md). These commands neither print keys nor connect; users do not find config files.
+
 ## Conversational setup
 
 Requests such as “Configure xcoze search,” “Configure Exa,” or “Replace my Yuanbao key” enter setup. The agent locates the script relative to SKILL.md; users should not have to find installation or configuration files.
@@ -49,7 +55,7 @@ Precedence: the provider's environment variable, then this Skill's dedicated con
 
 The path is `${XDG_CONFIG_HOME:-~/.config}/xcoze-search/config.json` (shell notation only describes the path). Storage is **permissions-protected plaintext**. POSIX uses 700 for the dedicated directory and 600 for the file, rejecting symbolic links at those locations. XDG_CONFIG_HOME must be absolute. Windows inherits user-directory ACLs; manual ACL acceptance is pending. Configuration and backups are excluded from the repository and packages.
 
-v0.3.0 uses schema_version:2 and reads v1 directly. Status, search, and doctor do not rewrite v1. To upgrade explicitly:
+v0.4.0 retains schema_version:2 and reads v1 directly. Status, search, and doctor do not rewrite v1. To upgrade explicitly:
 
 ```bash
 python3 "<skill_dir>/scripts/xcoze_search.py" migrate-config

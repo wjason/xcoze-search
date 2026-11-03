@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""xcoze search: direct official search APIs; Python 3.10+, stdlib only."""
+"""xcoze search: automatic public/keyed search; Python 3.10+, stdlib only."""
 from __future__ import annotations
 
 import argparse
+from copy import copy, deepcopy
 from datetime import datetime, timezone
 import getpass
 import json
@@ -24,17 +25,27 @@ SCRIPT_DIR = str(Path(__file__).resolve().parent)
 if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 from search_common import SearchError, RequestBudget, invalid, public_url, text_field, validate_site
-from search_providers import REGISTRY, get_provider
+from search_providers import REGISTRY, get_provider as get_key_provider
+from public_providers import PUBLIC_REGISTRY, domain_matches
+from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
+                            validate_preferences, scoped_args, plan, public_plan)
 
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 PROVIDERS = tuple(REGISTRY)
-ENDPOINTS = {name: provider.endpoint for name, provider in REGISTRY.items()}
-ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in REGISTRY.items() if p.fetch_endpoint})
+ALL_PROVIDERS = tuple(ALL_REGISTRY)
+ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search}
+ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in ALL_REGISTRY.items() if p.fetch_endpoint})
 ENDPOINTS["fetch"] = REGISTRY["deepseek"].fetch_endpoint
 ENV_KEYS = {name: p.env_keys for name, p in REGISTRY.items()}
 KEY_URLS = {name: p.key_url for name, p in REGISTRY.items()}
 MAX_RESPONSE = 16 * 1024 * 1024
 CONFIG_SCHEMA = 2
+
+
+def get_provider(name):
+    if name in PUBLIC_REGISTRY:
+        return PUBLIC_REGISTRY[name]
+    return get_key_provider(name)
 
 
 def validate_config(data):
@@ -43,8 +54,9 @@ def validate_config(data):
             or not isinstance(data.get("providers"), dict)
             or any(not isinstance(k, str) or not re.fullmatch(r"[a-z][a-z0-9-]*", k)
                    or not isinstance(v, dict) for k, v in data["providers"].items())
-            or data.get("default_provider") not in (*PROVIDERS, None)):
+            or data.get("default_provider") not in (*ALL_PROVIDERS, None)):
         raise SearchError("invalid_config", "Unsupported or invalid config; original file has not been changed.")
+    validate_preferences(data.get("search_preferences", {}))
     return data
 
 
@@ -128,6 +140,8 @@ def validate_key(value):
 
 
 def credential(provider, config):
+    if not get_provider(provider).requires_key:
+        return "", "not_required"
     for env in ENV_KEYS[provider]:
         if os.environ.get(env, "").strip():
             return validate_key(os.environ[env]), "environment:" + env
@@ -150,7 +164,7 @@ def configured_providers(config):
 
 
 def select_providers(requested, config):
-    if requested in REGISTRY:
+    if requested in ALL_REGISTRY:
         return [requested]
     if requested == "both":
         return ["deepseek", "yuanbao"]  # Backward-compatible meaning, even with six providers.
@@ -161,7 +175,7 @@ def select_providers(requested, config):
         return selected
     if "," in requested:
         selected = requested.split(",")
-        if len(selected) != len(set(selected)) or any(p not in REGISTRY for p in selected):
+        if len(selected) != len(set(selected)) or any(p not in ALL_REGISTRY for p in selected):
             invalid("Use distinct registered provider names separated by commas.")
         return selected
     if requested != "auto":
@@ -210,7 +224,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
     name = "deepseek" if operation == "fetch" else operation.removesuffix("_fetch")
     provider = get_provider(name)
     transport = opener or urllib.request.build_opener(NoRedirect())
-    req = provider.build_request(payload, validate_key(key), VERSION, fetch=fetching)
+    req = provider.build_request(payload, validate_key(key) if provider.requires_key else "", VERSION, fetch=fetching)
     budget = budget or RequestBudget(retries + 1)
     for attempt in range(retries + 1):
         try:
@@ -222,20 +236,20 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
         try:
             with transport.open(req, timeout=timeout) as response:
                 if response.status != 200:
+                    if name == "duckduckgo" and response.status == 202:
+                        raise SearchError("access_challenge", "DuckDuckGo returned an incomplete or verification response.",
+                                          status=202, category="access")
                     raise http_error(response.status)
                 raw = response.read(MAX_RESPONSE + 1)
             if len(raw) > MAX_RESPONSE:
                 raise SearchError("response_too_large", "Provider response exceeds 16 MiB.")
-            try:
-                data = json.loads(raw)
-            except (ValueError, UnicodeError):
-                raise SearchError("invalid_response", "Provider returned invalid JSON.") from None
-            if not isinstance(data, dict):
-                raise SearchError("invalid_response", "Expected a JSON object.")
+            data = provider.decode_response(raw)
             provider.check_error(data)
             return data, attempt + 1
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
+            if not provider.requires_key and exc.code in (401, 403):
+                error.category = "access"
             retry_after = exc.headers.get("Retry-After", "") if exc.headers else ""
             exc.close()
             try:
@@ -258,6 +272,12 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
 
 
 def run_search(args, config, *, budget=None):
+    if args.provider == "auto":
+        return run_routed(args, config, budget=budget)
+    # An explicit provider is a per-invocation override; free explicitly requested on this call is strict.
+    if getattr(args, "strategy", None) == "free":
+        plan(args, config, credential)
+    args = scoped_args(args)
     providers = select_providers(args.provider, config)
     payloads = {p: search_payload(p, args) for p in providers}
     for p in providers:
@@ -276,6 +296,9 @@ def run_search(args, config, *, budget=None):
             raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
             try:
                 rows, meta = normalize(p, raw, args.count)
+                if getattr(args, "site", None):
+                    rows = [r for r in rows if domain_matches(r["url"], args.site)]
+                    meta["shown_count"] = len(rows)
             except SearchError as exc:
                 exc.attempts = attempts
                 raise
@@ -302,7 +325,11 @@ def run_search(args, config, *, budget=None):
 def run_fetch(args, config, *, budget=None):
     if not public_url(args.url):
         invalid("Fetch requires a public HTTP(S) URL, <=8192 characters, without embedded credentials.")
-    name = getattr(args, "provider", "deepseek")
+    name = getattr(args, "provider", "auto")
+    if name == "auto":
+        return run_routed(args, config, budget=budget, fetch=True)
+    if getattr(args, "strategy", None) == "free":
+        plan(args, config, credential, fetch=True)
     provider = get_provider(name)
     if not provider.fetch_endpoint:
         raise SearchError("unsupported_operation", provider.label + " does not support fetch.")
@@ -323,6 +350,86 @@ def run_fetch(args, config, *, budget=None):
             "retrieved_at": datetime.now(timezone.utc).isoformat(), "facts_verified": False}
 
 
+def run_routed(args, config, *, budget=None, fetch=False):
+    route = plan(args, config, credential, fetch=fetch)
+    scoped = scoped_args(args)
+    budget = budget or RequestBudget(getattr(args, "max_requests", 3 if fetch else 12))
+    started = time.monotonic()
+    seconds = getattr(args, "max_seconds", 45)
+    requests, errors, rows, content, duplicates = [], [], [], None, []
+    for name in route["candidates"][:route["max_sources"]]:
+        remaining = seconds - (time.monotonic() - started)
+        if remaining < 1 or not budget.data()["remaining"]:
+            errors.append({"provider": name, "code": "budget_exhausted", "category": "budget",
+                           "message": "Time or HTTP attempt budget exhausted.", "attempts": 0})
+            break
+        one = copy(scoped)
+        one.provider = name
+        one.timeout = min(getattr(args, "timeout", 30), remaining)
+        one.retries = 0  # Smart fallback uses a different allowed source, not repeated retries.
+        call_started = time.monotonic()
+        before = budget.used
+        try:
+            if fetch:
+                output = run_fetch(one, config, budget=budget)
+                usable = bool(output.get("content", "").strip()) or output.get("content_kind") == "discussion_item"
+                requests.append({"provider": name, "ok": usable, "attempts": budget.used - before})
+                if usable: content = output
+            else:
+                output = run_search(one, config, budget=budget)
+                requests.extend(output["requests"])
+                errors.extend(output["errors"])
+                rows = output["results"]
+                duplicates = output["duplicate_groups"]
+                usable = bool(rows)
+            if usable:
+                requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
+                break
+        except SearchError as exc:
+            errors.append({"provider": name, **exc.data()})
+            requests.append({"provider": name, "ok": False, "attempts": budget.used - before})
+        requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
+        # An access challenge is not proof of no matches. No browser or challenge solver is launched.
+    routing = {**public_plan(route), "attempted_providers": [r["provider"] for r in requests],
+               "stop_reason": "usable_results" if rows or content else "no_usable_results_within_limits",
+               "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."}
+    if content:
+        return {**content, "routing": routing, "requests": requests, "errors": errors,
+                "partial": bool(errors), "budget": budget.data()}
+    return {"ok": bool(rows), "operation": "fetch" if fetch else "search", "version": VERSION,
+            "retrieved_at": datetime.now(timezone.utc).isoformat(), "query": getattr(args, "query", None),
+            "url": getattr(args, "url", None), "providers": [r["provider"] for r in requests],
+            "results": rows, "requests": requests, "errors": errors, "routing": routing,
+            "empty": not rows, "partial": bool(rows and errors), "complete": bool(rows),
+            "duplicate_groups": duplicates, "facts_verified": False, "budget": budget.data()}
+
+
+def update_preferences(args, config):
+    updated = deepcopy(config)
+    if getattr(args, "reset", False):
+        updated.pop("search_preferences", None)
+        updated.pop("default_provider", None)
+    else:
+        settings = preferences(updated)
+        if args.strategy is not None: settings["strategy"] = args.strategy
+        if args.max_sources is not None: settings["max_sources"] = args.max_sources
+        disabled = set(settings["disabled_providers"])
+        disabled.update(args.disable or [])
+        disabled.difference_update(args.enable or [])
+        settings["disabled_providers"] = sorted(disabled)
+        updated["search_preferences"] = settings
+        if args.provider == "auto": updated.pop("default_provider", None)
+        elif args.provider: updated["default_provider"] = args.provider
+    validate_config(updated)
+    changing = args.reset or args.strategy is not None or args.max_sources is not None or args.provider or args.disable or args.enable
+    if changing:
+        if config["schema_version"] == 1 and config_path().exists(): migrate_config(config)
+        save_config(updated)
+    return {"ok": True, "operation": "preferences", "saved": bool(changing),
+            "preferences": preferences(updated), "default_provider": updated.get("default_provider"),
+            "message": "Per-request provider/strategy overrides take precedence; no network requests sent."}
+
+
 def status(config):
     states = {}
     for p in PROVIDERS:
@@ -334,7 +441,11 @@ def status(config):
     return {"ok": all(s.get("error", {}).get("code", "missing_api_key") == "missing_api_key" for s in states.values()),
             "operation": "status", "version": VERSION, "default_provider": config.get("default_provider"),
             "schema_version": config["schema_version"], "migration_available": config["schema_version"] == 1,
-            "providers": states, "message": "Local inspection only; doctor performs a live billable search."}
+            "providers": states, "preferences": preferences(config),
+            "keyless": {p: {"requires_key": False, "search": a.supports_search, "fetch": bool(a.fetch_endpoint),
+                             "search_verified": False} for p, a in PUBLIC_REGISTRY.items()},
+            "default_strategy": preferences(config)["strategy"],
+            "message": "Local inspection only; keyless access is not a connectivity check. Doctor performs live requests."}
 
 
 def doctor(args, config):
@@ -347,7 +458,7 @@ def doctor(args, config):
         entry = next(r for r in result["requests"] if r["provider"] == p)
         verified = entry["ok"] and any(r["provider"] == p for r in result["results"])
         checks[p] = {**entry, "search_verified": verified}
-    good = all(x["search_verified"] for x in checks.values())
+    good = bool(checks) and all(x["search_verified"] for x in checks.values())
     return {"ok": good, "operation": "doctor", "providers": checks, "errors": result["errors"], "budget": result["budget"],
             "message": "Live search verified." if good else "Not all requested providers returned usable results."}
 
@@ -487,13 +598,20 @@ def setup(args, config):
 
 
 def parser():
-    root = argparse.ArgumentParser(description="xcoze search: multi-provider official search and extraction APIs")
+    root = argparse.ArgumentParser(description="xcoze search: automatic keyless and keyed search for Agents")
     root.add_argument("--version", action="version", version=VERSION)
     sub = root.add_subparsers(dest="command", required=True)
     sub.add_parser("status", help="Local-only credential status; never prints keys")
     sub.add_parser("migrate-config", help="Back up and explicitly migrate v1 config to v2")
+    prefs = sub.add_parser("preferences", help="Show/save strategy without network calls or exposing keys")
+    prefs.add_argument("--strategy", choices=STRATEGIES)
+    prefs.add_argument("--provider", choices=("auto", *ALL_PROVIDERS))
+    prefs.add_argument("--max-sources", type=int, choices=(1, 2, 3))
+    prefs.add_argument("--disable", choices=ALL_PROVIDERS, action="append")
+    prefs.add_argument("--enable", choices=ALL_PROVIDERS, action="append")
+    prefs.add_argument("--reset", action="store_true")
     capabilities = sub.add_parser("capabilities", help="Offline provider capabilities, limits and key links")
-    capabilities.add_argument("--provider", choices=PROVIDERS)
+    capabilities.add_argument("--provider", choices=ALL_PROVIDERS)
     configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
     configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
@@ -506,6 +624,7 @@ def parser():
     search.add_argument("--provider", default="auto", help="Name, comma-separated names, auto, both (DeepSeek/Yuanbao), or all configured")
     search.add_argument("--count", type=int, default=10)
     search.add_argument("--site", help="One public domain; see each provider's supported semantics")
+    search.add_argument("--platform", choices=tuple(PLATFORMS), help="Target platform; public-index coverage is not a native site search")
     search.add_argument("--need-content", action="store_true", help="Explicit page content: DeepSeek, Tavily or Exa")
     search.add_argument("--freshness", help="Provider-native time filter; see capabilities and providers.md")
     search.add_argument("--industry", choices=("gov", "news", "acad", "finance"), help="Yuanbao paid tiers")
@@ -517,10 +636,14 @@ def parser():
     search.add_argument("--extra-snippets", action="store_true", help="Brave: request additional snippets")
     search.add_argument("--include-answer", action="store_true", help="Tavily: explicit generated answer, separately returned")
     search.add_argument("--depth", help="Tavily: basic/advanced/fast/ultra-fast; default basic")
-    fetch = sub.add_parser("fetch", help="Fetch using DeepSeek (default), Tavily or Exa")
+    fetch = sub.add_parser("fetch", help="Read a URL; auto prefers keyless readers, or specify a supported source")
     fetch.add_argument("url")
-    fetch.add_argument("--provider", choices=PROVIDERS, default="deepseek")
+    fetch.add_argument("--provider", choices=("auto", *ALL_PROVIDERS), default="auto")
     for command in (search, fetch):
+        command.add_argument("--strategy", choices=STRATEGIES, help="Override saved strategy for this invocation")
+        command.add_argument("--max-sources", type=int, choices=(1, 2, 3), help="Auto: at most this many sources including fallbacks")
+        command.add_argument("--max-seconds", type=int, choices=range(1, 301), metavar="1..300", default=45,
+                             help="Auto: wall time budget; each request is clipped to remaining time")
         command.add_argument("--highlights", action="store_true", help="Exa: explicitly request excerpts")
         command.add_argument("--summary", action="store_true", help="Exa/Bocha search or Exa fetch: explicit summary")
     for command in (search, fetch, diagnose):
@@ -530,6 +653,7 @@ def parser():
         command.add_argument("--timeout", type=int, choices=range(1, 121), metavar="1..120", default=30)
     for command in (search, fetch):
         command.add_argument("--retries", type=int, choices=(0, 1, 2), default=1)
+    sub.add_parser("plan", parents=[search], add_help=False, help="Preview a search route offline; uses local credential presence only")
     return root
 
 
@@ -537,15 +661,20 @@ def main(argv=None):
     args = parser().parse_args(argv)
     try:
         if args.command == "capabilities":
-            names = [args.provider] if args.provider else PROVIDERS
+            names = [args.provider] if args.provider else ALL_PROVIDERS
             print(json.dumps({"ok": True, "operation": "capabilities", "version": VERSION,
-                              "providers": [REGISTRY[name].capabilities() for name in names]}, ensure_ascii=False, indent=2))
+                              "providers": [get_provider(name).capabilities() for name in names]}, ensure_ascii=False, indent=2))
             return 0
         config = read_config()
         if args.command == "migrate-config":
             result = migrate_config(config)
         elif args.command == "status":
             result = status(config)
+        elif args.command == "preferences":
+            result = update_preferences(args, config)
+        elif args.command == "plan":
+            result = {"ok": True, "operation": "plan", "network_requests": 0,
+                      "routing": public_plan(plan(args, config, credential))}
         elif args.command == "setup":
             result = setup(args, config)
         elif args.command == "doctor":

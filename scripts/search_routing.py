@@ -1,0 +1,123 @@
+"""Offline route planning. The calling Agent evaluates relevance and evidence."""
+from copy import copy
+
+from search_common import SearchError, invalid
+from search_providers import REGISTRY, SEARCH_OPTIONS
+from public_providers import PUBLIC_REGISTRY
+
+ALL = {**REGISTRY, **PUBLIC_REGISTRY}
+STRATEGIES = ("smart", "quality", "balanced", "free")
+PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhihu": "zhihu.com",
+             "xiaohongshu": "xiaohongshu.com", "weibo": "weibo.com"}
+DEFAULTS = {"strategy": "smart", "max_sources": 2, "disabled_providers": []}
+
+
+def preferences(config):
+    return {**DEFAULTS, **config.get("search_preferences", {})}
+
+
+def validate_preferences(value):
+    if (not isinstance(value, dict) or value.get("strategy", "smart") not in STRATEGIES
+            or type(value.get("max_sources", 2)) is not int or not 1 <= value.get("max_sources", 2) <= 3
+            or not isinstance(value.get("disabled_providers", []), list)
+            or any(p not in ALL for p in value.get("disabled_providers", []))):
+        raise SearchError("invalid_config", "Invalid search preferences; original config was not changed.")
+
+
+def scoped_args(args):
+    scoped = copy(args)
+    platform = getattr(args, "platform", None)
+    if platform:
+        domain = PLATFORMS[platform]
+        if getattr(args, "site", None) and args.site != domain:
+            invalid("--site conflicts with --platform; use one target scope.")
+        scoped.site = domain
+    return scoped
+
+
+def plan(args, config, credential, *, fetch=False):
+    scoped = scoped_args(args)
+    prefs = preferences(config)
+    requested_strategy = getattr(args, "strategy", None) or prefs["strategy"]
+    if requested_strategy not in STRATEGIES: invalid("Unknown search strategy.")
+    requested = getattr(args, "provider", "auto")
+    disabled = prefs["disabled_providers"]
+    available = []
+    for name in REGISTRY:
+        if name in disabled: continue
+        try:
+            credential(name, config)
+            available.append(name)
+        except SearchError as exc:
+            if exc.code not in ("missing_api_key", "invalid_key"): raise
+    preferred = config.get("default_provider")
+    if preferred in available:
+        available.remove(preferred); available.insert(0, preferred)
+    strategy = requested_strategy
+    if strategy == "smart": strategy = "quality" if available else "free"
+    if strategy == "quality" and not available: strategy = "free"
+    explicit = requested != "auto"
+    if explicit:
+        if requested == "both": candidates = ["deepseek", "yuanbao"]
+        elif requested == "all": candidates = available or ["bing", "exa-free", "duckduckgo"]
+        else: candidates = requested.split(",")
+        if len(set(candidates)) != len(candidates) or any(p not in ALL for p in candidates):
+            invalid("Use registered provider names without duplicates.")
+        # Explicit source selection overrides a saved mode. An explicit free flag remains a hard boundary.
+        if getattr(args, "strategy", None) == "free" and any(ALL[p].requires_key for p in candidates):
+            invalid("--strategy free conflicts with a keyed provider. Remove the keyed provider or change this invocation's strategy.")
+    else:
+        public = ["jina", "exa-free"] if fetch else ["bing", "exa-free", "duckduckgo"]
+        specialized = None
+        if fetch:
+            from urllib.parse import urlsplit
+            host = urlsplit(args.url).hostname
+            if host == "github.com" and len(urlsplit(args.url).path.strip("/").split("/")) == 2:
+                specialized = "github"
+            elif host == "news.ycombinator.com": specialized = "hackernews"
+            keyed = [p for p in available if ALL[p].fetch_endpoint]
+            # Known-URL reading prefers existing/native readers in the Skill, then these keyless readers.
+            candidates = public if strategy == "free" else public[:1] + keyed + public[1:]
+        else:
+            site = getattr(scoped, "site", None)
+            if site == "github.com": specialized = "github"
+            elif site == "news.ycombinator.com": specialized = "hackernews"
+            candidates = (available + public if strategy == "quality" else
+                          public[:1] + available + public[1:] if strategy == "balanced" else public)
+        if specialized: candidates.insert(0, specialized)
+        if preferred in candidates and preferred not in disabled and not specialized:
+            candidates.remove(preferred); candidates.insert(0, preferred)
+        candidates = list(dict.fromkeys(p for p in candidates if p not in disabled))
+    eligible, skipped = [], []
+    for name in candidates:
+        provider = ALL[name]
+        try:
+            if fetch:
+                if not provider.fetch_endpoint:
+                    raise SearchError("unsupported_operation", "Source does not read URLs.")
+                payload = provider.fetch_payload(scoped)
+            else:
+                if not provider.supports_search:
+                    raise SearchError("unsupported_operation", "Source only reads URLs.")
+                payload = provider.search_payload(scoped)
+            if provider.requires_key: credential(name, config)
+        except SearchError as exc:
+            if explicit: raise
+            skipped.append({"provider": name, "code": exc.code})
+            continue
+        eligible.append({"provider": name, "payload": payload})
+    if not eligible:
+        raise SearchError("no_compatible_provider", "No enabled source supports these constraints; inspect capabilities or simplify the request.")
+    limit = getattr(args, "max_sources", None) or prefs["max_sources"]
+    if type(limit) is not int or not 1 <= limit <= 3: invalid("--max-sources must be 1..3.")
+    return {"requested_strategy": requested_strategy, "strategy": strategy, "automatic": not explicit,
+            "selection_basis": "capabilities, target scope, configured default and access policy; no benchmark ranking",
+            "candidates": [x["provider"] for x in eligible], "skipped_incompatible": skipped,
+            "max_sources": len(eligible) if explicit else limit,
+            "payloads": {x["provider"]: x["payload"] for x in eligible},
+            "platform": getattr(args, "platform", None),
+            "semantic_quality_verified": False}
+
+
+def public_plan(value):
+    return {k: v for k, v in value.items() if k != "payloads"}

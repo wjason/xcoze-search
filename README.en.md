@@ -5,176 +5,106 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**Multi-provider search for AI agents.** Access official search and content-extraction APIs through one Skill. Bring your own API keys and choose which providers receive each request.
+**An out-of-the-box web search entry point for Agents.** Use public routes without a key; configured keys enable quality-first routing by default. The Agent selects sources, reads pages and searches for missing evidence, stopping when it has enough. Users ask normally; strategies and source preferences are optional.
 
-[Install](#installation) · [Configure](#api-key-setup) · [Usage](#usage) · [Roadmap](TODO.en.md) · [Contribute](CONTRIBUTING.en.md) · [Changelog](CHANGELOG.en.md)
+[Install](#install) · [Sources](#sources) · [Configure keys](#configure-keys) · [Routing](references/routing.en.md) · [Roadmap](TODO.en.md)
 
-## Supported providers
+## Install
 
-| Provider | Web search | Content support | Live account verification |
-|---|---|---|---|
-| DeepSeek | Implemented | Search content and Fetch | Search/Fetch regression passed on 2026-11-02 |
-| Tencent Yuanbao | Implemented | Standard and dynamic summaries | No test credential; live verification pending |
-| Tavily | Implemented | Search snippets, optional page content, Extract | Not tested with a live account |
-| Exa | Implemented | Search/Contents text, highlights, and summaries kept separate | Not tested with a live account |
-| Brave Search | Implemented | Web snippets and optional extra snippets | Not tested with a live account |
-| Bocha | Implemented | Web Search and optional summaries | Not tested with a live account |
-
-Current release: [v0.3.0 preview](https://github.com/wjason/xcoze-search/releases/tag/v0.3.0). Protocol implementations and offline tests are complete for the added providers. This does not establish account access or search quality. See [provider contracts](references/providers.en.md) and [validation records](VALIDATION.en.md).
-
-## Installation
-
-Requires Python 3.10+ and an Agent Skills host that can execute local scripts. No additional Python packages are needed. The Skills CLI installation method also requires Node.js; manual extraction does not.
-
-### Ask your agent to install it
-
-Send this to an agent that supports Skill installation and local command execution:
+Send this to an Agent that can install Skills and execute local scripts:
 
 ```text
 Install https://github.com/wjason/xcoze-search
 ```
 
-For more explicit instructions:
-
-```text
-Install this Skill: https://github.com/wjason/xcoze-search
-Check the Python runtime and install it in the current assistant's skills directory.
-```
-
-After installation, start a new chat or reload the assistant if instructed, then send:
-
-```text
-Configure xcoze search with DeepSeek. Reply in English.
-```
-
-Replace DeepSeek with another supported provider as needed. The agent provides an official key-console link and starts a local hidden-input dialog once you are ready. Installation does not require an API key. Keep keys out of chat. If your agent cannot install Skills or execute local commands, use the alternatives below.
-
-### CLI or manual installation
+Python 3.10+ is required. Runtime uses only the standard library: no browser, Node.js or Python packages to install. The optional Skills CLI installation method requires Node.js:
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively, download the [v0.3.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.3.0/xcoze-search-skill-v0.3.0.zip) and place `xcoze-search/` in your assistant's skills directory. The default Codex entry is `~/.codex/skills/xcoze-search/SKILL.md`; use the corresponding skills directory if CODEX_HOME is set.
+Alternatively unpack the [v0.4.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
-Start a new chat after installation or an update; reload the assistant if it has not discovered the Skill. See the [installation guide](INSTALL.en.md) for updates, configuration formats, and removal. The ZIP contains Python scripts; a standalone executable distribution is still planned.
+## Sources
 
-## API key setup
+### No key required
 
-Ask the assistant:
-
-```text
-Configure Tavily for xcoze search. Reply in English.
-I already have an Exa key; start local setup.
-Replace my xcoze search Yuanbao key.
-Check my xcoze search configuration status.
-```
-
-The assistant provides an official key-console link. Open it yourself; the Skill does not open a browser automatically. Once you have a key, reply “Ready to enter the key.” The agent starts a local hidden-input dialog, saves the key, and performs one potentially billable search to check access. You do not need to find an installation directory or configuration file. Do not paste the key into chat.
-
-The dialog uses macOS system dialogs, Windows PowerShell/WinForms, or an existing Zenity installation on a Linux desktop. Without an accessible desktop, use hidden input in your own visible terminal or managed environment variables. Manual desktop acceptance tests remain pending.
-
-| Provider | Official key console | Environment variable |
+| Source | Implemented | Limits |
 |---|---|---|
-| DeepSeek | [Platform](https://platform.deepseek.com/api_keys) | `DEEPSEEK_API_KEY` |
-| Yuanbao | [Search console](https://console.cloud.tencent.com/wsapi/index) | `YUANBAO_API_KEY`; alias `TENCENTCLOUD_WSA_APIKEY` |
-| Tavily | [Dashboard](https://app.tavily.com/home) | `TAVILY_API_KEY` |
-| Exa | [Dashboard](https://dashboard.exa.ai/api-keys) | `EXA_API_KEY` |
-| Brave | [Dashboard](https://api-dashboard.search.brave.com/app/keys) | `BRAVE_API_KEY` |
-| Bocha | [Open platform](https://open.bochaai.com/) | `BOCHA_API_KEY` |
+| Bing RSS | General public web search | Experimental public feed; at most 10 results, potentially missing dates or relevance |
+| DuckDuckGo HTML | General public web search | Experimental HTML parsing; verification pages and changes may block it |
+| Exa hosted MCP | Search and page reading | Official rate-limited keyless access; relies on Exa, separate from the keyed Exa API |
+| GitHub | Public repository search and default-branch README | Anonymous rate limits; excludes code search, private repositories and full Issue/PR adapters |
+| Hacker News | Algolia story search and official single-item reading | Discussion URLs and outbound articles stay separate; child IDs are not fetched comments |
+| Jina Reader | Page text extraction | Official rate-limited keyless reading; Jina Search is not integrated |
 
-Yuanbao requires a Search Service API Key; Tencent Cloud SecretId/SecretKey and other product keys are not interchangeable. Each provider has its own activation, authorization, and billing.
+The Agent can reuse available native search, page reading and browser tools; this Skill does not install or take them over. Zhihu, Xiaohongshu and Weibo support scoped public-index search, which does not promise native site search, complete text or comments. Use existing authorized platform tools for those operations when available.
 
-For manual setup, run these in your own visible terminal, replacing the path with the actual installation directory:
+### Bring your own key
 
-```bash
-python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider tavily --verify
-python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider exa --gui --verify
-```
+| Service | Implemented | Environment variable |
+|---|---|---|
+| DeepSeek | Search, Fetch | `DEEPSEEK_API_KEY` |
+| Tencent Yuanbao | SearchPro with standard/dynamic summaries | `YUANBAO_API_KEY`, alias `TENCENTCLOUD_WSA_APIKEY` |
+| Tavily | Search, Extract | `TAVILY_API_KEY` |
+| Exa | Search, Contents | `EXA_API_KEY` |
+| Brave Search | Web Search | `BRAVE_API_KEY` |
+| Bocha | Web Search | `BOCHA_API_KEY` |
 
-Without `--gui`, setup uses hidden terminal input; with it, setup opens a local input dialog. Cancelling leaves the configuration unchanged. If `--verify` fails, the key has been saved, but access has not been verified. Only `--default` changes the default provider. On Windows, `py -3` can replace `python3`. macOS also retains `scripts/setup.command` as a manual entry point.
+Accounts and billing are independent. Configured, enabled keys participate in default quality-first routing. Free strategy excludes all keyed adapters, including accounts with promotional credits. See [provider contracts](references/providers.en.md).
 
-Environment variables take precedence over saved credentials and must be visible to the process running the assistant. Credentials currently use a permissions-protected plaintext file in the user configuration directory, not an OS keychain. Existing v1 configuration remains readable and ordinary searches do not rewrite it. Explicit migration or saving new configuration creates a private backup first. See [setup and troubleshooting](references/setup.en.md).
+Implementation, account verification and search quality are separate. Local checks on 2026-11-03 obtained usable Bing RSS, GitHub, HN and Jina responses; Exa keyless MCP initially returned 403 but later search succeeded, DuckDuckGo returned a verification response, and GitHub README returned 403. These are network-specific observations, not availability promises. Keyed-provider evidence is in [validation](VALIDATION.en.md).
 
-## Usage
+## Automatic routing
+
+- **Smart by default:** no syntactically usable keys selects keyless routes; available keys select quality-first routing. Key presence does not establish live account access.
+- **Task-aware:** GitHub/HN targets prefer structured platform interfaces. Known URLs should use native readers when useful; script auto-reading starts with Jina/Exa keyless readers.
+- **Bounded fallback:** empty/failed responses advance to a compatible route, at most two sources and 45 seconds by default, within the HTTP budget. Usable results return immediately; the Agent assesses relevance, freshness and remaining evidence gaps before further searching.
+- **Optional controls:** quality, balanced, free, or a named source. Per-request choices override saved preferences; explicit `--strategy free` conflicts with keyed sources.
+
+Smart combines transparent capability/source rules and Agent judgment. It does not train a router, compare native scores across providers or claim a quality leaderboard. Initial keyed-provider order is configuration policy, not a performance ranking. See [routing](references/routing.en.md).
+
+## Configure keys
+
+Keys are optional. To add a service, tell the Agent:
 
 ```text
-Use xcoze search to find official sources on this topic and cite them.
-Use Tavily to search for reports from the past week.
-Use Exa to find the documentation, then read it; keep summaries and highlights separate.
-Use Brave to search for English sources from the United Kingdom.
-Use Bocha to search for industry news from the past week.
-Cross-check this topic with DeepSeek, Tavily, and Exa, comparing original sources and dates.
+Configure DeepSeek for xcoze search.
 ```
 
-CLI examples, run from the Skill directory:
+The Agent prints official signup links without opening a browser, then launches a local hidden-input dialog when ready. Never paste keys into chat. Verification after saving can incur one search charge. Yuanbao requires its search service key, not Tencent Cloud SecretId/SecretKey. See [setup](references/setup.en.md).
+
+Credentials are currently plaintext protected by local permissions, without OS credential-store integration. Environment variables take precedence. v1 configs remain readable and the existing private-backup migration applies when saving.
+
+## Examples
+
+```text
+Find official policy updates from the past week and link the original sources.
+Find open-source industrial vision projects on GitHub and compare deployment requirements.
+Find Hacker News discussions about this project.
+Find public Zhihu discussions of this question.
+```
+
+The Agent normally locates the Skill and runs these commands; users do not need to find files:
 
 ```bash
-# Inspect options, result counts, limits, and key-console links without networking
-python3 scripts/xcoze_search.py capabilities
-
-# Single-provider searches and filters
-python3 scripts/xcoze_search.py search 'industrial vision' --provider tavily --freshness week --count 5
-python3 scripts/xcoze_search.py search 'Python TaskGroup' --provider exa --site docs.python.org --start-date 2026-01-01 --highlights
-python3 scripts/xcoze_search.py search 'energy storage' --provider brave --country GB --language en --freshness pw --extra-snippets
-python3 scripts/xcoze_search.py search 'industrial vision' --provider bocha --freshness oneWeek --summary
-
-# Explicit multiple providers, at most six HTTP attempts including retries
-python3 scripts/xcoze_search.py search 'offshore wind digitalization' --provider deepseek,tavily,exa --count 5 --max-requests 6
-
-# Explicit content extraction
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio-task.html' --provider exa --highlights
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio-task.html' --provider tavily
+python3 scripts/xcoze_search.py search 'Python asyncio official documentation'
+python3 scripts/xcoze_search.py search 'industrial vision' --platform github
+python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01
+python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html'
+python3 scripts/xcoze_search.py preferences --strategy free
+python3 scripts/xcoze_search.py preferences --strategy balanced
+python3 scripts/xcoze_search.py preferences --reset
+python3 scripts/xcoze_search.py search 'offshore wind digitalization' --provider deepseek,yuanbao --max-requests 4
+python3 scripts/xcoze_search.py plan 'Python asyncio' --platform github
 ```
 
-Provider selection:
+`plan`, `status`, and `capabilities` never connect. Ordinary searches do not need doctor first. `--mode` retains its Yuanbao meaning; routing uses `--strategy`.
 
-- `auto` uses the configured default. Without one, it selects the first configured provider in this order: DeepSeek, Yuanbao, Tavily, Exa, Brave, Bocha. It does not silently switch after failure.
-- `both` still means DeepSeek plus Yuanbao. Adding providers does not change existing commands.
-- A comma-separated list selects specific providers; `all` selects every configured provider. Adding a key does not expand ordinary searches to more providers.
-- All credentials and options are checked before a multi-provider request starts. Unsupported options cause an error. Tavily/Brave support at most 20 results per call; this adapter limits the others to 50. There is no automatic pagination.
-- Fetch still defaults to DeepSeek. Specify Tavily or Exa explicitly to use their extraction APIs. The other three providers have search adapters only; no fallback extraction provider is selected.
+v0.4.0 changes `auto` to routing and Fetch's default to `auto`. Pin a source for the previous deterministic behavior. `both` still means DeepSeek plus Yuanbao; explicit multi-source requests never expand silently. Automatic recovery can return `ok:true` while retaining earlier errors and attempts; explicit multi-source partial failure still exits 4. See [output](references/output.en.md).
 
-Tavily `content` is snippets; `raw_content` is page content. Exa `text`, `highlights`, and `summary` remain separate. Yuanbao, Brave, and Bocha summaries are not labeled as full page text. Tavily generated answers require `--include-answer` and remain separate from source results.
+## Development and scope
 
-## Budgets, usage, and errors
+Run offline tests: `python3 -m unittest discover -s tests -v`. Native order and scores remain intact, summaries and page text stay separate, and script success never means facts were verified.
 
-`--max-requests` caps actual HTTP attempts for the current invocation, including failures and retries. Search/doctor default to 12; Fetch defaults to 3. A request permits at most two retries, defaults to one, and doctor uses none. A multi-provider invocation needs at least one attempt available per provider. Budgets do not persist across invocations and are not monetary limits.
-
-Results retain provider order, native scores, and original fields without comparing scores across providers. Output includes each provider's attempts, elapsed time, and any reported usage or cost. Unreported usage/cost is `null`, not an estimate. If a provider fails during multi-provider execution, successful results are retained with `ok:false`, `partial:true`, and exit code 4.
-
-Empty results, authentication, billing/quota, rate limits, network failures, exhausted budgets, and invalid responses are reported separately. HTTP 200 extraction responses still require per-URL success checks. See the [output contract](references/output.en.md).
-
-## Status and configuration migration
-
-```bash
-python3 scripts/xcoze_search.py status
-python3 scripts/xcoze_search.py doctor --provider tavily
-python3 scripts/xcoze_search.py doctor --provider deepseek,exa --max-requests 2
-python3 scripts/xcoze_search.py migrate-config
-```
-
-Status does not make network requests or display keys. Doctor performs live searches; `search_verified:true` only establishes that this check returned usable results. Migration upgrades v1 configuration to v2 with a private original-file backup, preserving keys, the default provider, and extension fields. See [setup](references/setup.en.md) for failures and rollback.
-
-## Development and regression checks
-
-Run these from the repository or source distribution. The current source has 68 offline tests (67 at the v0.3.0 release), using only the Python standard library; CI covers Windows/Linux and Python 3.10/3.12.
-
-```bash
-python3 -m unittest discover -s tests -v
-# Planning only: no credential reads or network requests by default
-python3 scripts/evaluate.py --provider deepseek,tavily,exa
-python3 scripts/evaluate.py --operation fetch --provider deepseek,tavily,exa
-```
-
-The source distribution includes 12 Chinese/English search queries and three extraction URLs covering technical documentation, original standards, dates, versions, and conflicting information. Domain matches support manual review; they are not factual-accuracy scores or provider rankings. Online execution requires `--live` and shares one run-wide request budget. See the [regression guide](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md), included in the source distribution.
-
-P0 infrastructure and the four P1 adapters are implemented. Yuanbao live verification remains pending without a test credential. See the [roadmap](TODO.en.md) for P2/P3 providers, standalone executables, OS credential storage, and other work, and the [contribution guide](CONTRIBUTING.en.md) to contribute.
-
-## Data, charges, and license
-
-Queries and URLs go directly to the selected providers, not through a maintainer-operated server. The project collects no telemetry and does not automatically save search history. The regression tool writes a report only when an output file is explicitly selected.
-
-Multiple providers, retries, extraction, generated summaries, or advanced search options may add charges under the provider's billing rules. This independently maintained integration uses official APIs; it is not an official product or certification from those providers. Do not submit unauthorized private queries or URLs containing access tokens.
-
-[MIT License](LICENSE). Rights to search-result content remain with the respective rights holders.
+Focus is web search and reading. Self-hosted SearXNG, web indexes and enterprise document search are outside current scope; logins, challenge solving and full-site crawling are not part of base installation. [Contributing](CONTRIBUTING.en.md) · [Changelog](CHANGELOG.en.md) · [Research](references/search-services.en.md)

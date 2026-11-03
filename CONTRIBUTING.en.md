@@ -4,6 +4,10 @@
 
 Bug fixes, documentation, regression cases, and provider adapters are welcome.
 
+## Keyless adapters and routing
+
+Keyless adapters live in scripts/public_providers.py and PUBLIC_REGISTRY, sharing the Provider contract with requires_key:false and no access to other credentials. Decode JSON/SSE/RSS/HTML through decode_response and never treat challenge pages as empty successes. Scripts/search_routing.py plans capabilities/preferences offline; the Agent assesses semantics. Cover free-mode key exclusion, explicit precedence, retained constraints, budgets and recovery. Add runtime/tests to build_release.py and update both document languages.
+
 ## Report a problem
 
 Use [GitHub Issues](https://github.com/wjason/xcoze-search/issues) to describe the environment, version, command, expected behavior, and actual result. Include only error codes, redacted RequestIds, and necessary output. Never upload API keys, credential files, or private queries.

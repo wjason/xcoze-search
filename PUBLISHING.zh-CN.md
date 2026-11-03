@@ -20,7 +20,7 @@ python3 scripts/build_release.py --output-dir ../release
 
 本仓库根目录直接含 SKILL.md。后续修改在此仓库提交并推送，不要把最外层的 outputs 或 release 文件夹作为 Skill 根目录。
 
-当前版本为 `v0.3.0` 预览版。推送 `v*` 标签会触发 `.github/workflows/release.yml`，复用 Windows/Linux、Python 3.10/3.12 四组离线测试；全部通过后才进入发布步骤。
+当前版本为 `v0.4.0` 预览版。推送 `v*` 标签会触发 `.github/workflows/release.yml`，复用 Windows/Linux、Python 3.10/3.12 四组离线测试；全部通过后才进入发布步骤。
 
 发布步骤会核对标签、程序版本、Skill 元数据、打包版本和 CHANGELOG，提取当前版本的发布说明，生成 Skill ZIP、源码 ZIP 和 SHA256SUMS.txt，再核对校验值。先创建带完整附件的草稿，再公开为 Pre-release；不覆盖已有 Release 或旧附件。
 
@@ -34,7 +34,7 @@ python3 scripts/build_release.py --output-dir ../release
 4. 等待标签发布工作流成功，检查 Release 的 Pre-release 标记、三个附件及校验值，再确认发布完成。
 
 ```bash
-python3 scripts/prepare_release.py --tag v0.3.0 --output ../release-notes.md
+python3 scripts/prepare_release.py --tag v0.4.0 --output ../release-notes.md
 python3 -m unittest discover -s tests -v
 python3 scripts/build_release.py --output-dir ../release
 ```
@@ -56,7 +56,7 @@ xcoze search v0.1.0 增加 DeepSeek 与腾讯元宝官方 API 搜索集成，支
 默认导出中文。`--language en` 导出英文；`--language both` 将中文放在正文，英文放入可展开的 English 区域。标签工作流使用 both，并核对中英文 CHANGELOG 都包含同版本日期段落；缺少英文记录时停止发布。
 
 ```bash
-python3 scripts/prepare_release.py --tag v0.3.0 --language both --output ../release-notes.md
+python3 scripts/prepare_release.py --tag v0.4.0 --language both --output ../release-notes.md
 ```
 
 中英文文档及 Agent 指令已加入后续打包清单；现有已发布版本的标签和附件保持不变。

@@ -1,6 +1,16 @@
-# Output contract v0.3.0
+# Output contract v0.4.0
 
 [简体中文](output.md) | **English**
+
+## Automatic-routing additions
+
+Auto Search/Fetch adds routing: requested_strategy, strategy, automatic, selection_basis, candidates, attempted_providers, skipped_incompatible, max_sources, stop_reason and semantic_quality_verified:false. Candidates are not executed/verified sources; requests and budget describe actual calls. Plan returns public routing fields and network_requests:0 without credentials or request bodies.
+
+Successful nonempty automatic recovery returns ok:true even with earlier errors; partial:true and exit 0 apply. Exhausted auto routes/budgets without usable results return ok:false and exit 4. Explicit multi-source partial failure retains ok:false, partial:true and exit 4. Complete only describes execution, never research sufficiency; facts_verified remains false.
+
+GitHub README uses repository_readme; an HN item uses discussion_item. Outbound_url and comment_ids do not establish read articles/comments. Keyless readers expose truncated/completeness_verified and length limits; full text is not guaranteed. RSS dates are not article publication dates.
+
+Preferences returns sanitized settings and save status. Status adds keyless capabilities/preferences without connectivity checks. Free never sends user-keyed requests or infers promotional credits.
 
 Standard output is JSON; top-level runtime errors use JSON on standard error. Argparse help/syntax errors retain Python's standard behavior. Setup guidance uses stderr and never echoes keys. GUI subprocess stdout/stderr is consumed only inside the local script, not forwarded to the agent.
 
@@ -32,7 +42,7 @@ Budget contains limit, attempts, remaining, by_provider, and scope. It counts ac
 
 ## Multiple providers
 
-Auto does not expand recipients. Both is fixed to DeepSeek plus Yuanbao. Comma-separated names execute in user order; all uses configured providers in registry order. All selected credentials/options are validated before sending. Runtime failures retain successful results with ok:false/complete:false. If another provider completes normally, even with no results, partial:true. All providers failing is not partial success.
+Auto uses bounded, recorded fallback as described above. Both is fixed to DeepSeek plus Yuanbao. Comma-separated names execute in user order; all uses configured providers in registry order. All selected credentials/options are validated before sending. Runtime failures retain successful results with ok:false/complete:false. If another provider completes normally, even with no results, partial:true. All providers failing is not partial success.
 
 Native scores are never merged into cross-provider rankings. duplicate_groups marks zero-based result indices after stripping URL fragments and lowercasing scheme/host. It does not merge content versions, remove query strings, or establish independent evidence. Malformed result entries fail that provider rather than being silently skipped.
 
@@ -48,7 +58,7 @@ Migrate-config returns migrated, schema_version, and backup_created. v2 is a no-
 
 ## Errors and exit codes
 
-Error objects include code, message (fixed redacted guidance), http_status, category, retryable, and attempts. Categories include authentication, billing, rate_limit, budget, credentials, configuration, input, network, response, and provider. Raw error bodies are not relayed. Categories do not supersede provider billing or entitlement decisions.
+Error objects include code, message (fixed redacted guidance), http_status, category, retryable, and attempts. Categories include access (keyless restrictions), authentication, billing, rate_limit, budget, credentials, configuration, input, network, response, and provider. Raw error bodies are not relayed. Categories do not supersede provider billing or entitlement decisions.
 
 | Exit code | Meaning |
 |---|---|

@@ -2,6 +2,12 @@
 
 **简体中文** | [English](setup.en.md)
 
+## 无 Key 开始与可选偏好
+
+普通搜索无需配置 Key，安装后直接提问。仅在用户需要添加/更换商用服务时进入下面的配置流程。配置并启用 Key 后默认 Smart 采用效果优先；已保存的 free/balanced 等偏好继续优先，不因新增 Key 被覆盖。
+
+由 Agent 执行 `preferences --strategy free|balanced|quality` 保存偏好；仅本次调整使用 search/fetch 的同名参数。`preferences --reset` 恢复 Smart 并清除默认源，保留密钥。`preferences --disable <ID>` 排除自动来源，`--enable` 恢复。详情见 [调度](routing.md)。这些命令不回显 Key、不联网，用户不用寻找配置文件。
+
 ## 对话配置（默认入口）
 
 用户说“配置 xcoze search”“配置 Exa”“更换元宝密钥”即可进入。Agent 从 SKILL.md 所在目录定位脚本，不要求用户找安装目录或配置文件。
@@ -49,7 +55,7 @@ python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider exa --verify
 
 路径为 `${XDG_CONFIG_HOME:-~/.config}/xcoze-search/config.json`（此处 shell 写法仅说明路径）。当前为**权限保护的明文**；POSIX 专用目录 700、文件 600，拒绝专用目录/文件符号链接。XDG_CONFIG_HOME 必须是绝对路径。Windows 继承用户目录 ACL，未做人工 ACL 验收。配置和备份均不进入仓库或安装包。
 
-v0.3.0 使用 schema_version:2；可以直接读取 v1，status/搜索/doctor 不会改写它。需要显式升级时运行：
+v0.4.0 沿用 schema_version:2；可以直接读取 v1，status/搜索/doctor 不会改写它。需要显式升级时运行：
 
 ```bash
 python3 "<skill_dir>/scripts/xcoze_search.py" migrate-config

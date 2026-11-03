@@ -2,7 +2,30 @@
 
 [简体中文](VALIDATION.md) | **English**
 
-## Unreleased: bilingual documentation and release checks
+## v0.4.0 — 2026-11-03
+
+Fifteen Chinese/English document and instruction pairs retain Chinese-first navigation. Runtime, Skill and package versions are 0.4.0.
+
+96 local offline tests passed: the previous 68 plus routing, preferences, keyless protocols and boundary coverage. Tests use synthetic keys/responses and temporary configuration; default CI stays offline. Runtime remains standard-library-only.
+
+| Live check | Observed result | Scope |
+|---|---|---|
+| Bing RSS | 2 results; a separate automatic call had a network error | Connectivity/RSS parsing, not relevance benchmarking |
+| Exa keyless MCP | 2 results and successful automatic recovery after Bing failed | Early probe returned 403, later requests worked; anonymous access fluctuates |
+| DuckDuckGo HTML | HTTP 202 verification response; no results | Challenge is not successful search; no bypass |
+| GitHub search | 2 public repositories | Anonymous search worked for this request |
+| GitHub README | HTTP 403 | Implemented/offline-tested, but anonymous live reading failed here |
+| HN search | 2 stories | Algolia retrieval worked for this request |
+| HN single item | Story and child comment IDs | No child comments or outbound article read |
+| Jina Reader | 3312 characters from Python documentation | Usable text; not site-wide crawling acceptance |
+| Smart with existing DeepSeek key | Automatically selected DeepSeek, 2 results | One Search request; no key/preference changes |
+| Free route with an existing key | Bing failed, Exa keyless returned 2 results | Two requests; no user key sent to keyless services |
+
+These limited public query/URL checks establish connectivity/parsing, not comparative search quality. No universal accuracy, Chinese-web coverage, long-term availability or savings claim. Yuanbao lacks a test key and retains the user's deferred live-verification item. Tavily, keyed Exa, Brave and Bocha still lack real-account regression.
+
+Coverage includes free-mode isolation, explicit overrides, constraint preflight, source/HTTP/time budgets, empty-result fallback, malformed responses, redaction and private config migration. Semantic relevance/fact checking belongs to the Agent, not a success code. Implicit invocation across hosts and real Windows/Linux desktop input/installation remain separate acceptance work.
+
+## Historical: bilingual documentation and release checks
 
 - Fourteen document/instruction pairs provide Chinese and English, with Chinese as default. Language links and packaged references are reviewed for this change. One added bilingual-release check brings the current source to 68 passing offline tests; historical v0.3.0 records retain their original 67-test scope.
 

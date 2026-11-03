@@ -2,61 +2,39 @@
 
 [简体中文](INSTALL.zh-CN.md) | **English**
 
-## Ask an agent to install it
-
-Send “Install” plus the repository URL to an agent that supports Skill installation and local command execution:
+## Ask the Agent to install
 
 ```text
 Install https://github.com/wjason/xcoze-search
 ```
 
-For explicit requirements:
+The Agent checks Python 3.10+, installs into the host's skill directory, then follows host reload/new-session requirements. Base runtime uses only the Python standard library, without a browser or additional dependencies. No key is needed during installation; ask normal questions afterwards.
 
-```text
-Install this Skill: https://github.com/wjason/xcoze-search
-Check that Python 3.10+ is available and install it in the current assistant's skills directory.
-```
-
-After installation, start a new chat or reload the assistant if instructed. Then say “Configure xcoze search with DeepSeek. Reply in English.” Yuanbao, Tavily, Exa, Brave, and Bocha are also available. See [setup](references/setup.en.md). Installation does not require a key; never send keys through chat.
-
-If the agent cannot install Skills or execute local scripts, follow the manual steps below.
-
-## Manual installation and first use
-
-1. Install Python 3.10+. Windows can use `py -3`; macOS/Linux usually use `python3`.
-2. Install from the repository with the Skills CLI, or download the [v0.3.0 package](https://github.com/wjason/xcoze-search/releases/tag/v0.3.0) and place the xcoze-search folder in the host's skills directory.
-3. Confirm a single directory level: `<skills>/xcoze-search/SKILL.md`. Codex defaults to `~/.codex/skills/xcoze-search/`, or the corresponding skills subdirectory when CODEX_HOME is set.
-4. Start a new chat and ask “Configure Tavily for xcoze search.” Reload the assistant if it has not discovered the Skill. Choose DeepSeek, Yuanbao, Tavily, Exa, Brave, or Bocha; one configured provider is sufficient.
-5. The assistant provides an official key-console link. Open it yourself; no browser page opens automatically. Once you have the key, say “Ready to enter the key.” If you already have a key, say so.
-6. Paste it into the local hidden-input dialog and save. Verification makes one potentially billable search. Only `search_verified:true` for the target provider establishes access for that check. Cancellation leaves configuration unchanged; failed verification leaves the saved key in place.
-7. Ask “Use xcoze search to research this public topic and cite sources.” Keep keys out of chat.
-
-## Runtime environment
-
-Local dialogs use macOS system dialogs, Windows PowerShell/WinForms, or an existing Zenity installation on a Linux desktop. In remote or headless environments, use hidden input in your own visible terminal or managed environment variables. The assistant should supply the actual script path:
+## CLI or manual installation
 
 ```bash
-python3 "<skill_dir>/scripts/xcoze_search.py" setup --provider exa --verify
+npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Python is still required. This is not a standalone application, and a chat-only host without local script execution cannot run it. The source ZIP additionally includes tests and regression tools; the Skill ZIP contains runtime files and user documentation.
+This optional method requires Node.js. Alternatively unpack the [v0.4.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) into your host's skill directory; manual unpacking does not need Node.js.
 
-Required directory structure includes:
+Codex's default is `~/.codex/skills/xcoze-search/`, or the skills subdirectory of CODEX_HOME when set. Follow other hosts' discovery rules. This package needs local script execution; a standalone executable remains planned.
+
+## First use
 
 ```text
-xcoze-search/
-  SKILL.md
-  agents/openai.yaml
-  scripts/xcoze_search.py
-  scripts/search_common.py
-  scripts/search_providers.py
-  references/setup.md
+Find open-source industrial vision projects and compare deployment requirements.
+Find official updates on this topic from the past week.
 ```
 
-## Updates, migration, and removal
+No key selects keyless sources; configured enabled keys make the default quality-first. Anonymous limits, network and coverage still affect results; successful installation does not verify every backend. Mode selection is optional; see [routing](references/routing.en.md).
 
-Replace the program directory to update. Credentials live in the user's configuration directory and are not overwritten by the package. v0.3.0 reads v1 configuration without rewriting it during queries. Explicit `migrate-config`, or saving after successful key input, first creates a backup and then upgrades to v2. Existing keys, the default provider, and extension fields are retained. Unknown formats or migration failures do not overwrite the original credentials.
+To add a commercial service, ask “Configure DeepSeek for xcoze search.” The Agent prints official links without opening them, then launches local hidden input when ready. Never paste keys into chat. On headless systems use the user's own visible terminal or controlled environment variables. See [setup](references/setup.en.md).
 
-Older releases such as v0.2.0 cannot read v2. To downgrade, inspect and restore the private v1 backup locally. It does not include keys added or replaced after the upgrade. See [setup](references/setup.en.md) for paths, permissions, and failure handling.
+## Upgrade, compatibility and removal
 
-Remove the Skill directory to uninstall. To remove credentials, separately remove the local configuration, private backup, and relevant environment variables, and revoke keys on the official platforms. Uninstalling does not revoke provider keys.
+Replacing the program folder does not overwrite user-directory credentials. v0.4.0 retains v1 reading, schema v2 and private-backup migration; search_preferences is optional. Searches never rewrite config; preferences/key saves migrate only when needed.
+
+**Behavior changes:** auto now has bounded fallback and Fetch defaults to automatic routing. Pin `--provider deepseek` or another source for older deterministic behavior. Both still means DeepSeek plus Yuanbao. Preferences --reset restores defaults without deleting keys.
+
+v0.2.0 cannot read v2. For downgrade inspect the private backup locally; it excludes later keys. Older versions also do not enforce new preferences. Removing the program does not revoke credentials; separately delete local config/backups, clear variables and revoke keys at their providers when required.

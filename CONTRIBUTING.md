@@ -4,6 +4,10 @@
 
 欢迎提交缺陷修复、文档改进、测试样例和搜索源适配。
 
+## 免 Key 与路由贡献
+
+免 Key 适配器位于 scripts/public_providers.py，使用 PUBLIC_REGISTRY；共用 Provider 契约，requires_key:false，不能读取其他服务凭据。请求解码通过 decode_response 区分 JSON、SSE、RSS 或 HTML，验证页不得视为空结果成功。scripts/search_routing.py 只做离线能力与偏好规划，Agent 负责语义判断。路由改动需覆盖免费模式不发送 Key、显式覆盖、条件不丢失、预算停止及失败备用。新增运行文件和测试同时加入 build_release.py 允许列表，并同步中英文文档。
+
 ## 提交问题
 
 在 [GitHub Issues](https://github.com/wjason/xcoze-search/issues) 说明使用环境、版本、命令、期望结果和实际结果。排错材料仅提供错误码、脱敏 RequestId 和必要输出，不要上传 API Key、配置文件或私密查询。

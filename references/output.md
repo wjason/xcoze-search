@@ -1,6 +1,16 @@
-# 输出契约 v0.3.0
+# 输出契约 v0.4.0
 
 **简体中文** | [English](output.en.md)
+
+## 自动路由的新增契约
+
+自动 Search / Fetch 增加 routing：requested_strategy、strategy、automatic、selection_basis、candidates、attempted_providers、skipped_incompatible、max_sources、stop_reason、semantic_quality_verified:false。候选存在不等于已执行或已验证，运行中以 requests 和 budget 为准。plan 只返回路由公开字段，network_requests:0，不包含凭据或请求体。
+
+自动备用得到非空可用结果时 ok:true，即使 errors 中保留之前失败；此时 partial:true，退出码 0。自动耗尽候选/预算且无可用结果时 ok:false，退出码 4。显式多源部分失败的旧契约不变：ok:false、partial:true、退出码 4。complete 仅描述本次执行，不代表问题已充分研究；facts_verified 始终 false。
+
+公开平台结果保留具体语义：GitHub README 为 repository_readme；HN 单条为 discussion_item，outbound_url 和 comment_ids 不代表外链或子评论已读；免 Key 阅读返回 truncated / completeness_verified。Jina/Exa 有长度上限，不声称完整正文。RSS 日期不作为文章发布日期。
+
+preferences 只报告脱敏偏好和是否保存。status 增加 keyless 能力与 preferences，仍不做网络验证。免费模式不读取无关服务 Key 用于请求，不按有无赠送额度自动改变分类。
 
 默认 stdout 为 JSON；顶层运行错误 stderr 为 JSON。argparse 帮助/语法错误保持 Python 标准行为。setup 引导写 stderr，密钥不回显；GUI 子进程 stdout/stderr 仅由本地脚本消费，不转发给 Agent。
 
@@ -32,7 +42,7 @@ budget 含 limit、attempts、remaining、by_provider、scope。记录当前命�
 
 ## 多源语义
 
-auto 不自动多发；both 固定为 DeepSeek＋元宝；逗号列表按用户顺序调用，all 按注册顺序使用已配置服务。参数和所需凭据在发送前整体校验。运行中的部分失败保留成功结果，ok:false/complete:false；另一家正常完成（即使空结果）时 partial:true。全部失败不是部分成功。
+auto 使用有记录的有限备用，语义见下方；both 固定为 DeepSeek＋元宝；逗号列表按用户顺序调用，all 按注册顺序使用已配置服务。参数和所需凭据在发送前整体校验。运行中的部分失败保留成功结果，ok:false/complete:false；另一家正常完成（即使空结果）时 partial:true。全部失败不是部分成功。
 
 不同服务不按原始分数混排。duplicate_groups 仅按 URL 去 fragment、小写 scheme/netloc 标记 0 起索引，不合并版本、不删除 query、不判定事实独立性。响应条目损坏时该服务失败，不跳过坏条目后宣称成功。
 

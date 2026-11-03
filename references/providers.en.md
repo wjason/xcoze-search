@@ -2,6 +2,21 @@
 
 [简体中文](providers.md) | **English**
 
+## v0.4.0 keyless routes
+
+| ID | Fixed entry point | Scope and limits |
+|---|---|---|
+| bing | https://www.bing.com/search?format=rss | Experimental RSS, max 10; site syntax plus returned-host checking; RSS dates are not article publication dates |
+| duckduckgo | https://html.duckduckgo.com/html/ | Experimental HTML, max 20; challenge/unrecognized pages fail |
+| exa-free | https://mcp.exa.ai/mcp | [Official limited keyless MCP](https://exa.ai/docs/get-started/exa-mcp), Search/Fetch tools/call over JSON/SSE; reading up to 24000 characters |
+| github | https://api.github.com/search/repositories | [Public repositories](https://docs.github.com/en/rest/search/search), max 20; no code search; default README through fixed repos endpoint |
+| hackernews | https://hn.algolia.com/api/v1/search | Stories with optional start/end dates; [official single-item API](https://github.com/HackerNews/API) reads story/comment metadata and child IDs without traversal |
+| jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/) for public URLs; reading only, max 24000 characters with truncation flag |
+
+Keyless adapters neither load nor send other credentials. Queries/URLs still go to external services; public pages, anonymous quotas and availability have no SLA. Fixed upstream services perform target resolution/fetching; the script does not connect to arbitrary user-supplied target hosts. Unsupported constraints fail or exclude the source from auto plans rather than being ignored. See [routing](routing.en.md).
+
+The existing six keyed API contracts follow.
+
 Checked on 2026-11-02. These are the features exposed by this tool; account access, billing, and service limits remain subject to official documentation. All endpoints are fixed, authenticated redirects are blocked, and custom proxy URLs are not accepted.
 
 ## Capability matrix

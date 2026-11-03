@@ -1,54 +1,43 @@
-# Agent 搜索服务调研
+# 搜索路线与竞品实现调研
 
 **简体中文** | [English](search-services.en.md)
 
-调研日期：2026-11-02。下列信息来自服务商官方文档和项目文档，用于安排 xcoze search 的后续接入，不是使用量榜单或检索质量评测。P1 四家已完成接口适配和离线测试，但没有使用其真实 Key 发起调用；P2/P3 候选仍未实现。文档或实现存在不等于账号已授权或结果质量已验证。
+核对：2026-11-03。资料来自项目代码和官方文档；没有将功能说明、星标或连通性测试作为检索质量排名。当前范围是联网搜索与读取，不包含自建实例、网页索引和企业资料搜索。
 
-## 接入路线
+## 实现参考与取舍
 
-- **结构化搜索 API**：返回标题、链接、片段和元数据，由调用 Agent 继续阅读和作答。
-- **搜索与内容提取服务**：除了发现页面，也可以提取网页文本、Markdown 或相关摘录；每种内容须保留含义。
-- **自建元搜索**：由用户维护实例、引擎配置与访问权限，不能套用“填一个 API Key 即可”的假设。
-
-这些路线有交叉。REST 是本项目优先考虑的执行入口；供应商提供 MCP 或官方 Skill 可以作为生态支持信息，但不替代适配器和结果契约。
-
-## 当前实现
-
-| 服务 | 接入依据 | 当前状态 |
+| 项目 | 实现观察 | xcoze search 的取舍 |
 |---|---|---|
-| DeepSeek Search / Fetch | [官方指南](https://api-docs.deepseek.com/guides/search/) | 已实现；2026-11-02 本版 Search / Fetch 回归通过 |
-| 腾讯元宝 SearchPro | [服务 API KEY 方式](https://cloud.tencent.com/document/product/1806/130615) | 已实现；真实账号测试待完成 |
-| Tavily Search / Extract | [Search](https://docs.tavily.com/documentation/api-reference/endpoint/search) / [Extract](https://docs.tavily.com/documentation/api-reference/endpoint/extract) | v0.3.0 已实现；未做真实账号测试 |
-| Exa Search / Contents | [Search](https://exa.ai/docs/reference/search) / [Contents](https://exa.ai/docs/reference/get-contents) | v0.3.0 已实现；未做真实账号测试 |
-| Brave Web Search | [官方参数](https://api-dashboard.search.brave.com/api-reference/web/search/get) | v0.3.0 已实现；未做真实账号测试 |
-| 博查 Web Search | [官方 MCP 实现](https://github.com/BochaAI/bocha-search-mcp/blob/master/src/bocha_search_mcp/server.py) | v0.3.0 已实现；未做真实账号测试 |
+| [Agent Reach](https://github.com/Panniantong/Agent-Reach/blob/main/agent_reach/channels/web.py) | 提醒优先使用宿主已有工具；通过 Exa MCP 搜索、Jina Reader 读取，并提供平台专用渠道 | 复用已有授权工具，不把浏览器和全部平台登录变成安装要求 |
+| [DDGS](https://github.com/deedy5/ddgs/blob/main/ddgs/ddgs.py) | 多搜索后端、并发、去重和简单排序；部分后端解析公开 HTML | 参考公共搜索入口，本版自行实现少量标准库适配，不引入 DDGS 运行依赖或声称其所有后端已支持 |
+| [open-webSearch](https://github.com/Aas-ee/open-webSearch) | CLI/MCP/本地服务共用核心；搜索可并发多个引擎，网页提取可选浏览器 | 基础包保持无浏览器依赖，限定来源数；未文档化的网站前端接口不作为稳定契约 |
+| [OpenRouter](https://openrouter.ai/docs/guides/features/server-tools/web-search) | 在可用端点选择原生搜索或外部引擎 | 宿主工具由 Agent 调用，本地脚本不假定可调用所有宿主内部工具 |
+| [LiteLLM](https://docs.litellm.ai/docs/search) | 多服务统一搜索接口、成本记录 | 统一入口已有同类；本项目以默认可用路径、简单配置和证据范围为重点 |
+| [Tavily Skills](https://github.com/tavily-ai/skills) | Skill 配合 CLI，提供搜索和阅读工作流；部分操作有免认证限额 | 保留自带 Key API，暂不承诺与其 CLI 匿名额度或登录状态互通 |
 
-## 扩展服务（P1 已实现，P2/P3 为候选）
+代码核对快照：Agent Reach 7a38047acf26a729cbb27851e3cb81639da86b29；DDGS 8e74959141106702645020dcb853c6453b5e5195；open-webSearch fb11fd94df736819a0d2765bf7645224f98b2c6b。仅参考选路和公开契约，未运行其安装脚本或复制用户会话。
 
-表中的能力来自官方资料；优先级是项目判断，采用 API Key 的服务仍可能要求开通产品、购买额度或授予相应访问权限。
+## 本版免 Key 支持
 
-| 服务 | 官方入口与主要能力 | 配置与适配关注点 | 优先级 |
-|---|---|---|---|
-| Tavily | [Search](https://docs.tavily.com/documentation/api-reference/endpoint/search) / [Extract 说明](https://help.tavily.com/articles/3363168593-extracting-web-content-using-tavily)：网页检索与内容提取 | Bearer API Key；映射搜索深度、日期/域名条件；单独处理 raw content、答案与额外请求成本 | P1 |
-| Exa | [Search API](https://exa.ai/docs/reference/search)：搜索和结果内容获取，支持 text / highlights 等字段 | API Key；区分正文、相关摘录和摘要，保留结果日期、warnings 及官方返回的成本 | P1 |
-| Brave Search | [Web Search 文档](https://api-dashboard.search.brave.com/app/documentation/web-search/get-started)：网页结果、地区/语言、时效、额外片段 | `X-Subscription-Token`；摘要和额外片段不是全文，条数/分页限制与现有服务不同 | P1 |
-| 博查 | [开放平台](https://open.bochaai.com/) / [官方 MCP 项目](https://github.com/BochaAI/bocha-search-mcp)：Web Search 与可选 AI Search 能力 | Web Search 使用 Bearer API Key；先映射网页结果与摘要，结构化卡片单独评估 | P1 |
-| Perplexity | [Search API](https://docs.perplexity.ai/docs/search/quickstart)：结构化搜索、过滤条件和内容提取 | API Key；接原始搜索接口，与生成答案接口区分，保留 snippet 的实际语义 | P2 |
-| Firecrawl | [Search](https://docs.firecrawl.dev/features/search)：搜索并可附加抓取 Markdown 等内容 | API Key；抓取需显式选择，区分发现页面与提取内容的成本和失败 | P2 |
-| Parallel | [Search Quickstart](https://docs.parallel.ai/search/search-quickstart)：目标驱动的查询和相关摘录 | `x-api-key`；objective 与 search_queries 单独映射，保留 excerpts 和 warnings | P2 |
-| Serper | [官方产品与结果示例](https://serper.dev/)：Google SERP 搜索服务，包括自然结果及其他类别 | API Key；实施前需在控制台核实最新鉴权/参数文档。它是第三方搜索服务，不能标成 Google 官方接口 | P2 |
-| SerpApi | [Google Search API](https://serpapi.com/search-api)：结构化 SERP、地理条件和分页；另有 [Search Index](https://serpapi.com/search-index-api) | API Key；先处理 organic_results 与异步/业务状态；各 engine 的能力不同，鉴权信息不能进入日志 | P2 |
-| Jina | [Search / Reader](https://jina.ai/reader/)：搜索结果与 URL 内容读取 | 核对 API Key 和对应限额；Reader 与搜索分开声明，不把所有访问方式都描述为免费 | P3 |
-| SearXNG | [Search API](https://docs.searxng.org/dev/search_api.html)：自建元搜索的 HTTP 接口 | 用户实例 URL，鉴权依部署；JSON 输出要在实例配置中启用，许多公共实例未开放机器可读格式 | P3 |
+- Bing RSS、DuckDuckGo HTML 是实验性公开搜索路径，结构、访问和相关性可能变化；不宣称厂商提供正式搜索 API SLA。
+- [Exa 官方 MCP](https://exa.ai/docs/get-started/exa-mcp) 明确提供搜索与读取的有限免 Key 入口；与带 Key Exa API 分开。
+- [GitHub 公开搜索](https://docs.github.com/en/rest/search/search) 有匿名限额，代码搜索需要认证，本版不适配代码搜索。
+- HN 帖子检索使用 [Algolia HN Search](https://hn.algolia.com/api)，单条帖子/评论使用 [HN 官方 API](https://github.com/HackerNews/API)。索引与官方单条数据可能存在时差。
+- [Jina Reader](https://jina.ai/reader/) 访问目标网页、提取内容并输出适合模型的文本，既负责获取也负责转换。本版只接 Reader：已有正文时不重复调用；摘要不足或宿主读取失败时用作备用。Jina Search 与 Reader 认证和限额不同，Search 本版未接入。
 
-## 选择优先级的理由
+免 Key、服务开源和不额外付费是不同概念。上述请求仍到外部服务，官方限额入口也属于商业服务；免费策略排除带 Key 适配器，不承诺所有计算免费。具体当次验证见 [验证记录](../VALIDATION.md)。
 
-P1 覆盖现有两家之外的不同检索与内容处理接口，同时延续单服务凭据的配置习惯。P2 扩展内容抓取、目标式搜索和不同 SERP 返回结构。P3 涉及可选内容服务或用户维护的实例，需要额外的配置与运维约定。
+## 已有带 Key 服务
 
-这是基于接口能力与项目范围作出的安排，不表示某个服务更准确、更便宜或在特定网络中一定可用。接入前仍需核对当日官方契约、计费、内容使用条款和账号资格。
+| 服务 | 官方契约 | 当前范围 |
+|---|---|---|
+| DeepSeek | [Search / Fetch](https://api-docs.deepseek.com/guides/search/) | 搜索、正文读取 |
+| 元宝 | [SearchPro](https://cloud.tencent.com/document/product/1806/121811) | 网页搜索与摘要，权限随实际版本 |
+| Tavily | [Search](https://docs.tavily.com/documentation/api-reference/endpoint/search)、[Extract](https://docs.tavily.com/documentation/api-reference/endpoint/extract) | 搜索、内容提取 |
+| Exa | [Search](https://exa.ai/docs/reference/search)、[Contents](https://exa.ai/docs/reference/get-contents) | 搜索、正文/摘录/摘要 |
+| Brave | [Web Search](https://api-dashboard.search.brave.com/api-reference/web/search/get) | 网页搜索 |
+| 博查 | [开放平台](https://open.bochaai.com/) | Web Search |
 
-## 实施前补齐的信息
+## 后续候选
 
-每个候选接入前均需核对：实际服务端点与鉴权、结果/内容语义、筛选条件、空结果和业务错误、限流与重试、费用/额度、数据处理条款、真实账号可用性。对需要登录控制台才能取得完整文档的服务，应记录材料缺口，不用社区示例替代最终接口依据。
-
-已有供应商的协议参考保留在 [providers.md](providers.md)，开发顺序和验收条件见 [TODO](../TODO.md)。
+Perplexity Search、Firecrawl、Parallel、Serper、SerpApi 和 Jina Search 仅按实际信息缺口安排，尚未接入。它们的免费体验、认证、数据契约和成本在实施时重新核对。平台专用动作也应逐项声明搜索、正文、评论和榜单覆盖，不用一个“支持平台”笼统代替。
