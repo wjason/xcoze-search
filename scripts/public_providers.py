@@ -1,7 +1,6 @@
 """Keyless public backends. No browser, SDK, account or implicit credentials."""
 import base64
 from datetime import datetime, timezone
-from html import unescape
 from html.parser import HTMLParser
 import json
 import re
@@ -229,14 +228,11 @@ class GitHub(PublicProvider):
     endpoint = "https://api.github.com/search/repositories"
     fetch_endpoint = "https://api.github.com/repos/"
     search_scope = "public_repositories_not_code_search"
-    options = frozenset(("site", "start_date", "end_date"))
+    options = frozenset(("site",))
 
     def build_search(self, args):
         if option(args, "site") not in (None, "", "github.com"):
             raise SearchError("unsupported_option", "GitHub repository search only supports site github.com.")
-        start, end = dates(args)
-        if start or end:
-            raise SearchError("unsupported_option", "GitHub repository update dates are not publication-date filters.")
         return {"q": args.query, "per_page": args.count}
 
     def normalize(self, raw, count):

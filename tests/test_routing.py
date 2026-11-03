@@ -70,6 +70,7 @@ class RoutingTests(unittest.TestCase):
         self.assertIn("numericFilters", route["payloads"]["hackernews"])
         with self.assertRaises(x.SearchError): x.plan(args(freshness="d7"), self.config, x.credential)
         with self.assertRaises(x.SearchError): x.plan(args(count=0), self.config, x.credential)
+        self.assertEqual(FREE["github"].capabilities()["time_filters"], [])
 
     def test_disabled_sources_and_bad_keys_do_not_enter_automatic_routes(self):
         self.keyed(); self.config["providers"]["deepseek"]["api_key"] = "bad key"
@@ -98,6 +99,8 @@ class RoutingTests(unittest.TestCase):
         request.assert_not_called()
         self.assertEqual(json.loads(out.getvalue())["network_requests"], 0)
         self.assertNotIn("synthetic-only", out.getvalue())
+        with self.assertRaises(x.SearchError):
+            x.plan(args(provider="all"), {"schema_version": 2, "providers": {}}, x.credential)
 
     def test_free_mode_executes_with_no_auth_even_when_key_is_configured(self):
         self.keyed()

@@ -2,7 +2,7 @@
 from copy import copy
 
 from search_common import SearchError, invalid
-from search_providers import REGISTRY, SEARCH_OPTIONS
+from search_providers import REGISTRY
 from public_providers import PUBLIC_REGISTRY
 
 ALL = {**REGISTRY, **PUBLIC_REGISTRY}
@@ -59,7 +59,15 @@ def plan(args, config, credential, *, fetch=False):
     explicit = requested != "auto"
     if explicit:
         if requested == "both": candidates = ["deepseek", "yuanbao"]
-        elif requested == "all": candidates = available or ["bing", "exa-free", "duckduckgo"]
+        elif requested == "all":
+            candidates = []
+            for name in REGISTRY:
+                try: credential(name, config)
+                except SearchError as exc:
+                    if exc.code != "missing_api_key": raise
+                else: candidates.append(name)
+            if not candidates:
+                raise SearchError("missing_api_key", "all selects configured keyed services; use auto for keyless search.")
         else: candidates = requested.split(",")
         if len(set(candidates)) != len(candidates) or any(p not in ALL for p in candidates):
             invalid("Use registered provider names without duplicates.")

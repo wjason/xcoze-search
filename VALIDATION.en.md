@@ -6,7 +6,7 @@
 
 Fifteen Chinese/English document and instruction pairs retain Chinese-first navigation. Runtime, Skill and package versions are 0.4.0.
 
-96 local offline tests passed: the previous 68 plus routing, preferences, keyless protocols and boundary coverage. Tests use synthetic keys/responses and temporary configuration; default CI stays offline. Runtime remains standard-library-only.
+94 local offline tests passed: the previous 68 plus routing, preferences, keyless protocols and boundary coverage. Tests use synthetic keys/responses and temporary configuration; default CI stays offline. Runtime remains standard-library-only.
 
 | Live check | Observed result | Scope |
 |---|---|---|
