@@ -58,3 +58,13 @@ python3 scripts/evaluate_fallback.py --live-api --live-browser --output ../fallb
 ```
 
 Default HTTP/browser execution is simulated, with synthetic keys for six providers and no credential-file reads. --live-api sends one anonymous API query; --live-browser launches one real browser path after injected API failures. The guard rejects keyed requests before transmission. ok means routing safety assertions passed; live_browser_usable separately reports actual browser availability and may be false. Simulated recovery is not real retrieval success. See the [observed report](reports/2026-11-03-fallback.en.md).
+
+## Live browser acceptance (v0.7.1)
+
+```bash
+python3 scripts/evaluate_browser.py --live --output ../browser-live.json
+```
+
+Explicit --live is required. All search pages/HTTP responses are real. Synthetic in-memory keys and temporary cache avoid user credential files/saved preference changes; a pre-transmission guard rejects keyed APIs. Three docs/statistical-release/filing-reproduction tasks plus a GitHub coverage probe run, followed by a real DDG-to-browser route with Exa/Bing temporarily disabled in test preferences. Successful DDG evidence without browser execution does not pass the browser-fallback check.
+
+accepted indicates an expected source/topic and acknowledged close, not factual accuracy. The GitHub coverage probe is required:false and remains a failed coverage check when empty; overall ok must not hide it. Overall ok requires the three core tasks, real automatic recovery and zero keyed attempts. Every failure remains reported. Public indexes/network conditions may change. Keep the historical [quota report](reports/2026-11-03-fallback.en.md) separate from [real browser evidence](reports/2026-11-03-browser.en.md).

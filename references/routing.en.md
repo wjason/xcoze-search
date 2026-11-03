@@ -82,3 +82,11 @@ Explicit sources never fall back outside their selection. Both and comma-list se
 - Browser only supports general query/site; explicit unsupported dates/languages are not dropped. API budget unit is provider_api_http_attempts. Browser navigation/commands are separate and actual subrequest counts remain unknown.
 
 [Fault tests and observed limits](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.en.md).
+
+## v0.7.1: real browser retrieval fixes
+
+360 is now the default browser engine; --browser-engine explicitly selects Bing/Google. One selected engine, without probes/rotation. An anonymous session launches a blank page, schedules one navigation through a fixed script and waits for visible organic rows with nonempty titles, rather than page load. 360 destination URLs come from organic data-mdurl attributes; ads, AI answer cards and internal engine links are excluded.
+
+Explicit no-match pages return an empty list and browser_explicit_no_matches:true, without failure cooldown or a claim of web-wide absence. Hidden rows produce browser_results_hidden, action timeouts remain browser_timeout and browser network pages produce browser_navigation_failed. These failures pause 60 seconds; challenges still pause 900. browser_failure_stage and browser_stage_timings_ms retain bounded stage/timing diagnostics for launch/navigation/wait/extraction/close, without page bodies or upstream error text. Conservative English/Chinese zero-topic-overlap rejection is not a semantic classifier.
+
+API priority, free isolation and source/time caps remain. Real browser retrieval took around 3–5 seconds and is heavier than a healthy API, so it never complements successful API results. Three retrieval tasks and real DDG-to-browser recovery passed; a GitHub index miss and weaker documentation queries remain in the [report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md). Multi-network and multi-OS runtime acceptance remain pending.

@@ -52,11 +52,11 @@ python3 scripts/xcoze_search.py search 'Qwen' --platform huggingface
 
 ## 可选浏览器搜索
 
-browser 现已接入已有 agent-browser，独立匿名 Chrome 会话，不是 Agent Reach 执行桥接。支持 Bing（默认）、Google（显式选择），一次导航，不自动轮换引擎。接口成功不启动，失败后仍需遵守网站验证与冷却。配置与费用边界见[调度](routing.md)。本轮真实浏览器空壳/超时，可用性未通过验收；模拟成功不替代真实验收。
+browser 现已接入已有 agent-browser，独立匿名 Chrome 会话，不是 Agent Reach 执行桥接。支持 360（默认）、Bing/Google（显式选择），一次导航，不自动轮换引擎。接口成功不启动，失败后仍需遵守网站验证与冷却。等可见自然结果而非仅节点存在，不为图片等整页资源延迟结果提取；广告/AI 卡片不作来源。360 的明确无匹配与空壳、隐藏节点、超时分开处理。v0.7.1 已用真实页面跑通文档、CPI 和公告转载检索，以及真实 API 验证失败后的自动兜底；GitHub 公开索引仍有缺口。见[真实测试](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)和[调度](routing.md)，不据此承诺跨网络或完整平台覆盖。
 
 ```bash
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
 python3 scripts/xcoze_search.py preferences --browser off
 python3 scripts/xcoze_search.py preferences --browser auto
-python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine bing
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```

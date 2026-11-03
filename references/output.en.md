@@ -1,4 +1,4 @@
-# Output contract v0.7.0
+# Output contract v0.7.1
 
 [简体中文](output.md) | **English**
 
@@ -81,3 +81,5 @@ Jina/keyless Exa Fetch adds max_characters and returned_characters, default 2400
 routing adds execution_candidates, skipped_unavailable and browser_mode. Exa application quota uses code source_rate_limited/category rate_limit, http_status:null when wire status is unknown. Actual HTTP 429/503 remains explicit. Locally suppressed calls count zero HTTP.
 
 execution_summary separates api_http_attempts, keyed_api_attempts, browser_navigation_attempts, browser_commands and browser_http_requests. The last is null after navigation, 0 without it. budget.unit=provider_api_http_attempts; browser page/resource subrequests are outside that observable count. Browser requests.attempts=0 means no API transport call, not no network; execution is local_browser. browser_cleanup_verified records a normal close acknowledgment, never assumed after failure.
+
+Browser requests may also expose browser_engine, browser_stage_timings_ms (launch/navigate/wait/extract/close in milliseconds), and browser_failure_stage on failure. browser_explicit_no_matches:true with empty results is distinct from a shell/timeout, not proof of complete index coverage. Failures/cleanup retain actual command/navigation counts without page bodies or upstream error text.

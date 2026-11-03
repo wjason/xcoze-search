@@ -185,29 +185,33 @@ class LocalBrowserTests(unittest.TestCase):
                 patch.object(browser, 'command', side_effect=command), \
                 patch.dict(os.environ, {'DEEPSEEK_API_KEY': 'synthetic-secret', 'EXA_API_KEY': 'synthetic-secret',
                                        'AGENT_BROWSER_PROVIDER': 'remote', 'AGENT_BROWSER_AUTO_CONNECT': '1'}):
-            raw = browser.search({'query': 'Python $(touch /tmp/never-executed)', 'count': 3})
-        self.assertEqual(len(calls), 4); self.assertIn('close', calls[-1][0])
+            raw = browser.search({'query': 'Python $(touch /tmp/never-executed)', 'count': 3}, engine='bing')
+        self.assertEqual(len(calls), 5); self.assertIn('close', calls[-1][0])
         self.assertTrue(raw['browser_cleanup_verified'])
         self.assertEqual(raw['browser_navigation_attempts'], 1)
         self.assertIsNone(raw['browser_http_requests'])
         self.assertTrue(calls[0][0][calls[0][0].index('--session') + 1].startswith('xcoze-search-'))
-        self.assertEqual(calls[2][1]['input_text'], browser.EXTRACT)
+        self.assertEqual(calls[3][1]['input_text'], browser.EXTRACT)
+        self.assertTrue(calls[1][1]['input_text'].startswith('setTimeout(() => location.assign('))
+        self.assertNotIn('$(touch /tmp/never-executed)', calls[1][1]['input_text'])
+        self.assertEqual(set(raw['browser_stage_timings_ms']), {'launch','navigate','wait','extract','close'})
 
     def test_challenge_stops_cools_down_and_never_switches_engine(self):
         calls = []
         def command(argv, **kw):
             calls.append(argv)
-            if 'open' in argv: return {'url': 'https://www.google.com/sorry/index', 'title': 'Verify'}
+            if 'eval' in argv and kw.get('input_text') == browser.EXTRACT:
+                return {'result': {**PAGE, 'url': 'https://www.google.com/sorry/index', 'results': [], 'challenge': True}}
             return {}
         with patch.object(browser.shutil, 'which', return_value='/safe/agent-browser'), patch.object(browser, 'command', side_effect=command):
             with self.assertRaises(x.SearchError) as caught:
                 browser.search({'query': 'Python', 'count': 3}, engine='google')
             self.assertEqual(caught.exception.code, 'access_challenge')
-            self.assertEqual(len(calls), 2)
+            self.assertEqual(len(calls), 5)
             with self.assertRaises(x.SearchError) as paused:
                 browser.search({'query': 'Python', 'count': 3}, engine='bing')
             self.assertEqual(paused.exception.code, 'source_cooldown')
-            self.assertEqual(len(calls), 2)
+            self.assertEqual(len(calls), 5)
         self.assertIsNotNone(public_access.pause_status('browser'))
 
     def test_unwrap_valid_links_and_reject_empty_shell_and_non_public_links(self):
@@ -231,6 +235,86 @@ class LocalBrowserTests(unittest.TestCase):
         with self.assertRaises(x.SearchError) as caught:
             browser.command([sys.executable, '-c', 'import time; time.sleep(5)'], env=env, deadline=time.monotonic()+.1)
         self.assertEqual(caught.exception.code, 'browser_timeout')
+
+    def test_hidden_rows_wait_timeout_is_diagnosed_on_same_page(self):
+        calls = []
+        def fake(argv, **kw):
+            calls.append(argv)
+            if 'wait' in argv:
+                raise x.SearchError('browser_timeout', 'Synthetic wait timeout')
+            if 'eval' in argv and kw.get('input_text') == browser.EXTRACT:
+                return {'result': {**PAGE, 'results': [], 'hidden_count': 10}}
+            return {}
+        with patch.object(browser.shutil, 'which', return_value='/safe/agent-browser'), patch.object(browser, 'command', side_effect=fake):
+            with self.assertRaises(x.SearchError) as caught:
+                browser.search({'query':'Python asyncio', 'count':3}, engine='bing')
+        self.assertEqual(caught.exception.code, 'browser_results_hidden')
+        self.assertEqual(caught.exception.browser_failure_stage, 'extract')
+        self.assertEqual(caught.exception.browser_navigation_attempts, 1)
+        self.assertTrue(caught.exception.browser_cleanup_verified)
+        self.assertEqual(len(calls), 5)
+        self.assertIsNotNone(public_access.pause_status('browser'))
+
+    def test_360_target_urls_exclude_engine_cards_and_nonpublic_destinations(self):
+        data = {**PAGE, 'url': 'https://www.so.com/s?q=Python', 'results': [
+            *PAGE['results'], {'title':'AI answer', 'url':'https://ai.so.com/answer'},
+            {'title':'Ad', 'url':'https://e.so.com/click'}, {'title':'Internal','url':'http://127.0.0.1/'}]}
+        rows = browser.parse_page(data, '360')
+        self.assertEqual(len(rows), 1); self.assertEqual(rows[0]['url'], PAGE['results'][0]['url'])
+        with self.assertRaises(x.SearchError): browser.parse_page({**data,'url':'https://www.so.com/account'}, '360')
+        with self.assertRaises(x.SearchError): browser.parse_page({**data,'url':'https://['}, '360')
+        self.assertEqual(x.parser().parse_args(['search','query']).browser_engine, '360')
+
+    def test_browser_chinese_mismatch_rejected_inside_cooldown_and_without_retry(self):
+        from search_quality import obvious_mismatch
+        self.assertTrue(obvious_mismatch('新能泰山 最新公告', [{'title':'ChatGPT release','url':'https://github.com/example'}], include_cjk=True))
+        self.assertFalse(obvious_mismatch('新能泰山 最新公告', [{'title':'新能泰山三季报','url':'https://example.com'}], include_cjk=True))
+        self.assertFalse(obvious_mismatch('上海天气', [{'title':'上海市天气预报','url':'https://example.com'}], include_cjk=True))
+        def fake(argv, **kw):
+            if kw.get('input_text') == browser.EXTRACT:
+                return {'result': {**PAGE, 'results':[{'title':'ChatGPT news','url':'https://example.com'}]}}
+            return {}
+        with patch.object(browser.shutil, 'which', return_value='/safe/agent-browser'), patch.object(browser, 'command', side_effect=fake):
+            with self.assertRaises(x.SearchError) as caught:
+                browser.search({'query':'新能泰山 最新公告','count':3},engine='bing')
+        self.assertEqual(caught.exception.code, 'irrelevant_results')
+        self.assertIsNotNone(public_access.pause_status('browser'))
+
+    def test_cli_timeout_and_navigation_errors_keep_stage_without_upstream_text(self):
+        for detail, code in [('Wait timed out after 6000ms synthetic-secret','browser_timeout'),
+                             ('Navigation failed: private-url','browser_navigation_failed')]:
+            program = 'import json; print(json.dumps(' + repr({'success':False,'error':detail}) + '))'
+            with self.assertRaises(x.SearchError) as caught:
+                browser.command([sys.executable,'-c',program],env=browser.browser_environment(),deadline=time.monotonic()+5)
+            self.assertEqual(caught.exception.code,code)
+            self.assertNotIn('synthetic-secret',str(caught.exception));self.assertNotIn('private-url',str(caught.exception))
+
+    def test_explicit_no_match_is_not_a_hidden_shell_or_failure_cooldown(self):
+        page = {**PAGE, 'url':'https://www.so.com/s?q=test', 'results':[],
+                'candidate_count':0, 'hidden_count':0, 'explicit_no_matches':True}
+        self.assertEqual(browser.parse_page(page,'360'), [])
+        def fake(argv, **kw):
+            return {'result':page} if kw.get('input_text') == browser.EXTRACT else {}
+        with patch.object(browser.shutil,'which',return_value='/safe/agent-browser'), patch.object(browser,'command',side_effect=fake):
+            raw = browser.search({'query':'unlikely topic','count':3})
+        self.assertEqual(raw['results'],[]); self.assertTrue(raw['browser_explicit_no_matches'])
+        self.assertIsNone(public_access.pause_status('browser'))
+        with self.assertRaises(x.SearchError): browser.parse_page({**page,'explicit_no_matches':False},'360')
+        with self.assertRaises(x.SearchError): browser.parse_page({**page,'url':PAGE['url']},'bing')
+
+    def test_live_evaluator_requires_explicit_opt_in_and_disables_only_named_sources(self):
+        path = Path(__file__).resolve().parents[1] / 'scripts/evaluate_browser.py'
+        spec = importlib.util.spec_from_file_location('evaluate_browser',path)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        with patch.object(sys,'argv',['evaluate_browser.py','--output','unused.json']), \
+                patch.object(module,'execute',side_effect=AssertionError('no network')), \
+                patch('sys.stderr',io.StringIO()), self.assertRaises(SystemExit) as caught:
+            module.main()
+        self.assertEqual(caught.exception.code,2)
+        config = {'providers':{}, 'search_preferences':{'strategy':'free','disabled_providers':['exa-free','bing']}}
+        with patch('search_routing.browser_available',return_value=True):
+            route = x.plan(args(strategy='free'),config,x.credential)
+        self.assertEqual(route['execution_candidates'],['duckduckgo','browser'])
 
     def test_fault_evaluator_default_is_fully_simulated_and_records_zero_paid_calls(self):
         path = Path(__file__).resolve().parents[1] / 'scripts/evaluate_fallback.py'

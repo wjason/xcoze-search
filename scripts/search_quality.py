@@ -1,7 +1,8 @@
 """Conservative mismatch detection for experimental scraped search responses.
 
 Zero topic overlap is a fallback signal, never a quality score or fact check.
-Only experimental HTML/RSS backends use it; semantic APIs may return synonyms.
+Experimental HTML/RSS/browser backends use it; semantic APIs may return synonyms.
+Chinese literal-overlap checks are opt-in for browser results only.
 """
 import re
 
@@ -18,12 +19,19 @@ def topic_terms(query):
     return words
 
 
-def obvious_mismatch(query, rows):
+def obvious_mismatch(query, rows, *, include_cjk=False):
     terms = topic_terms(query)
-    if len(terms) < 2 or not rows:
-        return False
+    if not rows: return False
     text = " ".join(str(row.get(k) or "") for row in rows
                     for k in ("title", "url", "snippet", "summary", "content"))
+    if len(terms) < 2:
+        if not include_cjk: return False
+        # Browser-only fallback signal, not semantic ranking. Remove common task
+        # instructions before looking for any literal Chinese topic bigram.
+        topic = re.sub(r"最新|最近|近期|官方|公告|报告|搜索|查找|查询|帮我|请问|是什么|怎么样|多少|第[一二三四]季度|年度|月份", " ", query)
+        groups = re.findall(r"[\u3400-\u9fff]{2,}", topic)
+        bigrams = {g[i:i+2] for g in groups for i in range(len(g)-1)}
+        return len(bigrams) >= 2 and not any(term in text for term in bigrams)
     found = set(re.findall(r"[a-z][a-z0-9]*(?:\.[a-z][a-z0-9]*)*", text.casefold()))
     compact = {word.replace(".", "") for word in found}
     return not any(term in found or term.replace(".", "") in compact for term in terms)

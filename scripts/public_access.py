@@ -141,7 +141,7 @@ def request_slot(name, url, *, max_wait=0):
         if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
         if name == "browser":
             if error.code in ("access_challenge", "browser_navigation_blocked"): slot.defer(900)
-            elif error.code in ("browser_timeout", "browser_no_results", "browser_failed", "browser_unavailable"): slot.defer(60)
+            elif error.code in ("browser_timeout", "browser_no_results", "browser_results_hidden", "browser_navigation_failed", "browser_failed", "browser_unavailable", "irrelevant_results"): slot.defer(60)
         raise
     finally:
         # OS locks are released on close, including process exit; no stale lock deletion needed.

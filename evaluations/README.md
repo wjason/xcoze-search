@@ -58,3 +58,13 @@ python3 scripts/evaluate_fallback.py --live-api --live-browser --output ../fallb
 ```
 
 默认所有 HTTP/浏览器均模拟，使用内存中的六家合成 Key，不读取用户凭据；--live-api 只做一次真实匿名 API 查询，--live-browser 在 API 故障注入后执行一条真实浏览器路径。付费 API 在传输前由测试守卫拒绝。ok 只表示路由安全断言通过；live_browser_usable 单列真实浏览器可用性，可能为 false，不能把模拟恢复当成真实检索成功。本轮[报告](reports/2026-11-03-fallback.md)记录了这一限制。
+
+## 真实浏览器验收（v0.7.1）
+
+```bash
+python3 scripts/evaluate_browser.py --live --output ../browser-live.json
+```
+
+仅显式 --live 才执行；全部搜索页面/HTTP 响应均真实，不模拟。使用内存合成 Key、临时缓存，不读取用户凭据或保存偏好，传输前守卫拒绝带 Key API。测试三道文档/统计发布/公告转载检索、一道 GitHub 覆盖探测，再以临时禁用 Exa/Bing 的偏好运行真实 DDG 到浏览器的自动链路。若 DDG 自身取得足够证据而未启动浏览器，也不算浏览器兜底通过。
+
+accepted 只表示取得预期来源/主题且关闭确认；不是事实正确性评分。GitHub 探测 required:false，明确记录为未通过覆盖检查，不能用总体 ok 隐藏该缺口。总体 ok 仅要求核心三题、真实自动兜底和零带 Key 调用；每项失败仍保留。运行结果受公开索引更新和网络影响。历史[限额报告](reports/2026-11-03-fallback.md)与[真实浏览器报告](reports/2026-11-03-browser.md)分别维护，不把模拟当在线成功。

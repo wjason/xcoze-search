@@ -52,11 +52,11 @@ Reading defaults to 24000 characters. Use `fetch URL --max-characters 100000` on
 
 ## Optional browser search
 
-browser now executes an existing agent-browser in an isolated anonymous Chrome session; it is not an Agent Reach execution bridge. Bing is default, Google explicit, one navigation without engine rotation. API success prevents startup. Website verification/cooldowns still apply; see [routing](routing.en.md). Live browser checks here returned a shell/timeout and did not pass availability acceptance. Simulated recovery is separate.
+browser now executes an existing agent-browser in an isolated anonymous Chrome session; it is not an Agent Reach execution bridge. 360 is default, Bing/Google explicit, one navigation without engine rotation. API success prevents startup; verification/cooldowns still apply. Wait for visible organic rows rather than node existence or all page resources; exclude ads/AI cards. Explicit 360 no-match pages are distinct from shells, hidden placeholders and timeouts. v0.7.1 retrieved docs, a CPI release and a filing reproduction from real pages, including automatic recovery after a real API challenge. A GitHub public-index gap remains. See [live evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md) and [routing](routing.en.md); this is not multi-network or full-platform acceptance.
 
 ```bash
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
 python3 scripts/xcoze_search.py preferences --browser off
 python3 scripts/xcoze_search.py preferences --browser auto
-python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine bing
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```

@@ -82,3 +82,11 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 - 原生约束不为 browser 放宽：browser 目前仅通用 query/site，日期、语言等显式条件不兼容时跳过。浏览器真实子请求数未知；API budget 的单位为 provider_api_http_attempts，浏览器另计一次导航和本地命令，不能混为实际 HTTP。
 
 [故障测试与实际限制](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.md)。
+
+## v0.7.1：真实浏览器检索修正
+
+默认浏览器引擎改为 360，Bing/Google 仍可用 --browser-engine 显式指定；每次只使用所选引擎，不探测/轮换。匿名会话先启动空白页，固定脚本发起一次导航，再等可见、标题非空的自然结果，不等待整页 load 作为结果可用条件。360 从自然结果的 data-mdurl 取目标网址，排除广告、AI 答案卡片及搜索引擎内部链接。
+
+明确无匹配返回空列表和 browser_explicit_no_matches:true，不设置失败冷却，也不代表全网没有资料。隐藏结果报告 browser_results_hidden；命令超时保留 browser_timeout，网络错误页为 browser_navigation_failed。后者与空壳等暂缓 60 秒；验证码仍暂缓 900 秒。browser_failure_stage 和 browser_stage_timings_ms 记录失败阶段与启动/导航/等待/提取/关闭耗时，不保存网页正文或上游错误文本。中英文明显无主题重合可拒绝，但这不是语义质量分类器。
+
+API 优先、免费隔离、来源和等待上限保持不变。真实检索约 3–5 秒，仍比健康 API 更重，所以不会让浏览器补充已成功的 API 结果。三题检索和真实 DDG 到浏览器的兜底通过；公开索引 GitHub 无匹配和较弱文档查询仍保留在[测试报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)，多网络与多操作系统运行时验收继续保留待办。

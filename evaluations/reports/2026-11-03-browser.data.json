@@ -1,0 +1,752 @@
+{
+  "release": "0.7.1",
+  "browser_runtime_version_when_measured": "0.7.0",
+  "tested_at": "2026-11-03T12:11:07.924260+00:00",
+  "baseline_commit": "2cdd04e2443284a92295cc876800c887616c0ab9",
+  "environment": {
+    "os": "macOS ARM64",
+    "agent_browser": "0.27.0",
+    "chrome": "156.0.8078.80"
+  },
+  "scope": "Final fixed live set, not every diagnostic network operation. No mocked responses. Summaries are not verified facts. No real user credential file is read.",
+  "diagnosis": {
+    "bing_hidden_nodes": 10,
+    "bing_visibility": "hidden",
+    "bing_results_after_visibility": "unrelated; not accepted as task evidence",
+    "old_360_open_seconds": 20.179,
+    "old_360_load_event_milliseconds": 2938.9,
+    "old_no_match_wait_seconds": 10.287,
+    "old_no_match_page_complete": true,
+    "historical_timeout_cause_fully_reconstructed": false
+  },
+  "core_cases_passed": 4,
+  "optional_coverage_cases_passed": 0,
+  "cases": [
+    {
+      "id": "python_taskgroup",
+      "query": "Python TaskGroup",
+      "site": "docs.python.org",
+      "automatic": false,
+      "required": true,
+      "ok": true,
+      "accepted": true,
+      "elapsed_ms": 3820.74,
+      "execution_summary": {
+        "api_http_attempts": 0,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_http_requests": null
+      },
+      "errors": [],
+      "matching_sources": 4,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "browser",
+          "ok": true,
+          "attempts": 0,
+          "elapsed_ms": 3818.8,
+          "execution": "local_browser",
+          "browser_engine": "360",
+          "browser_navigation_attempts": 1,
+          "browser_commands": 5,
+          "browser_cleanup_verified": true,
+          "browser_explicit_no_matches": false,
+          "browser_stage_timings_ms": {
+            "launch": 1924.25,
+            "navigate": 750.58,
+            "wait": 314.54,
+            "extract": 301.9,
+            "close": 523.18
+          }
+        }
+      ],
+      "sources": [
+        {
+          "provider": "browser",
+          "title": "코루틴과 태스크 — Python 3.14.2 문서",
+          "url": "https://docs.python.org/ko/3/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "코루틴과 태스크 — Python 3.11.14 문서",
+          "url": "https://docs.python.org/ko/3.11/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "コルーチンと Task — Python 3.15.0a3 ドキュメント",
+          "url": "https://docs.python.org/ja/dev/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "调用图内省 — Python 3.14.2 文档",
+          "url": "https://docs.python.org/zh-cn/3.14/library/asyncio-graph.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "协程与任务 — Python 3.14.5 文档",
+          "url": "https://docs.python.org/zh-cn/3/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        }
+      ],
+      "execution_candidates": null
+    },
+    {
+      "id": "china_cpi",
+      "query": "国家统计局 2026年9月 居民消费价格 CPI",
+      "site": "stats.gov.cn",
+      "automatic": false,
+      "required": true,
+      "ok": true,
+      "accepted": true,
+      "elapsed_ms": 3427.95,
+      "execution_summary": {
+        "api_http_attempts": 0,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_http_requests": null
+      },
+      "errors": [],
+      "matching_sources": 3,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "browser",
+          "ok": true,
+          "attempts": 0,
+          "elapsed_ms": 3422.08,
+          "execution": "local_browser",
+          "browser_engine": "360",
+          "browser_navigation_attempts": 1,
+          "browser_commands": 5,
+          "browser_cleanup_verified": true,
+          "browser_explicit_no_matches": false,
+          "browser_stage_timings_ms": {
+            "launch": 1810.71,
+            "navigate": 595.01,
+            "wait": 193.83,
+            "extract": 306.21,
+            "close": 512.94
+          }
+        }
+      ],
+      "sources": [
+        {
+          "provider": "browser",
+          "title": "2026年9月份居民消费价格同比上涨0.9% - 国家统计局",
+          "url": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261014_1965477.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "居民消费价格指数(2026年分月度)-湖南国调信息网,国家统计局湖南调查总队",
+          "url": "http://hnzdhd.stats.gov.cn/dcsj/sjfb/hns/zytjdcsj/202603/t20260316_270761.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "2026年前三季度居民收入和消费支出情况 - 国家统计局",
+          "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965612.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "9月份陕西居民消费价格同比上涨0.6% - 发布解读 - 国家统计局陕西调查总队",
+          "url": "http://snzd.stats.gov.cn/fbjd/2026/47578.shtml",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "国家统计局信息公开",
+          "url": "https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202609/t20260909_1965263.html",
+          "content_kind": "search_summary"
+        }
+      ],
+      "execution_candidates": null
+    },
+    {
+      "id": "xinneng_taishan",
+      "query": "新能泰山 2026年 第三季度 报告",
+      "site": null,
+      "automatic": false,
+      "required": true,
+      "ok": true,
+      "accepted": true,
+      "elapsed_ms": 3402.62,
+      "execution_summary": {
+        "api_http_attempts": 0,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_http_requests": null
+      },
+      "errors": [],
+      "matching_sources": 1,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "browser",
+          "ok": true,
+          "attempts": 0,
+          "elapsed_ms": 3401.37,
+          "execution": "local_browser",
+          "browser_engine": "360",
+          "browser_navigation_attempts": 1,
+          "browser_commands": 5,
+          "browser_cleanup_verified": true,
+          "browser_explicit_no_matches": false,
+          "browser_stage_timings_ms": {
+            "launch": 1861.4,
+            "navigate": 600.05,
+            "wait": 195.4,
+            "extract": 212.47,
+            "close": 528.78
+          }
+        }
+      ],
+      "sources": [
+        {
+          "provider": "browser",
+          "title": "[三季报]新能泰山(000720):2026年三季度报告- CFi.CN 中财网",
+          "url": "https://stock.cfi.cn/p20261028005847.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "新能泰山:2026年第三季度报告",
+          "url": "http://stock.10jqka.com.cn/20261028/c681205057.shtml",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "新能泰山:将按期披露2026年第三季度报告_新浪财经_新浪网",
+          "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-10-20/doc-inivwitm5714134.shtml?cref=cj",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "新能泰山第三季度亏损同比扩大至1579万元,营收同比下降15.7%|亏损额|同比增幅_网易订阅",
+          "url": "https://www.163.com/dy/article/LABO8LQV05568V7Z.html?spss=dy_author",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "新能泰山(000720.SZ):第三季度净亏损1579.13万元_股票频道_证券之星",
+          "url": "http://stock.stockstar.com/IG2026102800050692.shtml",
+          "content_kind": "search_summary"
+        }
+      ],
+      "execution_candidates": null
+    },
+    {
+      "id": "agent_browser",
+      "query": "agent-browser",
+      "site": "github.com",
+      "automatic": false,
+      "required": false,
+      "ok": true,
+      "accepted": false,
+      "elapsed_ms": 3302.26,
+      "execution_summary": {
+        "api_http_attempts": 0,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_http_requests": null
+      },
+      "errors": [],
+      "matching_sources": 0,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "browser",
+          "ok": true,
+          "attempts": 0,
+          "elapsed_ms": 3298.52,
+          "execution": "local_browser",
+          "browser_engine": "360",
+          "browser_navigation_attempts": 1,
+          "browser_commands": 5,
+          "browser_cleanup_verified": true,
+          "browser_explicit_no_matches": true,
+          "browser_stage_timings_ms": {
+            "launch": 1690.5,
+            "navigate": 515.08,
+            "wait": 347.05,
+            "extract": 276.58,
+            "close": 466.41
+          }
+        }
+      ],
+      "sources": [],
+      "execution_candidates": null
+    },
+    {
+      "id": "real_api_to_browser",
+      "query": "Python TaskGroup",
+      "site": "docs.python.org",
+      "automatic": true,
+      "required": true,
+      "ok": true,
+      "accepted": true,
+      "elapsed_ms": 3611.19,
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_http_requests": null
+      },
+      "errors": [
+        {
+          "provider": "duckduckgo",
+          "code": "access_challenge",
+          "message": "DuckDuckGo returned an incomplete or verification response.",
+          "http_status": 202,
+          "category": "access",
+          "retryable": false,
+          "attempts": 1
+        }
+      ],
+      "matching_sources": 4,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "duckduckgo",
+          "ok": false,
+          "attempts": 1,
+          "elapsed_ms": 254.52
+        },
+        {
+          "provider": "browser",
+          "ok": true,
+          "attempts": 0,
+          "elapsed_ms": 3353.06,
+          "execution": "local_browser",
+          "browser_engine": "360",
+          "browser_navigation_attempts": 1,
+          "browser_commands": 5,
+          "browser_cleanup_verified": true,
+          "browser_explicit_no_matches": false,
+          "browser_stage_timings_ms": {
+            "launch": 1666.94,
+            "navigate": 632.86,
+            "wait": 248.08,
+            "extract": 258.42,
+            "close": 537.84
+          }
+        }
+      ],
+      "sources": [
+        {
+          "provider": "browser",
+          "title": "코루틴과 태스크 — Python 3.14.2 문서",
+          "url": "https://docs.python.org/ko/3/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "코루틴과 태스크 — Python 3.11.14 문서",
+          "url": "https://docs.python.org/ko/3.11/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "コルーチンと Task — Python 3.15.0a3 ドキュメント",
+          "url": "https://docs.python.org/ja/dev/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "调用图内省 — Python 3.14.2 文档",
+          "url": "https://docs.python.org/zh-cn/3.14/library/asyncio-graph.html",
+          "content_kind": "search_summary"
+        },
+        {
+          "provider": "browser",
+          "title": "协程与任务 — Python 3.14.5 文档",
+          "url": "https://docs.python.org/zh-cn/3/library/asyncio-task.html",
+          "content_kind": "search_summary"
+        }
+      ],
+      "execution_candidates": [
+        "duckduckgo",
+        "browser"
+      ]
+    }
+  ],
+  "keyed_api_attempts": 0,
+  "required_cases_passed": true,
+  "source_reads": [
+    {
+      "id": "python_taskgroup",
+      "url": "https://docs.python.org/ko/3/library/asyncio-task.html",
+      "ok": true,
+      "provider": "exa-free",
+      "characters": 36629,
+      "truncated": false,
+      "content_kind": "page_content",
+      "term_checks": {
+        "TaskGroup": true,
+        "cancel": true
+      },
+      "budget": {
+        "limit": 2,
+        "attempts": 2,
+        "remaining": 0,
+        "by_provider": {
+          "jina": 1,
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [
+        {
+          "provider": "jina",
+          "code": "network_error",
+          "message": "Network/TLS failure or timeout.",
+          "http_status": null,
+          "category": "network",
+          "retryable": true,
+          "attempts": 1
+        }
+      ],
+      "elapsed_ms": 913.22
+    },
+    {
+      "id": "china_cpi",
+      "url": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261014_1965477.html",
+      "ok": true,
+      "provider": "exa-free",
+      "characters": 5919,
+      "truncated": false,
+      "content_kind": "page_content",
+      "term_checks": {
+        "2026年9月": true,
+        "0.9%": true
+      },
+      "budget": {
+        "limit": 2,
+        "attempts": 2,
+        "remaining": 0,
+        "by_provider": {
+          "jina": 1,
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [
+        {
+          "provider": "jina",
+          "code": "network_error",
+          "message": "Network/TLS failure or timeout.",
+          "http_status": null,
+          "category": "network",
+          "retryable": true,
+          "attempts": 1
+        }
+      ],
+      "elapsed_ms": 10597.87
+    },
+    {
+      "id": "xinneng_taishan",
+      "url": "https://stock.cfi.cn/p20261028005847.html",
+      "ok": true,
+      "provider": "jina",
+      "characters": 19892,
+      "truncated": false,
+      "content_kind": "page_content",
+      "term_checks": {
+        "2026": true,
+        "三季度报告": true
+      },
+      "budget": {
+        "limit": 2,
+        "attempts": 1,
+        "remaining": 1,
+        "by_provider": {
+          "jina": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "elapsed_ms": 4712.1
+    }
+  ],
+  "api_priority": {
+    "version": "0.7.1",
+    "ok": true,
+    "elapsed_ms": 1250.61,
+    "execution_summary": {
+      "api_http_attempts": 1,
+      "keyed_api_attempts": 0,
+      "browser_navigation_attempts": 0,
+      "browser_commands": 0,
+      "browser_http_requests": 0
+    },
+    "requests": [
+      {
+        "provider": "exa-free",
+        "ok": true,
+        "attempts": 1,
+        "elapsed_ms": 1246.88
+      }
+    ],
+    "errors": [],
+    "sources": [
+      {
+        "provider": "exa-free",
+        "title": "Coroutines and tasks — Python 3.14.5 documentation",
+        "url": "https://docs.python.org/3/library/asyncio-task.html"
+      },
+      {
+        "provider": "exa-free",
+        "title": "Lib/asyncio/taskgroups.py",
+        "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py"
+      },
+      {
+        "provider": "exa-free",
+        "title": "High-level API Index — Python 3.15.2 documentation",
+        "url": "https://docs.python.org/3/library/asyncio-api-index.html"
+      }
+    ]
+  },
+  "earlier_rounds": [
+    {
+      "run": "browser-live-first",
+      "cases": [
+        {
+          "id": "python_taskgroup",
+          "query": "Python TaskGroup cancellation documentation",
+          "ok": true,
+          "accepted": false,
+          "elapsed_ms": 3503.09,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 0,
+          "errors": []
+        },
+        {
+          "id": "china_cpi",
+          "query": "国家统计局 2026年9月 居民消费价格 CPI",
+          "ok": true,
+          "accepted": true,
+          "elapsed_ms": 4093.93,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 3,
+          "errors": []
+        },
+        {
+          "id": "agent_browser",
+          "query": "vercel-labs agent-browser releases",
+          "ok": false,
+          "accepted": false,
+          "elapsed_ms": 9113.03,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 0,
+          "errors": [
+            {
+              "provider": "browser",
+              "code": "browser_no_results",
+              "message": "No verified result rows were extracted; an empty shell is not proof of no matches.",
+              "http_status": null,
+              "category": "response",
+              "retryable": false,
+              "attempts": 0
+            }
+          ]
+        },
+        {
+          "id": "real_api_to_browser",
+          "query": "Python TaskGroup cancellation documentation",
+          "ok": false,
+          "accepted": false,
+          "elapsed_ms": 946.58,
+          "execution_summary": {
+            "api_http_attempts": 3,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 0,
+            "browser_commands": 0,
+            "browser_http_requests": 0
+          },
+          "matching_sources": 0,
+          "errors": [
+            {
+              "provider": "exa-free",
+              "code": "network_error",
+              "message": "Network/TLS failure or timeout.",
+              "http_status": null,
+              "category": "network",
+              "retryable": true,
+              "attempts": 1
+            },
+            {
+              "provider": "duckduckgo",
+              "code": "access_challenge",
+              "message": "DuckDuckGo returned an incomplete or verification response.",
+              "http_status": 202,
+              "category": "access",
+              "retryable": false,
+              "attempts": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": "browser-live-second",
+      "cases": [
+        {
+          "id": "python_taskgroup",
+          "query": "asyncio.TaskGroup",
+          "ok": true,
+          "accepted": false,
+          "elapsed_ms": 3708.82,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 0,
+          "errors": []
+        },
+        {
+          "id": "china_cpi",
+          "query": "国家统计局 2026年9月 居民消费价格 CPI",
+          "ok": true,
+          "accepted": true,
+          "elapsed_ms": 3675.69,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 3,
+          "errors": []
+        },
+        {
+          "id": "agent_browser",
+          "query": "agent-browser",
+          "ok": true,
+          "accepted": false,
+          "elapsed_ms": 6008.93,
+          "execution_summary": {
+            "api_http_attempts": 0,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 0,
+          "errors": []
+        },
+        {
+          "id": "real_api_to_browser",
+          "query": "asyncio.TaskGroup",
+          "ok": true,
+          "accepted": false,
+          "elapsed_ms": 5634.92,
+          "execution_summary": {
+            "api_http_attempts": 1,
+            "keyed_api_attempts": 0,
+            "browser_navigation_attempts": 1,
+            "browser_commands": 5,
+            "browser_http_requests": null
+          },
+          "matching_sources": 0,
+          "errors": [
+            {
+              "provider": "duckduckgo",
+              "code": "access_challenge",
+              "message": "DuckDuckGo returned an incomplete or verification response.",
+              "http_status": 202,
+              "category": "access",
+              "retryable": false,
+              "attempts": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "earlier_round_notes": "First evaluator used an incorrect preferences key; its automatic route is invalid as acceptance evidence. Fixed to search_preferences and regression-tested. Weak doc queries and GitHub no-matches remain reported. Final short Python query retained the same expected source/topic criterion.",
+  "installed_smoke": {
+    "version": "0.7.1",
+    "ok": true,
+    "elapsed_ms": 4629.3,
+    "execution_summary": {
+      "api_http_attempts": 0,
+      "keyed_api_attempts": 0,
+      "browser_navigation_attempts": 1,
+      "browser_commands": 5,
+      "browser_http_requests": null
+    },
+    "errors": [],
+    "requests": [
+      {
+        "provider": "browser",
+        "ok": true,
+        "attempts": 0,
+        "elapsed_ms": 4624.55,
+        "browser_engine": "360",
+        "browser_navigation_attempts": 1,
+        "browser_commands": 5,
+        "browser_cleanup_verified": true,
+        "browser_stage_timings_ms": {
+          "launch": 2918.15,
+          "navigate": 264.85,
+          "wait": 506.45,
+          "extract": 286.53,
+          "close": 644.26
+        }
+      }
+    ],
+    "sources": [
+      {
+        "title": "2026年9月份居民消费价格同比上涨0.9% - 国家统计局",
+        "url": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261014_1965477.html",
+        "provider": "browser"
+      },
+      {
+        "title": "居民消费价格指数(2026年分月度)-湖南国调信息网,国家统计局湖南调查总队",
+        "url": "http://hnzdhd.stats.gov.cn/dcsj/sjfb/hns/zytjdcsj/202603/t20260316_270761.html",
+        "provider": "browser"
+      },
+      {
+        "title": "2026年前三季度居民收入和消费支出情况 - 国家统计局",
+        "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965612.html",
+        "provider": "browser"
+      }
+    ]
+  }
+}

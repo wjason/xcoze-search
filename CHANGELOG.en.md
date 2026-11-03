@@ -2,6 +2,14 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.7.1 — 2026-11-03
+
+- Default browser fallback to 360 Search, retaining explicit Bing/Google. Extract visible organic destinations, excluding ads/AI cards.
+- Fix readiness on hidden placeholders. Launch a blank page, schedule one navigation, wait for visible rows and report launch/navigation/wait/extraction/close timings.
+- Distinguish explicit no-match, hidden rows, network pages, verification and timeout. No-match pages no longer waste a wait or trigger failure cooldown. Add conservative Chinese browser mismatch rejection; preserve API priority and free isolation.
+- 141 offline tests pass. Three real retrieval tasks and real DDG-challenge-to-browser recovery passed with zero keyed API attempts; source bodies were checked separately. Retain GitHub index misses and weaker doc queries; multi-network/OS acceptance is pending.
+- Add an explicit --live browser evaluator and bilingual report. Simulated quota injection remains a separate safety regression.
+
 ## v0.7.0 — 2026-11-03
 
 - Detect Exa anonymous HTTP/MCP quota errors, share Search/Fetch pauses, honor Retry-After and skip later calls; never invent wire status or upgrade to keyed services.

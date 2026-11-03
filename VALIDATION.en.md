@@ -2,6 +2,12 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.7.1 — 2026-11-03
+
+141 offline tests pass. This machine: agent-browser 0.27.0, Chrome 156.0.8078.80, macOS ARM64. Three real browser retrieval tasks took around 3.4–3.8 seconds; real DDG verification-to-browser recovery took about 3.61 seconds. All had zero keyed API attempts and acknowledged close. Three source bodies were separately checked with Jina/keyless Exa. A GitHub repository query explicitly had no matches on 360 and is not counted as a pass; weaker TaskGroup queries and earlier shells/timeouts remain recorded.
+
+[Live browser report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md) records rounds, failures, results and reading, not a universal quality ranking or multi-network acceptance. v0.7.0 quota simulation below remains separate.
+
 ## v0.7.0 — 2026-11-03
 
 135 local offline tests passed. Fifteen added tests cover HTTP/MCP quota, persisted pauses/expiry, free isolation with six synthetic keys, healthy-API/no-browser and retained-evidence/no-browser paths, missing/disabled/explicit/budget controls, isolated/sanitized browser execution, DOM parsing, timeout/close and offline-default fault evaluation.

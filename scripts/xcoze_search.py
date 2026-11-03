@@ -36,7 +36,7 @@ from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.7.0"
+VERSION = "0.7.1"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -320,7 +320,7 @@ def run_search(args, config, *, budget=None):
             key, _ = credential(p, config)
             if p == "browser":
                 raw = run_browser_search(payloads[p], timeout=min(args.timeout, getattr(args, "browser_timeout", 15)),
-                                         engine=getattr(args, "browser_engine", "bing"))
+                                         engine=getattr(args, "browser_engine", "360"))
                 attempts = 0
             else:
                 raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
@@ -338,6 +338,8 @@ def run_search(args, config, *, budget=None):
                     exc.browser_navigation_attempts = raw.get("browser_navigation_attempts", 0)
                     exc.browser_commands = raw.get("browser_commands", 0)
                     exc.browser_cleanup_verified = raw.get("browser_cleanup_verified", False)
+                    exc.browser_engine = raw.get("browser_engine")
+                    exc.browser_stage_timings_ms = raw.get("browser_stage_timings_ms", {})
                 raise
             output["results"].extend(rows)
             output["requests"].append({"provider": p, "ok": True, "attempts": attempts, **meta})
@@ -347,7 +349,10 @@ def run_search(args, config, *, budget=None):
             if p == "browser":
                 output["requests"][-1].update(execution="local_browser", browser_navigation_attempts=getattr(exc, "browser_navigation_attempts", 0),
                                               browser_commands=getattr(exc, "browser_commands", 0), browser_http_requests=None,
-                                              browser_cleanup_verified=getattr(exc, "browser_cleanup_verified", False))
+                                              browser_cleanup_verified=getattr(exc, "browser_cleanup_verified", False),
+                                              browser_engine=getattr(exc, "browser_engine", None),
+                                              browser_failure_stage=getattr(exc, "browser_failure_stage", "normalize"),
+                                              browser_stage_timings_ms=getattr(exc, "browser_stage_timings_ms", {}))
         output["requests"][-1]["elapsed_ms"] = round((time.monotonic() - started) * 1000, 2)
     output["ok"] = not output["errors"]
     output["complete"] = output["ok"]
@@ -447,7 +452,7 @@ def run_routed(args, config, *, budget=None, fetch=False):
         requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
         if rows and complement and index > 0:
             break  # A failed complement must not discard evidence or trigger extra paid fan-out.
-        # An access challenge is not proof of no matches. No browser or challenge solver is launched.
+        # Challenges are not no-match evidence. Only the planned browser fallback may run; no solver or engine rotation.
     routing = {**public_plan(route), "attempted_providers": [r["provider"] for r in requests],
                "complementary_search": complement,
                "stop_reason": "usable_results" if rows or content else "no_usable_results_within_limits",
@@ -699,7 +704,7 @@ def parser():
                         help="Agent task intent; quality reference/current may consult a complementary source within existing limits")
     search.add_argument("--browser", choices=("auto", "off"), help="Lazy fallback only; requires an existing agent-browser installation")
     search.add_argument("--browser-timeout", type=int, choices=range(2, 31), metavar="2..30", default=15)
-    search.add_argument("--browser-engine", choices=("bing", "google"), default="bing")
+    search.add_argument("--browser-engine", choices=("360", "bing", "google"), default="360")
     search.add_argument("--need-content", action="store_true", help="Explicit page content: DeepSeek, Tavily or Exa")
     search.add_argument("--freshness", help="Provider-native time filter; see capabilities and providers.md")
     search.add_argument("--industry", choices=("gov", "news", "acad", "finance"), help="Yuanbao paid tiers")

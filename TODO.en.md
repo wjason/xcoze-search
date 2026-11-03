@@ -31,7 +31,8 @@ Updated 2026-11-03. Focus: Agent web search and source reading. Default automati
 - [x] Exa pause/skip and free-mode injection, with zero keyed attempts despite six synthetic keys.
 - [x] Existing local agent-browser execution, one navigation, isolated session, budgets/close/cooldown and disable preference.
 - [x] No browser on healthy APIs, separate execution accounting and truthful live failures.
-- [ ] Multi-network live browser acceptance: this machine returned Bing shells/timeouts and did not pass; no identity rotation or challenge solving.
+- [x] v0.7.1 live acceptance on this machine: visible readiness, 360 organic/destination extraction, explicit no-match and stage diagnostics; three retrieval tasks and real API-to-browser recovery passed. [Evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md).
+- [ ] Multi-network/multi-OS live acceptance; track Bing hidden/unrelated results and GitHub public-index misses without identity rotation or challenge solving.
 
 ## P0: task quality and reliability
 
