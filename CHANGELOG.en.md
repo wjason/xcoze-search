@@ -2,6 +2,14 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.7.0 — 2026-11-03
+
+- Detect Exa anonymous HTTP/MCP quota errors, share Search/Fetch pauses, honor Retry-After and skip later calls; never invent wire status or upgrade to keyed services.
+- Added optional existing agent-browser search: API-first, isolated headless session, fixed commands, key-free environment, one navigation, close and failure cooldown, with no automatic dependency install.
+- **Default change:** total automatic source cap increases from two to three; normally two APIs plus one browser when available. Lower saved caps are retained. Successful API evidence never launches a browser. Auto API caps are eight seconds; browser work defaults to 15 plus up to six seconds close grace.
+- Added --browser auto/off and saved preference, --browser-engine/--browser-timeout, execution_summary and separate API/browser request accounting.
+- 135 offline tests passed. Injection proves zero keyed free-mode attempts. Live anonymous API succeeded without a browser; live browsers returned a shell/timeout and failed availability acceptance. Simulated recovery is not represented as real retrieval. Bilingual report and reproducer included.
+
 ## v0.6.0 — 2026-11-03
 
 - Added nine keyless adapters: Wikipedia en/zh, Stack Exchange, arXiv, Crossref, npm, crates.io, GitLab, Europe PMC and Hugging Face, with task-scoped native routing and existing free/budget boundaries.

@@ -174,6 +174,14 @@ class ExaFree(PublicProvider):
             raise SearchError("invalid_response", "Invalid Exa MCP response.") from None
         body = msg.get("result")
         if "error" in msg or not isinstance(body, dict) or body.get("isError"):
+            error = msg.get("error")
+            message = str(error.get("message", ""))[:4000] if isinstance(error, dict) else ""
+            if isinstance(body, dict) and isinstance(body.get("content"), list):
+                message += " ".join(str(c.get("text", ""))[:1000] for c in body["content"] if isinstance(c, dict))[:4000]
+            if ((isinstance(error, dict) and error.get("code") in (429, "429")) or
+                    re.search(r"rate[ _-]*limit|too many requests|quota|(?:usage|request|daily|monthly|free)[ _-]+limit|(?:credit|balance).{0,40}(?:exhaust|deplet|insufficient)|(?:out of|insufficient|exhausted).{0,20}credits?", message, re.I)):
+                raise SearchError("source_rate_limited", "Exa anonymous search/read limit reached; the source is paused before another allowed route is tried.",
+                                  category="rate_limit")
             raise SearchError("provider_error", "Exa hosted MCP rejected the call; check service access or limits.")
         structured = body.get("structuredContent")
         if isinstance(structured, dict) and isinstance(structured.get("results"), list):
@@ -718,4 +726,6 @@ class HuggingFace(OpenSource):
 
 OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace())
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES)}
+from browser_search import Browser
+
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser())}

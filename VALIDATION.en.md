@@ -2,6 +2,15 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.7.0 — 2026-11-03
+
+135 local offline tests passed. Fifteen added tests cover HTTP/MCP quota, persisted pauses/expiry, free isolation with six synthetic keys, healthy-API/no-browser and retained-evidence/no-browser paths, missing/disabled/explicit/budget controls, isolated/sanitized browser execution, DOM parsing, timeout/close and offline-default fault evaluation.
+
+One anonymous API query returned three related docs in about 1.36 seconds with zero browser launches. Two real browsers returned a shell/timeout and failed availability acceptance; the second received normal close acknowledgment. Keyed search attempts were zero. Simulated and real observations remain separate and do not establish universal availability.
+
+
+[故障与性能报告 / Report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.en.md)。
+
 ## v0.6.0 — 2026-11-03
 
 120 local offline tests passed: nine public endpoints/no-auth/result types, dates/languages, native/free policy, OS serialization/cooldown/duplicate/quota/Retry-After, bounded gzip, non-executing offline catalog, default clipping and expanded reading.

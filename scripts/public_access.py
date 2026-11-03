@@ -14,7 +14,25 @@ import urllib.error
 from search_common import SearchError
 
 INTERVALS = {"wikipedia": 1, "stackexchange": 1, "arxiv": 3, "crossref": 1,
-             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1}
+             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "exa-free": 1, "browser": 0}
+
+
+def pause_status(name):
+    """Read a source pause without creating files or accessing the network."""
+    path = cache_root() / (name + ".json")
+    try:
+        if not path.exists(): return None
+        if path.stat().st_size > 65536: raise ValueError
+        data = json.loads(path.read_text(encoding="utf-8"))
+        deadline = data.get("not_before", 0)
+        if not isinstance(deadline, (int, float)) or not math.isfinite(deadline): raise ValueError
+        remaining = deadline - time.time()
+        # Tiny pacing intervals are handled inside request_slot, not planner skipping.
+        if remaining > 3:
+            return {"code": "source_cooldown", "retry_after_seconds": math.ceil(remaining)}
+    except (OSError, ValueError, TypeError, AttributeError):
+        return {"code": "public_access_state_error", "retry_after_seconds": None}
+    return None
 
 
 def cache_root():
@@ -114,10 +132,16 @@ def request_slot(name, url, *, max_wait=0):
     try:
         yield slot
     except urllib.error.HTTPError as error:
-        if error.code in (429, 503): slot.defer(error.headers.get("Retry-After", "60") if error.headers else 60)
+        if error.code in (429, 503):
+            default = 900 if name == "exa-free" else 60
+            slot.defer(error.headers.get("Retry-After", str(default)) if error.headers else default)
         raise
     except SearchError as error:
-        if error.status in (429, 503): slot.defer(60)
+        if error.status in (429, 503): slot.defer(900 if name == "exa-free" else 60)
+        if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
+        if name == "browser":
+            if error.code in ("access_challenge", "browser_navigation_blocked"): slot.defer(900)
+            elif error.code in ("browser_timeout", "browser_no_results", "browser_failed", "browser_unavailable"): slot.defer(60)
         raise
     finally:
         # OS locks are released on close, including process exit; no stale lock deletion needed.

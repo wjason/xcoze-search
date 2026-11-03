@@ -26,11 +26,18 @@ Updated 2026-11-03. Focus: Agent web search and source reading. Default automati
 - [x] Offline platform catalog and existing-tool detection, separating public indexes from native actions.
 - [x] Persistent pacing/backoff, bounded long reading, Agent Reach source study and observed same-task paths.
 
+## v0.7.0: quota and lazy browser
+
+- [x] Exa pause/skip and free-mode injection, with zero keyed attempts despite six synthetic keys.
+- [x] Existing local agent-browser execution, one navigation, isolated session, budgets/close/cooldown and disable preference.
+- [x] No browser on healthy APIs, separate execution accounting and truthful live failures.
+- [ ] Multi-network live browser acceptance: this machine returned Bing shells/timeouts and did not pass; no identity rotation or challenge solving.
+
 ## P0: task quality and reliability
 
 - [ ] Shared Chinese news/policy/docs/ecosystem/community/video tasks with blinded answer support, freshness and body/comment/subtitle evidence review before competitive claims.
 - [ ] Evaluate Open Library, DBLP, Wikidata and Hugging Face datasets; distinguish current indexes from archival material and source count from utility.
-- [ ] Evaluate optional platform execution adapters and action health, reusing authorized tools; current code detects executables without executing a bridge.
+- [ ] Evaluate optional platform execution adapters and action health, reusing authorized tools; browser search is wired; other platform-tool bridges remain discovery-only.
 
 
 - [x] Initial six-task plus two-Chinese-holdout comparison of keyless/DeepSeek/Smart, with evidence/freshness review, timings and API estimates. [Report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md); model cost and invoice reconciliation remain pending.

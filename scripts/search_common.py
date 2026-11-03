@@ -86,4 +86,4 @@ class RequestBudget:
 
     def data(self):
         return {"limit": self.limit, "attempts": self.used, "remaining": self.limit - self.used,
-                "by_provider": dict(self.by_provider), "scope": "current_invocation"}
+                "by_provider": dict(self.by_provider), "scope": "current_invocation", "unit": "provider_api_http_attempts"}

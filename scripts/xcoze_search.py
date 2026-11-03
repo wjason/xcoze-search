@@ -32,13 +32,14 @@ from search_providers import REGISTRY, get_provider as get_key_provider
 from public_providers import PUBLIC_REGISTRY, domain_matches
 from search_quality import obvious_mismatch
 from public_access import request_slot
+from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
-ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search}
+ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
 ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in ALL_REGISTRY.items() if p.fetch_endpoint})
 ENDPOINTS["fetch"] = REGISTRY["deepseek"].fetch_endpoint
 ENV_KEYS = {name: p.env_keys for name, p in REGISTRY.items()}
@@ -207,6 +208,15 @@ def normalize(provider, raw, count):
     return get_provider(provider).normalize(raw, count)
 
 
+def execution_summary(requests):
+    navigations = sum(r.get("browser_navigation_attempts", 0) for r in requests)
+    return {"api_http_attempts": sum(r.get("attempts", 0) for r in requests),
+            "keyed_api_attempts": sum(r.get("attempts", 0) for r in requests if get_provider(r["provider"]).requires_key),
+            "browser_navigation_attempts": navigations,
+            "browser_commands": sum(r.get("browser_commands", 0) for r in requests),
+            "browser_http_requests": None if navigations else 0}
+
+
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None
@@ -262,6 +272,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
                 return data, budget.used - initial_used
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
+            if name == "exa-free" and exc.code in (429, 503): error.retryable = False
             if not provider.requires_key and exc.code in (401, 403):
                 error.category = "access"
             retry_after = exc.headers.get("Retry-After", "") if exc.headers else ""
@@ -307,29 +318,43 @@ def run_search(args, config, *, budget=None):
         started = time.monotonic()
         try:
             key, _ = credential(p, config)
-            raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
+            if p == "browser":
+                raw = run_browser_search(payloads[p], timeout=min(args.timeout, getattr(args, "browser_timeout", 15)),
+                                         engine=getattr(args, "browser_engine", "bing"))
+                attempts = 0
+            else:
+                raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
             try:
                 rows, meta = normalize(p, raw, args.count)
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
-                if p in ("bing", "duckduckgo") and obvious_mismatch(args.query, rows):
+                if p in ("bing", "duckduckgo", "browser") and obvious_mismatch(args.query, rows):
                     raise SearchError("irrelevant_results", "Experimental source returned no recognizable query topic; use another allowed source.",
                                       category="response")
             except SearchError as exc:
                 exc.attempts = attempts
+                if p == "browser":
+                    exc.browser_navigation_attempts = raw.get("browser_navigation_attempts", 0)
+                    exc.browser_commands = raw.get("browser_commands", 0)
+                    exc.browser_cleanup_verified = raw.get("browser_cleanup_verified", False)
                 raise
             output["results"].extend(rows)
             output["requests"].append({"provider": p, "ok": True, "attempts": attempts, **meta})
         except SearchError as exc:
             output["errors"].append({"provider": p, **exc.data()})
             output["requests"].append({"provider": p, "ok": False, "attempts": exc.attempts})
+            if p == "browser":
+                output["requests"][-1].update(execution="local_browser", browser_navigation_attempts=getattr(exc, "browser_navigation_attempts", 0),
+                                              browser_commands=getattr(exc, "browser_commands", 0), browser_http_requests=None,
+                                              browser_cleanup_verified=getattr(exc, "browser_cleanup_verified", False))
         output["requests"][-1]["elapsed_ms"] = round((time.monotonic() - started) * 1000, 2)
     output["ok"] = not output["errors"]
     output["complete"] = output["ok"]
     output["empty"] = not output["results"]
     output["partial"] = bool(output["errors"]) and any(r["ok"] for r in output["requests"])
     output["budget"] = budget.data()
+    output["execution_summary"] = execution_summary(output["requests"])
     groups = {}
     for i, row in enumerate(output["results"]):
         parsed = urllib.parse.urlsplit(row["url"])
@@ -385,7 +410,9 @@ def run_routed(args, config, *, budget=None, fetch=False):
     seconds = getattr(args, "max_seconds", 45)
     requests, errors, rows, content = [], [], [], None
     complement = route["complementary_search"]
-    for index, name in enumerate(route["candidates"][:route["max_sources"]]):
+    for index, name in enumerate(route["execution_candidates"]):
+        if name == "browser" and rows:
+            break  # The browser is a failure fallback, never a complement to successful API results.
         remaining = seconds - (time.monotonic() - started)
         if remaining < 1 or not budget.data()["remaining"]:
             errors.append({"provider": name, "code": "budget_exhausted", "category": "budget",
@@ -394,6 +421,8 @@ def run_routed(args, config, *, budget=None, fetch=False):
         one = copy(scoped)
         one.provider = name
         one.timeout = min(getattr(args, "timeout", 30), remaining)
+        if not fetch:
+            one.timeout = min(one.timeout, getattr(args, "browser_timeout", 15) if name == "browser" else 8)
         one.retries = 0  # Smart fallback uses a different allowed source, not repeated retries.
         call_started = time.monotonic()
         before = budget.used
@@ -409,7 +438,7 @@ def run_routed(args, config, *, budget=None, fetch=False):
                 errors.extend(output["errors"])
                 rows.extend(output["results"])
                 usable = bool(output["results"])
-            if usable and (not complement or index > 0):
+            if usable and (name == "browser" or not complement or index > 0):
                 requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
                 break
         except SearchError as exc:
@@ -437,7 +466,8 @@ def run_routed(args, config, *, budget=None, fetch=False):
             "url": getattr(args, "url", None), "providers": [r["provider"] for r in requests],
             "results": rows, "requests": requests, "errors": errors, "routing": routing,
             "empty": not rows, "partial": bool(rows and errors), "complete": bool(rows),
-            "duplicate_groups": duplicates, "facts_verified": False, "budget": budget.data()}
+            "duplicate_groups": duplicates, "facts_verified": False, "budget": budget.data(),
+            "execution_summary": execution_summary(requests)}
 
 
 def update_preferences(args, config):
@@ -447,6 +477,7 @@ def update_preferences(args, config):
         updated.pop("default_provider", None)
     else:
         settings = preferences(updated)
+        if getattr(args, "browser", None): settings["browser"] = args.browser
         if args.strategy is not None: settings["strategy"] = args.strategy
         if args.max_sources is not None: settings["max_sources"] = args.max_sources
         disabled = set(settings["disabled_providers"])
@@ -457,7 +488,7 @@ def update_preferences(args, config):
         if args.provider == "auto": updated.pop("default_provider", None)
         elif args.provider: updated["default_provider"] = args.provider
     validate_config(updated)
-    changing = args.reset or args.strategy is not None or args.max_sources is not None or args.provider or args.disable or args.enable
+    changing = args.reset or args.strategy is not None or args.max_sources is not None or args.provider or args.disable or args.enable or getattr(args, "browser", None)
     if changing:
         if config["schema_version"] == 1 and config_path().exists(): migrate_config(config)
         save_config(updated)
@@ -646,6 +677,7 @@ def parser():
     prefs.add_argument("--disable", choices=ALL_PROVIDERS, action="append")
     prefs.add_argument("--enable", choices=ALL_PROVIDERS, action="append")
     prefs.add_argument("--reset", action="store_true")
+    prefs.add_argument("--browser", choices=("auto", "off"), help="Enable lazy local-browser fallback or keep API-only routing")
     capabilities = sub.add_parser("capabilities", help="Offline provider capabilities, limits and key links")
     capabilities.add_argument("--provider", choices=ALL_PROVIDERS)
     platforms = sub.add_parser("platforms", help="Offline platform scope and optional local-tool presence; no tool is executed")
@@ -665,6 +697,9 @@ def parser():
     search.add_argument("--platform", choices=tuple(PLATFORMS), help="Target platform; public-index coverage is not a native site search")
     search.add_argument("--intent", choices=("auto", "general", "reference", "current"), default="auto",
                         help="Agent task intent; quality reference/current may consult a complementary source within existing limits")
+    search.add_argument("--browser", choices=("auto", "off"), help="Lazy fallback only; requires an existing agent-browser installation")
+    search.add_argument("--browser-timeout", type=int, choices=range(2, 31), metavar="2..30", default=15)
+    search.add_argument("--browser-engine", choices=("bing", "google"), default="bing")
     search.add_argument("--need-content", action="store_true", help="Explicit page content: DeepSeek, Tavily or Exa")
     search.add_argument("--freshness", help="Provider-native time filter; see capabilities and providers.md")
     search.add_argument("--industry", choices=("gov", "news", "acad", "finance"), help="Yuanbao paid tiers")

@@ -49,3 +49,12 @@ Local live reports retain up to 1800 evidence characters per result, possibly tr
 ## Open-source and competitor-study checks
 
 The [dated study](reports/2026-11-03-open-sources.en.md) covers nine adapters, Agent Reach and a long-reading correction. Use open-source-cases.json with --modes free --limit 10 --count 3 in benchmark.py; default is offline, --live connects. expected_provider_returned indicates a native provider returned rows, not a correct answer.
+
+## Exa quota failure injection
+
+```bash
+python3 scripts/evaluate_fallback.py --output ../fallback-offline.json
+python3 scripts/evaluate_fallback.py --live-api --live-browser --output ../fallback-live.json
+```
+
+Default HTTP/browser execution is simulated, with synthetic keys for six providers and no credential-file reads. --live-api sends one anonymous API query; --live-browser launches one real browser path after injected API failures. The guard rejects keyed requests before transmission. ok means routing safety assertions passed; live_browser_usable separately reports actual browser availability and may be false. Simulated recovery is not real retrieval success. See the [observed report](reports/2026-11-03-fallback.en.md).

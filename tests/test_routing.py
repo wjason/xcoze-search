@@ -24,12 +24,14 @@ EXA = {"jsonrpc": "2.0", "id": 1, "result": {"structuredContent": {
 class RoutingTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
-        self.env = patch.dict(os.environ, {"XDG_CONFIG_HOME": self.tmp.name}, clear=True)
+        self.env = patch.dict(os.environ, {"XDG_CONFIG_HOME": self.tmp.name, "XDG_CACHE_HOME": self.tmp.name}, clear=True)
         self.env.start()
+        self.browser = patch('search_routing.browser_available', return_value=False)
+        self.browser.start()
         self.config = {"schema_version": 2, "providers": {}}
 
     def tearDown(self):
-        self.env.stop(); self.tmp.cleanup()
+        self.browser.stop(); self.env.stop(); self.tmp.cleanup()
 
     def keyed(self):
         self.config["providers"]["deepseek"] = {"api_key": "synthetic-only"}
@@ -314,6 +316,7 @@ class PublicProtocolTests(unittest.TestCase):
     def test_keyless_auth_is_never_forwarded_and_requests_are_fixed_host(self):
         for name, p in FREE.items():
             if not p.supports_search: continue
+            if p.method == "LOCAL_BROWSER": continue
             payload = p.search_payload(args())
             request = p.build_request(payload, "synthetic-do-not-send", "0.4.0")
             self.assertIsNone(request.get_header("Authorization"))

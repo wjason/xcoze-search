@@ -23,7 +23,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.6.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.6.0/xcoze-search-skill-v0.6.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.7.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.7.0/xcoze-search-skill-v0.7.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 支持的来源
 
@@ -67,14 +67,22 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 - **默认 Smart**：没有可用格式的 Key 时选免 Key 路径；存在 Key 时按效果优先策略选路。Key 的存在不等于账号在线可用。
 - **按任务选择**：百科、技术问答、论文、软件包、模型、GitHub/GitLab、HN 任务由 Agent 选择对应原生接口。已知 URL 优先复用宿主读取；脚本自动读取优先 Jina/Exa 免 Key 阅读路径。
-- **有限补充**：通用免 Key 优先 Exa MCP，Bing/DDG 备用；quality 的官方资料、最新信息任务可在原有两源预算内补一个来源。普通任务和 GitHub/HN 专用路线有可用结果即返回，空结果/失败时备用。默认最多 2 个来源、45 秒，受 HTTP 预算约束。Agent 判断缺口，价格、规则、最新版本与冲突信息继续读当前原文。
+- **有限补充**：通用免 Key 优先 Exa MCP，Bing/DDG 备用；quality 的官方资料、最新信息任务可在原有两源预算内补一个来源。普通任务和 GitHub/HN 专用路线有可用结果即返回，空结果/失败时备用。默认最多 3 个来源、45 秒；有浏览器时默认最多两条兼容 API 后才使用浏览器，受 API 请求预算约束。已有更低来源上限保持生效。Agent 判断缺口，价格、规则、最新版本与冲突信息继续读当前原文。
 - **可选设置**：支持效果优先、平衡、免费，以及指定来源。本次指定优先于已保存设置；明确 `--strategy free` 时不能同时指定带 Key 来源。
 
 Smart 当前采用透明的能力/来源规则与 Agent 的语义判断，没有跨供应商评分比较、检索质量排行榜或自动训练路由。元宝、DeepSeek 等通用 API 的初始顺序是配置规则，不代表质量排名。详见 [调度说明](references/routing.md)。
 
 2026-11-03 用六道真实任务和两道中文留出题做了同题比较：付费源更快，但官方资料与近期平台讨论并非每题更好，已据此调整默认选路。查看[实测报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.md)（含耗时、费用估算和局限）；结果不代表通用准确率。
 
-本轮新增 9 个原生公开接口适配器，免 Key 适配器合计 15 个（14 个可搜索、1 个纯读取）。平台能力与已有工具的检测见 `platforms`，不把安装状态当实测通过。详见[开放来源与平台协作](references/open-sources.md)和[本轮实测/Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
+免 Key 接口/读取适配器共 15 个（14 个可搜索、1 个纯读取），另有 1 条可选本地浏览器搜索路径。平台能力与已有工具的检测见 `platforms`，不把安装状态当实测通过。详见[开放来源与平台协作](references/open-sources.md)和[本轮实测/Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
+
+## Exa 限额与浏览器兜底
+
+Exa 匿名额度耗尽会记录冷却，后续调用跳过该源；遵守 Retry-After，未提供恢复时间时暂缓 15 分钟后才允许试探，不承诺届时额度已恢复。普通 Smart 有 Key 时仍优先配置的接口；平台题优先原生 API，健康接口返回后不启动浏览器。官方/最新信息可进行 API 互补，但不会为了互补启动浏览器。
+
+浏览器只在没有 API 可用结果时按需启动，需要已有 agent-browser 和本机 Chrome 运行条件，不自动安装、登录或复用个人会话。默认 API 每源最多 8 秒，浏览器工作预算最多 15 秒，另有最多 6 秒关闭宽限；普通查询不做联网体检。可对 Agent 说“关闭浏览器兜底”，或用 preferences --browser off。免费模式始终不调用带 Key 服务。
+
+本次真实 API 调用约 1.36 秒、浏览器启动 0 次；真实浏览器兜底两次分别出现空壳/超时，未通过可用性验收。模拟成功路径与真实受限结果分开记录，见[限额故障与性能报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.md)。浏览器可用性受网站和网络影响，不能承诺永远有结果。
 
 ## 配置 Key
 

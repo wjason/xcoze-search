@@ -1,0 +1,641 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "code_base": "4995609f6a2d1fc0a9bd7e17b089236d4892e747",
+  "note": "Development on v0.6.0 base, released as v0.7.0. Synthetic recovery and live restrictions are distinct. No query body excerpts, credentials or challenge URL tokens retained.",
+  "final_offline_invariants": {
+    "version": "0.6.0",
+    "tested_at": "2026-11-03T10:48:38.978275+00:00",
+    "live_api_requested": false,
+    "live_browser_requested": false,
+    "scope": "Fault injection and routing safety; synthetic results are not live retrieval evidence. Browser subrequest counts are unknown.",
+    "cases": [
+      {
+        "case": "healthy_api_no_browser",
+        "mode": "free",
+        "browser_execution": "simulated",
+        "ok": true,
+        "elapsed_ms": 3.68,
+        "api_calls": [
+          "exa-free"
+        ],
+        "simulated_transport": [
+          {
+            "host": "mcp.exa.ai",
+            "authorization_header_present": false
+          }
+        ],
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "exa-free",
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "execution_candidates": [
+            "exa-free",
+            "bing",
+            "browser"
+          ],
+          "skipped_incompatible": [],
+          "skipped_unavailable": [],
+          "browser_mode": "auto",
+          "max_sources": 3,
+          "platform": null,
+          "intent": "reference",
+          "specialized_source": null,
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "exa-free"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "execution_summary": {
+          "api_http_attempts": 1,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 0,
+          "browser_commands": 0,
+          "browser_http_requests": 0
+        },
+        "requests": [
+          {
+            "provider": "exa-free",
+            "ok": true,
+            "attempts": 1,
+            "elapsed_ms": 1.51,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "exa-free",
+            "title": "Python TaskGroup docs",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "content_kind": "search_summary"
+          }
+        ]
+      },
+      {
+        "case": "quota_exhausted_browser_recovers",
+        "mode": "free",
+        "browser_execution": "simulated",
+        "ok": true,
+        "elapsed_ms": 1.94,
+        "api_calls": [
+          "exa-free",
+          "bing"
+        ],
+        "simulated_transport": [
+          {
+            "host": "mcp.exa.ai",
+            "authorization_header_present": false
+          },
+          {
+            "host": "www.bing.com",
+            "authorization_header_present": false
+          }
+        ],
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "exa-free",
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "execution_candidates": [
+            "exa-free",
+            "bing",
+            "browser"
+          ],
+          "skipped_incompatible": [],
+          "skipped_unavailable": [],
+          "browser_mode": "auto",
+          "max_sources": 3,
+          "platform": null,
+          "intent": "reference",
+          "specialized_source": null,
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "exa-free",
+            "bing",
+            "browser"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "execution_summary": {
+          "api_http_attempts": 2,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 1,
+          "browser_commands": 4,
+          "browser_http_requests": null
+        },
+        "requests": [
+          {
+            "provider": "exa-free",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.98,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "bing",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.39,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "browser",
+            "ok": true,
+            "attempts": 0,
+            "elapsed_ms": 0.09,
+            "execution": "local_browser",
+            "browser_navigation_attempts": 1,
+            "browser_commands": 4,
+            "browser_cleanup_verified": true
+          }
+        ],
+        "errors": [
+          {
+            "provider": "exa-free",
+            "code": "source_rate_limited",
+            "message": "Exa anonymous search/read limit reached; the source is paused before another allowed route is tried.",
+            "http_status": null,
+            "category": "rate_limit",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "bing",
+            "code": "irrelevant_results",
+            "message": "Experimental source returned no recognizable query topic; use another allowed source.",
+            "http_status": null,
+            "category": "response",
+            "retryable": false,
+            "attempts": 1
+          }
+        ],
+        "sources": [
+          {
+            "provider": "browser",
+            "title": "Python asyncio TaskGroup docs",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "content_kind": "search_summary"
+          }
+        ]
+      },
+      {
+        "case": "paused_exa_skipped_next_query",
+        "mode": "free",
+        "browser_execution": "simulated",
+        "ok": true,
+        "elapsed_ms": 1.22,
+        "api_calls": [
+          "bing",
+          "duckduckgo"
+        ],
+        "simulated_transport": [
+          {
+            "host": "www.bing.com",
+            "authorization_header_present": false
+          },
+          {
+            "host": "html.duckduckgo.com",
+            "authorization_header_present": false
+          }
+        ],
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "execution_candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "skipped_incompatible": [],
+          "skipped_unavailable": [
+            {
+              "provider": "exa-free",
+              "code": "source_cooldown",
+              "retry_after_seconds": 900
+            }
+          ],
+          "browser_mode": "auto",
+          "max_sources": 3,
+          "platform": null,
+          "intent": "reference",
+          "specialized_source": null,
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "execution_summary": {
+          "api_http_attempts": 2,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 1,
+          "browser_commands": 4,
+          "browser_http_requests": null
+        },
+        "requests": [
+          {
+            "provider": "bing",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.22,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "duckduckgo",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.1,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "browser",
+            "ok": true,
+            "attempts": 0,
+            "elapsed_ms": 0.36,
+            "execution": "local_browser",
+            "browser_navigation_attempts": 1,
+            "browser_commands": 4,
+            "browser_cleanup_verified": true
+          }
+        ],
+        "errors": [
+          {
+            "provider": "bing",
+            "code": "irrelevant_results",
+            "message": "Experimental source returned no recognizable query topic; use another allowed source.",
+            "http_status": null,
+            "category": "response",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "duckduckgo",
+            "code": "access_challenge",
+            "message": "DuckDuckGo returned a verification page; no results obtained.",
+            "http_status": null,
+            "category": "provider",
+            "retryable": false,
+            "attempts": 1
+          }
+        ],
+        "sources": [
+          {
+            "provider": "browser",
+            "title": "Python asyncio TaskGroup docs",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "content_kind": "search_summary"
+          }
+        ]
+      }
+    ],
+    "keys": "Synthetic only; user credential file is never read.",
+    "free_mode_safety_passed": true,
+    "healthy_api_browser_starts": 0,
+    "simulated_recovery_passed": true,
+    "live_browser_usable": null,
+    "ok": true
+  },
+  "live_api_observation": {
+    "ok": true,
+    "elapsed_ms": 1356.72,
+    "api_calls": [
+      "exa-free"
+    ],
+    "execution_summary": {
+      "api_http_attempts": 1,
+      "keyed_api_attempts": 0,
+      "browser_navigation_attempts": 0,
+      "browser_commands": 0,
+      "browser_http_requests": 0
+    },
+    "errors": [],
+    "sources": [
+      {
+        "provider": "exa-free",
+        "title": "Coroutines and tasks — Python 3.14.5 documentation",
+        "url": "https://docs.python.org/3/library/asyncio-task.html"
+      },
+      {
+        "provider": "exa-free",
+        "title": "Lib/asyncio/taskgroups.py",
+        "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py"
+      },
+      {
+        "provider": "exa-free",
+        "title": "High-level API Index — Python 3.15.2 documentation",
+        "url": "https://docs.python.org/3/library/asyncio-api-index.html"
+      }
+    ]
+  },
+  "live_browser_observations": [
+    {
+      "tested_at": "2026-11-03T10:42:15.771693+00:00",
+      "close_grace_seconds": 3,
+      "case": {
+        "case": "live_browser_after_injected_quota",
+        "mode": "free",
+        "browser_execution": "live",
+        "ok": false,
+        "elapsed_ms": 9642.95,
+        "api_calls": [
+          "bing",
+          "duckduckgo"
+        ],
+        "simulated_transport": [
+          {
+            "host": "www.bing.com",
+            "authorization_header_present": false
+          },
+          {
+            "host": "html.duckduckgo.com",
+            "authorization_header_present": false
+          }
+        ],
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "execution_candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "skipped_incompatible": [],
+          "skipped_unavailable": [
+            {
+              "provider": "exa-free",
+              "code": "source_cooldown",
+              "retry_after_seconds": 900
+            }
+          ],
+          "browser_mode": "auto",
+          "max_sources": 3,
+          "platform": null,
+          "intent": "reference",
+          "specialized_source": null,
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "stop_reason": "no_usable_results_within_limits",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "execution_summary": {
+          "api_http_attempts": 2,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 1,
+          "browser_commands": 4,
+          "browser_http_requests": null
+        },
+        "requests": [
+          {
+            "provider": "bing",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.24,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "duckduckgo",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.29,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "browser",
+            "ok": false,
+            "attempts": 0,
+            "elapsed_ms": 9639.94,
+            "execution": "local_browser",
+            "browser_navigation_attempts": 1,
+            "browser_commands": 4,
+            "browser_cleanup_verified": false
+          }
+        ],
+        "errors": [
+          {
+            "provider": "bing",
+            "code": "irrelevant_results",
+            "message": "Experimental source returned no recognizable query topic; use another allowed source.",
+            "http_status": null,
+            "category": "response",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "duckduckgo",
+            "code": "access_challenge",
+            "message": "DuckDuckGo returned a verification page; no results obtained.",
+            "http_status": null,
+            "category": "provider",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "browser",
+            "code": "browser_no_results",
+            "message": "No verified result rows were extracted; an empty shell is not proof of no matches.",
+            "http_status": null,
+            "category": "response",
+            "retryable": false,
+            "attempts": 0
+          }
+        ],
+        "sources": []
+      }
+    },
+    {
+      "tested_at": "2026-11-03T10:46:41.930701+00:00",
+      "close_grace_seconds": 6,
+      "case": {
+        "case": "live_browser_after_injected_quota",
+        "mode": "free",
+        "browser_execution": "live",
+        "ok": false,
+        "elapsed_ms": 11166.91,
+        "api_calls": [
+          "bing",
+          "duckduckgo"
+        ],
+        "simulated_transport": [
+          {
+            "host": "www.bing.com",
+            "authorization_header_present": false
+          },
+          {
+            "host": "html.duckduckgo.com",
+            "authorization_header_present": false
+          }
+        ],
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "execution_candidates": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "skipped_incompatible": [],
+          "skipped_unavailable": [
+            {
+              "provider": "exa-free",
+              "code": "source_cooldown",
+              "retry_after_seconds": 900
+            }
+          ],
+          "browser_mode": "auto",
+          "max_sources": 3,
+          "platform": null,
+          "intent": "reference",
+          "specialized_source": null,
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "bing",
+            "duckduckgo",
+            "browser"
+          ],
+          "stop_reason": "no_usable_results_within_limits",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "execution_summary": {
+          "api_http_attempts": 2,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 1,
+          "browser_commands": 2,
+          "browser_http_requests": null
+        },
+        "requests": [
+          {
+            "provider": "bing",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.18,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "duckduckgo",
+            "ok": false,
+            "attempts": 1,
+            "elapsed_ms": 0.09,
+            "execution": null,
+            "browser_navigation_attempts": null,
+            "browser_commands": null,
+            "browser_cleanup_verified": null
+          },
+          {
+            "provider": "browser",
+            "ok": false,
+            "attempts": 0,
+            "elapsed_ms": 11163.65,
+            "execution": "local_browser",
+            "browser_navigation_attempts": 1,
+            "browser_commands": 2,
+            "browser_cleanup_verified": true
+          }
+        ],
+        "errors": [
+          {
+            "provider": "bing",
+            "code": "irrelevant_results",
+            "message": "Experimental source returned no recognizable query topic; use another allowed source.",
+            "http_status": null,
+            "category": "response",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "duckduckgo",
+            "code": "access_challenge",
+            "message": "DuckDuckGo returned a verification page; no results obtained.",
+            "http_status": null,
+            "category": "provider",
+            "retryable": false,
+            "attempts": 1
+          },
+          {
+            "provider": "browser",
+            "code": "browser_timeout",
+            "message": "Local browser search exceeded its time budget.",
+            "http_status": null,
+            "category": "network",
+            "retryable": false,
+            "attempts": 0
+          }
+        ],
+        "sources": []
+      }
+    }
+  ]
+}

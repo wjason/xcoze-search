@@ -29,6 +29,14 @@ Read [open sources and local-tool cooperation](references/open-sources.en.md) fo
 
 Jina/keyless Exa reading defaults to 24000 characters. If truncated and a required section is missing, one task-budgeted `fetch URL --max-characters 100000` can expand it (1000–200000); stop once sufficient. More returned text does not verify full-page completeness or truth. For rolling past-N-day tasks, establish timezone and exact cutoffs; remove out-of-window boundary items returned by calendar-date filters.
 
+## Limits and local-browser fallback
+
+Default API priority: up to two compatible API routes before one browser path. Healthy results stop; quality strategy does not itself trigger browser startup. Honor explicit current/saved browser-source choices and lower source/request/time caps. Anonymous Exa limits create a shared Search/Fetch pause, without repeated retries. plan.skipped_unavailable records skipped pauses; execution_candidates is this bounded order.
+
+Use an existing agent-browser in an isolated anonymous headless session, with fixed search/DOM/close commands only. Do not install dependencies, attach personal Chrome, import sessions, call AI chat or rotate identities to handle verification. Default Bing; explicit --browser-engine google is available, without automatic engine rotation. Challenges, empty shells and timeouts mean access/retrieval failure, not no matches. Respect browser pauses rather than repeatedly relaunching.
+
+--browser off disables this call; preferences --browser off saves it; auto restores lazy fallback. execution_summary separates API HTTP attempts, keyed attempts, browser navigation and commands. Browser subrequest counts are unknown/null, never one fictional HTTP or zero network. Auto APIs cap at 8 seconds; browser work at 15 seconds, further clipped by --timeout/remaining schedule, plus up to 6 seconds close grace. Failed close stays flagged and uses a 20-second idle shutdown. Reuse sufficient host-tool evidence without restarting fallback.
+
 ## Optional preferences and source overrides
 
 Save preferences when users ask for a persistent change; they never need to find configuration files:
@@ -54,7 +62,7 @@ On headless systems offer hidden input in the user's own visible terminal or con
 
 ## Failures and boundaries
 
-Automatic calls default to at most two sources and 45 seconds, with zero retries per source, also constrained by `--max-requests`. Unknown cost stays null; HTTP counts are not a currency ceiling. Successful automatic recovery may return ok:true, partial:true with errors: use successful sources and disclose material gaps. Explicit multi-source partial failure still returns ok:false and exit 4. See [output](references/output.en.md).
+Automatic calls default to at most three sources and 45 seconds, with zero retries per source, also constrained by `--max-requests`. Unknown cost stays null; HTTP counts are not a currency ceiling. Successful automatic recovery may return ok:true, partial:true with errors: use successful sources and disclose material gaps. Explicit multi-source partial failure still returns ok:false and exit 4. See [output](references/output.en.md).
 
 Challenge pages, login walls and shells are not page content. One route failing does not establish a platform-wide login requirement. Deliver public evidence already obtained. Reuse existing authorized platform tools when necessary; do not automatically install browsers or require every platform login. Base scope excludes full-site crawling, SearXNG, self-built indexes and enterprise document search.
 

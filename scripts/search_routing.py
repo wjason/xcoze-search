@@ -5,6 +5,8 @@ import re
 from search_common import SearchError, invalid
 from search_providers import REGISTRY
 from public_providers import PUBLIC_REGISTRY
+from public_access import pause_status
+from browser_search import available as browser_available
 
 ALL = {**REGISTRY, **PUBLIC_REGISTRY}
 STRATEGIES = ("smart", "quality", "balanced", "free")
@@ -39,7 +41,7 @@ def platform_catalog(platform=None):
             ("gh", "optional GitHub operations within existing authorization"),
             ("agent-browser", "optional existing browser workflow within user authorization"))],
             "network_requests": 0, "note": "Capabilities and executable presence only; no login, setup, update or tool execution."}
-DEFAULTS = {"strategy": "smart", "max_sources": 2, "disabled_providers": []}
+DEFAULTS = {"strategy": "smart", "max_sources": 3, "disabled_providers": [], "browser": "auto"}
 
 
 def query_intent(query, requested="auto"):
@@ -57,7 +59,8 @@ def preferences(config):
 
 def validate_preferences(value):
     if (not isinstance(value, dict) or value.get("strategy", "smart") not in STRATEGIES
-            or type(value.get("max_sources", 2)) is not int or not 1 <= value.get("max_sources", 2) <= 3
+            or type(value.get("max_sources", 3)) is not int or not 1 <= value.get("max_sources", 3) <= 3
+            or value.get("browser", "auto") not in ("auto", "off")
             or not isinstance(value.get("disabled_providers", []), list)
             or any(p not in ALL for p in value.get("disabled_providers", []))):
         raise SearchError("invalid_config", "Invalid search preferences; original config was not changed.")
@@ -85,6 +88,7 @@ def plan(args, config, credential, *, fetch=False):
     scoped = scoped_args(args)
     intent = "reading" if fetch else query_intent(args.query, getattr(args, "intent", "auto"))
     prefs = preferences(config)
+    browser_mode = getattr(args, "browser", None) or prefs["browser"]
     requested_strategy = getattr(args, "strategy", None) or prefs["strategy"]
     if requested_strategy not in STRATEGIES: invalid("Unknown search strategy.")
     requested = getattr(args, "provider", "auto")
@@ -116,6 +120,8 @@ def plan(args, config, credential, *, fetch=False):
             if not candidates:
                 raise SearchError("missing_api_key", "all selects configured keyed services; use auto for keyless search.")
         else: candidates = requested.split(",")
+        if "browser" in candidates and getattr(args, "browser", None) == "off":
+            invalid("--browser off conflicts with an explicitly selected browser source.")
         if len(set(candidates)) != len(candidates) or any(p not in ALL for p in candidates):
             invalid("Use registered provider names without duplicates.")
         # Explicit source selection overrides a saved mode. An explicit free flag remains a hard boundary.
@@ -145,12 +151,18 @@ def plan(args, config, credential, *, fetch=False):
             candidates = (available[:1] + public[:1] + available[1:] + public[1:] if strategy == "quality" else
                           public[:1] + available + public[1:] if strategy == "balanced" else public)
         if specialized: candidates.insert(0, specialized)
+        if not fetch and browser_mode == "auto" and browser_available(): candidates.append("browser")
         if preferred in candidates and preferred not in disabled and not specialized:
             candidates.remove(preferred); candidates.insert(0, preferred)
         candidates = list(dict.fromkeys(p for p in candidates if p not in disabled))
-    eligible, skipped = [], []
+    eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
+        if not explicit and name in ("exa-free", "browser"):
+            pause = pause_status(name)
+            if pause:
+                unavailable.append({"provider": name, **pause})
+                continue
         try:
             if fetch:
                 if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free"):
@@ -172,9 +184,14 @@ def plan(args, config, credential, *, fetch=False):
         raise SearchError("no_compatible_provider", "No enabled source supports these constraints; inspect capabilities or simplify the request.")
     limit = getattr(args, "max_sources", None) or prefs["max_sources"]
     if type(limit) is not int or not 1 <= limit <= 3: invalid("--max-sources must be 1..3.")
+    names = [x["provider"] for x in eligible]
+    execution = names if explicit else names[:limit]
+    if not explicit and "browser" in names and limit > 1 and preferred != "browser":
+        execution = [p for p in names if p != "browser"][:limit - 1] + ["browser"]
     return {"requested_strategy": requested_strategy, "strategy": strategy, "automatic": not explicit,
             "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
-            "candidates": [x["provider"] for x in eligible], "skipped_incompatible": skipped,
+            "candidates": names, "execution_candidates": execution, "skipped_incompatible": skipped,
+            "skipped_unavailable": unavailable, "browser_mode": browser_mode,
             "max_sources": len(eligible) if explicit else limit,
             "payloads": {x["provider"]: x["payload"] for x in eligible},
             "platform": getattr(args, "platform", None),

@@ -2,6 +2,14 @@
 
 **简体中文** | [English](CHANGELOG.en.md)
 
+## v0.7.0 — 2026-11-03
+
+- Exa 匿名 HTTP/MCP 限额识别、跨 Search/Fetch 冷却、Retry-After 与后续跳过；应用层错误不伪造 HTTP 状态，不自动升级付费服务。
+- 新增已有 agent-browser 的本地搜索路径：默认 API 优先，独立无头会话、固定命令、无 Key 环境、一次导航、关闭与失败冷却；无依赖时不自动安装。
+- **默认变更**：自动总来源上限从 2 改为 3，有浏览器时默认两 API 加一 browser；保留用户更低设置。API 成功或已有互补证据不启动浏览器；自动 API 每源最多 8 秒，浏览器默认工作 15 秒另最多 6 秒关闭宽限。
+- 新增 --browser auto/off、可保存偏好、--browser-engine、--browser-timeout 与 execution_summary；API HTTP 与浏览器子请求未知值分开，避免虚报请求数。
+- 135 项离线测试通过；故障注入验证免费调用带 Key API 为零。真实匿名 API 成功、零浏览器启动；真实浏览器空壳/超时，可用性未验收通过，未将模拟成功当真实成功。新增双语报告和可复现工具。
+
 ## v0.6.0 — 2026-11-03
 
 - 新增 Wikipedia 中英文、Stack Exchange、arXiv、Crossref、npm、crates.io、GitLab、Europe PMC、Hugging Face 九个免 Key 适配器；任务定向原生选路，免费边界与预算保留。

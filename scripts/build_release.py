@@ -6,14 +6,14 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents/openai.yaml",
                  "scripts/xcoze_search.py", "scripts/setup.command", "references/setup.md",
                  "references/providers.md", "references/output.md", "VALIDATION.md",
                  "MARKETPLACE.zh-CN.md", "PUBLISHING.zh-CN.md", "TODO.md",
                  "CONTRIBUTING.md", "CHANGELOG.md", "references/search-services.md",
                  "scripts/search_common.py", "scripts/search_providers.py", "scripts/public_providers.py",
-                 "scripts/search_routing.py", "scripts/search_quality.py", "scripts/public_access.py",
+                 "scripts/search_routing.py", "scripts/search_quality.py", "scripts/public_access.py", "scripts/browser_search.py",
                  "references/open-sources.md", "references/open-sources.en.md", "references/routing.md", "references/routing.en.md"]
 SOURCE_EXTRA = [".gitignore",
                 ".github/workflows/test.yml", ".github/workflows/release.yml",
@@ -33,7 +33,9 @@ SOURCE_EXTRA += ["evaluations/README.en.md", "scripts/benchmark.py", "tests/test
                  "evaluations/reports/2026-11-03.md", "evaluations/reports/2026-11-03.en.md",
                  "evaluations/reports/2026-11-03.data.json", "tests/test_open_sources.py",
                  "evaluations/open-source-cases.json", "evaluations/reports/2026-11-03-open-sources.md",
-                 "evaluations/reports/2026-11-03-open-sources.en.md", "evaluations/reports/2026-11-03-open-sources.data.json"]
+                 "evaluations/reports/2026-11-03-open-sources.en.md", "evaluations/reports/2026-11-03-open-sources.data.json", "scripts/evaluate_fallback.py",
+                 "tests/test_browser_fallback.py", "evaluations/reports/2026-11-03-fallback.md",
+                 "evaluations/reports/2026-11-03-fallback.en.md", "evaluations/reports/2026-11-03-fallback.data.json"]
 
 
 def main():

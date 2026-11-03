@@ -83,6 +83,7 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
                                            if case.get("expected_provider") else None),
             "elapsed_ms": elapsed, "receipts": receipts, "sources": rows,
             "routing": result.get("routing"), "errors": result.get("errors", []),
+            "execution_summary": result.get("execution_summary"),
             "semantic_quality_assessed": False}
 
 
@@ -103,12 +104,12 @@ def execute(corpus, *, live=False, modes=MODES, rounds=1, limit=6, count=5,
               "scope": "retrieval only; process startup, final-answer generation and validation reads excluded",
               "price_reference": corpus.get("price_reference"), "model_cost_usd": None,
               "plan": {"cells": len(cases) * len(modes) * rounds,
-                       "max_requests": max_requests, "max_sources_per_auto_call": 2}}
+                       "max_requests": max_requests, "max_sources_per_auto_call": 3}}
     if not live:
         return {**report, "ok": True, "budget": budget.data(), "network_requests": 0}
     config = search.read_config()
     # Benchmark default Smart without altering saved user preferences or credentials.
-    config = {**config, "search_preferences": {"strategy": "smart", "max_sources": 2, "disabled_providers": []}}
+    config = {**config, "search_preferences": {"strategy": "smart", "max_sources": 3, "disabled_providers": []}}
     for iteration in range(rounds):
         for index, case in enumerate(cases):
             rotation = (index + iteration) % len(modes)

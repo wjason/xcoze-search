@@ -3,7 +3,7 @@ name: xcoze-search
 description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
 metadata:
   author: XCoze
-  version: "0.6.0"
+  version: "0.7.0"
 ---
 
 # xcoze search
@@ -37,6 +37,14 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article
 
 Jina/Exa 免 Key读取默认返回最多 24000 字符。`truncated:true` 且所需段落未读到时，可在整项任务预算内用 `fetch URL --max-characters 100000` 再读一次（允许 1000–200000），取得所需内容即停止；读取更多不等于验证全文完整或事实正确。对“最近 N 天”明确时区和滚动起止时间，日期粒度接口多取的边界记录需按实际时间剔除。
 
+## 限额和本地浏览器兜底
+
+默认保持 API 优先；无配置偏好时最多两条兼容 API 后才调用一条 browser 路径。健康结果会停止，不为“效果优先”额外启动浏览器。用户本次或已保存显式选择 browser 时尊重该选择；更低来源/请求/时间上限仍有效。Exa 限额进入共享冷却，Search/Fetch 都不反复重试。plan 的 skipped_unavailable 说明未尝试原因，execution_candidates 是本次有界顺序。
+
+浏览器采用已有 agent-browser 的独立匿名、无头会话，只执行固定搜索/DOM 读取/关闭命令；不安装依赖，不连接用户 Chrome、导入会话、调用 AI chat 或切换身份处理验证码。默认 Bing，可显式 --browser-engine google；一次调用不轮换引擎。验证码、空壳、超时都不是“没有相关结果”，停止并说明缺口。浏览器受限后冷却，不能反复重新启动绕过暂停。
+
+--browser off 本次禁用，preferences --browser off 保存禁用，auto 恢复按需。execution_summary 分开记录 API HTTP 尝试、带 Key 尝试、浏览器导航和命令；浏览器子请求数量未知 null，不能把它伪装成一次 HTTP 或零网络。API 时间上限 8 秒；浏览器工作最多 15 秒（还受 --timeout/剩余总预算约束），另有最多 6 秒关闭宽限，失败关闭保留标记并设 20 秒空闲退出。已有宿主搜索取得足够证据时直接复用，不重复启动兜底。
+
 ## 可选偏好和指定来源
 
 用户说“以后免费模式”“改成平衡模式”等时由 Agent 保存，用户无需找配置文件：
@@ -62,7 +70,7 @@ python3 "<skill_dir>/scripts/xcoze_search.py" preferences --reset
 
 ## 失败和边界
 
-自动选路默认最多 2 个来源、45 秒，每个来源零重试；`--max-requests` 还约束实际 HTTP 尝试，未知费用为 null，不是金额上限。自动备用成功可有 ok:true、partial:true 和 errors：可使用成功来源，同时说明重要缺口。显式多源部分失败仍为 ok:false、退出码 4。见 [输出契约](references/output.md)。
+自动选路默认最多 3 个来源、45 秒，每个来源零重试；`--max-requests` 还约束实际 HTTP 尝试，未知费用为 null，不是金额上限。自动备用成功可有 ok:true、partial:true 和 errors：可使用成功来源，同时说明重要缺口。显式多源部分失败仍为 ok:false、退出码 4。见 [输出契约](references/output.md)。
 
 验证页、登录墙、空壳不是正文。接口不可用只说明本次路径失败，不推断整个平台必须登录。保留实际已取得的公开内容；需要专用平台能力时优先使用已有且已授权的工具，不自动安装浏览器或要求全部平台登录。基础包不提供整站爬取、SearXNG、自建索引或企业资料搜索。
 

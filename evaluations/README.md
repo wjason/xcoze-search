@@ -49,3 +49,12 @@ python3 scripts/benchmark.py --live --corpus evaluations/smart-holdout.json --li
 ## 开放源与竞品研究复测
 
 [本轮报告](reports/2026-11-03-open-sources.md)记录九源接入、Agent Reach 研究和长文截断修正。使用 open-source-cases.json、--modes free --limit 10 --count 3 复用 benchmark.py；默认仍离线，--live 才联网。expected_provider_returned 只表示对应原生源返回，不代表结论正确。
+
+## Exa 限额故障注入
+
+```bash
+python3 scripts/evaluate_fallback.py --output ../fallback-offline.json
+python3 scripts/evaluate_fallback.py --live-api --live-browser --output ../fallback-live.json
+```
+
+默认所有 HTTP/浏览器均模拟，使用内存中的六家合成 Key，不读取用户凭据；--live-api 只做一次真实匿名 API 查询，--live-browser 在 API 故障注入后执行一条真实浏览器路径。付费 API 在传输前由测试守卫拒绝。ok 只表示路由安全断言通过；live_browser_usable 单列真实浏览器可用性，可能为 false，不能把模拟恢复当成真实检索成功。本轮[报告](reports/2026-11-03-fallback.md)记录了这一限制。

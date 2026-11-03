@@ -49,3 +49,14 @@ python3 scripts/xcoze_search.py search 'Qwen' --platform huggingface
 正文默认最多 24000 字符，需要遗漏段落时再执行 `fetch URL --max-characters 100000`；仅 Jina/Exa 免 Key支持，最大 200000。`truncated` 表示本机裁剪或已触及请求上限的风险，`completeness_verified:false` 始终保留，不能据长度声称整页已完整读取。
 
 [本轮实测与 Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
+
+## 可选浏览器搜索
+
+browser 现已接入已有 agent-browser，独立匿名 Chrome 会话，不是 Agent Reach 执行桥接。支持 Bing（默认）、Google（显式选择），一次导航，不自动轮换引擎。接口成功不启动，失败后仍需遵守网站验证与冷却。配置与费用边界见[调度](routing.md)。本轮真实浏览器空壳/超时，可用性未通过验收；模拟成功不替代真实验收。
+
+```bash
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
+python3 scripts/xcoze_search.py preferences --browser off
+python3 scripts/xcoze_search.py preferences --browser auto
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine bing
+```

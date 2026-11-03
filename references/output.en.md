@@ -1,4 +1,4 @@
-# Output contract v0.6.0
+# Output contract v0.7.0
 
 [简体中文](output.md) | **English**
 
@@ -75,3 +75,9 @@ New native content_kind values: encyclopedia_excerpt, question_excerpt, abstract
 platforms returns coverage, native_provider, search_scope, native_fetch, comment_threads_integrated, transcripts_integrated and local_tools.present. live_verified stays false; presence is not verification. Suppressed new-source calls may have attempts:0; only sent HTTP counts. source_cooldown/source_busy are rate_limit; public_access_state_error is configuration.
 
 Jina/keyless Exa Fetch adds max_characters and returned_characters, default 24000, explicitly 1000–200000. Other providers reject this option in preflight. truncated is not proof of complete dynamic content; completeness_verified remains false.
+
+## Quota and local execution
+
+routing adds execution_candidates, skipped_unavailable and browser_mode. Exa application quota uses code source_rate_limited/category rate_limit, http_status:null when wire status is unknown. Actual HTTP 429/503 remains explicit. Locally suppressed calls count zero HTTP.
+
+execution_summary separates api_http_attempts, keyed_api_attempts, browser_navigation_attempts, browser_commands and browser_http_requests. The last is null after navigation, 0 without it. budget.unit=provider_api_http_attempts; browser page/resource subrequests are outside that observable count. Browser requests.attempts=0 means no API transport call, not no network; execution is local_browser. browser_cleanup_verified records a normal close acknowledgment, never assumed after failure.

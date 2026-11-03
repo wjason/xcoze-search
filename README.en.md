@@ -23,7 +23,7 @@ Python 3.10+ is required. Runtime uses only the standard library: no browser, No
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.6.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.6.0/xcoze-search-skill-v0.6.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.7.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.0/xcoze-search-skill-v0.7.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Sources
 
@@ -67,14 +67,22 @@ Implementation, account verification and search quality are separate. Local chec
 
 - **Smart by default:** no syntactically usable keys selects keyless routes; available keys select quality-first routing. Key presence does not establish live account access.
 - **Task-aware:** The Agent can select native public indexes for encyclopedias, questions, papers, packages, models, GitHub/GitLab and HN. Known URLs should use native readers when useful; script auto-reading starts with Jina/Exa keyless readers.
-- **Bounded complement/fallback:** general keyless search starts with Exa MCP, with Bing/DDG fallbacks. Quality reference/current tasks may consult a complementary source within the existing two-source cap. General tasks and successful GitHub/HN routes return immediately; empty/failed calls may fall back. Defaults remain two sources and 45 seconds within the HTTP budget. The Agent checks gaps and reads current primary pages for prices, rules, versions and conflicts.
+- **Bounded complement/fallback:** general keyless search starts with Exa MCP, with Bing/DDG fallbacks. Quality reference/current tasks may consult a complementary source within the existing two-source cap. General tasks and successful GitHub/HN routes return immediately; empty/failed calls may fall back. Defaults are three total sources and 45 seconds. With a browser available, at most two compatible API paths precede browser fallback. Lower saved caps remain effective; the API HTTP budget still applies. The Agent checks gaps and reads current primary pages for prices, rules, versions and conflicts.
 - **Optional controls:** quality, balanced, free, or a named source. Per-request choices override saved preferences; explicit `--strategy free` conflicts with keyed sources.
 
 Smart combines transparent capability/source rules and Agent judgment. It does not train a router, compare native scores across providers or claim a quality leaderboard. Initial keyed-provider order is configuration policy, not a performance ranking. See [routing](references/routing.en.md).
 
 Six live tasks and two Chinese holdouts on 2026-11-03 found paid retrieval faster in this sample, with keyless/native routes adding useful primary and dated evidence. Routing was revised accordingly. See the [dated comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md), including latency, estimated costs and limitations; this is not a general accuracy claim.
 
-Nine new native adapters bring keyless adapters to 15 (14 search-capable, one reader-only). Offline `platforms` distinguishes scope and optional executable presence from live verification. See [open sources and local-tool cooperation](references/open-sources.en.md) and [live checks/Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
+There are 15 keyless API/reader adapters (14 search-capable, one reader-only), plus an optional local-browser search path. Offline `platforms` distinguishes scope and optional executable presence from live verification. See [open sources and local-tool cooperation](references/open-sources.en.md) and [live checks/Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
+
+## Exa limits and browser fallback
+
+An exhausted anonymous Exa source is paused and skipped on later calls. Retry-After is honored; absent a recovery time, a 15-minute pause precedes another probe, without promising quota reset then. Smart with keys retains API priority; platform tasks prefer native APIs. Healthy API results never start a browser, including when API complements are useful.
+
+Browser search launches lazily only without usable API results. It requires an existing agent-browser/working local Chrome, with no installation/login/personal-session reuse. Automatic APIs cap each source at 8 seconds; browser work at 15 seconds plus up to 6 seconds close grace. Ordinary searches do not run live health checks. Ask the Agent to disable browser fallback, or use preferences --browser off. Free strategy never calls keyed providers.
+
+The observed live API call took about 1.36 seconds with zero browser launches. Two live browser fallbacks returned an empty shell/timeout and did not pass availability acceptance. Simulated recovery and real restrictions are separate in the [quota/performance report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.en.md). Browser availability depends on upstream/network conditions.
 
 ## Configure keys
 

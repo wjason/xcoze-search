@@ -49,3 +49,14 @@ State lives under XDG_CACHE_HOME/xcoze-search/public-access, with LOCALAPPDATA f
 Reading defaults to 24000 characters. Use `fetch URL --max-characters 100000` only for missing sections; Jina/keyless Exa support 1000–200000. `truncated` indicates local clipping or possible upstream limit saturation. `completeness_verified:false` remains: length does not prove the full page was retrieved.
 
 [Live checks and Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
+
+## Optional browser search
+
+browser now executes an existing agent-browser in an isolated anonymous Chrome session; it is not an Agent Reach execution bridge. Bing is default, Google explicit, one navigation without engine rotation. API success prevents startup. Website verification/cooldowns still apply; see [routing](routing.en.md). Live browser checks here returned a shell/timeout and did not pass availability acceptance. Simulated recovery is separate.
+
+```bash
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
+python3 scripts/xcoze_search.py preferences --browser off
+python3 scripts/xcoze_search.py preferences --browser auto
+python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine bing
+```
