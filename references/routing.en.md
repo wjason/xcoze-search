@@ -34,6 +34,10 @@ Experimental Bing/DDG nonempty results with zero overlap against at least two in
 
 [Live tasks and tradeoffs](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md).
 
+## Extended platforms
+
+Wikipedia, Stack Exchange, arXiv, Crossref, npm, crates, GitLab, Europe PMC and Hugging Face prefer their public adapter for --platform or supported sites. Successful native routes do not force complements; unsupported dates/languages are still rejected/skipped in preflight. Offline platforms reads no keys and executes no tool. Added video/community scopes are public indexes only. See [open sources](open-sources.en.md) for parameters, local-tool cooperation and pacing.
+
 ## Platform coverage
 
 | Target | Implemented | Not promised |

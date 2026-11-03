@@ -1,9 +1,9 @@
 ---
 name: xcoze-search
-description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持 GitHub、Hacker News 及中文平台公开内容定向检索。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
+description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
 metadata:
   author: XCoze
-  version: "0.5.0"
+  version: "0.6.0"
 ---
 
 # xcoze search
@@ -28,6 +28,14 @@ python3 "<skill_dir>/scripts/xcoze_search.py" search 'industrial vision' --platf
 python3 "<skill_dir>/scripts/xcoze_search.py" search 'AI coding' --platform hackernews --start-date 2026-11-01
 python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article'
 ```
+
+## 平台原生搜索和本机工具
+
+根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
+
+需要平台正文、评论或字幕等专用能力时读[开放来源与平台协作](references/open-sources.md)。已有授权工具可按其 Skill 补缺口，不自动安装/更新工具、打开登录窗口或复制登录态。索引摘要、问题摘录、论文摘要、视频描述、评论 ID 和字幕轨道列表分别判断，不能互相替代。第三方平台动作仍按其限流/登录/验证码停止条件执行。
+
+Jina/Exa 免 Key读取默认返回最多 24000 字符。`truncated:true` 且所需段落未读到时，可在整项任务预算内用 `fetch URL --max-characters 100000` 再读一次（允许 1000–200000），取得所需内容即停止；读取更多不等于验证全文完整或事实正确。对“最近 N 天”明确时区和滚动起止时间，日期粒度接口多取的边界记录需按实际时间剔除。
 
 ## 可选偏好和指定来源
 

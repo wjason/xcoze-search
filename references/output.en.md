@@ -1,4 +1,4 @@
-# Output contract v0.5.0
+# Output contract v0.6.0
 
 [简体中文](output.md) | **English**
 
@@ -69,3 +69,9 @@ Error objects include code, message (fixed redacted guidance), http_status, cate
 | 130 | User cancelled or local key input timed out |
 
 GUI cancellation, timeout, or failure neither saves nor migrates this input. gui_unavailable / gui_failed indicates no usable dialog; never automatically fall back to plaintext input.
+
+New native content_kind values: encyclopedia_excerpt, question_excerpt, abstract, bibliographic_metadata, package_metadata, repository_metadata, model_metadata. Abstracts stay in summary rather than page content; question excerpts do not mean answers were read. Creation/revision/package dates stay in provider_fields. Crossref preserves date precision; Europe PMC may infer dates upstream.
+
+platforms returns coverage, native_provider, search_scope, native_fetch, comment_threads_integrated, transcripts_integrated and local_tools.present. live_verified stays false; presence is not verification. Suppressed new-source calls may have attempts:0; only sent HTTP counts. source_cooldown/source_busy are rate_limit; public_access_state_error is configuration.
+
+Jina/keyless Exa Fetch adds max_characters and returned_characters, default 24000, explicitly 1000–200000. Other providers reject this option in preflight. truncated is not proof of complete dynamic content; completeness_verified remains false.

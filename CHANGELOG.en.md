@@ -2,6 +2,14 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.6.0 — 2026-11-03
+
+- Added nine keyless adapters: Wikipedia en/zh, Stack Exchange, arXiv, Crossref, npm, crates.io, GitLab, Europe PMC and Hugging Face, with task-scoped native routing and existing free/budget boundaries.
+- Offline platforms distinguishes native APIs, public indexes and local executable presence; more video/community index scopes do not imply native subtitle/comment support.
+- New-source OS serialization, pacing/backoff, Stack Exchange duplicate/quota handling, gzip decoding and decompressed size limits; suppressed requests count zero HTTP.
+- Reviewed Agent Reach 1.6.1 and ran a limited same-task comparison. Added opt-in fetch --max-characters after observing long-page clipping (Jina/keyless Exa, default 24000, maximum 200000); more text does not prove completeness.
+- 120 local offline tests passed; live observations, pacing follow-ups, bilingual reports/instructions retained. No universal coverage or overall superiority claim.
+
 ## v0.5.0 — 2026-11-03
 
 - Compared keyless, DeepSeek and Smart on six live tasks plus two Chinese holdouts, with bilingual reports, sanitized receipts and a reproducible runner.

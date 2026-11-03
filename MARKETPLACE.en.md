@@ -4,7 +4,7 @@
 
 Name: **xcoze search**
 ID: `xcoze-search`
-Version: `0.5.0` preview
+Version: `0.6.0` preview
 Maintainer: XCoze
 Repository: [wjason/xcoze-search](https://github.com/wjason/xcoze-search)
 

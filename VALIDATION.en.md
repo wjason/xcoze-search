@@ -2,6 +2,15 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.6.0 — 2026-11-03
+
+120 local offline tests passed: nine public endpoints/no-auth/result types, dates/languages, native/free policy, OS serialization/cooldown/duplicate/quota/Retry-After, bounded gzip, non-executing offline catalog, default clipping and expanded reading.
+
+Nine direct probes and eleven adapter HTTP attempts, including a zero-HTTP short-cooldown failure and successful consecutive-language follow-ups. Empty in-memory credentials/free strategy, no keyed requests. Agent Reach 1.6.1 source review, two observed actions and longer-reading follow-up are separate evidence, not general accuracy/superiority.
+
+
+[详见实测 / Study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md)。
+
 ## v0.5.0 — 2026-11-03
 
 103 local offline tests passed, covering complementary accumulation, duplicate URLs, retaining first results after complement failure, intent/explicit/free/platform boundaries, RSS mismatch fallback, offline-default benchmarking, request budgets, empty-result billing and execution-order rotation.

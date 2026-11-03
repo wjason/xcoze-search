@@ -13,6 +13,8 @@ from search_providers import Provider, array, dates, option, result
 
 
 def clean_html(value):
+    if value is not None and not isinstance(value, str):
+        raise SearchError("invalid_response", "Expected HTML/text from public source.")
     class Text(HTMLParser):
         def __init__(self):
             super().__init__(); self.parts = []; self.hidden = 0
@@ -51,6 +53,8 @@ class PublicProvider(Provider):
     def capabilities(self):
         return {**super().capabilities(), "access": "keyless", "availability": self.availability,
                 "search_scope": getattr(self, "search_scope", "public_web"),
+                "fetch_character_limit": ({"default": 24000, "min": 1000, "max": 200000}
+                                          if self.name in ("jina", "exa-free") else None),
                 "note": "No user key is sent; upstream access and limits still apply."}
 
     def build_request(self, payload, key, version, *, fetch=False):
@@ -204,7 +208,7 @@ class ExaFree(PublicProvider):
     def fetch_payload(self, args):
         if option(args, "highlights") or option(args, "summary"):
             raise SearchError("unsupported_option", "Exa keyless reader does not accept highlights/summary options.")
-        return {"tool": "web_fetch_exa", "arguments": {"urls": [args.url], "maxCharacters": 24000}}
+        return {"tool": "web_fetch_exa", "arguments": {"urls": [args.url], "maxCharacters": getattr(args, "max_characters", None) or 24000}}
 
     def normalize_fetch(self, raw, url):
         if "results" in raw:
@@ -220,7 +224,7 @@ class ExaFree(PublicProvider):
             title = header.splitlines()[0][2:]
         if not content.strip(): raise SearchError("extraction_failed", "Exa returned empty page text.")
         return {"title": title, "content": content, "content_kind": "page_content",
-                "truncated": len(content) >= 24000, "completeness_verified": False}
+                "truncated": False, "completeness_verified": False}
 
 
 class GitHub(PublicProvider):
@@ -353,9 +357,365 @@ class JinaReader(PublicProvider):
         if (re.search(r"^(?:log in|sign in|登录|安全验证|just a moment)[.!…\s]*$", title, re.I)
                 or "requiring CAPTCHA" in content[:2000]):
             raise SearchError("access_challenge", "Reader returned a login or verification page.")
-        return {"title": title, "content": content[:24000], "content_kind": "page_content",
-                "truncated": len(content) > 24000, "completeness_verified": False,
+        return {"title": title, "content": content, "content_kind": "page_content",
+                "truncated": False, "completeness_verified": False,
                 "source_url": data.get("url") or url}
 
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader())}
+def record_array(body, field):
+    records = array(body, field)
+    if any(not isinstance(item, dict) for item in records):
+        raise SearchError("invalid_response", "Public source records must be objects.")
+    return records
+
+
+class OpenSource(PublicProvider):
+    """Scoped public indexes: never a replacement for general web search."""
+    options = frozenset(("site",))
+    availability = "official_public_api_rate_limited"
+    sites = ()
+    result_kind = "search_summary"
+    documentation_url = ""
+
+    def check_site(self, args):
+        if option(args, "site") and args.site not in self.sites:
+            raise SearchError("unsupported_option", self.label + " does not cover this site.")
+
+    def capabilities(self):
+        return {**super().capabilities(), "supported_sites": list(self.sites),
+                "result_type": self.result_kind, "documentation_url": self.documentation_url}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        req = super().build_request(payload, key, version, fetch=fetch)
+        req.add_header("User-Agent", "xcoze-search/" + version + " (+https://github.com/wjason/xcoze-search)")
+        req.add_header("Accept-Encoding", "gzip")
+        return req
+
+    def metadata(self, raw, rows, count):
+        value = super().metadata(raw, rows, count)
+        value["provider_metadata"] = {k: v for k, v in raw.items() if k not in (
+            "items", "query", "message", "objects", "crates", "resultList", "entries")}
+        for container, field in (("message", "items"), ("query", "search")):
+            if isinstance(raw.get(container), dict):
+                value["provider_metadata"][container] = {k: v for k, v in raw[container].items() if k != field}
+        return value
+
+    def rows(self, raw, items, count, *, published=None, summary=None):
+        rows = [result(self.name, i, item, published=published, summary=summary) for i, item in enumerate(items, 1)]
+        for row in rows: row["content_kind"] = self.result_kind
+        return rows[:count], self.metadata(raw, rows, count)
+
+
+class Wikipedia(OpenSource):
+    name, label = "wikipedia", "Wikipedia (English / 中文)"
+    endpoint = "https://en.wikipedia.org/w/api.php"
+    sites = ("en.wikipedia.org", "zh.wikipedia.org")
+    options = frozenset(("site", "language"))
+    result_kind, search_scope = "encyclopedia_excerpt", "encyclopedia_articles"
+    documentation_url = "https://www.mediawiki.org/wiki/API:Search"
+
+    def build_search(self, args):
+        self.check_site(args)
+        language = option(args, "language")
+        if language not in (None, "", "en", "zh"):
+            raise SearchError("unsupported_option", "Wikipedia supports --language en or zh.")
+        inferred = "zh" if re.search(r"[\u3400-\u9fff]", args.query) else "en"
+        chosen = args.site.split(".")[0] if option(args, "site") else language or inferred
+        if language and chosen != language: invalid("Wikipedia --language and --site conflict.")
+        return {"action": "query", "list": "search", "srsearch": args.query, "srlimit": args.count,
+                "meta": "siteinfo", "siprop": "general", "format": "json", "utf8": 1, "maxlag": 5, "_language": chosen}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        language = payload["_language"]
+        if language not in ("en", "zh"): invalid("Unsupported Wikipedia language.")
+        req = super().build_request({k: v for k, v in payload.items() if k != "_language"}, key, version)
+        req.full_url = "https://" + language + ".wikipedia.org/w/api.php?" + req.full_url.split("?", 1)[1]
+        return req
+
+    def normalize(self, raw, count):
+        query = raw.get("query")
+        if not isinstance(query, dict): raise SearchError("invalid_response", "Missing Wikipedia query results.")
+        general = query.get("general")
+        wiki = general.get("wikiid") if isinstance(general, dict) else None
+        if wiki not in ("enwiki", "zhwiki"):
+            raise SearchError("invalid_response", "Missing supported Wikipedia identity.")
+        host = "en.wikipedia.org" if wiki == "enwiki" else "zh.wikipedia.org"
+        items = []
+        for item in record_array(query, "search"):
+            title = item.get("title")
+            if not isinstance(title, str): raise SearchError("invalid_response", "Missing article title.")
+            items.append({**item, "url": "https://" + host + "/wiki/" + urllib.parse.quote(title.replace(" ", "_"), safe=""),
+                          "snippet": clean_html(item.get("snippet") or ""), "date_semantics": "timestamp_is_last_edit_not_publication"})
+        return self.rows(raw, items, count)
+
+    def metadata(self, raw, rows, count):
+        value = super().metadata(raw, rows, count)
+        query = value["provider_metadata"].get("query", {})
+        if isinstance(query.get("general"), dict):
+            query["general"] = {k: v for k, v in query["general"].items() if k in ("wikiid", "lang", "sitename")}
+        return value
+
+
+class StackExchange(OpenSource):
+    name, label = "stackexchange", "Stack Exchange questions"
+    endpoint = "https://api.stackexchange.com/2.3/search/advanced"
+    sites = ("stackoverflow.com", "superuser.com", "serverfault.com", "askubuntu.com",
+             "math.stackexchange.com", "stats.stackexchange.com", "datascience.stackexchange.com")
+    options = frozenset(("site", "start_date", "end_date"))
+    result_kind, search_scope = "question_excerpt", "public_questions_not_answers"
+    documentation_url = "https://api.stackexchange.com/docs/advanced-search"
+
+    def build_search(self, args):
+        self.check_site(args)
+        site = option(args, "site") or "stackoverflow.com"
+        site = site.removesuffix(".stackexchange.com").removesuffix(".com")
+        start, end = dates(args)
+        payload = {"site": site, "q": args.query, "pagesize": args.count, "sort": "relevance", "order": "desc", "filter": "withbody"}
+        for value, key, offset in ((start, "fromdate", 0), (end, "todate", 86399)):
+            if value: payload[key] = int(datetime.fromisoformat(value).replace(tzinfo=timezone.utc).timestamp()) + offset
+        return payload
+
+    def check_error(self, raw):
+        if "error_id" in raw:
+            raise SearchError("provider_error", "Stack Exchange rejected the request; inspect quota or retry later.",
+                              category="rate_limit" if raw.get("error_name") == "throttle_violation" else "provider")
+        super().check_error(raw)
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "items"):
+            timestamp = item.get("creation_date")
+            if type(timestamp) is not int: raise SearchError("invalid_response", "Invalid question creation date.")
+            try: published = datetime.fromtimestamp(timestamp, timezone.utc).isoformat()
+            except (ValueError, OverflowError, OSError):
+                raise SearchError("invalid_response", "Question creation date is out of range.") from None
+            items.append({**item, "title": clean_html(item.get("title") or ""), "url": item.get("link"),
+                          "snippet": clean_html(item.get("body") or "")[:1200],
+                          "published": published,
+                          "answers_fetched": False})
+        rows, meta = self.rows(raw, items, count, published="published")
+        meta["usage"] = {k: raw[k] for k in ("quota_remaining", "quota_max", "backoff") if k in raw}
+        return rows, meta
+
+
+class Arxiv(OpenSource):
+    name, label = "arxiv", "arXiv preprints"
+    endpoint = "https://export.arxiv.org/api/query"
+    sites = ("arxiv.org",)
+    options = frozenset(("site", "start_date", "end_date"))
+    result_kind, search_scope = "abstract", "preprint_metadata_and_abstracts"
+    documentation_url = "https://info.arxiv.org/help/api/user-manual.html"
+
+    def build_search(self, args):
+        self.check_site(args); start, end = dates(args)
+        query = args.query
+        if start or end:
+            low = start.replace("-", "") + "0000" if start else "000000000000"
+            high = end.replace("-", "") + "2359" if end else "999999999999"
+            query = "(" + query + ") AND submittedDate:[" + low + " TO " + high + "]"
+        return {"search_query": query, "max_results": args.count, "start": 0, "sortBy": "relevance"}
+
+    def decode_response(self, raw):
+        try: root = ET.fromstring(raw)
+        except ET.ParseError:
+            raise SearchError("invalid_response", "arXiv returned invalid Atom XML.") from None
+        ns = "{http://www.w3.org/2005/Atom}"
+        if root.tag != ns + "feed": raise SearchError("invalid_response", "Expected arXiv Atom feed.")
+        entries = []
+        for entry in root.findall(ns + "entry"):
+            url = entry.findtext(ns + "id") or ""
+            if "/api/errors" in url: raise SearchError("provider_error", "arXiv rejected the search expression.")
+            parsed = urllib.parse.urlsplit(url)
+            if parsed.hostname not in ("arxiv.org", "export.arxiv.org") or not parsed.path.startswith("/abs/"):
+                raise SearchError("invalid_response", "Invalid arXiv paper URL.")
+            entries.append({"title": " ".join((entry.findtext(ns + "title") or "").split()),
+                            "url": "https://arxiv.org" + parsed.path,
+                            "abstract": " ".join((entry.findtext(ns + "summary") or "").split()),
+                            "published": entry.findtext(ns + "published"), "updated": entry.findtext(ns + "updated"),
+                            "authors": [a.findtext(ns + "name") for a in entry.findall(ns + "author")],
+                            "categories": [a.get("term") for a in entry.findall(ns + "category")],
+                            "peer_review_verified": False})
+        return {"entries": entries, "total_results": root.findtext("{http://a9.com/-/spec/opensearch/1.1/}totalResults")}
+
+    def normalize(self, raw, count):
+        return self.rows(raw, record_array(raw, "entries"), count, published="published", summary="abstract")
+
+
+def partial_date(item):
+    for field in ("published", "published-online", "published-print"):
+        value = item.get(field)
+        parts = value.get("date-parts") if isinstance(value, dict) else None
+        if isinstance(parts, list) and parts and isinstance(parts[0], list) and 1 <= len(parts[0]) <= 3:
+            nums = parts[0]
+            if any(type(n) is not int for n in nums): continue
+            try:
+                from datetime import date
+                date(nums[0], nums[1] if len(nums) > 1 else 1, nums[2] if len(nums) > 2 else 1)
+            except (ValueError, OverflowError): continue
+            return str(nums[0]).zfill(4) + "".join("-" + str(n).zfill(2) for n in nums[1:])
+    return None
+
+
+class Crossref(OpenSource):
+    name, label = "crossref", "Crossref DOI metadata"
+    endpoint = "https://api.crossref.org/works"
+    sites = ("doi.org",)
+    options = frozenset(("site", "start_date", "end_date"))
+    result_kind, search_scope = "bibliographic_metadata", "crossref_registered_works"
+    documentation_url = "https://www.crossref.org/documentation/retrieve-metadata/rest-api/"
+
+    def build_search(self, args):
+        self.check_site(args); start, end = dates(args)
+        payload = {"query.bibliographic": args.query, "rows": args.count,
+                   "select": "DOI,title,abstract,published,published-online,published-print,type,URL,author,container-title,score,license"}
+        filters = [k + ":" + v for k, v in (("from-pub-date", start), ("until-pub-date", end)) if v]
+        if filters: payload["filter"] = ",".join(filters)
+        return payload
+
+    def normalize(self, raw, count):
+        message = raw.get("message")
+        if not isinstance(message, dict): raise SearchError("invalid_response", "Missing Crossref message.")
+        items = []
+        for item in record_array(message, "items"):
+            doi, titles = item.get("DOI"), item.get("title", [])
+            if not isinstance(doi, str) or not doi.startswith("10.") or not isinstance(titles, list):
+                raise SearchError("invalid_response", "Invalid DOI record.")
+            abstract = item.get("abstract") or ""
+            if not isinstance(abstract, str): raise SearchError("invalid_response", "Invalid Crossref abstract.")
+            items.append({**item, "title": titles[0] if titles else doi,
+                          "url": "https://doi.org/" + urllib.parse.quote(doi, safe="/"),
+                          "abstract_text": clean_html(abstract), "published": partial_date(item),
+                          "date_semantics": "publication_date_with_original_precision"})
+        return self.rows(raw, items, count, published="published", summary="abstract_text")
+
+
+class Npm(OpenSource):
+    name, label = "npm", "npm public package registry"
+    endpoint = "https://registry.npmjs.org/-/v1/search"
+    sites = ("npmjs.com",)
+    result_kind, search_scope = "package_metadata", "public_npm_packages"
+    documentation_url = "https://api-docs.npmjs.com/"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"text": args.query, "size": args.count, "from": 0}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "objects"):
+            package = item.get("package")
+            if not isinstance(package, dict) or not isinstance(package.get("name"), str):
+                raise SearchError("invalid_response", "Invalid npm package record.")
+            name, version = package["name"], package.get("version")
+            items.append({**item, "title": name + ("@" + version if isinstance(version, str) else ""),
+                          "url": "https://www.npmjs.com/package/" + urllib.parse.quote(name, safe="@/"),
+                          "snippet": package.get("description") or "", "date_semantics": "registry_dates_are_metadata_not_article_publication"})
+        return self.rows(raw, items, count)
+
+
+class Crates(OpenSource):
+    name, label = "crates", "crates.io Rust packages"
+    endpoint = "https://crates.io/api/v1/crates"
+    sites = ("crates.io",)
+    result_kind, search_scope = "package_metadata", "public_rust_crates"
+    documentation_url = "https://crates.io/data-access"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"q": args.query, "page": 1, "per_page": args.count, "sort": "relevance"}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "crates"):
+            name = item.get("name")
+            if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_-]+", name):
+                raise SearchError("invalid_response", "Invalid crate name.")
+            items.append({**item, "title": name, "url": "https://crates.io/crates/" + name,
+                          "snippet": item.get("description") or "", "date_semantics": "created_updated_are_registry_metadata"})
+        return self.rows(raw, items, count)
+
+
+class GitLab(OpenSource):
+    name, label = "gitlab", "GitLab.com public projects"
+    endpoint = "https://gitlab.com/api/v4/projects"
+    sites = ("gitlab.com",)
+    result_kind, search_scope = "repository_metadata", "public_project_name_path_description_not_code"
+    documentation_url = "https://docs.gitlab.com/api/projects/"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"search": args.query, "simple": "true", "visibility": "public", "per_page": args.count,
+                "order_by": "star_count", "sort": "desc"}
+
+    def decode_response(self, raw):
+        try: items = json.loads(raw)
+        except (ValueError, UnicodeError): raise SearchError("invalid_response", "Invalid GitLab JSON.") from None
+        if not isinstance(items, list): raise SearchError("invalid_response", "Expected GitLab project list.")
+        return {"items": items}
+
+    def normalize(self, raw, count):
+        items = [{**item, "title": item.get("path_with_namespace") or item.get("name_with_namespace"),
+                  "url": item.get("web_url"), "snippet": item.get("description") or "",
+                  "date_semantics": "project_creation_activity_not_article_publication"} for item in record_array(raw, "items")]
+        return self.rows(raw, items, count)
+
+
+class EuropePMC(OpenSource):
+    name, label = "europepmc", "Europe PMC literature"
+    endpoint = "https://www.ebi.ac.uk/europepmc/webservices/rest/search"
+    sites = ("europepmc.org",)
+    options = frozenset(("site", "start_date", "end_date"))
+    result_kind, search_scope = "abstract", "biomedical_literature_metadata_and_abstracts"
+    documentation_url = "https://europepmc.org/RestfulWebService"
+
+    def build_search(self, args):
+        self.check_site(args); start, end = dates(args)
+        query = args.query
+        if start or end: query = "(" + query + ") AND FIRST_PDATE:[" + (start or "0001-01-01") + " TO " + (end or "9999-12-31") + "]"
+        return {"query": query, "format": "json", "pageSize": args.count, "resultType": "core"}
+
+    def normalize(self, raw, count):
+        data = raw.get("resultList")
+        if not isinstance(data, dict): raise SearchError("invalid_response", "Missing Europe PMC result list.")
+        items = []
+        for item in record_array(data, "result"):
+            source, identifier = item.get("source"), item.get("id")
+            if any(not isinstance(x, str) or not re.fullmatch(r"[A-Za-z0-9._-]+", x) for x in (source, identifier)):
+                raise SearchError("invalid_response", "Invalid Europe PMC identifier.")
+            items.append({**item, "url": "https://europepmc.org/article/" + source + "/" + identifier,
+                          "abstract_text": clean_html(item.get("abstractText") or ""),
+                          "date_semantics": "provider_first_publication_date_may_be_inferred"})
+        return self.rows(raw, items, count, published="firstPublicationDate", summary="abstract_text")
+
+
+class HuggingFace(OpenSource):
+    name, label = "huggingface", "Hugging Face public models"
+    endpoint = "https://huggingface.co/api/models"
+    sites = ("huggingface.co",)
+    result_kind, search_scope = "model_metadata", "public_model_repositories_not_inference_or_downloads"
+    documentation_url = "https://huggingface.co/docs/hub/api"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"search": args.query, "limit": args.count, "sort": "downloads", "direction": -1}
+
+    def decode_response(self, raw):
+        try: items = json.loads(raw)
+        except (ValueError, UnicodeError): raise SearchError("invalid_response", "Invalid Hugging Face JSON.") from None
+        if not isinstance(items, list): raise SearchError("invalid_response", "Expected Hugging Face model list.")
+        return {"items": items}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "items"):
+            name = item.get("id") or item.get("modelId")
+            if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)?", name):
+                raise SearchError("invalid_response", "Invalid Hugging Face model ID.")
+            items.append({**item, "title": name, "url": "https://huggingface.co/" + name,
+                          "snippet": item.get("pipeline_tag") or "", "date_semantics": "model_created_modified_not_article_publication"})
+        return self.rows(raw, items, count)
+
+
+OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace())
+
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES)}

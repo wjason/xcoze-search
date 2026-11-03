@@ -34,6 +34,10 @@ GitHub 仓库、HN 帖子定向任务优先平台适配器。已保存的默认�
 
 [真实任务实测与取舍](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.md)。
 
+## 扩展平台
+
+Wikipedia、Stack Exchange、arXiv、Crossref、npm、crates、GitLab、Europe PMC、Hugging Face 按 --platform 或兼容站点优先对应公开接口。成功的原生选路不强制双源，不支持的日期/语言仍预检拒绝或记录跳过。platforms 完全离线，不读 Key、不执行外部工具。新增视频/社区 scope 仅为公开索引。参数、已有工具协作与冷却规则见[开放来源](open-sources.md)。
+
 ## 平台覆盖
 
 | 目标 | 适配范围 | 不承诺 |

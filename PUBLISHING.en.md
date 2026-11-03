@@ -20,7 +20,7 @@ python3 scripts/build_release.py --output-dir ../release
 
 The repository root contains SKILL.md. Commit/push here rather than treating a surrounding outputs/release directory as the Skill root.
 
-The current release is v0.5.0 preview. Pushing a v* tag triggers .github/workflows/release.yml and reuses four Windows/Linux, Python 3.10/3.12 test jobs. Publication waits for every job to pass.
+The current release is v0.6.0 preview. Pushing a v* tag triggers .github/workflows/release.yml and reuses four Windows/Linux, Python 3.10/3.12 test jobs. Publication waits for every job to pass.
 
 Publishing checks the tag, runtime/Skill/package versions, and changelog; extracts current-version notes; builds Skill ZIP, source ZIP, and SHA256SUMS.txt; then verifies checksums. It creates a draft with complete assets before publishing a Pre-release, without overwriting existing Releases/assets.
 
@@ -34,7 +34,7 @@ For the next version:
 4. Wait for publication to pass, then check the Pre-release marker, three assets, and checksums before confirming completion.
 
 ```bash
-python3 scripts/prepare_release.py --tag v0.5.0 --output ../release-notes.md
+python3 scripts/prepare_release.py --tag v0.6.0 --output ../release-notes.md
 python3 -m unittest discover -s tests -v
 python3 scripts/build_release.py --output-dir ../release
 ```
@@ -54,7 +54,7 @@ See the same version's validation record. This is an independent XCoze integrati
 The default export is Chinese. Use --language en for English, or --language both for a Chinese body followed by a collapsed English section. The tag workflow uses both and requires matching dated version sections in both changelogs; a missing English record stops publication.
 
 ```bash
-python3 scripts/prepare_release.py --tag v0.5.0 --language both --output ../release-notes.md
+python3 scripts/prepare_release.py --tag v0.6.0 --language both --output ../release-notes.md
 ```
 
 Both documentation/instruction languages are in future package manifests. Existing published tags/assets remain unchanged.

@@ -23,7 +23,7 @@ Python 3.10+ is required. Runtime uses only the standard library: no browser, No
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.5.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.5.0/xcoze-search-skill-v0.5.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.6.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.6.0/xcoze-search-skill-v0.6.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Sources
 
@@ -37,8 +37,16 @@ Alternatively unpack the [v0.5.0 Skill ZIP](https://github.com/wjason/xcoze-sear
 | GitHub | Public repository search and default-branch README | Anonymous rate limits; excludes code search, private repositories and full Issue/PR adapters |
 | Hacker News | Algolia story search and official single-item reading | Discussion URLs and outbound articles stay separate; child IDs are not fetched comments |
 | Jina Reader | Page text extraction | Official rate-limited keyless reading; Jina Search is not integrated |
+| Wikipedia | English/Chinese article search | Excerpts/edit timestamps, not primary-source or full-text proof |
+| Stack Exchange | Questions across Stack Overflow and six other communities | Question excerpts do not mean answers/comments were read |
+| arXiv | Paper search, abstracts and submission-date ranges | Preprint abstracts, without PDF text or peer-review guarantees |
+| Crossref | DOI/author/publication metadata and available abstracts | Match author/year as well as title |
+| npm / crates.io | JavaScript/Rust package search and version metadata | Neither a security audit nor a quality score from downloads |
+| GitLab.com | Public project name/path/description search | No code/private search; stars do not establish official identity |
+| Europe PMC | Biomedical metadata, abstracts and date ranges | No full text/clinical validation; upstream dates may be inferred |
+| Hugging Face | Public model metadata search | No model downloads/inference; gated models still require authorization |
 
-The Agent can reuse available native search, page reading and browser tools; this Skill does not install or take them over. Zhihu, Xiaohongshu and Weibo support scoped public-index search, which does not promise native site search, complete text or comments. Use existing authorized platform tools for those operations when available.
+The Agent can reuse available native search, page reading and browser tools; this Skill does not install or take them over. Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX and Douban support scoped public-index search, which does not promise native site search, complete text or comments. Use existing authorized platform tools for those operations when available.
 
 ### Bring your own key
 
@@ -58,13 +66,15 @@ Implementation, account verification and search quality are separate. Local chec
 ## Automatic routing
 
 - **Smart by default:** no syntactically usable keys selects keyless routes; available keys select quality-first routing. Key presence does not establish live account access.
-- **Task-aware:** GitHub/HN targets prefer structured platform interfaces. Known URLs should use native readers when useful; script auto-reading starts with Jina/Exa keyless readers.
+- **Task-aware:** The Agent can select native public indexes for encyclopedias, questions, papers, packages, models, GitHub/GitLab and HN. Known URLs should use native readers when useful; script auto-reading starts with Jina/Exa keyless readers.
 - **Bounded complement/fallback:** general keyless search starts with Exa MCP, with Bing/DDG fallbacks. Quality reference/current tasks may consult a complementary source within the existing two-source cap. General tasks and successful GitHub/HN routes return immediately; empty/failed calls may fall back. Defaults remain two sources and 45 seconds within the HTTP budget. The Agent checks gaps and reads current primary pages for prices, rules, versions and conflicts.
 - **Optional controls:** quality, balanced, free, or a named source. Per-request choices override saved preferences; explicit `--strategy free` conflicts with keyed sources.
 
 Smart combines transparent capability/source rules and Agent judgment. It does not train a router, compare native scores across providers or claim a quality leaderboard. Initial keyed-provider order is configuration policy, not a performance ranking. See [routing](references/routing.en.md).
 
 Six live tasks and two Chinese holdouts on 2026-11-03 found paid retrieval faster in this sample, with keyless/native routes adding useful primary and dated evidence. Routing was revised accordingly. See the [dated comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md), including latency, estimated costs and limitations; this is not a general accuracy claim.
+
+Nine new native adapters bring keyless adapters to 15 (14 search-capable, one reader-only). Offline `platforms` distinguishes scope and optional executable presence from live verification. See [open sources and local-tool cooperation](references/open-sources.en.md) and [live checks/Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
 
 ## Configure keys
 
@@ -93,7 +103,10 @@ The Agent normally locates the Skill and runs these commands; users do not need 
 python3 scripts/xcoze_search.py search 'Python asyncio official documentation'
 python3 scripts/xcoze_search.py search 'industrial vision' --platform github
 python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html'
+python3 scripts/xcoze_search.py search 'playwright' --platform npm
+python3 scripts/xcoze_search.py search 'wind power' --platform wikipedia
+python3 scripts/xcoze_search.py platforms
+python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html' --max-characters 100000
 python3 scripts/xcoze_search.py preferences --strategy free
 python3 scripts/xcoze_search.py preferences --strategy balanced
 python3 scripts/xcoze_search.py preferences --reset

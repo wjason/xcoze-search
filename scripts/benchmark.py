@@ -28,6 +28,8 @@ def query_args(case, mode, *, count=5, timeout=15):
             "--retries", "0", "--max-seconds", str(timeout * 2 + 1)]
     if case.get("platform"): argv.extend(["--platform", case["platform"]])
     if case.get("intent"): argv.extend(["--intent", case["intent"]])
+    for field in ("language", "site"):
+        if case.get(field): argv.extend(["--" + field, case[field]])
     if mode == "deepseek":
         argv.extend(["--provider", "deepseek"])
         if case.get("deepseek_query"): argv[1] = case["deepseek_query"]
@@ -77,6 +79,8 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
         if item.get("highlights"): text += "\n" + "\n".join(item["highlights"])
         rows[-1].update(evidence_text=text[:1800], evidence_truncated=len(text) > 1800)
     return {"id": case["id"], "mode": mode, "query_sent": args.query, "ok": result["ok"],
+            "expected_provider_returned": (any(r["provider"] == case["expected_provider"] for r in rows)
+                                           if case.get("expected_provider") else None),
             "elapsed_ms": elapsed, "receipts": receipts, "sources": rows,
             "routing": result.get("routing"), "errors": result.get("errors", []),
             "semantic_quality_assessed": False}
@@ -134,11 +138,12 @@ def main(argv=None):
     p.add_argument("--limit", type=int, default=6)
     p.add_argument("--max-requests", type=int, default=36)
     p.add_argument("--timeout", type=int, default=15)
+    p.add_argument("--count", type=int, default=5)
     p.add_argument("--output", type=Path, required=True)
     args = p.parse_args(argv)
     try:
         report = execute(load_cases(args.corpus), modes=tuple(args.modes.split(",")), live=args.live,
-                         rounds=args.rounds, limit=args.limit, max_requests=args.max_requests, timeout=args.timeout,
+                         rounds=args.rounds, limit=args.limit, count=args.count, max_requests=args.max_requests, timeout=args.timeout,
                          progress=lambda item: print(json.dumps(item, ensure_ascii=False), flush=True))
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

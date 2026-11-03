@@ -6,6 +6,8 @@ import argparse
 from copy import copy, deepcopy
 from datetime import datetime, timezone
 import getpass
+import gzip
+import io
 import json
 import os
 from pathlib import Path
@@ -20,6 +22,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import warnings
+import zlib
 
 SCRIPT_DIR = str(Path(__file__).resolve().parent)
 if SCRIPT_DIR not in sys.path:
@@ -28,10 +31,11 @@ from search_common import SearchError, RequestBudget, invalid, public_url, text_
 from search_providers import REGISTRY, get_provider as get_key_provider
 from public_providers import PUBLIC_REGISTRY, domain_matches
 from search_quality import obvious_mismatch
+from public_access import request_slot
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
-                            validate_preferences, scoped_args, plan, public_plan)
+                            validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search}
@@ -227,26 +231,35 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
     transport = opener or urllib.request.build_opener(NoRedirect())
     req = provider.build_request(payload, validate_key(key) if provider.requires_key else "", VERSION, fetch=fetching)
     budget = budget or RequestBudget(retries + 1)
+    initial_used = budget.used
     for attempt in range(retries + 1):
-        try:
-            budget.consume(name)
-        except SearchError as error:
-            error.attempts = attempt
-            raise
         wait = min(2 ** attempt, 8)
         try:
-            with transport.open(req, timeout=timeout) as response:
-                if response.status != 200:
-                    if name == "duckduckgo" and response.status == 202:
-                        raise SearchError("access_challenge", "DuckDuckGo returned an incomplete or verification response.",
-                                          status=202, category="access")
-                    raise http_error(response.status)
-                raw = response.read(MAX_RESPONSE + 1)
-            if len(raw) > MAX_RESPONSE:
-                raise SearchError("response_too_large", "Provider response exceeds 16 MiB.")
-            data = provider.decode_response(raw)
-            provider.check_error(data)
-            return data, attempt + 1
+            if not budget.data()["remaining"]:
+                raise SearchError("budget_exhausted", "HTTP attempt budget exhausted; no further requests sent.")
+            with request_slot(name, req.full_url, max_wait=min(3, max(0, timeout - 1))) as slot:
+                budget.consume(name)
+                with transport.open(req, timeout=max(1, timeout - (slot.waited_seconds if slot else 0))) as response:
+                    if response.status != 200:
+                        if name == "duckduckgo" and response.status == 202:
+                            raise SearchError("access_challenge", "DuckDuckGo returned an incomplete or verification response.",
+                                              status=202, category="access")
+                        raise http_error(response.status)
+                    raw = response.read(MAX_RESPONSE + 1)
+                if len(raw) > MAX_RESPONSE:
+                    raise SearchError("response_too_large", "Provider response exceeds 16 MiB.")
+                if raw.startswith(b"\x1f\x8b"):
+                    try:
+                        with gzip.GzipFile(fileobj=io.BytesIO(raw)) as stream:
+                            raw = stream.read(MAX_RESPONSE + 1)
+                    except (OSError, EOFError, zlib.error):
+                        raise SearchError("invalid_response", "Invalid gzip response.") from None
+                    if len(raw) > MAX_RESPONSE:
+                        raise SearchError("response_too_large", "Decompressed response exceeds 16 MiB.")
+                data = provider.decode_response(raw)
+                if slot: slot.observe(data)
+                provider.check_error(data)
+                return data, budget.used - initial_used
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
             if not provider.requires_key and exc.code in (401, 403):
@@ -261,12 +274,12 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
             error = SearchError("network_error", "Network/TLS failure or timeout.", retryable=True)
         except SearchError as exc:
             error = exc
-        error.attempts = attempt + 1
+        error.attempts = budget.used - initial_used
         if not error.retryable or attempt == retries:
             raise error from None
         if wait > 10:
             later = SearchError("retry_later", "Server requires a longer wait; retry later.")
-            later.attempts = attempt + 1
+            later.attempts = budget.used - initial_used
             raise later
         sleep(wait)
     raise AssertionError("unreachable")
@@ -327,6 +340,9 @@ def run_search(args, config, *, budget=None):
 
 
 def run_fetch(args, config, *, budget=None):
+    limit = getattr(args, "max_characters", None)
+    if limit is not None and (type(limit) is not int or not 1000 <= limit <= 200000):
+        invalid("--max-characters must be 1000..200000.")
     if not public_url(args.url):
         invalid("Fetch requires a public HTTP(S) URL, <=8192 characters, without embedded credentials.")
     name = getattr(args, "provider", "auto")
@@ -335,6 +351,8 @@ def run_fetch(args, config, *, budget=None):
     if getattr(args, "strategy", None) == "free":
         plan(args, config, credential, fetch=True)
     provider = get_provider(name)
+    if limit is not None and name not in ("jina", "exa-free"):
+        raise SearchError("unsupported_option", "--max-characters is supported by Jina and keyless Exa readers only.")
     if not provider.fetch_endpoint:
         raise SearchError("unsupported_operation", provider.label + " does not support fetch.")
     payload = provider.fetch_payload(args)
@@ -348,6 +366,11 @@ def run_fetch(args, config, *, budget=None):
     except SearchError as error:
         error.attempts = attempts
         raise
+    if name in ("jina", "exa-free"):
+        limit = getattr(args, "max_characters", None) or 24000
+        text = data["content"]
+        data.update(content=text[:limit], max_characters=limit, returned_characters=min(len(text), limit),
+                    truncated=data.get("truncated", False) or len(text) > limit or (name == "exa-free" and len(text) >= limit))
     return {"ok": True, "operation": "fetch", "provider": name, "url": args.url, **data,
             "empty": not data["content"].strip(), "attempts": attempts, "budget": budget.data(),
             "provider_metadata": provider.metadata(raw, [], 0),
@@ -625,6 +648,8 @@ def parser():
     prefs.add_argument("--reset", action="store_true")
     capabilities = sub.add_parser("capabilities", help="Offline provider capabilities, limits and key links")
     capabilities.add_argument("--provider", choices=ALL_PROVIDERS)
+    platforms = sub.add_parser("platforms", help="Offline platform scope and optional local-tool presence; no tool is executed")
+    platforms.add_argument("--platform", choices=tuple(PLATFORMS))
     configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
     configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
@@ -654,6 +679,8 @@ def parser():
     fetch = sub.add_parser("fetch", help="Read a URL; auto prefers keyless readers, or specify a supported source")
     fetch.add_argument("url")
     fetch.add_argument("--provider", choices=("auto", *ALL_PROVIDERS), default="auto")
+    fetch.add_argument("--max-characters", type=int, choices=range(1000, 200001), metavar="1000..200000",
+                       help="Jina/keyless Exa readers: returned-text limit, default 24000; increase only for missing sections")
     for command in (search, fetch):
         command.add_argument("--strategy", choices=STRATEGIES, help="Override saved strategy for this invocation")
         command.add_argument("--max-sources", type=int, choices=(1, 2, 3), help="Auto: at most this many sources including fallbacks")
@@ -675,6 +702,10 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "platforms":
+            print(json.dumps({"ok": True, "operation": "platforms", "version": VERSION,
+                              **platform_catalog(args.platform)}, ensure_ascii=False, indent=2))
+            return 0
         if args.command == "capabilities":
             names = [args.provider] if args.provider else ALL_PROVIDERS
             print(json.dumps({"ok": True, "operation": "capabilities", "version": VERSION,

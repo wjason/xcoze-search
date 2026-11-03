@@ -45,3 +45,7 @@ python3 scripts/benchmark.py --live --corpus evaluations/smart-holdout.json --li
 默认只生成计划，不读凭据、不联网。显式 --live 会把公开查询发给服务，DeepSeek/Smart 可能计费。每轮共享 HTTP 预算，零重试，顺序轮换；Smart 使用内存中的默认偏好，不保存配置。HN 显式 DeepSeek 使用语料记录的日期运算符，原生路径使用日期字段。
 
 本地在线报告包含每条最多 1800 字符的搜索证据，可能截断，勿直接公开；发布前只保留 URL/指标/人工判断并检查隐私与转载范围。成本按原始 DeepSeek 非空成功和语料内当日单价估算，不是账单；模型费用未知。ok 只说明执行了计划单元，semantic_quality_assessed 默认 false；人工复核不能由词命中/官方域名代替。基准题里的日期答案是历史快照，重新测量时更新语料并另存报告。
+
+## 开放源与竞品研究复测
+
+[本轮报告](reports/2026-11-03-open-sources.md)记录九源接入、Agent Reach 研究和长文截断修正。使用 open-source-cases.json、--modes free --limit 10 --count 3 复用 benchmark.py；默认仍离线，--live 才联网。expected_provider_returned 只表示对应原生源返回，不代表结论正确。

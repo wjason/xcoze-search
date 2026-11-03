@@ -41,3 +41,5 @@ Keyless, open-source and no additional payment are distinct. Requests still reac
 ## Future candidates
 
 Perplexity Search, Firecrawl, Parallel, Serper, SerpApi and Jina Search remain unimplemented candidates for demonstrated gaps. Recheck trials, auth, contracts and costs at implementation time. Declare platform search, reading, comments and ranking capabilities independently rather than a blanket “supported platform” label.
+
+See [open sources](open-sources.en.md) for public native indexes and existing-tool cooperation. No new base dependencies; native APIs, public indexes and specialist content tools remain separate.

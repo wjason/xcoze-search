@@ -21,6 +21,14 @@ python3 "<skill_dir>/scripts/xcoze_search.py" search 'AI coding' --platform hack
 python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article'
 ```
 
+## Native platform search and existing local tools
+
+The Agent selects `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface` from the task without making users choose channels. Native public APIs go first; empty/failed calls may fall back within existing limits. Never silently drop unsupported language/date/scope constraints. Offline `platforms` lists native/index coverage and presence of agent-reach, yt-dlp, gh and agent-browser; presence is not setup or live verification and executes no tool.
+
+Read [open sources and local-tool cooperation](references/open-sources.en.md) for platform bodies, comments or subtitles. Reuse already-authorized tools under their own Skills for gaps; do not install/update tools, open login windows or copy sessions automatically. Distinguish search snippets, question excerpts, paper abstracts, video descriptions, comment IDs and subtitle-track lists. Respect the platform tool's terminal rate-limit/login/challenge conditions.
+
+Jina/keyless Exa reading defaults to 24000 characters. If truncated and a required section is missing, one task-budgeted `fetch URL --max-characters 100000` can expand it (1000–200000); stop once sufficient. More returned text does not verify full-page completeness or truth. For rolling past-N-day tasks, establish timezone and exact cutoffs; remove out-of-window boundary items returned by calendar-date filters.
+
 ## Optional preferences and source overrides
 
 Save preferences when users ask for a persistent change; they never need to find configuration files:

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "notice": "Public-source smoke tasks; native source return is not semantic answer correctness. Update dated windows for new runs.",
+  "cases": [
+    {
+      "id": "wiki-zh",
+      "query": "风力发电",
+      "platform": "wikipedia",
+      "expected_provider": "wikipedia",
+      "language": "zh"
+    },
+    {
+      "id": "wiki-en",
+      "query": "retrieval augmented generation",
+      "platform": "wikipedia",
+      "expected_provider": "wikipedia",
+      "language": "en"
+    },
+    {
+      "id": "stackoverflow",
+      "query": "asyncio TaskGroup",
+      "platform": "stackexchange",
+      "expected_provider": "stackexchange"
+    },
+    {
+      "id": "arxiv-rag",
+      "query": "all:\"retrieval augmented generation\"",
+      "platform": "arxiv",
+      "expected_provider": "arxiv",
+      "start_date": "2026-01-01",
+      "end_date": "2026-11-03"
+    },
+    {
+      "id": "crossref-doi",
+      "query": "Attention Vaswani",
+      "platform": "crossref",
+      "expected_provider": "crossref",
+      "start_date": "2017-01-01",
+      "end_date": "2026-11-03"
+    },
+    {
+      "id": "npm-playwright",
+      "query": "playwright",
+      "platform": "npm",
+      "expected_provider": "npm"
+    },
+    {
+      "id": "crates-tokio",
+      "query": "tokio",
+      "platform": "crates",
+      "expected_provider": "crates"
+    },
+    {
+      "id": "gitlab-inkscape",
+      "query": "inkscape",
+      "platform": "gitlab",
+      "expected_provider": "gitlab"
+    },
+    {
+      "id": "epmc-protein",
+      "query": "TITLE:\"protein structure prediction\"",
+      "platform": "europepmc",
+      "expected_provider": "europepmc",
+      "start_date": "2026-01-01",
+      "end_date": "2026-11-03"
+    },
+    {
+      "id": "hf-qwen",
+      "query": "Qwen",
+      "platform": "huggingface",
+      "expected_provider": "huggingface"
+    }
+  ]
+}

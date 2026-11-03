@@ -1,4 +1,4 @@
-# 输出契约 v0.5.0
+# 输出契约 v0.6.0
 
 **简体中文** | [English](output.en.md)
 
@@ -69,3 +69,9 @@ migrate-config 返回 migrated、schema_version、backup_created。已为 v2 时
 | 130 | 用户取消或窗口输入超时 |
 
 GUI 取消、超时或失败不保存/迁移本次输入；gui_unavailable / gui_failed 表示缺少可用窗口。不能自动回退到明文输入。
+
+新增原生结果的 content_kind 为 encyclopedia_excerpt、question_excerpt、abstract、bibliographic_metadata、package_metadata、repository_metadata、model_metadata。摘要保留在 summary，正文 content 不填摘要；问题摘录不代表答案已读。创建/修订/包更新时间留在 provider_fields，不伪装文章发布日期；Crossref 日期按原精度保留，Europe PMC 日期可能由上游推定。
+
+platforms 返回 coverage、native_provider、search_scope、native_fetch、comment_threads_integrated、transcripts_integrated 和 local_tools.present；live_verified 始终 false，程序存在不等于测试通过。新源冷却/占用失败可 attempts:0，budget 只计已发 HTTP；source_cooldown/source_busy 为 rate_limit，public_access_state_error 为 configuration。
+
+Jina/Exa 免 Key Fetch 新增 max_characters、returned_characters；默认 24000，可显式 1000–200000，其他服务不兼容时预检拒绝。truncated 不证明全部动态内容完整，completeness_verified 始终 false。

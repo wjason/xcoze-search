@@ -9,7 +9,36 @@ from public_providers import PUBLIC_REGISTRY
 ALL = {**REGISTRY, **PUBLIC_REGISTRY}
 STRATEGIES = ("smart", "quality", "balanced", "free")
 PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhihu": "zhihu.com",
-             "xiaohongshu": "xiaohongshu.com", "weibo": "weibo.com"}
+             "xiaohongshu": "xiaohongshu.com", "weibo": "weibo.com", "wikipedia": "en.wikipedia.org",
+             "stackexchange": "stackoverflow.com", "arxiv": "arxiv.org", "crossref": "doi.org",
+             "npm": "npmjs.com", "crates": "crates.io", "gitlab": "gitlab.com", "europepmc": "europepmc.org",
+             "huggingface": "huggingface.co", "youtube": "youtube.com", "bilibili": "bilibili.com",
+             "reddit": "reddit.com", "twitter": "x.com", "v2ex": "v2ex.com", "douban": "douban.com"}
+NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
+
+
+def platform_catalog(platform=None):
+    """Declarations only: do not execute another program, read credentials or probe a site."""
+    import shutil
+    rows = []
+    for name, domain in PLATFORMS.items():
+        if platform and name != platform: continue
+        source = NATIVE_PLATFORMS.get(name)
+        adapter = PUBLIC_REGISTRY.get(source)
+        rows.append({"platform": name, "default_domain": domain, "native_provider": source,
+                     "coverage": "native_public_api" if source else "public_index_only",
+                     "search_scope": adapter.capabilities()["search_scope"] if adapter else "public_web_index_not_site_search",
+                     "native_fetch": bool(adapter and adapter.fetch_endpoint),
+                     "generic_fetch_may_help": True, "comment_threads_integrated": False, "transcripts_integrated": False,
+                     "live_verified": False})
+    return {"platforms": rows, "local_tools": [
+        {"name": name, "present": bool(shutil.which(name)), "role": role,
+         "live_verified": False, "automatic_execution": False} for name, role in (
+            ("agent-reach", "optional platform reading, comments or video/subtitle workflows; inspect channels and its Skill first"),
+            ("yt-dlp", "optional video metadata/subtitles; executable presence does not establish website access"),
+            ("gh", "optional GitHub operations within existing authorization"),
+            ("agent-browser", "optional existing browser workflow within user authorization"))],
+            "network_requests": 0, "note": "Capabilities and executable presence only; no login, setup, update or tool execution."}
 DEFAULTS = {"strategy": "smart", "max_sources": 2, "disabled_providers": []}
 
 
@@ -39,6 +68,13 @@ def scoped_args(args):
     platform = getattr(args, "platform", None)
     if platform:
         domain = PLATFORMS[platform]
+        if platform == "wikipedia":
+            domain = ("zh.wikipedia.org" if getattr(args, "language", None) == "zh" or
+                      (not getattr(args, "language", None) and re.search(r"[\u3400-\u9fff]", args.query)) else "en.wikipedia.org")
+        if platform in ("wikipedia", "stackexchange") and getattr(args, "site", None):
+            if args.site not in PUBLIC_REGISTRY[platform].sites:
+                invalid("Unsupported site for this platform; inspect capabilities.")
+            domain = args.site
         if getattr(args, "site", None) and args.site != domain:
             invalid("--site conflicts with --platform; use one target scope.")
         scoped.site = domain
@@ -99,8 +135,13 @@ def plan(args, config, credential, *, fetch=False):
             candidates = public if strategy == "free" else public[:1] + keyed + public[1:]
         else:
             site = getattr(scoped, "site", None)
-            if site == "github.com": specialized = "github"
-            elif site == "news.ycombinator.com": specialized = "hackernews"
+            specialized = NATIVE_PLATFORMS.get(getattr(scoped, "platform", None))
+            if not specialized:
+                for target, source in NATIVE_PLATFORMS.items():
+                    domains = getattr(PUBLIC_REGISTRY[source], "sites", (PLATFORMS[target],))
+                    if site in domains:
+                        specialized = source
+                        break
             candidates = (available[:1] + public[:1] + available[1:] + public[1:] if strategy == "quality" else
                           public[:1] + available + public[1:] if strategy == "balanced" else public)
         if specialized: candidates.insert(0, specialized)
@@ -112,6 +153,8 @@ def plan(args, config, credential, *, fetch=False):
         provider = ALL[name]
         try:
             if fetch:
+                if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free"):
+                    raise SearchError("unsupported_option", "Source does not support adjustable reading length.")
                 if not provider.fetch_endpoint:
                     raise SearchError("unsupported_operation", "Source does not read URLs.")
                 payload = provider.fetch_payload(scoped)

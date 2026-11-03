@@ -23,7 +23,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.5.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.5.0/xcoze-search-skill-v0.5.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.6.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.6.0/xcoze-search-skill-v0.6.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 支持的来源
 
@@ -37,8 +37,16 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 | GitHub | 公开仓库搜索、默认分支 README 读取 | 匿名接口有限流；不包含代码搜索、私有仓库或完整 Issue/PR 适配 |
 | Hacker News | Algolia 帖子搜索、官方接口读取单条帖子或评论 | 保留讨论地址和外链；子评论 ID 不等于已读取评论树 |
 | Jina Reader | 网页正文读取 | 官方限额内免 Key；本项目未接入 Jina Search |
+| Wikipedia | 中英文条目搜索 | 摘录与最后编辑时间，不等于一手来源或全文 |
+| Stack Exchange | Stack Overflow 等七个社区的问题搜索 | 返回问题摘录，不代表读过答案/评论 |
+| arXiv | 论文检索、摘要、提交日期范围 | 预印本摘要，不包含 PDF 全文或同行评审保证 |
+| Crossref | DOI、作者、出版日期及可用摘要 | 书目元数据；同名论文需核对作者/年份 |
+| npm / crates.io | JavaScript / Rust 软件包搜索、版本元数据 | 不是安全审计，不把下载量当质量分 |
+| GitLab.com | 公开项目名称/路径/描述搜索 | 不含代码搜索和私有仓库；星标不是官方身份认证 |
+| Europe PMC | 生物医学文献检索、摘要、出版日期范围 | 不是全文或临床结论验证；日期可能由上游推定 |
+| Hugging Face | 公开模型元数据检索 | 不下载模型、不调用推理，受限模型仍需各自授权 |
 
-宿主已有搜索、网页读取及浏览器工具由 Agent 按需复用，Skill 不安装或接管宿主工具。知乎、小红书、微博支持公开索引定向搜索；这不等同站内搜索、完整正文或评论读取。需要站内能力时，可使用环境中已有且已授权的平台工具。
+宿主已有搜索、网页读取及浏览器工具由 Agent 按需复用，Skill 不安装或接管宿主工具。知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣支持公开索引定向搜索；这不等同站内搜索、完整正文或评论读取。需要站内能力时，可使用环境中已有且已授权的平台工具。
 
 ### 使用自己的 Key
 
@@ -58,13 +66,15 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 ## 自动调度
 
 - **默认 Smart**：没有可用格式的 Key 时选免 Key 路径；存在 Key 时按效果优先策略选路。Key 的存在不等于账号在线可用。
-- **按任务选择**：GitHub、HN 定向任务优先平台结构化接口。已知 URL 优先复用宿主读取；脚本自动读取优先 Jina/Exa 免 Key 阅读路径。
+- **按任务选择**：百科、技术问答、论文、软件包、模型、GitHub/GitLab、HN 任务由 Agent 选择对应原生接口。已知 URL 优先复用宿主读取；脚本自动读取优先 Jina/Exa 免 Key 阅读路径。
 - **有限补充**：通用免 Key 优先 Exa MCP，Bing/DDG 备用；quality 的官方资料、最新信息任务可在原有两源预算内补一个来源。普通任务和 GitHub/HN 专用路线有可用结果即返回，空结果/失败时备用。默认最多 2 个来源、45 秒，受 HTTP 预算约束。Agent 判断缺口，价格、规则、最新版本与冲突信息继续读当前原文。
 - **可选设置**：支持效果优先、平衡、免费，以及指定来源。本次指定优先于已保存设置；明确 `--strategy free` 时不能同时指定带 Key 来源。
 
 Smart 当前采用透明的能力/来源规则与 Agent 的语义判断，没有跨供应商评分比较、检索质量排行榜或自动训练路由。元宝、DeepSeek 等通用 API 的初始顺序是配置规则，不代表质量排名。详见 [调度说明](references/routing.md)。
 
 2026-11-03 用六道真实任务和两道中文留出题做了同题比较：付费源更快，但官方资料与近期平台讨论并非每题更好，已据此调整默认选路。查看[实测报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.md)（含耗时、费用估算和局限）；结果不代表通用准确率。
+
+本轮新增 9 个原生公开接口适配器，免 Key 适配器合计 15 个（14 个可搜索、1 个纯读取）。平台能力与已有工具的检测见 `platforms`，不把安装状态当实测通过。详见[开放来源与平台协作](references/open-sources.md)和[本轮实测/Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
 
 ## 配置 Key
 
@@ -93,7 +103,10 @@ Agent 只提供官方申请链接，不自动打开网页；准备好后启动�
 python3 scripts/xcoze_search.py search 'Python asyncio 官方文档'
 python3 scripts/xcoze_search.py search 'industrial vision' --platform github
 python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01
-python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html'
+python3 scripts/xcoze_search.py search 'playwright' --platform npm
+python3 scripts/xcoze_search.py search '风力发电' --platform wikipedia
+python3 scripts/xcoze_search.py platforms
+python3 scripts/xcoze_search.py fetch 'https://docs.python.org/3/library/asyncio.html' --max-characters 100000
 python3 scripts/xcoze_search.py preferences --strategy free
 python3 scripts/xcoze_search.py preferences --strategy balanced
 python3 scripts/xcoze_search.py preferences --reset

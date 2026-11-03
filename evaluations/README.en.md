@@ -45,3 +45,7 @@ python3 scripts/benchmark.py --live --corpus evaluations/smart-holdout.json --li
 Default is an offline plan without credential reads. --live sends public queries and may incur DeepSeek/Smart charges. Runs share an actual HTTP budget, use zero retries and rotate order. Smart uses in-memory default preferences without saving config. Explicit DeepSeek HN queries use recorded date operators; native routes use date fields.
 
 Local live reports retain up to 1800 evidence characters per result, possibly truncated: do not publish them directly. Retain only URLs, metrics and manual reviews after privacy/copyright review. Cost estimates count raw nonempty DeepSeek successes at the dated corpus price, not an invoice; model cost is unknown. ok means scheduled cells executed, not useful evidence; semantic_quality_assessed defaults false. Token/domain hits are not manual fact checks. Dated answers are historical snapshots; refresh the corpus and save new reports for later runs.
+
+## Open-source and competitor-study checks
+
+The [dated study](reports/2026-11-03-open-sources.en.md) covers nine adapters, Agent Reach and a long-reading correction. Use open-source-cases.json with --modes free --limit 10 --count 3 in benchmark.py; default is offline, --live connects. expected_provider_returned indicates a native provider returned rows, not a correct answer.

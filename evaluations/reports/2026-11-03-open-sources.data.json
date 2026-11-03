@@ -1,0 +1,1372 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "upstream_research": {
+    "project": "Panniantong/Agent-Reach",
+    "version": "1.6.1",
+    "commit": "7a38047acf26a729cbb27851e3cb81639da86b29"
+  },
+  "adapter_checks": {
+    "as_of": "2026-11-03",
+    "python": "3.14.6",
+    "budget": {
+      "limit": 16,
+      "attempts": 8,
+      "remaining": 8,
+      "by_provider": {
+        "wikipedia": 1,
+        "stackexchange": 1,
+        "arxiv": 1,
+        "crossref": 1,
+        "npm": 1,
+        "crates": 1,
+        "gitlab": 1,
+        "europepmc": 1
+      },
+      "scope": "current_invocation"
+    },
+    "config": "empty in-memory credentials, free strategy; user config never read",
+    "records": [
+      {
+        "platform": "wikipedia",
+        "query": "风力发电",
+        "flags": [],
+        "ok": true,
+        "elapsed_ms": 832.17,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "wikipedia",
+            "exa-free",
+            "bing",
+            "duckduckgo"
+          ],
+          "skipped_incompatible": [],
+          "max_sources": 2,
+          "platform": "wikipedia",
+          "intent": "general",
+          "specialized_source": "wikipedia",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "wikipedia"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "wikipedia",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 830.63
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "wikipedia",
+            "rank": 1,
+            "title": "風力發電廠",
+            "url": "https://zh.wikipedia.org/wiki/%E9%A2%A8%E5%8A%9B%E7%99%BC%E9%9B%BB%E5%BB%A0",
+            "published_at": null,
+            "content_kind": "encyclopedia_excerpt",
+            "date_semantics": "timestamp_is_last_edit_not_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "wikipedia",
+            "rank": 2,
+            "title": "風力發電機",
+            "url": "https://zh.wikipedia.org/wiki/%E9%A2%A8%E5%8A%9B%E7%99%BC%E9%9B%BB%E6%A9%9F",
+            "published_at": null,
+            "content_kind": "encyclopedia_excerpt",
+            "date_semantics": "timestamp_is_last_edit_not_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "wikipedia",
+            "rank": 3,
+            "title": "中华人民共和国风力发电",
+            "url": "https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%A3%8E%E5%8A%9B%E5%8F%91%E7%94%B5",
+            "published_at": null,
+            "content_kind": "encyclopedia_excerpt",
+            "date_semantics": "timestamp_is_last_edit_not_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          }
+        ]
+      },
+      {
+        "platform": "wikipedia",
+        "query": "retrieval augmented generation",
+        "flags": [
+          "--language",
+          "en"
+        ],
+        "ok": false,
+        "elapsed_ms": 11.02,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "wikipedia"
+          ],
+          "skipped_incompatible": [
+            {
+              "provider": "exa-free",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "bing",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "duckduckgo",
+              "code": "unsupported_option"
+            }
+          ],
+          "max_sources": 2,
+          "platform": "wikipedia",
+          "intent": "general",
+          "specialized_source": "wikipedia",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "wikipedia"
+          ],
+          "stop_reason": "no_usable_results_within_limits",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "wikipedia",
+            "ok": false,
+            "attempts": 0,
+            "elapsed_ms": 10.92
+          }
+        ],
+        "errors": [
+          {
+            "provider": "wikipedia",
+            "code": "source_cooldown",
+            "message": "Public source is cooling down or a duplicate request was suppressed; retry later or use another allowed source.",
+            "http_status": null,
+            "category": "rate_limit",
+            "retryable": false,
+            "attempts": 0
+          }
+        ],
+        "sources": []
+      },
+      {
+        "platform": "stackexchange",
+        "query": "asyncio TaskGroup",
+        "flags": [],
+        "ok": true,
+        "elapsed_ms": 365.32,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "stackexchange",
+            "exa-free",
+            "bing",
+            "duckduckgo"
+          ],
+          "skipped_incompatible": [],
+          "max_sources": 2,
+          "platform": "stackexchange",
+          "intent": "general",
+          "specialized_source": "stackexchange",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "stackexchange"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "stackexchange",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": {
+              "quota_remaining": 294,
+              "quota_max": 300
+            },
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 365.22
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "stackexchange",
+            "rank": 1,
+            "title": "asyncio TaskGroup throwing TypeError when returning lists",
+            "url": "https://stackoverflow.com/questions/75521886/asyncio-taskgroup-throwing-typeerror-when-returning-lists",
+            "published_at": "2023-02-21T14:29:59+00:00",
+            "content_kind": "question_excerpt",
+            "date_semantics": null,
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "stackexchange",
+            "rank": 2,
+            "title": "is there a way to dynamically add tasks to asyncio tasks or to AnyIO TaskGroup?",
+            "url": "https://stackoverflow.com/questions/78298137/is-there-a-way-to-dynamically-add-tasks-to-asyncio-tasks-or-to-anyio-taskgroup",
+            "published_at": "2024-04-09T11:35:24+00:00",
+            "content_kind": "question_excerpt",
+            "date_semantics": null,
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "stackexchange",
+            "rank": 3,
+            "title": "Unexpected Memory Leak in Python's asyncio When Using contextvars with Nested TaskGroups",
+            "url": "https://stackoverflow.com/questions/79719555/unexpected-memory-leak-in-pythons-asyncio-when-using-contextvars-with-nested-ta",
+            "published_at": "2025-07-30T06:57:30+00:00",
+            "content_kind": "question_excerpt",
+            "date_semantics": null,
+            "abstract_characters": 0,
+            "content_characters": 0
+          }
+        ]
+      },
+      {
+        "platform": "arxiv",
+        "query": "all:\"retrieval augmented generation\"",
+        "flags": [
+          "--start-date",
+          "2026-01-01",
+          "--end-date",
+          "2026-11-03"
+        ],
+        "ok": true,
+        "elapsed_ms": 553.32,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "arxiv"
+          ],
+          "skipped_incompatible": [
+            {
+              "provider": "exa-free",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "bing",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "duckduckgo",
+              "code": "unsupported_option"
+            }
+          ],
+          "max_sources": 2,
+          "platform": "arxiv",
+          "intent": "general",
+          "specialized_source": "arxiv",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "arxiv"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "arxiv",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 553.14
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "arxiv",
+            "rank": 1,
+            "title": "Overview of the TREC 2025 Retrieval Augmented Generation (RAG) Track",
+            "url": "https://arxiv.org/abs/2603.09891v1",
+            "published_at": "2026-03-10T16:49:18Z",
+            "content_kind": "abstract",
+            "date_semantics": null,
+            "abstract_characters": 994,
+            "content_characters": 0
+          },
+          {
+            "provider": "arxiv",
+            "rank": 2,
+            "title": "A Reproducibility Study of Metacognitive Retrieval-Augmented Generation",
+            "url": "https://arxiv.org/abs/2604.19899v1",
+            "published_at": "2026-04-21T18:22:15Z",
+            "content_kind": "abstract",
+            "date_semantics": null,
+            "abstract_characters": 1208,
+            "content_characters": 0
+          },
+          {
+            "provider": "arxiv",
+            "rank": 3,
+            "title": "Evaluating Chunking Strategies for Retrieval-Augmented Generation on Academic Texts",
+            "url": "https://arxiv.org/abs/2607.01852v1",
+            "published_at": "2026-07-02T08:12:35Z",
+            "content_kind": "abstract",
+            "date_semantics": null,
+            "abstract_characters": 716,
+            "content_characters": 0
+          }
+        ]
+      },
+      {
+        "platform": "crossref",
+        "query": "Attention Vaswani",
+        "flags": [
+          "--start-date",
+          "2017-01-01",
+          "--end-date",
+          "2026-11-03"
+        ],
+        "ok": true,
+        "elapsed_ms": 1215.95,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "crossref"
+          ],
+          "skipped_incompatible": [
+            {
+              "provider": "exa-free",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "bing",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "duckduckgo",
+              "code": "unsupported_option"
+            }
+          ],
+          "max_sources": 2,
+          "platform": "crossref",
+          "intent": "general",
+          "specialized_source": "crossref",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "crossref"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "crossref",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 1215.84
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "crossref",
+            "rank": 1,
+            "title": "Attention Is All You Need",
+            "url": "https://doi.org/10.65215/r5bs2d54",
+            "published_at": "2025-11-13",
+            "content_kind": "bibliographic_metadata",
+            "date_semantics": "publication_date_with_original_precision",
+            "abstract_characters": 1136,
+            "content_characters": 0
+          },
+          {
+            "provider": "crossref",
+            "rank": 2,
+            "title": "Attention Is All You Need",
+            "url": "https://doi.org/10.65215/ysbyhc05",
+            "published_at": "2025-08-23",
+            "content_kind": "bibliographic_metadata",
+            "date_semantics": "publication_date_with_original_precision",
+            "abstract_characters": 1136,
+            "content_characters": 0
+          },
+          {
+            "provider": "crossref",
+            "rank": 3,
+            "title": "Attention Is All You Need",
+            "url": "https://doi.org/10.65215/nxvz2v36",
+            "published_at": "2025-08-23",
+            "content_kind": "bibliographic_metadata",
+            "date_semantics": "publication_date_with_original_precision",
+            "abstract_characters": 1136,
+            "content_characters": 0
+          }
+        ]
+      },
+      {
+        "platform": "npm",
+        "query": "playwright",
+        "flags": [],
+        "ok": true,
+        "elapsed_ms": 523.86,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "npm",
+            "exa-free",
+            "bing",
+            "duckduckgo"
+          ],
+          "skipped_incompatible": [],
+          "max_sources": 2,
+          "platform": "npm",
+          "intent": "general",
+          "specialized_source": "npm",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "npm"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "npm",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 523.76
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "npm",
+            "rank": 1,
+            "title": "playwright@1.64.1",
+            "url": "https://www.npmjs.com/package/playwright",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "registry_dates_are_metadata_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "version": "1.64.1"
+          },
+          {
+            "provider": "npm",
+            "rank": 2,
+            "title": "@playwright/mcp@0.0.84",
+            "url": "https://www.npmjs.com/package/@playwright/mcp",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "registry_dates_are_metadata_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "version": "0.0.84"
+          },
+          {
+            "provider": "npm",
+            "rank": 3,
+            "title": "@vitest/browser-playwright@5.1.0",
+            "url": "https://www.npmjs.com/package/@vitest/browser-playwright",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "registry_dates_are_metadata_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "version": "5.1.0"
+          }
+        ]
+      },
+      {
+        "platform": "crates",
+        "query": "tokio",
+        "flags": [],
+        "ok": true,
+        "elapsed_ms": 544.32,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "crates",
+            "exa-free",
+            "bing",
+            "duckduckgo"
+          ],
+          "skipped_incompatible": [],
+          "max_sources": 2,
+          "platform": "crates",
+          "intent": "general",
+          "specialized_source": "crates",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "crates"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "crates",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 544.21
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "crates",
+            "rank": 1,
+            "title": "tokio",
+            "url": "https://crates.io/crates/tokio",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "created_updated_are_registry_metadata",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "max_version": "1.54.1",
+            "max_stable_version": "1.54.1"
+          },
+          {
+            "provider": "crates",
+            "rank": 2,
+            "title": "asupersync",
+            "url": "https://crates.io/crates/asupersync",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "created_updated_are_registry_metadata",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "max_version": "0.6.2",
+            "max_stable_version": "0.6.2"
+          },
+          {
+            "provider": "crates",
+            "rank": 3,
+            "title": "dial9",
+            "url": "https://crates.io/crates/dial9",
+            "published_at": null,
+            "content_kind": "package_metadata",
+            "date_semantics": "created_updated_are_registry_metadata",
+            "abstract_characters": 0,
+            "content_characters": 0,
+            "max_version": "0.5.7",
+            "max_stable_version": "0.5.7"
+          }
+        ]
+      },
+      {
+        "platform": "gitlab",
+        "query": "inkscape",
+        "flags": [],
+        "ok": true,
+        "elapsed_ms": 732.44,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "gitlab",
+            "exa-free",
+            "bing",
+            "duckduckgo"
+          ],
+          "skipped_incompatible": [],
+          "max_sources": 2,
+          "platform": "gitlab",
+          "intent": "general",
+          "specialized_source": "gitlab",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "gitlab"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "gitlab",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 732.34
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "gitlab",
+            "rank": 1,
+            "title": "inkscape/inkscape",
+            "url": "https://gitlab.com/inkscape/inkscape",
+            "published_at": null,
+            "content_kind": "repository_metadata",
+            "date_semantics": "project_creation_activity_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "gitlab",
+            "rank": 2,
+            "title": "inkscape/inkscape-web",
+            "url": "https://gitlab.com/inkscape/inkscape-web",
+            "published_at": null,
+            "content_kind": "repository_metadata",
+            "date_semantics": "project_creation_activity_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          },
+          {
+            "provider": "gitlab",
+            "rank": 3,
+            "title": "inkscape/extensions",
+            "url": "https://gitlab.com/inkscape/extensions",
+            "published_at": null,
+            "content_kind": "repository_metadata",
+            "date_semantics": "project_creation_activity_not_article_publication",
+            "abstract_characters": 0,
+            "content_characters": 0
+          }
+        ]
+      },
+      {
+        "platform": "europepmc",
+        "query": "TITLE:\"protein structure prediction\"",
+        "flags": [
+          "--start-date",
+          "2026-01-01",
+          "--end-date",
+          "2026-11-03"
+        ],
+        "ok": true,
+        "elapsed_ms": 899.38,
+        "routing": {
+          "requested_strategy": "free",
+          "strategy": "free",
+          "automatic": true,
+          "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+          "candidates": [
+            "europepmc"
+          ],
+          "skipped_incompatible": [
+            {
+              "provider": "exa-free",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "bing",
+              "code": "unsupported_option"
+            },
+            {
+              "provider": "duckduckgo",
+              "code": "unsupported_option"
+            }
+          ],
+          "max_sources": 2,
+          "platform": "europepmc",
+          "intent": "general",
+          "specialized_source": "europepmc",
+          "complementary_search": false,
+          "semantic_quality_verified": false,
+          "attempted_providers": [
+            "europepmc"
+          ],
+          "stop_reason": "usable_results",
+          "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+        },
+        "requests": [
+          {
+            "provider": "europepmc",
+            "ok": true,
+            "attempts": 1,
+            "request_id": null,
+            "account_tier": null,
+            "usage": null,
+            "cost": null,
+            "warnings": [],
+            "returned_count": 3,
+            "shown_count": 3,
+            "access": "keyless",
+            "user_api_key_used": false,
+            "elapsed_ms": 899.27
+          }
+        ],
+        "errors": [],
+        "sources": [
+          {
+            "provider": "europepmc",
+            "rank": 1,
+            "title": "AtlasFold: Protein structure prediction with metagenomic-scale language models",
+            "url": "https://europepmc.org/article/PPR/PPR1315045",
+            "published_at": "2026-09-07",
+            "content_kind": "abstract",
+            "date_semantics": "provider_first_publication_date_may_be_inferred",
+            "abstract_characters": 1222,
+            "content_characters": 0
+          },
+          {
+            "provider": "europepmc",
+            "rank": 2,
+            "title": "Foldify: Web Application for Protein Structure Prediction.",
+            "url": "https://europepmc.org/article/MED/42359896",
+            "published_at": "2026-06-26",
+            "content_kind": "abstract",
+            "date_semantics": "provider_first_publication_date_may_be_inferred",
+            "abstract_characters": 1188,
+            "content_characters": 0
+          },
+          {
+            "provider": "europepmc",
+            "rank": 3,
+            "title": "Context-dependent protein structure prediction analysis and complex stoichiometry inference with MultimerMapper.",
+            "url": "https://europepmc.org/article/MED/42923437",
+            "published_at": "2026-10-07",
+            "content_kind": "abstract",
+            "date_semantics": "provider_first_publication_date_may_be_inferred",
+            "abstract_characters": 1513,
+            "content_characters": 0
+          }
+        ]
+      }
+    ],
+    "wikipedia_followup_after_bounded_pacing_fix": {
+      "budget": {
+        "limit": 3,
+        "attempts": 2,
+        "remaining": 1,
+        "by_provider": {
+          "wikipedia": 2
+        },
+        "scope": "current_invocation"
+      },
+      "checks": [
+        {
+          "language": "en",
+          "ok": true,
+          "elapsed_ms": 781.05,
+          "requests": [
+            {
+              "provider": "wikipedia",
+              "ok": true,
+              "attempts": 1,
+              "request_id": null,
+              "account_tier": null,
+              "usage": null,
+              "cost": null,
+              "warnings": [],
+              "returned_count": 3,
+              "shown_count": 3,
+              "access": "keyless",
+              "user_api_key_used": false,
+              "elapsed_ms": 779.29
+            }
+          ],
+          "errors": [],
+          "sources": [
+            {
+              "provider": "wikipedia",
+              "rank": 1,
+              "title": "Retrieval-augmented generation",
+              "url": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            },
+            {
+              "provider": "wikipedia",
+              "rank": 2,
+              "title": "Vector database",
+              "url": "https://en.wikipedia.org/wiki/Vector_database",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            },
+            {
+              "provider": "wikipedia",
+              "rank": 3,
+              "title": "Prompt engineering",
+              "url": "https://en.wikipedia.org/wiki/Prompt_engineering",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            }
+          ]
+        },
+        {
+          "language": "zh",
+          "ok": true,
+          "elapsed_ms": 1042.41,
+          "requests": [
+            {
+              "provider": "wikipedia",
+              "ok": true,
+              "attempts": 1,
+              "request_id": null,
+              "account_tier": null,
+              "usage": null,
+              "cost": null,
+              "warnings": [],
+              "returned_count": 3,
+              "shown_count": 3,
+              "access": "keyless",
+              "user_api_key_used": false,
+              "elapsed_ms": 1041.96
+            }
+          ],
+          "errors": [],
+          "sources": [
+            {
+              "provider": "wikipedia",
+              "rank": 1,
+              "title": "風力發電機",
+              "url": "https://zh.wikipedia.org/wiki/%E9%A2%A8%E5%8A%9B%E7%99%BC%E9%9B%BB%E6%A9%9F",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            },
+            {
+              "provider": "wikipedia",
+              "rank": 2,
+              "title": "風力發電廠",
+              "url": "https://zh.wikipedia.org/wiki/%E9%A2%A8%E5%8A%9B%E7%99%BC%E9%9B%BB%E5%BB%A0",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            },
+            {
+              "provider": "wikipedia",
+              "rank": 3,
+              "title": "中华人民共和国风力发电",
+              "url": "https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E9%A3%8E%E5%8A%9B%E5%8F%91%E7%94%B5",
+              "published_at": null,
+              "content_kind": "encyclopedia_excerpt"
+            }
+          ]
+        }
+      ]
+    },
+    "huggingface_followup": {
+      "query": "Qwen",
+      "ok": true,
+      "elapsed_ms": 398.81,
+      "routing": {
+        "requested_strategy": "free",
+        "strategy": "free",
+        "automatic": true,
+        "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
+        "candidates": [
+          "huggingface",
+          "exa-free",
+          "bing",
+          "duckduckgo"
+        ],
+        "skipped_incompatible": [],
+        "max_sources": 2,
+        "platform": "huggingface",
+        "intent": "general",
+        "specialized_source": "huggingface",
+        "complementary_search": false,
+        "semantic_quality_verified": false,
+        "attempted_providers": [
+          "huggingface"
+        ],
+        "stop_reason": "usable_results",
+        "agent_action": "Assess relevance, freshness and primary sources; search a remaining candidate only for an evidence gap."
+      },
+      "requests": [
+        {
+          "provider": "huggingface",
+          "ok": true,
+          "attempts": 1,
+          "request_id": null,
+          "account_tier": null,
+          "usage": null,
+          "cost": null,
+          "warnings": [],
+          "returned_count": 3,
+          "shown_count": 3,
+          "access": "keyless",
+          "user_api_key_used": false,
+          "elapsed_ms": 385.32
+        }
+      ],
+      "budget": {
+        "limit": 12,
+        "attempts": 1,
+        "remaining": 11,
+        "by_provider": {
+          "huggingface": 1
+        },
+        "scope": "current_invocation"
+      },
+      "sources": [
+        {
+          "provider": "huggingface",
+          "rank": 1,
+          "title": "Qwen/Qwen3-0.6B",
+          "url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+          "published_at": null,
+          "content_kind": "model_metadata"
+        },
+        {
+          "provider": "huggingface",
+          "rank": 2,
+          "title": "Qwen/Qwen3-14B",
+          "url": "https://huggingface.co/Qwen/Qwen3-14B",
+          "published_at": null,
+          "content_kind": "model_metadata"
+        },
+        {
+          "provider": "huggingface",
+          "rank": 3,
+          "title": "Comfy-Org/Qwen-Image-2.1",
+          "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1",
+          "published_at": null,
+          "content_kind": "model_metadata"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "direct_endpoint_probe": [
+    {
+      "source": "wikipedia-en",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": "Retrieval-augmented generation"
+        },
+        {
+          "title": "Vector database"
+        },
+        {
+          "title": "Prompt engineering"
+        }
+      ],
+      "elapsed_ms": 740.31
+    },
+    {
+      "source": "wikipedia-zh",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": "風力發電機"
+        },
+        {
+          "title": "風力發電廠"
+        },
+        {
+          "title": "中华人民共和国风力发电"
+        }
+      ],
+      "elapsed_ms": 594.78
+    },
+    {
+      "source": "stackexchange",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": "asyncio TaskGroup throwing TypeError when returning lists",
+          "link": "https://stackoverflow.com/questions/75521886/asyncio-taskgroup-throwing-typeerror-when-returning-lists"
+        },
+        {
+          "title": "is there a way to dynamically add tasks to asyncio tasks or to AnyIO TaskGroup?",
+          "link": "https://stackoverflow.com/questions/78298137/is-there-a-way-to-dynamically-add-tasks-to-asyncio-tasks-or-to-anyio-taskgroup"
+        },
+        {
+          "title": "Unexpected Memory Leak in Python&#39;s asyncio When Using contextvars with Nested TaskGroups",
+          "link": "https://stackoverflow.com/questions/79719555/unexpected-memory-leak-in-pythons-asyncio-when-using-contextvars-with-nested-ta"
+        }
+      ],
+      "quota_remaining": 298,
+      "elapsed_ms": 527.16
+    },
+    {
+      "source": "arxiv",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": "Overview of the TREC 2025 Retrieval Augmented Generation (RAG) Track",
+          "id": "http://arxiv.org/abs/2603.09891v1"
+        },
+        {
+          "title": "A Reproducibility Study of Metacognitive Retrieval-Augmented Generation",
+          "id": "http://arxiv.org/abs/2604.19899v1"
+        },
+        {
+          "title": "Evaluating Chunking Strategies for Retrieval-Augmented Generation on Academic Texts",
+          "id": "http://arxiv.org/abs/2607.01852v1"
+        }
+      ],
+      "elapsed_ms": 593.38
+    },
+    {
+      "source": "crossref",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": [
+            "Is Attention All You Need?"
+          ],
+          "DOI": "10.1007/978-3-031-84300-6_13",
+          "link": [
+            {
+              "URL": "https://link.springer.com/content/pdf/10.1007/978-3-031-84300-6_13",
+              "content-type": "unspecified",
+              "content-version": "vor",
+              "intended-application": "similarity-checking"
+            }
+          ]
+        },
+        {
+          "title": [
+            "Attention Is All You Need: An Analysis Of The Valuation Of Artificial Intelligence Tokens"
+          ],
+          "DOI": "10.2139/ssrn.4993784"
+        },
+        {
+          "title": [
+            "Attention is All You Need... Unless You Are a CISO: The Inherent Incompatibility Between Transformer Architectures and Zero-Trust Environments"
+          ],
+          "DOI": "10.2139/ssrn.5967774"
+        }
+      ],
+      "elapsed_ms": 1065.36
+    },
+    {
+      "source": "npm",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "name": "playwright",
+          "version": "1.64.1",
+          "date": "2026-10-14T11:54:49.998Z"
+        },
+        {
+          "name": "@playwright/mcp",
+          "version": "0.0.84",
+          "date": "2026-10-31T15:22:22.918Z"
+        },
+        {
+          "name": "@vitest/browser-playwright",
+          "version": "5.1.0",
+          "date": "2026-11-02T16:11:35.669Z"
+        }
+      ],
+      "elapsed_ms": 593.69
+    },
+    {
+      "source": "crates",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "id": "tokio",
+          "name": "tokio",
+          "description": "An event-driven, non-blocking I/O platform for writing asynchronous I/O\nbacked applications.\n",
+          "max_version": "1.54.1"
+        },
+        {
+          "id": "asupersync",
+          "name": "asupersync",
+          "description": "Spec-first, cancel-correct, capability-secure async runtime for Rust.",
+          "max_version": "0.6.2"
+        },
+        {
+          "id": "dial9",
+          "name": "dial9",
+          "description": "Low-overhead async runtime telemetry: event recording, Tokio integration, CPU/memory profiling, and a trace viewer CLI",
+          "max_version": "0.5.7"
+        }
+      ],
+      "elapsed_ms": 567.74
+    },
+    {
+      "source": "gitlab",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "id": 88438274,
+          "name": "temp scan ecoscan-14484465-deletion_scheduled-88438274",
+          "name_with_namespace": "Rachel Green / temp scan ecoscan-14484465-deletion_scheduled-88438274",
+          "web_url": "https://gitlab.com/rachel.green.r/ecoscan-14484465-deletion_scheduled-88438274",
+          "description": "Inkscape extension that replaces strings in template SVG files with data from a CSV file and exports to multiple file formats (png, svg, ps, eps, pdf). This can be useful for automatically generating conference badges and similar items."
+        },
+        {
+          "id": 88438085,
+          "name": "temp scan ecoscan-10403243-deletion_scheduled-88438085",
+          "name_with_namespace": "Chandler Bing / temp scan ecoscan-10403243-deletion_scheduled-88438085",
+          "web_url": "https://gitlab.com/chandler.bing/ecoscan-10403243-deletion_scheduled-88438085",
+          "description": "This inbox is a \"friendly feedback zone\", we welcome questions, comments, ideas, and bug reports that pertain to the Inkscape software, its related components, and the project in general."
+        },
+        {
+          "id": 88435137,
+          "name": "temp scan ecoscan-5833962-deletion_scheduled-88435137",
+          "name_with_namespace": "Rachel Green / temp scan ecoscan-5833962-deletion_scheduled-88435137",
+          "web_url": "https://gitlab.com/rachel.green.r/ecoscan-5833962-deletion_scheduled-88435137",
+          "description": "A python library for manipulating SVG documents which is the basis for Inkscape extensions, also containing the Python and XSLT extensions shipped with Inkscape."
+        }
+      ],
+      "elapsed_ms": 626.44
+    },
+    {
+      "source": "europepmc",
+      "http_status": 200,
+      "returned": 3,
+      "results": [
+        {
+          "title": "AtlasFold: Protein structure prediction with metagenomic-scale language models",
+          "id": "PPR1315045",
+          "firstPublicationDate": "2026-09-07"
+        },
+        {
+          "title": "Foldify: Web Application for Protein Structure Prediction.",
+          "id": "42359896",
+          "firstPublicationDate": "2026-06-26"
+        },
+        {
+          "title": "Context-dependent protein structure prediction analysis and complex stoichiometry inference with MultimerMapper.",
+          "id": "42923437",
+          "firstPublicationDate": "2026-10-07"
+        }
+      ],
+      "elapsed_ms": 984.78
+    }
+  ],
+  "limited_same_task_comparison": {
+    "as_of": "2026-11-03",
+    "scope": "two retrieval paths, one observation each; not an accuracy or latency ranking",
+    "question": "Python asyncio TaskGroup ExceptionGroup official documentation",
+    "read_url": "https://docs.python.org/3/library/asyncio-task.html",
+    "records": [
+      {
+        "tool": "agent-reach",
+        "action": "search",
+        "ok": true,
+        "backend": "exa",
+        "sources": [
+          {
+            "title": "Coroutines and tasks — Python 3.15.2 documentation",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "text_characters": 5242
+          },
+          {
+            "title": "Lib/asyncio/taskgroups.py",
+            "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+            "text_characters": 1100
+          },
+          {
+            "title": "cpython/Doc/library/asyncio-task.rst at main",
+            "url": "https://github.com/python/cpython/blob/main/Doc/library/asyncio-task.rst?plain=1",
+            "text_characters": 1164
+          }
+        ],
+        "attempts": [
+          {
+            "backend": "exa",
+            "result": "ok"
+          }
+        ],
+        "error_code": null,
+        "elapsed_ms": 1477.46
+      },
+      {
+        "tool": "xcoze",
+        "action": "search",
+        "ok": true,
+        "sources": [
+          {
+            "title": "Coroutines and tasks — Python 3.15.2 documentation",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "content_kind": "search_summary",
+            "text_characters": 5237,
+            "completeness_verified": null
+          },
+          {
+            "title": "Lib/asyncio/taskgroups.py",
+            "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+            "content_kind": "search_summary",
+            "text_characters": 1095,
+            "completeness_verified": null
+          },
+          {
+            "title": "cpython/Doc/library/asyncio-task.rst at main",
+            "url": "https://github.com/python/cpython/blob/main/Doc/library/asyncio-task.rst?plain=1",
+            "content_kind": "search_summary",
+            "text_characters": 1164,
+            "completeness_verified": null
+          }
+        ],
+        "attempts": {
+          "limit": 12,
+          "attempts": 1,
+          "remaining": 11,
+          "by_provider": {
+            "exa-free": 1
+          },
+          "scope": "current_invocation"
+        },
+        "errors": [],
+        "elapsed_ms": 624.87
+      },
+      {
+        "tool": "xcoze",
+        "action": "read",
+        "ok": true,
+        "sources": [
+          {
+            "title": "Coroutines and tasks",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "content_kind": "page_content",
+            "text_characters": 24000,
+            "completeness_verified": false
+          }
+        ],
+        "attempts": {
+          "limit": 3,
+          "attempts": 1,
+          "remaining": 2,
+          "by_provider": {
+            "jina": 1
+          },
+          "scope": "current_invocation"
+        },
+        "errors": [],
+        "elapsed_ms": 1189.06
+      },
+      {
+        "tool": "agent-reach",
+        "action": "read",
+        "ok": true,
+        "backend": "jina",
+        "sources": [
+          {
+            "title": "Coroutines and tasks",
+            "url": "https://docs.python.org/3/library/asyncio-task.html",
+            "text_characters": 67841
+          }
+        ],
+        "attempts": [
+          {
+            "backend": "jina",
+            "result": "ok"
+          }
+        ],
+        "error_code": null,
+        "elapsed_ms": 1745.94
+      }
+    ],
+    "long_read_followup": {
+      "ok": true,
+      "provider": "jina",
+      "elapsed_ms": 638.98,
+      "returned_characters": 67841,
+      "max_characters": 100000,
+      "truncated": false,
+      "completeness_verified": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "jina": 1
+        },
+        "scope": "current_invocation"
+      }
+    }
+  }
+}

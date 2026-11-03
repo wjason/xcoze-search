@@ -2,6 +2,14 @@
 
 **简体中文** | [English](CHANGELOG.en.md)
 
+## v0.6.0 — 2026-11-03
+
+- 新增 Wikipedia 中英文、Stack Exchange、arXiv、Crossref、npm、crates.io、GitLab、Europe PMC、Hugging Face 九个免 Key 适配器；任务定向原生选路，免费边界与预算保留。
+- 新增离线 platforms，区分原生接口、公开索引和本机工具存在；扩充视频/社区公开索引范围，不声明原生字幕/评论能力。
+- 新源跨进程串行、限频/退避、Stack Exchange 重复抑制及限额处理，支持 gzip 与解压体积限制；零网络的冷却不计 HTTP。
+- 参考 Agent Reach 1.6.1 源码并做有限同题对照，发现长文截断差距；新增 fetch --max-characters（Jina/Exa 免 Key，默认 24000，最高 200000），不将更多文本当全文核实。
+- 120 项本地离线测试通过；新增源实际调用、冷却修正复测及双语报告/使用说明已记录。未宣称全平台能力或整体质量已超过其他项目。
+
 ## v0.5.0 — 2026-11-03
 
 - 六道真实任务比较免 Key、DeepSeek、Smart，另加两道中文留出题，保留双语报告、脱敏逐次记录和可复现运行器。
