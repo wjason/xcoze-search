@@ -16,7 +16,7 @@ The Agent checks Python 3.10+, installs into the host's skill directory, then fo
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-This optional method requires Node.js. Alternatively unpack the [v0.4.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) into your host's skill directory; manual unpacking does not need Node.js.
+This optional method requires Node.js. Alternatively unpack the [v0.4.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.1/xcoze-search-skill-v0.4.1.zip) into your host's skill directory; manual unpacking does not need Node.js.
 
 Codex's default is `~/.codex/skills/xcoze-search/`, or the skills subdirectory of CODEX_HOME when set. Follow other hosts' discovery rules. This package needs local script execution; a standalone executable remains planned.
 

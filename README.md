@@ -23,7 +23,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.4.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.4.1 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.4.1/xcoze-search-skill-v0.4.1.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 支持的来源
 

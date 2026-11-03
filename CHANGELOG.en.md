@@ -2,6 +2,13 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.4.1 — 2026-11-03
+
+- Correct GitHub capabilities: repository update dates are not article publication filters; unsupported date filters are no longer advertised.
+- Align offline plan and execution of all: configured keyed sources only; use auto for keyless routing.
+- Classify keyless 401/403 and DDG 202 as access/verification issues; doctor cannot succeed without checks.
+- Consolidate validation evidence: 94 offline tests pass with successful/restricted source checks retained. Jina Reader retrieves/extracts text and is skipped when text is already available.
+
 ## v0.4.0 — 2026-11-03
 
 - Add keyless Bing RSS, DuckDuckGo HTML, Exa MCP, GitHub, HN and Jina Reader. Public feeds/HTML are experimental; official keyless services retain access limits.

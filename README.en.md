@@ -23,7 +23,7 @@ Python 3.10+ is required. Runtime uses only the standard library: no browser, No
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.4.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.0/xcoze-search-skill-v0.4.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.4.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.4.1/xcoze-search-skill-v0.4.1.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Sources
 

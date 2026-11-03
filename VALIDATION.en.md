@@ -2,6 +2,10 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.4.1 — 2026-11-03
+
+94 offline tests passed. The patch corrects capabilities, plan/all parity and access classification. Live examples reuse the v0.4.0 observations below, without counting them as new checks. Runtime, Skill and packages are version 0.4.1.
+
 ## v0.4.0 — 2026-11-03
 
 Fifteen Chinese/English document and instruction pairs retain Chinese-first navigation. Runtime, Skill and package versions are 0.4.0.

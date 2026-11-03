@@ -2,6 +2,13 @@
 
 **简体中文** | [English](CHANGELOG.en.md)
 
+## v0.4.1 — 2026-11-03
+
+- 修正 GitHub 能力声明：仓库更新时间不作为文章发布日期过滤，capabilities 不再声明未实现的日期筛选。
+- 对齐离线 plan 与实际 all 的语义：all 仍只表示已配置带 Key 服务，无 Key 自动搜索使用 auto。
+- 将免 Key 401/403 与 DDG 202 归为访问/验证问题；doctor 不把没有执行检查判为成功。
+- 整理验证记录，最终 94 项离线测试通过；保留各来源的成功和受限状态。Jina Reader 负责访问与正文提取，已有文本不重复调用。
+
 ## v0.4.0 — 2026-11-03
 
 - 增加无需 Key 的 Bing RSS、DuckDuckGo HTML、Exa MCP、GitHub、HN 适配，以及 Jina Reader。公开 feed/HTML 属实验路径，官方免 Key 服务受其限额约束。

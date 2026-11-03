@@ -30,7 +30,7 @@ from public_providers import PUBLIC_REGISTRY, domain_matches
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan)
 
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search}
