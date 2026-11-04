@@ -7,23 +7,73 @@
 
 **给 Agent 一个开箱即用的联网搜索入口。** 无 Key 时使用公开渠道；配置 Key 后默认效果优先。Agent 根据问题选择来源、读取原文、补充搜索，取得足够证据后停止。日常提问即可，模式和搜索源都是可选设置。
 
-[安装](#安装) · [支持的来源](#支持的来源) · [配置 Key](#配置-key) · [自动调度](references/routing.md) · [开发计划](TODO.md)
+[让 Agent 安装](#安装) · [在 Agent 中使用](#在-agent-中使用) · [支持的来源](#支持的来源) · [配置 Key](#配置-key) · [开发计划](TODO.md)
 
 ## 安装
 
-在能够安装 Skill、执行本地脚本的 Agent 中发送：
+### 直接告诉 Agent
+
+把下面这句话发给你正在使用的 Agent：
 
 ```text
-安装 https://github.com/wjason/xcoze-search
+帮我安装这个 Skill：https://github.com/wjason/xcoze-search
 ```
 
-要求 Python 3.10+；运行只使用标准库，无需安装浏览器、Node.js 或额外 Python 包。使用 Skills CLI 安装时另需 Node.js：
+需要使用支持 Skill 安装、能够执行本地脚本的 Agent。Agent 会按当前工具的规则安装；完成后，如提示需要重新加载或新建会话，照提示操作即可。安装时不需要 API Key，也不用自己找技能目录。
+
+然后发一句话，确认它能实际搜索：
+
+```text
+请用 xcoze search 在 GitHub 搜索 microsoft/markitdown，给我仓库链接，并说明它是做什么的。
+```
+
+运行环境需要 Python 3.10+，基础搜索只使用标准库，无需额外 Python 包。浏览器兜底是可选功能，不是开始搜索的前提。只有聊天、无法执行本地脚本的环境不能运行本 Skill。
+
+### 其他安装方式
+
+使用 Skills CLI 安装时另需 Node.js：
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
 也可下载 [v0.7.2 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+
+## 在 Agent 中使用
+
+### 日常提问即可
+
+安装并加载后，直接提出需要联网查证的问题。Agent 会按任务需要调用 Skill，不用每次说技能名、选择来源或填写参数：
+
+```text
+查一下最近一周海上风电有哪些政策更新，优先找官方原文，标注发布日期和来源链接。
+```
+
+```text
+查阅 Python asyncio 的官方文档，说明 TaskGroup 的异常处理方式，并给出文档链接。
+```
+
+```text
+在 GitHub 找几个开源工业视觉项目，对比用途、许可证和部署要求。
+```
+
+需要明确指定时，在问题前加上“请用 xcoze search”。如果 Agent 没有识别到技能，让它检查是否安装并加载成功；按当前工具要求重新加载或新建会话后再试。
+
+### 用对话调整搜索方式
+
+默认是 **Smart**：不填 Key 就用免 Key 来源；配置并启用 Key 后默认效果优先。也可以直接告诉 Agent：
+
+| 想做什么 | 直接这样说 |
+|---|---|
+| 以后只用免 Key 来源 | “把 xcoze search 设为免费模式，以后都用这个模式。” |
+| 以后先用免 Key，必要时使用已配置服务 | “把 xcoze search 设为平衡模式。” |
+| 恢复自动选择 | “清除 xcoze search 的搜索偏好，恢复默认 Smart，保留 Key。” |
+| 仅本次指定来源 | “这次用 DeepSeek 搜索这个问题：……” |
+| 仅本次使用免 Key 来源 | “这次用免费模式搜索这个问题：……” |
+
+“以后”会保存为偏好，“这次”只影响当前请求。指定 DeepSeek 等商用来源前需要配置对应 Key；免费模式不调用带 Key 的搜索接口。
+
+需要添加服务时，说“帮我配置 xcoze search 的 DeepSeek 搜索”即可。Agent 提供官方申请链接，再引导你在本机隐藏输入窗口填写，**不要把 Key 发到聊天里**。完整流程见 [配置 Key](#配置-key)和[配置与排错](references/setup.md)。
 
 ## 支持的来源
 
@@ -96,14 +146,7 @@ Agent 只提供官方申请链接，不自动打开网页；准备好后启动�
 
 凭据目前以权限保护的明文保存在用户配置目录，尚未接入系统凭据库。环境变量优先。v1 读取保持兼容，保存时按原迁移流程保留私人备份。
 
-## 使用示例
-
-```text
-查一下最近一周相关政策的官方原文。
-在 GitHub 找几个开源工业视觉项目，对比它们的部署要求。
-看看 Hacker News 对这个项目有哪些讨论。
-搜索知乎上关于这个问题的公开资料。
-```
+## 命令行参考
 
 以下命令通常由 Agent 定位 Skill 后执行，用户无需查找文件：
 

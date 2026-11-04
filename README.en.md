@@ -7,23 +7,73 @@
 
 **An out-of-the-box web search entry point for Agents.** Use public routes without a key; configured keys enable quality-first routing by default. The Agent selects sources, reads pages and searches for missing evidence, stopping when it has enough. Users ask normally; strategies and source preferences are optional.
 
-[Install](#install) · [Sources](#sources) · [Configure keys](#configure-keys) · [Routing](references/routing.en.md) · [Roadmap](TODO.en.md)
+[Ask your Agent to install](#install) · [Use in your Agent](#use-in-your-agent) · [Sources](#sources) · [Configure keys](#configure-keys) · [Roadmap](TODO.en.md)
 
 ## Install
 
-Send this to an Agent that can install Skills and execute local scripts:
+### Ask your Agent
+
+Send this message to your Agent:
 
 ```text
-Install https://github.com/wjason/xcoze-search
+Please install this Skill: https://github.com/wjason/xcoze-search
 ```
 
-Python 3.10+ is required. Runtime uses only the standard library: no browser, Node.js or Python packages to install. The optional Skills CLI installation method requires Node.js:
+Use an Agent that supports Skill installation and can execute local scripts. It installs according to its host's rules; reload or start a new session if prompted. Installation needs no API key, and you do not need to locate the skill directory yourself.
+
+Then check that it can actually search:
+
+```text
+Use xcoze search to find microsoft/markitdown on GitHub. Give me the repository link and explain what it does.
+```
+
+Python 3.10+ is required. Basic search uses only the standard library, with no additional Python packages. Browser fallback is optional, not a prerequisite for searching. Chat-only environments without local script execution cannot run this Skill.
+
+### Other installation methods
+
+The optional Skills CLI installation method requires Node.js:
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
 Alternatively unpack the [v0.7.2 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+
+## Use in your Agent
+
+### Ask normally
+
+Once installed and loaded, ask questions that need current sources. The Agent can call the Skill when the task needs it; you do not need to name it, choose sources or provide parameters every time:
+
+```text
+Find offshore wind policy updates from the past week. Prefer official pages and include publication dates and source links.
+```
+
+```text
+Read the official Python asyncio documentation and explain how TaskGroup handles exceptions. Include the documentation link.
+```
+
+```text
+Find open-source industrial vision projects on GitHub. Compare their purpose, licenses and deployment requirements.
+```
+
+To request it explicitly, start with “Use xcoze search.” If the Agent does not recognize the Skill, ask it to check installation and loading. Reload or start a new session as required by your host, then try again.
+
+### Change search preferences in conversation
+
+**Smart** is the default: no key uses keyless sources; configured, enabled keys make the default quality-first. You can also tell the Agent:
+
+| Goal | What to say |
+|---|---|
+| Use keyless sources from now on | “Set xcoze search to free mode for future searches.” |
+| Start with keyless sources, then use configured services when needed | “Set xcoze search to balanced mode.” |
+| Restore automatic selection | “Clear xcoze search preferences and restore default Smart routing. Keep my keys.” |
+| Choose a source for one request | “Use DeepSeek for this search only: …” |
+| Limit this request to keyless sources | “Use free mode for this search only: …” |
+
+“From now on” saves a preference; “this search only” affects one request. Named commercial sources such as DeepSeek require their own configured keys. Free mode never calls keyed search APIs.
+
+To add a service, say “Configure DeepSeek for xcoze search.” The Agent provides the official signup link, then guides you through a local hidden-input dialog. **Never paste keys into chat.** See [configure keys](#configure-keys) and [setup and troubleshooting](references/setup.en.md).
 
 ## Sources
 
@@ -96,14 +146,7 @@ The Agent prints official signup links without opening a browser, then launches 
 
 Credentials are currently plaintext protected by local permissions, without OS credential-store integration. Environment variables take precedence. v1 configs remain readable and the existing private-backup migration applies when saving.
 
-## Examples
-
-```text
-Find official policy updates from the past week and link the original sources.
-Find open-source industrial vision projects on GitHub and compare deployment requirements.
-Find Hacker News discussions about this project.
-Find public Zhihu discussions of this question.
-```
+## Command-line reference
 
 The Agent normally locates the Skill and runs these commands; users do not need to find files:
 
