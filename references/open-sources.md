@@ -6,6 +6,17 @@
 
 ## 原生接口
 
+### 社区热点快照
+
+`trending --platform bilibili|zhihu|v2ex --count 10` 独立于关键词搜索，每次一个公开接口、最多一次 HTTP、默认 8 秒、零重试。B 站热词返回搜索链接和原生热度；知乎热榜返回问题链接/摘录，不读答案；V2EX 热门返回话题元数据，不输出正文/回复。原生顺序、热度单位、检索时间分别保留；B 站/知乎发布时间未知，不用检索时间填充。平台目录用 native_trending 单独声明，不改变 native_provider/coverage 的关键词搜索含义。
+
+B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开放平台 API；V2EX 按其 [API 公平使用规则](https://www.v2ex.com/p/7v9TEc53)使用。来源每 2 秒最多一次、跨进程串行；401/403/412 后该 feed 暂停 15 分钟，429/503 遵守 Retry-After，无额外说明时暂停 60 秒。不换 Cookie、IP 或浏览器继续请求。
+
+微博直接入口本次 403，没有接入原生热榜；小红书没有确认到可匿名使用的官方通用笔记搜索接口。其[账号开放文档](https://openaccount.xiaohongshu.com/docs/api-reference)不等于内容搜索 API。两者仍用公开索引，结果新增 URL 类型标记，账号主页不代表笔记/帖子正文。完整评论或站内检索优先评估用户已有授权工具，仍未内置执行桥接。[本轮实测与下一步](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.md)。
+
+### 关键词与专业索引
+
+
 | platform | 任务 | 日期/语言含义 | 主要边界与官方文档 |
 |---|---|---|---|
 | wikipedia | 中英文百科条目 | --language en/zh；中文查询默认中文。编辑时间不作为发布日期 | 条目摘录；[MediaWiki](https://www.mediawiki.org/wiki/API:Search) |

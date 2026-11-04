@@ -2,6 +2,15 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.8.0 — 2026-11-05
+
+- Add keyless `trending` actions for Zhihu's hot list, Bilibili hotwords and V2EX hot topics. One endpoint, no retries, credentials or browser; ordinary keyword searches do not request feeds.
+- Preserve source order, native heat units and retrieval time. Feeds do not establish native keyword search, read bodies/comments or complete site rankings. Catalog feed capabilities remain separate from search coverage.
+- Serialize and pace feeds across local processes, pause access denials for 15 minutes and honor Retry-After. Exclude explicit Bilibili commercial markers; no hardcoded cookies or aggregation servers.
+- Label Xiaohongshu/Weibo index destinations as note/post links, profiles or other pages, without claiming bodies were read.
+- 159 offline tests pass and all three new paths initially succeeded live. Installed V2EX acceptance then returned 403 and correctly paused. Retain Weibo 403, Bilibili keyword-search 412 and profile-heavy Xiaohongshu index results in the bilingual report. Native search/comments for these platforms have not been added.
+
+
 ## v0.7.2 — 2026-11-04
 
 - Compare free/DeepSeek/Smart on six real tasks, with same-query 360, official-site, concise-query and real limit/recovery observations. Publish bilingual evidence without equating nonempty output with correctness.

@@ -15,6 +15,7 @@ from search_common import SearchError
 
 INTERVALS = {"wikipedia": 1, "stackexchange": 1, "arxiv": 3, "crossref": 1,
              "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "exa-free": 1, "duckduckgo": 1, "browser": 0}
+INTERVALS.update({"bilibili-trending": 2, "zhihu-trending": 2, "v2ex-trending": 2})
 
 
 def pause_status(name):
@@ -132,11 +133,13 @@ def request_slot(name, url, *, max_wait=0):
     try:
         yield slot
     except urllib.error.HTTPError as error:
+        if name.endswith("-trending") and error.code in (401, 403, 412): slot.defer(900)
         if error.code in (429, 503):
             default = 900 if name == "exa-free" else 60
             slot.defer(error.headers.get("Retry-After", str(default)) if error.headers else default)
         raise
     except SearchError as error:
+        if name.endswith("-trending") and error.status in (401, 403, 412): slot.defer(900)
         if error.status in (429, 503): slot.defer(900 if name == "exa-free" else 60)
         if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
         if name == "duckduckgo" and error.code == "access_challenge": slot.defer(900)

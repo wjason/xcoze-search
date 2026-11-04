@@ -37,7 +37,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.7.2 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.8.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.8.0/xcoze-search-skill-v0.8.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 在 Agent 中使用
 
@@ -76,6 +76,20 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 需要添加服务时，说“帮我配置 xcoze search 的 DeepSeek 搜索”即可。Agent 提供官方申请链接，再引导你在本机隐藏输入窗口填写，**不要把 Key 发到聊天里**。完整流程见 [配置 Key](#配置-key)和[配置与排错](references/setup.md)。
 
 ## 支持的来源
+
+### 社区热点（无需 Key）
+
+直接问 Agent：“知乎现在有哪些热议问题？”“B 站热搜有哪些？”“看看 V2EX 的热门话题。”
+
+| 平台 | 直接取得的内容 | 继续查证时要注意 |
+|---|---|---|
+| 知乎 | 公开热榜的问题、摘录、热度文字与问题链接 | 不包含答案和评论正文 |
+| B 站 | 公开热搜词、原生热度字段与搜索链接 | 热搜词不是热门视频排行，也不是视频内容 |
+| V2EX | 热门话题标题、节点、创建时间、回复数与链接 | 不包含话题正文和回复 |
+
+Agent 按问题选择榜单；普通搜索不会额外请求这些接口。榜单保留各自顺序、检索时间与热度含义，不混排分数，不保证覆盖全站或持续可用；V2EX 本轮首次成功，安装后复测遇到 403，已按规则暂停。每次只请求一个平台，不需要登录、Cookie 或浏览器。见 [公开源实测与接入计划](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.md)。
+
+小红书、微博目前支持下方的公开索引搜索；返回链接会区分笔记/帖子、账号主页和其他页面。**尚未接入两者的原生站内搜索、完整评论或实时热榜**。本轮微博直接入口返回 403；小红书公开索引样例主要命中账号主页，不能据此宣称读到了笔记。
 
 ### 无需 Key
 
@@ -151,6 +165,9 @@ Agent 只提供官方申请链接，不自动打开网页；准备好后启动�
 以下命令通常由 Agent 定位 Skill 后执行，用户无需查找文件：
 
 ```bash
+python3 scripts/xcoze_search.py trending --platform zhihu --count 10
+python3 scripts/xcoze_search.py trending --platform bilibili --count 10
+python3 scripts/xcoze_search.py trending --platform v2ex --count 10
 python3 scripts/xcoze_search.py search 'Python asyncio 官方文档'
 python3 scripts/xcoze_search.py search 'industrial vision' --platform github
 python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01

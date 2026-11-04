@@ -2,7 +2,7 @@
 
 [简体中文](TODO.md) | **English**
 
-Updated 2026-11-04. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
+Updated 2026-11-05. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
 
 ## v0.4.0: implemented
 
@@ -42,6 +42,12 @@ Updated 2026-11-04. Focus: Agent web search and source reading. Default automati
 - [ ] Continue multi-network/browser startup/close tail measurements with cleanup acknowledgment; do not hide shutdown time.
 
 ## P0: task quality and reliability
+
+- [x] v0.8.0: integrate and live-check Zhihu hot questions, Bilibili hotwords and V2EX hot topics, separately from keyword search/bodies/comments.
+- [x] Distinguish Xiaohongshu/Weibo profiles from note/post links in indexed results.
+- [ ] **Next public sources:** evaluate publisher RSS/Atom, government notices and V2EX latest topics/single-topic reading. Validate freshness and originals on real tasks before adapting.
+- [ ] **Xiaohongshu/Weibo native actions:** verify public endpoints and existing authorized tools. Retain Weibo 403 and Bilibili search 412; do not copy competitor cookies or relabel third-party feeds as official live rankings.
+- [ ] Cross-network/schema-change/denial-pause acceptance for experimental Zhihu/Bilibili feeds; hot-list retrieval is not answer-support evaluation.
 
 - [ ] Shared Chinese news/policy/docs/ecosystem/community/video tasks with blinded answer support, freshness and body/comment/subtitle evidence review before competitive claims.
 - [ ] Evaluate Open Library, DBLP, Wikidata and Hugging Face datasets; distinguish current indexes from archival material and source count from utility.

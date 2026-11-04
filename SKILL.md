@@ -1,9 +1,9 @@
 ---
 name: xcoze-search
-description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
+description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索，以及知乎、B 站、V2EX 公开热点快照。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
 metadata:
   author: XCoze
-  version: "0.7.2"
+  version: "0.8.0"
 ---
 
 # xcoze search
@@ -30,6 +30,10 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article
 ```
 
 ## 平台原生搜索和本机工具
+
+用户问“知乎现在热议什么”“B 站热搜有哪些”“V2EX 热门话题”等当前榜单时，执行 `trending --platform zhihu|bilibili|v2ex --count 10`。这三条路径无需 Key，不读凭据、不启动浏览器，每次最多一次请求、零重试。保留平台、检索时间、原始顺序和热度单位；只代表该公开接口快照，不能称全站完整榜单或个人推荐。B 站返回热搜词及搜索链接，不是视频排行；知乎返回问题及摘录，不是已读答案；V2EX 返回话题元数据，不是已读正文或回复。用户要解释热点时，再按证据缺口搜索/读原文，遵守当前搜索偏好。关键词搜索仍用 `search --platform`，不把榜单筛词当站内搜索。其他平台的原生榜单暂未接入，不能用普通网页结果宣称实时榜单。
+
+小红书、微博公开索引结果的 `platform_item_type` 标明笔记/帖子链接、账号主页或其他页面，只是 URL 形态识别。用户要笔记/帖子内容时，账号主页不能充当正文证据；需要读取原文，受限时说明实际缺口。找作者时账号主页仍可使用。
 
 根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
 

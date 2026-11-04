@@ -34,6 +34,23 @@ def domain_matches(url, domain):
     return host == domain.lower() or host.endswith("." + domain.lower())
 
 
+def platform_item_type(platform, url):
+    """Label index destinations; finding a profile does not mean a note/post was read."""
+    parsed = urllib.parse.urlsplit(url)
+    path = parsed.path
+    if platform == "xiaohongshu" and domain_matches(url, "xiaohongshu.com"):
+        if re.fullmatch(r"/user/profile/[^/]+/?", path): return "user_profile"
+        if re.fullmatch(r"/(?:explore|discovery/item)/[^/]+/?", path): return "note_link"
+        if path.rstrip("/") == "/search_result": return "platform_search"
+        return "other_platform_page"
+    if platform == "weibo" and domain_matches(url, "weibo.com"):
+        if parsed.hostname == "s.weibo.com": return "platform_search"
+        if re.fullmatch(r"/\d+/[A-Za-z0-9]+/?", path): return "post_link"
+        if re.fullmatch(r"/(?:u/\d+|[A-Za-z0-9_]+)/?", path): return "profile_or_landing_page"
+        return "other_platform_page"
+    return None
+
+
 def repo_parts(url):
     parsed = urllib.parse.urlsplit(url)
     parts = parsed.path.strip("/").split("/")

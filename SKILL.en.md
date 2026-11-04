@@ -23,6 +23,11 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article
 
 ## Native platform search and existing local tools
 
+For current hot-list requests such as “What is trending on Zhihu/Bilibili/V2EX?”, run `trending --platform zhihu|bilibili|v2ex --count 10`. These keyless paths never read credentials or launch a browser and send at most one request with no retries. Retain platform, retrieval time, source order and native heat units. They are endpoint snapshots, not complete site rankings or personalized recommendations. Bilibili returns hotwords/search links, not video rankings; Zhihu returns questions/excerpts, not read answers; V2EX returns topic metadata, not read bodies/replies. To explain a topic, search/read for missing evidence under the current search preferences. Keyword requests still use `search --platform`; filtering a hot list is not native keyword search. Other platforms have no native feed adapter; ordinary web results cannot establish a live ranking.
+
+Xiaohongshu/Weibo index results include `platform_item_type` for note/post links, profiles or other pages, based only on URL shape. Profiles are useful for author discovery but cannot substitute for note/post bodies. Read originals when needed and report access gaps.
+
+
 The Agent selects `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface` from the task without making users choose channels. Native public APIs go first; empty/failed calls may fall back within existing limits. Never silently drop unsupported language/date/scope constraints. Offline `platforms` lists native/index coverage and presence of agent-reach, yt-dlp, gh and agent-browser; presence is not setup or live verification and executes no tool.
 
 Read [open sources and local-tool cooperation](references/open-sources.en.md) for platform bodies, comments or subtitles. Reuse already-authorized tools under their own Skills for gaps; do not install/update tools, open login windows or copy sessions automatically. Distinguish search snippets, question excerpts, paper abstracts, video descriptions, comment IDs and subtitle-track lists. Respect the platform tool's terminal rate-limit/login/challenge conditions.

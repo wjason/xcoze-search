@@ -1,0 +1,365 @@
+{
+  "observed_date": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "release_version": "0.8.0",
+  "scope": "Local one-pass public endpoint probes, three real new-adapter calls, two existing free index searches. Not an accuracy benchmark.",
+  "runtime_note": "Initial live calls used the development worktree still labelled 0.7.2; installed 0.8.0 acceptance is recorded separately.",
+  "public_evidence_policy": "Only status/count/timing/type metadata is published. No feed content, member profiles, signed URLs, cookies or credentials.",
+  "direct_probes": [
+    {
+      "source": "weibo_hot",
+      "url": "https://weibo.com/ajax/side/hotSearch",
+      "status": 403,
+      "elapsed_ms": 347,
+      "error": "HTTPError"
+    },
+    {
+      "source": "bilibili_hot",
+      "url": "https://s.search.bilibili.com/main/hotword?limit=10",
+      "status": 200,
+      "elapsed_ms": 272,
+      "shape": [
+        "code",
+        "exp_str",
+        "list",
+        "top_list",
+        "hotword_egg_info",
+        "seid",
+        "timestamp",
+        "total_count"
+      ]
+    },
+    {
+      "source": "zhihu_hot",
+      "url": "https://www.zhihu.com/api/v3/feed/topstory/hot-list-web?limit=10&desktop=true",
+      "status": 200,
+      "elapsed_ms": 334,
+      "shape": [
+        "data"
+      ]
+    },
+    {
+      "source": "v2ex_hot",
+      "url": "https://www.v2ex.com/api/topics/hot.json",
+      "status": 200,
+      "elapsed_ms": 388,
+      "shape": "array:8"
+    },
+    {
+      "source": "bilibili_search",
+      "url": "https://api.bilibili.com/x/web-interface/search/type?search_type=video&keyword=python&page=1",
+      "status": 412,
+      "elapsed_ms": 196,
+      "error": "HTTPError"
+    },
+    {
+      "source": "xiaohongshu_search",
+      "url": "https://www.xiaohongshu.com/search_result?keyword=Python",
+      "status": 200,
+      "elapsed_ms": 668,
+      "shape": "non_json"
+    }
+  ],
+  "trending_adapter_calls": [
+    {
+      "platform": "bilibili",
+      "runtime_version": "0.7.2",
+      "ok": true,
+      "retrieved_at": "2026-11-04T22:05:41.263303+00:00",
+      "elapsed_ms": 223.56,
+      "shown_count": 5,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "bilibili-trending": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      },
+      "metadata": {
+        "returned_count": 5,
+        "shown_count": 5,
+        "cost": null,
+        "usage": null,
+        "access": "keyless",
+        "user_api_key_used": false,
+        "feed_scope": "public_hotword_list_not_video_search_or_video_popularity_ranking",
+        "rank_semantics": "endpoint_order_before_local_filtering",
+        "upstream_updated_at": 1793829517,
+        "upstream_updated_at_semantics": "raw_source_timestamp_not_publication",
+        "snapshot_complete": false,
+        "comments_fetched": false,
+        "facts_verified": false
+      }
+    },
+    {
+      "platform": "zhihu",
+      "runtime_version": "0.7.2",
+      "ok": true,
+      "retrieved_at": "2026-11-04T22:05:41.320179+00:00",
+      "elapsed_ms": 280.09,
+      "shown_count": 5,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "zhihu-trending": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      },
+      "metadata": {
+        "returned_count": 5,
+        "shown_count": 5,
+        "cost": null,
+        "usage": null,
+        "access": "keyless",
+        "user_api_key_used": false,
+        "feed_scope": "public_hot_question_list_not_answers_or_keyword_search",
+        "rank_semantics": "endpoint_order_before_local_filtering",
+        "upstream_updated_at": null,
+        "upstream_updated_at_semantics": "raw_source_timestamp_not_publication",
+        "snapshot_complete": false,
+        "comments_fetched": false,
+        "facts_verified": false
+      }
+    },
+    {
+      "platform": "v2ex",
+      "runtime_version": "0.7.2",
+      "ok": true,
+      "retrieved_at": "2026-11-04T22:05:41.637837+00:00",
+      "elapsed_ms": 596.67,
+      "shown_count": 5,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "v2ex-trending": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      },
+      "metadata": {
+        "returned_count": 8,
+        "shown_count": 5,
+        "cost": null,
+        "usage": null,
+        "access": "keyless",
+        "user_api_key_used": false,
+        "feed_scope": "public_hot_topics_not_full_site_search_or_replies",
+        "rank_semantics": "endpoint_order_before_local_filtering",
+        "upstream_updated_at": null,
+        "upstream_updated_at_semantics": "raw_source_timestamp_not_publication",
+        "snapshot_complete": false,
+        "comments_fetched": false,
+        "facts_verified": false
+      }
+    }
+  ],
+  "index_search_calls": [
+    {
+      "platform": "xiaohongshu",
+      "query": "Python 学习",
+      "ok": true,
+      "runtime_version": "0.7.2",
+      "retrieved_at": "2026-11-04T22:05:42.730419+00:00",
+      "elapsed_ms": 730.15,
+      "shown_count": 5,
+      "destination_types": {
+        "user_profile": 5
+      },
+      "budget": {
+        "limit": 2,
+        "attempts": 1,
+        "remaining": 1,
+        "by_provider": {
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      },
+      "facts_verified": false
+    },
+    {
+      "platform": "weibo",
+      "query": "人工智能",
+      "ok": true,
+      "runtime_version": "0.7.2",
+      "retrieved_at": "2026-11-04T22:05:43.892279+00:00",
+      "elapsed_ms": 1160.06,
+      "shown_count": 5,
+      "destination_types": {
+        "post_link": 3,
+        "profile_or_landing_page": 1,
+        "other_platform_page": 1
+      },
+      "budget": {
+        "limit": 2,
+        "attempts": 1,
+        "remaining": 1,
+        "by_provider": {
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      },
+      "facts_verified": false
+    }
+  ],
+  "known_limitations": [
+    "Single local network and time window",
+    "Feed snapshots are not native keyword search or read bodies/comments",
+    "No native Weibo/Xiaohongshu feed/search adapter added"
+  ],
+  "facts_verified": false,
+  "installed_acceptance": {
+    "version": "0.8.0",
+    "first_installed_sequence": {
+      "note": "The first two installed calls succeeded before a V2EX denial aborted the acceptance script; their elapsed values were not retained.",
+      "successful_platforms": [
+        "bilibili",
+        "zhihu"
+      ],
+      "v2ex": {
+        "ok": false,
+        "http_status": 403,
+        "attempts": 1,
+        "elapsed_ms": 634.91,
+        "no_retry": true
+      }
+    },
+    "subsequent_trending_checks": [
+      {
+        "platform": "bilibili",
+        "runtime_version": "0.8.0",
+        "ok": true,
+        "shown_count": 3,
+        "elapsed_ms": 429.81,
+        "budget": {
+          "limit": 1,
+          "attempts": 1,
+          "remaining": 0,
+          "by_provider": {
+            "bilibili-trending": 1
+          },
+          "scope": "current_invocation",
+          "unit": "provider_api_http_attempts"
+        },
+        "execution_summary": {
+          "api_http_attempts": 1,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 0,
+          "browser_commands": 0,
+          "browser_http_requests": 0
+        },
+        "error": null
+      },
+      {
+        "platform": "zhihu",
+        "runtime_version": "0.8.0",
+        "ok": true,
+        "shown_count": 3,
+        "elapsed_ms": 522.32,
+        "budget": {
+          "limit": 1,
+          "attempts": 1,
+          "remaining": 0,
+          "by_provider": {
+            "zhihu-trending": 1
+          },
+          "scope": "current_invocation",
+          "unit": "provider_api_http_attempts"
+        },
+        "execution_summary": {
+          "api_http_attempts": 1,
+          "keyed_api_attempts": 0,
+          "browser_navigation_attempts": 0,
+          "browser_commands": 0,
+          "browser_http_requests": 0
+        },
+        "error": null
+      },
+      {
+        "platform": "v2ex",
+        "runtime_version": "0.8.0",
+        "ok": false,
+        "shown_count": 0,
+        "elapsed_ms": 144.0,
+        "budget": null,
+        "execution_summary": null,
+        "error": {
+          "code": "source_cooldown",
+          "message": "Public source is cooling down or a duplicate request was suppressed; retry later or use another allowed source.",
+          "http_status": null,
+          "category": "rate_limit",
+          "retryable": false,
+          "attempts": 0
+        }
+      }
+    ],
+    "index_search": {
+      "platform": "xiaohongshu",
+      "ok": true,
+      "destination_types": {
+        "user_profile": 10
+      },
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "execution_summary": {
+        "api_http_attempts": 1,
+        "keyed_api_attempts": 0,
+        "browser_navigation_attempts": 0,
+        "browser_commands": 0,
+        "browser_http_requests": 0
+      }
+    }
+  }
+}

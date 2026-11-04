@@ -29,19 +29,21 @@ if SCRIPT_DIR not in sys.path:
     sys.path.insert(0, SCRIPT_DIR)
 from search_common import SearchError, RequestBudget, invalid, public_url, text_field, validate_site
 from search_providers import REGISTRY, get_provider as get_key_provider
-from public_providers import PUBLIC_REGISTRY, domain_matches
+from public_providers import PUBLIC_REGISTRY, domain_matches, platform_item_type
+from public_trends import TRENDING, TREND_PROVIDERS, run_trending
 from search_quality import filter_experimental
 from public_access import request_slot
 from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.7.2"
+VERSION = "0.8.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
 ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in ALL_REGISTRY.items() if p.fetch_endpoint})
 ENDPOINTS["fetch"] = REGISTRY["deepseek"].fetch_endpoint
+ENDPOINTS.update({name: provider.endpoint for name, provider in TREND_PROVIDERS.items()})
 ENV_KEYS = {name: p.env_keys for name, p in REGISTRY.items()}
 KEY_URLS = {name: p.key_url for name, p in REGISTRY.items()}
 MAX_RESPONSE = 16 * 1024 * 1024
@@ -49,6 +51,8 @@ CONFIG_SCHEMA = 2
 
 
 def get_provider(name):
+    if name in TREND_PROVIDERS:
+        return TREND_PROVIDERS[name]
     if name in PUBLIC_REGISTRY:
         return PUBLIC_REGISTRY[name]
     return get_key_provider(name)
@@ -329,6 +333,10 @@ def run_search(args, config, *, budget=None):
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
+                for row in rows:
+                    item_type = platform_item_type(getattr(args, "platform", None), row["url"])
+                    if item_type:
+                        row["platform_item_type"] = item_type
                 if p in ("bing", "duckduckgo", "browser"):
                     had_rows = bool(rows)
                     rows, dropped = filter_experimental(args.query, rows)
@@ -693,6 +701,10 @@ def parser():
     capabilities.add_argument("--provider", choices=ALL_PROVIDERS)
     platforms = sub.add_parser("platforms", help="Offline platform scope and optional local-tool presence; no tool is executed")
     platforms.add_argument("--platform", choices=tuple(PLATFORMS))
+    trending = sub.add_parser("trending", help="One keyless public hot-list snapshot; not keyword search, comments or history")
+    trending.add_argument("--platform", required=True, choices=tuple(TRENDING))
+    trending.add_argument("--count", type=int, choices=range(1, 51), metavar="1..50", default=10)
+    trending.add_argument("--timeout", type=int, choices=range(1, 121), metavar="1..120", default=8)
     configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
     configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
@@ -748,6 +760,10 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "trending":
+            result = run_trending(args, request_api, VERSION)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0
         if args.command == "platforms":
             print(json.dumps({"ok": True, "operation": "platforms", "version": VERSION,
                               **platform_catalog(args.platform)}, ensure_ascii=False, indent=2))
@@ -755,7 +771,8 @@ def main(argv=None):
         if args.command == "capabilities":
             names = [args.provider] if args.provider else ALL_PROVIDERS
             print(json.dumps({"ok": True, "operation": "capabilities", "version": VERSION,
-                              "providers": [get_provider(name).capabilities() for name in names]}, ensure_ascii=False, indent=2))
+                              "providers": [get_provider(name).capabilities() for name in names],
+                              "trending_sources": [p.capabilities() for p in TRENDING.values()] if not args.provider else []}, ensure_ascii=False, indent=2))
             return 0
         config = read_config()
         if args.command == "migrate-config":

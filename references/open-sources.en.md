@@ -6,6 +6,17 @@ Local search here means the local Agent calls public services directly and still
 
 ## Native indexes
 
+### Community snapshots
+
+`trending --platform bilibili|zhihu|v2ex --count 10` is separate from keyword search: one public endpoint, at most one HTTP attempt, an 8-second default timeout and no retries. Bilibili returns hotwords/search links/native heat; Zhihu returns question links/excerpts without reading answers; V2EX returns topic metadata without bodies/replies. Preserve source order, units and retrieval time. Unknown Bilibili/Zhihu publication times stay null. The catalog declares native_trending separately from native keyword-search coverage.
+
+Bilibili and Zhihu use experimental public website endpoints, not stable open-platform APIs with an SLA. Follow the [V2EX API fair-use rules](https://www.v2ex.com/p/7v9TEc53). Each feed is serialized across local processes with a two-second interval. Access denials (401/403/412) pause that feed for 15 minutes; 429/503 honor Retry-After, defaulting to 60 seconds when absent. Do not rotate cookies, IPs or browsers to retry a blocked feed.
+
+The direct Weibo endpoint returned 403; no native feed was added. No anonymous official general note-search API was confirmed for Xiaohongshu; its [account API documentation](https://openaccount.xiaohongshu.com/docs/api-reference) is not content search. Both still use public indexes, now with URL destination labels. Profiles are not note/post bodies. Authorized existing tools remain an optional path for native search/comments; no execution bridge has been added. See [live checks and next steps](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
+
+### Keyword and specialist indexes
+
+
 | platform | Task | Dates/languages | Boundary and official documentation |
 |---|---|---|---|
 | wikipedia | English/Chinese articles | --language en/zh; Chinese queries default to zh; edit timestamps are not publication dates | Article excerpts; [MediaWiki](https://www.mediawiki.org/wiki/API:Search) |

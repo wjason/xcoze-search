@@ -37,7 +37,7 @@ The optional Skills CLI installation method requires Node.js:
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.7.2 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.7.2/xcoze-search-skill-v0.7.2.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.8.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.8.0/xcoze-search-skill-v0.8.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Use in your Agent
 
@@ -76,6 +76,20 @@ To request it explicitly, start with “Use xcoze search.” If the Agent does n
 To add a service, say “Configure DeepSeek for xcoze search.” The Agent provides the official signup link, then guides you through a local hidden-input dialog. **Never paste keys into chat.** See [configure keys](#configure-keys) and [setup and troubleshooting](references/setup.en.md).
 
 ## Sources
+
+### Community trends (no key)
+
+Ask your Agent: “What questions are trending on Zhihu?” “What are Bilibili's hot search terms?” or “Show me V2EX's hot topics.”
+
+| Platform | Directly retrieved | Evidence limits |
+|---|---|---|
+| Zhihu | Public hot-list questions, excerpts, displayed heat and question links | No answer or comment bodies |
+| Bilibili | Public hotwords, native heat fields and search links | Hotwords are not video popularity rankings or video content |
+| V2EX | Hot-topic titles, nodes, creation times, reply counts and links | No topic bodies or replies |
+
+The Agent selects a feed when needed; ordinary searches do not request these feeds. Each snapshot retains its source order, retrieval time and metric meaning, without combining scores or promising complete coverage or availability. V2EX succeeded initially, then returned 403 during installed acceptance and was paused. One platform per call; no login, cookies or browser. See the [public-source checks and roadmap](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
+
+Xiaohongshu and Weibo currently use scoped public-index search. Links distinguish notes/posts, profiles and other pages. **Native site search, complete comments and live hot lists for these two platforms are not integrated.** The direct Weibo endpoint returned 403 in this check; the Xiaohongshu index sample mainly found profiles, not evidence that notes were read.
 
 ### No key required
 
@@ -151,6 +165,9 @@ Credentials are currently plaintext protected by local permissions, without OS c
 The Agent normally locates the Skill and runs these commands; users do not need to find files:
 
 ```bash
+python3 scripts/xcoze_search.py trending --platform zhihu --count 10
+python3 scripts/xcoze_search.py trending --platform bilibili --count 10
+python3 scripts/xcoze_search.py trending --platform v2ex --count 10
 python3 scripts/xcoze_search.py search 'Python asyncio official documentation'
 python3 scripts/xcoze_search.py search 'industrial vision' --platform github
 python3 scripts/xcoze_search.py search 'AI coding' --platform hackernews --start-date 2026-11-01

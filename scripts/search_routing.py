@@ -5,6 +5,7 @@ import re
 from search_common import SearchError, invalid
 from search_providers import REGISTRY
 from public_providers import PUBLIC_REGISTRY
+from public_trends import TRENDING
 from public_access import pause_status
 from browser_search import available as browser_available
 
@@ -33,6 +34,9 @@ def platform_catalog(platform=None):
                      "native_fetch": bool(adapter and adapter.fetch_endpoint),
                      "generic_fetch_may_help": True, "comment_threads_integrated": False, "transcripts_integrated": False,
                      "live_verified": False})
+        trend = TRENDING.get(name)
+        rows[-1].update({"native_trending": bool(trend), "trending_provider": trend.name if trend else None,
+                         "trending_scope": trend.feed_scope if trend else None})
     return {"platforms": rows, "local_tools": [
         {"name": name, "present": bool(shutil.which(name)), "role": role,
          "live_verified": False, "automatic_execution": False} for name, role in (

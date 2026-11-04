@@ -2,6 +2,13 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.8.0 — 2026-11-05
+
+159 offline tests pass. All three new feeds succeeded through the real adapters, one HTTP each: Bilibili about 0.22 s, Zhihu 0.28 s and V2EX 0.60 s, with no keyed requests, cookies or browser. Separate free Xiaohongshu/Weibo searches each used one anonymous Exa call, about 0.73/1.16 s. Xiaohongshu mainly returned profiles; Weibo mixed posts/profiles. This does not establish native search or read bodies.
+
+Retain the direct Weibo 403 and Bilibili keyword-search 412. Xiaohongshu HTML 200 only confirms a page response; anonymous results/bodies were not verified. Installed V2EX acceptance then returned 403 (one attempt) and paused; a later check returned source_cooldown with zero HTTP. Installed Bilibili/Zhihu calls continued to succeed. Local feed success is not multi-network acceptance. See [public-platform checks](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
+
+
 ## v0.7.2 — 2026-11-04
 
 149 offline tests pass. Six-task live comparison, same-query 360, official-site/short-query probes, changed-code replay, real Exa limit/natural recovery and controlled-preference weak-complement checks are recorded separately. Free/browser diagnostics reject keyed calls before API transport; no live pause reset or saved key/preference change.

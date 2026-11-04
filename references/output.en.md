@@ -1,6 +1,19 @@
-# Output contract v0.7.2
+# Output contract v0.8.0
 
 [简体中文](output.md) | **English**
+
+## Community-trending action
+
+`trending` is separate from Search/Fetch. Output includes operation:trending, platform, provider, retrieved_at, results, metadata, requests, budget and execution_summary; only bilibili/zhihu/v2ex are supported. One platform, at most one HTTP attempt, no retries, credential reading, paid fallback or browser fallback. Failures use the existing redacted top-level error and count sent HTTP attempts. Malformed records are errors; a valid empty array may return success with empty:true.
+
+Rows use content_kind:trending_item and empty content. Rank retains source-list position before local filtering. Bilibili removes explicit commercial markers and may leave rank gaps; destinations are hotword search pages. Zhihu returns question links/excerpts; V2EX returns topic metadata without bodies/replies. Heat values retain native units, never score. Bilibili/Zhihu published_at stays null; V2EX creation time is topic publication, not a ranking update.
+
+Metadata includes feed_scope, rank_semantics, upstream_updated_at (currently Bilibili's raw timestamp only), snapshot_complete:false and comments_fetched:false. Retrieval time is not an upstream update time. No complete site ranking, historical-list or ad-free guarantee. Unreported cost is null; keyed_api_attempts is zero.
+
+platforms adds native_trending, trending_provider and trending_scope without changing keyword-search native_provider/coverage. Unfiltered capabilities lists trending_sources separately. Feed adapters do not enter search-source choices, default-provider settings or Smart candidates.
+
+Xiaohongshu/Weibo index rows may include platform_item_type: user_profile / note_link / post_link / profile_or_landing_page / platform_search / other_platform_page. This labels known URL shapes only, not read bodies, verified identities or continued access.
+
 
 ## Automatic-routing additions
 

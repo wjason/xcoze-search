@@ -1,6 +1,19 @@
-# 输出契约 v0.7.2
+# 输出契约 v0.8.0
 
 **简体中文** | [English](output.en.md)
+
+## 社区热点动作
+
+`trending` 与 Search/Fetch 独立，输出 operation:trending、platform、provider、retrieved_at、results、metadata、requests、budget、execution_summary；只支持 bilibili/zhihu/v2ex。每次一个平台、最多一次 HTTP、零重试，不读凭据、没有付费或浏览器备用。失败沿用顶层脱敏 error，attempts 反映已发 HTTP；畸形结果不作为成功空列表，明确空数组可成功并 empty:true。
+
+results 的 content_kind:trending_item，content 为空；rank 为源列表在本地过滤前顺序。B 站剔除显式商业标记，可能保留序号缺口，URL 是热词搜索页；知乎为问题链接/摘录；V2EX 为话题元数据，不输出正文或回复。热度字段保留各自单位，score 不填热度。B 站/知乎 published_at:null；V2EX 为话题创建时间，非榜单更新时间。
+
+metadata 包含 feed_scope、rank_semantics、upstream_updated_at（目前只有 B 站原始 timestamp，可能未知）、snapshot_complete:false、comments_fetched:false。retrieved_at 是本次请求时间，不表示源数据恰好更新；不保证全站排行、历史列表或无广告完整性。cost 未报告为 null，keyed_api_attempts:0。
+
+platforms 新增 native_trending、trending_provider、trending_scope，不改变 native_provider/coverage 的关键词搜索语义。capabilities 默认另列 trending_sources，三家 feed 不加入搜索源清单、默认 provider 或 Smart 候选。
+
+小红书、微博公开索引结果可包含 platform_item_type：user_profile / note_link / post_link / profile_or_landing_page / platform_search / other_platform_page。它只标识已知 URL 形态，不证明正文、账号身份或笔记/帖子仍可访问。
+
 
 ## 自动路由的新增契约
 
