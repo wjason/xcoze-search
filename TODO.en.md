@@ -43,6 +43,11 @@ Updated 2026-11-05. Focus: Agent web search and source reading. Default automati
 
 ## P0: task quality and reliability
 
+- [x] Survey 165 free/public candidates/exclusions, six MCP protocol/query paths and ten public APIs. [Evidence](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md) is not integration.
+- [ ] Prioritize Parallel anonymous search/fetch; check legacy migration, quotas and initialization overhead.
+- [ ] Prioritize task-specific Microsoft Learn, MDN and searchcode. Validate Cloudflare Docs tails and grep.app hits before enabling.
+- [ ] Extend NDRC/NEA/NBS public originals/date parsing without claiming complete notice coverage.
+
 - [x] v0.8.0: integrate and live-check Zhihu hot questions, Bilibili hotwords and V2EX hot topics, separately from keyword search/bodies/comments.
 - [x] Distinguish Xiaohongshu/Weibo profiles from note/post links in indexed results.
 - [x] v0.9.0: CNS latest/finance and BBC RSS, bounded gov.cn policy index, Python/Rust originals; V2EX reading implemented with the live 403 retained.

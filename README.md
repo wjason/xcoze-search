@@ -201,6 +201,8 @@ python3 scripts/xcoze_search.py plan 'Python asyncio' --platform github
 
 ## 开发与范围
 
+[国内外免费与公开来源图谱](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)：165 个来源/候选与排除项，区分免 Key、免费额度、公开网页和自建工具，并附真实探测与接入优先级。
+
 运行离线测试：`python3 -m unittest discover -s tests -v`。结果保留原生顺序与分数、摘要与正文分别处理，不把脚本返回成功当作事实核实完成。
 
 当前聚焦联网搜索和阅读。自建 SearXNG、网页索引、企业资料搜索不在当前范围；站点登录、验证码处理和整站爬取也不是基础安装的一部分。[贡献指南](CONTRIBUTING.md) · [更新记录](CHANGELOG.md) · [竞品与服务调研](references/search-services.md)

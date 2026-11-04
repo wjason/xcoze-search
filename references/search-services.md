@@ -2,7 +2,7 @@
 
 **简体中文** | [English](search-services.en.md)
 
-核对：2026-11-03。资料来自项目代码和官方文档；没有将功能说明、星标或连通性测试作为检索质量排名。当前范围是联网搜索与读取，不包含自建实例、网页索引和企业资料搜索。
+免费来源政策盘点更新：2026-11-05；下列竞品源码快照核对于 2026-11-03。资料来自项目代码和官方文档；没有将功能说明、星标或连通性测试作为检索质量排名。当前范围是联网搜索与读取，不包含自建实例、网页索引和企业资料搜索。
 
 ## 实现参考与取舍
 
@@ -39,6 +39,10 @@
 | 博查 | [开放平台](https://open.bochaai.com/) | Web Search |
 
 ## 后续候选
+
+2026-11-05 扩展为 [165 条免费与公开来源图谱](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)，覆盖匿名 MCP、新闻、政策、科研、代码、社区、金融/地理数据及受限平台。Parallel、Microsoft Learn、MDN、searchcode、Cloudflare Docs 本轮返回相关内容；grep.app 本题无命中。GDELT/Semantic Scholar 429、Bluesky 403、dblp 非 JSON 均保留，不能将参考文档当验收。
+
+Tavily/Exa/Firecrawl/Brave/OpenAlex 等免费额度与免 Key 区分；已有 free 仍排除带 Key 适配器。没有安装新 MCP 或改变默认选路。
 
 Perplexity Search、Firecrawl、Parallel、Serper、SerpApi 和 Jina Search 仅按实际信息缺口安排，尚未接入。它们的免费体验、认证、数据契约和成本在实施时重新核对。平台专用动作也应逐项声明搜索、正文、评论和榜单覆盖，不用一个“支持平台”笼统代替。
 

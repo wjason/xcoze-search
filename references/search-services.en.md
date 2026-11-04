@@ -2,7 +2,7 @@
 
 [简体中文](search-services.md) | **English**
 
-Checked 2026-11-03 against project code and official documentation. Features, stars and connectivity are not search-quality rankings. Scope is web search/reading, excluding self-hosted instances, self-built indexes and enterprise document search.
+Free-source policy survey updated 2026-11-05; competitor code snapshots below were checked 2026-11-03 against project code and official documentation. Features, stars and connectivity are not search-quality rankings. Scope is web search/reading, excluding self-hosted instances, self-built indexes and enterprise document search.
 
 ## References and decisions
 
@@ -39,6 +39,10 @@ Keyless, open-source and no additional payment are distinct. Requests still reac
 | Bocha | [Platform](https://open.bochaai.com/) | Web Search |
 
 ## Future candidates
+
+The [165-entry free/public source map](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md) adds anonymous MCP, news, policy, research, code, community, finance/geography and restricted platforms. Parallel, Microsoft Learn, MDN, searchcode and Cloudflare Docs returned relevant data; grep.app had no hits. Retain GDELT/Semantic Scholar 429, Bluesky 403 and non-JSON dblp responses. References are not acceptance.
+
+Free credits from Tavily/Exa/Firecrawl/Brave/OpenAlex are separate from keyless access. Existing free mode still excludes keyed adapters. No new MCP connection or routing change was made.
 
 Perplexity Search, Firecrawl, Parallel, Serper, SerpApi and Jina Search remain unimplemented candidates for demonstrated gaps. Recheck trials, auth, contracts and costs at implementation time. Declare platform search, reading, comments and ranking capabilities independently rather than a blanket “supported platform” label.
 

@@ -201,6 +201,8 @@ v0.4.0 changes `auto` to routing and Fetch's default to `auto`. Pin a source for
 
 ## Development and scope
 
+[Free and public source map](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md): 165 source/candidate/exclusion entries separating keyless access, free credits, public pages and self-hosted tools, with live probes and priorities.
+
 Run offline tests: `python3 -m unittest discover -s tests -v`. Native order and scores remain intact, summaries and page text stay separate, and script success never means facts were verified.
 
 Focus is web search and reading. Self-hosted SearXNG, web indexes and enterprise document search are outside current scope; logins, challenge solving and full-site crawling are not part of base installation. [Contributing](CONTRIBUTING.en.md) · [Changelog](CHANGELOG.en.md) · [Research](references/search-services.en.md)

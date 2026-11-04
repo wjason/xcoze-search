@@ -1,0 +1,166 @@
+﻿id,category,access,name,source_url,verification,integration,priority,notes_zh,notes_en
+S001,web,A,Parallel Search MCP,https://parallel.ai/mcp,live_response,candidate,P0,搜索与网页读取，匿名有限额；独立于带 Key API,"Anonymous limited search/fetch, separate from keyed APIs"
+S002,web,A,Exa hosted MCP,https://exa.ai/docs/get-started/exa-mcp,candidate_reference,partial_or_existing_adapter,existing,已接入；匿名限额与 API 套餐分开,Integrated; anonymous limits differ from the keyed API plan
+S003,web,W,Bing RSS,https://www.bing.com/search?format=rss&q=python,candidate_reference,partial_or_existing_adapter,existing,已接实验路径，相关性/结构可变，不是正式免费 API 契约,"Integrated experimental feed, not a stable free API contract"
+S004,web,W,DuckDuckGo HTML,https://html.duckduckgo.com/html/,candidate_reference,partial_or_existing_adapter,existing,已接实验路径，验证页会阻断,Integrated experimental HTML; verification may block
+S005,web,A,DuckDuckGo Instant Answer,https://duckduckgo.com/api,candidate_reference,candidate,backlog,知识卡/即时答案，不是完整网页 SERP,"Instant answers/knowledge data, not full web SERP"
+S006,web,W,360 / Baidu / Sogou public search pages,https://www.so.com/,candidate_reference,partial_or_existing_adapter,existing,360 浏览器兜底已接；其他引擎待验证，免费网页不等于 API,"360 browser fallback integrated; others unverified, public UI is not API"
+S007,web,W,Google / Bing / Brave / Mojeek public UI,https://www.google.com/,candidate_reference,candidate,backlog,可选浏览器路径；验证码、地区与索引不同，不承诺匿名自动化,Optional browser candidates; access/region/index differ
+S008,web,Q,Tavily API,https://www.tavily.com/pricing,candidate_reference,partial_or_existing_adapter,existing,1000 credits/月，需 Key，无需信用卡；已接带 Key 适配,"1000 credits/month, key required, no card; keyed adapter integrated"
+S009,web,Q,Exa API,https://exa.ai/pricing,candidate_reference,partial_or_existing_adapter,existing,每月 $10 credits 加 $10 开户奖励，需 Key；不等于匿名 MCP,"Monthly $10 credits plus $10 onboarding bonus; key required, not anonymous MCP"
+S010,web,Q,Brave Search API,https://api-dashboard.search.brave.com/documentation/resources/help-feedback,candidate_reference,partial_or_existing_adapter,existing,每月 $5 credits；需 Key 和信用卡；不是独立免费套餐,"Monthly $5 credits; key/card required, no standalone free plan"
+S011,web,Q,Firecrawl,https://www.firecrawl.dev/pricing,candidate_reference,candidate,backlog,1000 credits/月，约500次搜索或1000页抓取，需 Key,"1000 credits/month, about 500 searches or 1000 scraped pages; key required"
+S012,web,T,Serper,https://serper.dev/,candidate_reference,candidate,backlog,2500 次免费体验，不能当作每月重置额度；第三方 Google SERP,"2500 free trial queries, not a monthly allowance; third-party Google SERP"
+S013,web,Q,SerpApi,https://serpapi.com/pricing,candidate_reference,candidate,backlog,250 次/月免费搜索，需 Key；第三方搜索结果服务,"250 free searches/month, key required; third-party SERP service"
+S014,web,T,Search1API,https://s1.dev/docs/essentials/credits-and-limits,candidate_reference,candidate,backlog,新账号100 credits，非月度额度，需 Key,"100 signup credits, not monthly; key required"
+S015,web,Q,Jina Reader / Search,https://jina.ai/reader/,candidate_reference,partial_or_existing_adapter,existing,Reader 已接匿名备用，本机见401；Search/高额度需单独核对鉴权,"Anonymous Reader fallback integrated, local 401 observed; verify Search/keyed access separately"
+S016,docs,A,Microsoft Learn MCP,https://learn.microsoft.com/en-us/training/support/mcp,live_response,candidate,P0,微软/Azure/.NET 官方文档与代码样例，非全网搜索,"Microsoft/Azure/.NET official docs/code samples, not general web"
+S017,docs,A,MDN MCP,https://developer.mozilla.org/en-US/mcp,live_response,candidate,P0,HTML/CSS/JS/Web API 文档与兼容数据,HTML/CSS/JS/Web API docs and browser compatibility
+S018,docs,A,Cloudflare Docs MCP,https://developers.cloudflare.com/workers/get-started/prompting/,live_response,candidate,P1,Workers/KV/R2 等官方文档；本题耗时尾部偏长,Official Workers/KV/R2 docs; relatively long tail in this sample
+S019,docs,A,OpenAI Docs MCP,https://developers.openai.com/resources/docs-mcp,candidate_reference,candidate,backlog,OpenAI 官方文档；本轮仅发现文档，未联调,"Official OpenAI docs; documentation discovery only, no live call here"
+S020,docs,Q,Context7,https://github.com/upstash/context7,candidate_reference,candidate,backlog,文档称 Key 推荐用于更高限额；匿名范围与当前套餐需联调,Docs recommend keys for higher limits; verify anonymous scope/current plan
+S021,docs,W,Python official docs / Sphinx inventories,https://docs.python.org/3/,candidate_reference,candidate,backlog,文档页/索引文件可读，不是统一搜索 API,"Readable docs/inventories, not a universal search API"
+S022,docs,W,Rust std / docs.rs,https://docs.rs/,candidate_reference,candidate,backlog,标准库与 crate 文档，版本需区分,Standard/crate docs; distinguish versions
+S023,docs,W,Read the Docs / llms.txt publisher docs,https://docs.readthedocs.com/platform/stable/reference/sitemaps.html,candidate_reference,candidate,backlog,站点地图/文档索引辅助定位，不保证全文或实时,"Sitemaps/doc indexes aid discovery, not complete/live retrieval"
+S024,news,A,China News Service RSS,https://www.chinanews.com.cn/rss/,candidate_reference,partial_or_existing_adapter,existing,即时/财经已接；还可扩国际、时政、科技等栏目,Latest/finance integrated; more publisher channels can be added
+S025,news,A,BBC RSS,https://www.bbc.co.uk/news/10628494,candidate_reference,partial_or_existing_adapter,existing,World 已接；可扩其他新闻栏目,World integrated; other publisher feeds are candidates
+S026,news,W,CCTV / CGTN RSS,https://english.cctv.cn/rss/,historical_official_listing_freshness_unverified,candidate,backlog,官方 RSS 页面存在，历史地址须验证更新鲜度,Official RSS listing exists; verify freshness of older endpoints
+S027,news,W,Xinhua RSS,https://www.xinhuanet.com/english/rss/index.htm,historical_official_listing_freshness_unverified,candidate,backlog,历史官方订阅入口；更新情况/使用范围待验证,Legacy official feeds; freshness/use scope needs checking
+S028,news,A,DW RSS,https://rss.dw.com/rdf/rss-en-all,candidate_reference,candidate,backlog,国际新闻订阅；摘要与正文分开,International news feed; distinguish excerpts from originals
+S029,news,A,UN News RSS,https://news.un.org/en/rss-feeds,candidate_reference,candidate,backlog,联合国新闻、多语言，有限订阅窗口,"UN multilingual news, finite feed windows"
+S030,news,A,NASA news feeds,https://www.nasa.gov/rss-feeds/,candidate_reference,candidate,backlog,航天/科研官方新闻，不是全文通用搜索,"Official space/research news, not general full-text search"
+S031,news,A,GDELT DOC / Context,https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/,live_limited_or_unparsed,candidate,P1-validation,多语言新闻检索；本次429，不能直接宣称当前可用,"Multilingual news retrieval; local 429, not currently accepted"
+S032,news,W,Google News RSS,https://news.google.com/,candidate_reference,candidate,backlog,实验性新闻索引候选，不称正式免费 News API,"Experimental news-index candidate, not an official free News API"
+S033,news,Q,Guardian Open Platform,https://open-platform.theguardian.com/access/,candidate_reference,candidate,backlog,免费开发 Key 限非商业；商业/数据挖掘用途另议,Free developer key is non-commercial; commercial/mining use differs
+S034,news,Q,NewsAPI.org,https://newsapi.org/pricing,candidate_reference,candidate,backlog,100次/日，开发测试，文章延迟24小时；不宜免费实时主路,"100/day, development/testing, 24h article delay; unsuitable as live default"
+S035,news,Q,GNews,https://gnews.io/pricing,candidate_reference,candidate,backlog,100次/日，非商业，12小时延迟、正文截断,"100/day, non-commercial, 12h delay and truncated content"
+S036,news,Q,NewsData.io,https://newsdata.io/pricing,candidate_reference,candidate,backlog,200 credits/日，测试/个人，新闻延迟12小时,"200 credits/day, testing/personal use, 12h delay"
+S037,news,Q,TheNewsAPI,https://www.thenewsapi.com/pricing,candidate_reference,candidate,backlog,100次/日，每次3篇；生产用途需继续核对许可,"100/day, three articles/request; verify production terms"
+S038,cn-official,A,China gov.cn latest-policy index,https://www.gov.cn/zhengce/zuixin/,candidate_reference,partial_or_existing_adapter,existing,已接有限 JSON 列表，包含文件/解读，不是全国全集,"Integrated finite JSON list incl. explainers, not national completeness"
+S039,cn-official,W,NDRC notices / announcements,https://www.ndrc.gov.cn/xxgk/zcfb/tz/,candidate_reference,candidate,P0,公开文件原文与日期；需专用解析，不承诺稳定 API,"Public originals/dates; site-specific parsing, not stable API"
+S040,cn-official,W,National Energy Administration,https://www.nea.gov.cn/,candidate_reference,candidate,P0,能源政策、公告、统计与发布会,"Energy policy, notices, statistics and press releases"
+S041,cn-official,W,National Bureau of Statistics releases,https://www.stats.gov.cn/sj/zxfb/,candidate_reference,candidate,P0,PMI/CPI/GDP 等发布原文,Original statistical releases including PMI/CPI/GDP
+S042,cn-official,W,National Data / NBS database,https://data.stats.gov.cn/,candidate_reference,candidate,backlog,统计数据门户；新前端，不能把旧接口当稳定契约,Statistics portal with changed frontend; old endpoints not stable contracts
+S043,cn-official,W,MIIT,https://www.miit.gov.cn/,candidate_reference,candidate,P1,产业、软件、装备、通信公告原文,Industrial/software/equipment/telecom policy originals
+S044,cn-official,W,Ministry of Commerce,https://www.mofcom.gov.cn/,candidate_reference,candidate,backlog,贸易、出口、产业政策；公开栏目按需读取,Trade/export policy; on-demand public-page reading
+S045,cn-official,W,Ministry of Ecology and Environment,https://www.mee.gov.cn/,candidate_reference,candidate,backlog,环保、碳市场、环境标准与公告,Environment/carbon-market/standards notices
+S046,cn-official,W,People's Bank of China,https://www.pbc.gov.cn/,candidate_reference,candidate,backlog,货币政策、金融统计等官方发布,Monetary policy and financial statistics releases
+S047,cn-official,W,CSRC,https://www.csrc.gov.cn/,candidate_reference,candidate,backlog,证券监管规则、公告和政策,"Securities rules, notices and policy"
+S048,cn-official,W,SAMR standards disclosure,https://openstd.samr.gov.cn/,candidate_reference,candidate,backlog,公开标准目录/可公开全文；不承诺所有标准免费或可批量下载,"Public standards/catalogs, not all standards free or bulk-accessible"
+S049,cn-official,W,National law database,https://flk.npc.gov.cn/,candidate_reference,candidate,backlog,法律原文入口；本轮浏览工具403，无开放 API 承诺,"Law originals; browser tool 403 here, no open API promise"
+S050,cn-official,W,China Government Procurement,https://www.ccgp.gov.cn/,candidate_reference,candidate,backlog,招标、中标、采购公告；搜索访问控制待适配,Procurement/tender notices; search controls need adaptation
+S051,cn-official,W,National public resource trading platform,https://www.ggzy.gov.cn/,candidate_reference,candidate,backlog,工程、土地、产权等交易公告,Public works/land/property trading notices
+S052,cn-official,W,CNInfo public disclosures,https://www.cninfo.com.cn/new/index,candidate_reference,candidate,P1-validation,公告网页/PDF公开；官方数据 API 另有鉴权/套餐,Public disclosure pages/PDFs; data API has separate access/plans
+S053,cn-official,W,SSE / SZSE / BSE disclosures,https://www.sse.com.cn/disclosure/listedinfo/announcement/,candidate_reference,candidate,backlog,交易所原始公告，不把授权数据服务称免费 API,"Exchange original disclosures, not licensed data feeds for free"
+S054,cn-official,A,DATA.GOV.HK,https://data.gov.hk/en/help/api-spec,candidate_reference,candidate,backlog,公开数据集目录/API；具体数据集授权单独核对,Public dataset catalog/APIs; check dataset-specific terms
+S055,cn-official,W,Beijing / Shanghai / Shenzhen open-data portals,https://data.sh.gov.cn/,candidate_reference,candidate,backlog,目录可查，部分 API 需注册；不能概括全免 Key,"Catalogs public; some APIs require signup, not universally keyless"
+S056,cn-official,W,data.gov.tw,https://data.gov.tw/,candidate_reference,candidate,backlog,开放数据目录，逐数据集区分访问和授权,"Open-data catalog, dataset-specific access/licensing"
+S057,global-official,A,Federal Register API,https://www.federalregister.gov/developers/documentation/api/v1,candidate_reference,candidate,backlog,美国联邦规则/公告检索；法定原件另核对 govinfo,US federal rules/notices discovery; authoritative originals via govinfo
+S058,global-official,A,SEC EDGAR public data,https://www.sec.gov/search-filings/edgar-application-programming-interfaces,candidate_reference,candidate,P1,公司申报/XBRL免 Key；提交历史不等于全站全文检索,Keyless submissions/XBRL; not universal full-text search
+S059,global-official,A,GOV.UK content/search,https://docs.publishing.service.gov.uk/apis.html,candidate_reference,candidate,backlog,英国政府公开内容/API，区分搜索与单页内容,"UK public content/APIs, distinguish search and page content"
+S060,global-official,A,UK legislation,https://www.legislation.gov.uk/developer,candidate_reference,candidate,backlog,法律数据/格式访问，非法律结论验证,"Legislation data/formats, not legal conclusion verification"
+S061,global-official,A,Eurostat,https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access,candidate_reference,candidate,backlog,欧洲统计 API，指标有发布滞后,"European statistical APIs, release lags apply"
+S062,global-official,A,World Bank Indicators,https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation,candidate_reference,candidate,backlog,宏观/经济指标，非实时行情,"Macroeconomic indicators, not live market quotes"
+S063,global-official,A,OECD SDMX,https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html,candidate_reference,candidate,backlog,经济统计，限频/数据集范围待联调,Economic statistics; verify limits/dataset scope
+S064,global-official,Q,api.data.gov / govinfo / Congress APIs,https://api.data.gov/,candidate_reference,candidate,backlog,很多联邦服务用免费 Key；不是所有 data.gov 数据同一鉴权,Many federal services use free keys; not uniform authentication
+S065,academic,A,arXiv,https://info.arxiv.org/help/api/index.html,candidate_reference,partial_or_existing_adapter,existing,已接论文元数据/摘要；PDF按需另读,Integrated metadata/abstracts; PDFs separate
+S066,academic,A,Crossref,https://www.crossref.org/documentation/retrieve-metadata/rest-api/,candidate_reference,partial_or_existing_adapter,existing,已接 DOI/出版信息，不保证有正文,"Integrated DOI/publication metadata, not guaranteed full text"
+S067,academic,A,DataCite,https://support.datacite.org/docs/api,live_response,candidate,P1,数据/论文 DOI 元数据；本轮匿名请求成功,Dataset/work DOI metadata; anonymous call succeeded
+S068,academic,A,dblp,https://dblp.org/faq/How+to+use+the+dblp+search+API.html,live_limited_or_unparsed,candidate,backlog,计算机论文；本轮响应未能按 JSON 解析，需再核验,CS bibliography; response was not parseable JSON in this check
+S069,academic,A,Europe PMC,https://europepmc.org/RestfulWebService,candidate_reference,partial_or_existing_adapter,existing,已接生物医学摘要/元数据；不等于临床结论,"Integrated biomedical abstracts/metadata, not clinical validation"
+S070,academic,A,NCBI PubMed / PMC E-utilities,https://www.ncbi.nlm.nih.gov/books/NBK25501/,candidate_reference,candidate,backlog,元数据与开放全文子集；可选 Key 提升限额,Metadata/open-text subset; optional key raises limits
+S071,academic,A,HAL,https://api.archives-ouvertes.fr/docs,live_response,candidate,P2,开放科研记录；本轮匿名请求成功,Open research records; anonymous request succeeded
+S072,academic,Q,OpenAIRE,https://graph.openaire.eu/develop/api.html,candidate_reference,candidate,backlog,开放科研图谱；当前端点注册/鉴权政策未核定，不列为已确认免 Key,"Open research graph; current endpoint signup/auth policy unconfirmed, not accepted as keyless"
+S073,academic,A,Zenodo public records,https://developers.zenodo.org/,live_response,candidate,P1,公开 records 搜索本轮免 Key 成功；上传/私有接口需授权,Anonymous public records succeeded; upload/private APIs require auth
+S074,academic,A,Figshare public articles,https://docs.figshare.com/,live_response,candidate,P2,公开科研记录本轮免 Key 成功；受限文件另行授权,Anonymous public articles succeeded; restricted files separate
+S075,academic,A,bioRxiv / medRxiv,https://api.biorxiv.org/,candidate_reference,candidate,backlog,按日期/DOI/类别获取预印本；不等于通用关键词搜索,"Date/DOI/category preprint retrieval, not generic keyword search"
+S076,academic,A,ClinicalTrials.gov,https://clinicaltrials.gov/data-api/api,candidate_reference,candidate,backlog,试验注册资料，不证明疗效,"Trial registrations, not proof of efficacy"
+S077,academic,A,OpenReview public notes,https://docs.openreview.net/,candidate_reference,candidate,backlog,公开论文/评审，权限按 venue/记录区分,Public notes/reviews; venue/record permissions vary
+S078,academic,A,Open Library,https://openlibrary.org/developers/api,live_response,candidate,P1,图书元数据查询本轮成功；不等于免费借阅/下载整书,Book metadata succeeded; not unrestricted book downloads/loans
+S079,academic,A,Internet Archive search,https://archive.org/developers/,candidate_reference,candidate,backlog,馆藏/元数据与部分全文，受限资源不可等同开放,Catalog/metadata/some text; restricted resources separate
+S080,academic,A,Library of Congress,https://www.loc.gov/apis/,candidate_reference,candidate,backlog,公开馆藏 JSON/检索接口，权限逐资源判断,Public collection JSON/search; rights per item
+S081,academic,A,Wikisource,https://www.mediawiki.org/wiki/API:Main_page,candidate_reference,candidate,backlog,开放文献库，复用 MediaWiki 访问规范,Open textual library via MediaWiki interfaces
+S082,academic,Q,OpenAlex,https://help.openalex.org/access/pricing/,candidate_reference,candidate,P2-opt-in-key,当前 API 要 Key；免费 $1/日，无需付款方式，非免 Key,"API key now required; $1/day free, no payment method, not keyless"
+S083,academic,Q,Semantic Scholar,https://www.semanticscholar.org/product/api,live_limited_or_unparsed,candidate,P2-opt-in-key,可申请免费 Key；匿名池本轮429，不作为可靠默认源,Free key available; anonymous pool returned 429
+S084,academic,Q,CORE,https://core.ac.uk/services/api,candidate_reference,candidate,backlog,开放研究聚合，免费范围/Key/限额需实施时核对,Open research aggregation; verify free/key/limit terms
+S085,academic,Q,Unpaywall,https://unpaywall.org/products/api,candidate_reference,candidate,backlog,找 DOI 的开放获取链接，需邮箱标识；不是通用论文搜索,"DOI-to-OA links with email identification, not general paper search"
+S086,academic,Q,Google Books API,https://developers.google.com/books/docs/v1/using,candidate_reference,candidate,backlog,图书元数据/有限预览，Key/配额与正文权限分开,Book metadata/previews; key/quota separate from text rights
+S087,academic,Q,Europeana,https://pro.europeana.eu/page/apis,candidate_reference,candidate,backlog,文化馆藏，开发 Key 与资源授权各自核对,Cultural collections; developer keys and item rights separate
+S088,tech,A,GitHub REST public repositories,https://docs.github.com/en/rest/search/search,candidate_reference,partial_or_existing_adapter,existing,已接仓库/README；匿名受限，代码搜索需要认证,"Integrated repos/README; anonymous limits, code search needs auth"
+S089,tech,A,GitLab public projects,https://docs.gitlab.com/api/projects/,candidate_reference,partial_or_existing_adapter,existing,已接公开项目；不是匿名全局代码搜索,"Integrated public projects, not anonymous global code search"
+S090,tech,A,Codeberg / Forgejo,https://codeberg.org/api/swagger,candidate_reference,candidate,backlog,公开项目 API；实例限额和索引范围要验证,Public-project API; verify instance limits/coverage
+S091,tech,Q,Gitee API,https://gitee.com/api/v5/swagger,candidate_reference,candidate,backlog,国内开源项目，可读范围/令牌与限频逐端点核对,Chinese repos; verify per-endpoint token/access/limits
+S092,tech,A,npm registry,https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md,candidate_reference,partial_or_existing_adapter,existing,已接包搜索和元数据，不是质量/安全结论,"Integrated package search/metadata, not quality/security verdicts"
+S093,tech,A,PyPI JSON / Simple,https://docs.pypi.org/api/,candidate_reference,candidate,P1,包名/版本/依赖元数据；不是全站关键词搜索 API,"Named package/version/dependency metadata, not global text-search API"
+S094,tech,A,crates.io,https://crates.io/data-access,candidate_reference,partial_or_existing_adapter,existing,已接 Rust 包检索，版本/稳定版要区分,Integrated Rust package search; stable/prerelease distinction
+S095,tech,A,Maven Central,https://central.sonatype.org/search/rest-api-guide/,candidate_reference,candidate,P1,Java 构件元数据搜索,Java artifact metadata search
+S096,tech,A,NuGet,https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource,candidate_reference,candidate,P2,.NET 包搜索/元数据,.NET package search/metadata
+S097,tech,A,Packagist,https://packagist.org/apidoc,candidate_reference,candidate,backlog,PHP 包搜索/元数据，多数读取免认证,PHP package search/metadata; many reads anonymous
+S098,tech,A,RubyGems,https://guides.rubygems.org/rubygems-org-api/,candidate_reference,candidate,backlog,Ruby 包搜索/元数据，写操作需 Key,Ruby package reads/search; writes need keys
+S099,tech,A,Go module proxy,https://go.dev/ref/mod#module-proxy,candidate_reference,candidate,backlog,按模块路径查版本；不是全站关键词搜索,"Module-path/version lookup, not universal keyword search"
+S100,tech,A,Hugging Face Hub,https://huggingface.co/docs/hub/api,candidate_reference,partial_or_existing_adapter,existing,模型已接，可扩数据集/Space；受限内容需授权,"Models integrated; datasets/Spaces candidates, gated content separate"
+S101,tech,Q,Docker Hub,https://docs.docker.com/reference/api/hub/latest/,candidate_reference,candidate,backlog,公开镜像元数据，拉取/搜索配额及认证另核对,Public image metadata; pull/search quotas/auth vary
+S102,tech,A,searchcode MCP,https://searchcode.com/,live_response,candidate,P0,公测免费免 Key；指定仓库内代码检索，不是全网代码索引,"Keyless free beta; code within a named repo, not global code index"
+S103,tech,A,grep.app MCP,https://vercel.com/blog/grep-a-million-github-repositories-via-mcp,protocol_ok_no_hits,candidate,P1-validation,公开跨仓库代码检索；本题无命中，不能称质量通过,Public cross-repo code retrieval; this query had no hits
+S104,tech,Q,Libraries.io,https://libraries.io/api,candidate_reference,candidate,backlog,依赖/包索引；Key、免费范围与数据许可待核验,Dependency/package index; verify keys/free scope/data terms
+S105,community,A,Hacker News / Algolia,https://hn.algolia.com/api,candidate_reference,partial_or_existing_adapter,existing,已接帖子检索；官方单条与评论树分开,Integrated story search; item/comment-tree reading separate
+S106,community,A,Stack Exchange family,https://api.stackexchange.com/docs,candidate_reference,partial_or_existing_adapter,existing,已接问题，可扩回答/评论；保留署名许可,"Questions integrated; answers/comments candidates, attribution required"
+S107,community,A,Discourse public communities,https://docs.discourse.org/,candidate_reference,partial_or_existing_adapter,existing,Python/Rust 主帖已接；各站可关闭公开 API,Python/Rust originals integrated; sites may disable public access
+S108,community,A,V2EX public API,https://www.v2ex.com/p/7v9TEc53,candidate_reference,partial_or_existing_adapter,existing,热点/主帖已实现；本机403，不能宣称当前可用,"Hot/original adapters implemented; local 403, not currently accepted"
+S109,community,A,DEV.to / Forem,https://developers.forem.com/api,live_response,candidate,P1,公开技术文章，列表本轮免 Key 成功,Public technical articles; anonymous listing succeeded
+S110,community,A,Lobsters,https://lobste.rs/,candidate_reference,candidate,backlog,技术链接社区 RSS/JSON 候选，未联调,"Technical link-community RSS/JSON candidate, not live-tested"
+S111,community,A,Lemmy public instances,https://join-lemmy.org/api/,candidate_reference,candidate,backlog,公开帖子/评论，依赖实例开放策略，不默认任意公共实例,Public posts/comments vary by instance; no arbitrary public default
+S112,community,Q,Mastodon,https://docs.joinmastodon.org/methods/search/,candidate_reference,candidate,backlog,全文搜索常需 token/索引支持，不能称全联邦搜索,"Full-text search often needs token/index support, not global federation"
+S113,community,A,Bluesky public AppView,https://docs.bsky.app/docs/advanced-guides/api-directory,live_limited_or_unparsed,candidate,P2-validation,公开社交流；本轮搜索403，需继续验证,"Public social views; local search 403, further validation required"
+S114,community,W,Cnblogs RSS,https://www.cnblogs.com/,candidate_reference,candidate,backlog,个人/社区技术订阅候选，逐 feed 验证,"Personal/community tech feeds, per-feed validation needed"
+S115,knowledge,A,Wikipedia,https://www.mediawiki.org/wiki/API:Search,candidate_reference,partial_or_existing_adapter,existing,已接中英文条目；编辑日期非发布日期,English/Chinese articles integrated; edit date is not publication
+S116,knowledge,A,Wikidata,https://www.wikidata.org/wiki/Wikidata:Data_access,candidate_reference,candidate,P1,实体/关系/标识符，SPARQL有限流，不是新闻搜索,"Entities/relations/IDs, SPARQL limits, not news search"
+S117,knowledge,A,Wikimedia Commons,https://commons.wikimedia.org/wiki/Commons:API,candidate_reference,candidate,backlog,图片/音视频元数据；逐项署名许可,Media metadata; attribution/license per item
+S118,knowledge,A,Openverse,https://docs.openverse.org/api/,candidate_reference,candidate,P2,开放许可图片/音频；匿名与认证限额不同,Open-license images/audio; anonymous/authenticated limits differ
+S119,knowledge,A,GBIF,https://www.gbif.org/developer/summary,candidate_reference,candidate,backlog,物种/生物多样性，下载任务与读取权限不同,Species/biodiversity; download jobs differ from public reads
+S120,knowledge,A,iNaturalist,https://api.inaturalist.org/v1/docs/,candidate_reference,candidate,backlog,物种观察记录，逐数据/图片许可,"Species observations, per-data/image rights"
+S121,knowledge,A,ROR,https://ror.readme.io/docs/rest-api,candidate_reference,candidate,backlog,机构标识/名称消歧；不是文章搜索,"Institution IDs/name disambiguation, not article search"
+S122,knowledge,Q,ORCID public API,https://info.orcid.org/documentation/integration-guide/orcid-api-2/,candidate_reference,candidate,backlog,研究者身份信息；公开 API 凭据/使用范围要核对,Researcher identities; verify public API credentials/scope
+S123,archive,A,Common Crawl URL Index,https://index.commoncrawl.org/,candidate_reference,candidate,backlog,抓取快照 URL 索引，不是实时全文搜索；自建全文索引仍不做,"Crawl-snapshot URL index, not live full-text search; no self-built index scope"
+S124,archive,A,Wayback / CDX,https://archive.org/developers/wayback-cdx-server.html,candidate_reference,candidate,backlog,历史 URL/快照，不能替代当前网页原文,"Historical URL/snapshots, not current-page evidence"
+S125,archive,A,Arquivo.pt,https://arquivo.pt/api,candidate_reference,candidate,backlog,历史网页全文/URL检索，非实时网络,"Archived full-text/URL retrieval, not live web"
+S126,data,A,USGS earthquake feeds/API,https://earthquake.usgs.gov/fdsnws/event/1/,candidate_reference,candidate,backlog,事件与地震资料，已提供标准公开接口,Standard public earthquake/event data
+S127,data,A,NOAA NCEI data service,https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation,candidate_reference,candidate,backlog,特定气象历史数据无需统一通用搜索,"Dataset-specific historical weather, not general search"
+S128,data,A,weather.gov API,https://www.weather.gov/documentation/services-web-api,candidate_reference,candidate,backlog,美国天气预报/告警，User-Agent与限频要求,US forecasts/alerts with UA/rate requirements
+S129,data,Q,EIA Open Data,https://www.eia.gov/opendata/,candidate_reference,candidate,backlog,能源、电力、油气数据，免费 Key,Energy/electricity/oil/gas data with free key
+S130,data,Q,ENTSO-E Transparency,https://transparency.entsoe.eu/,candidate_reference,candidate,backlog,欧洲电力，注册 token 与数据条款核对,European power data; register token and check data terms
+S131,data,Q,NASA public APIs,https://api.nasa.gov/,candidate_reference,candidate,backlog,多数接口使用免费 Key，演示 Key 限额低,Many APIs use free keys; demo-key limits are low
+S132,data,Q,Open-Meteo,https://open-meteo.com/en/pricing,candidate_reference,candidate,backlog,免费端点用于评估/原型；商用需订阅许可,Free endpoint for evaluation/prototyping; commercial subscription differs
+S133,data,A,OpenStreetMap Nominatim,https://operations.osmfoundation.org/policies/nominatim/,candidate_reference,candidate,backlog,地名/地理编码，严格公共服务用量规范，不是全网搜索,Place/geocoding with strict public-service usage limits
+S134,data,A,Overpass public API,https://wiki.openstreetmap.org/wiki/Overpass_API,candidate_reference,candidate,backlog,OSM地理要素查询，实例容量有限，不默认广播,"OSM feature queries; instance capacity limited, no fan-out default"
+S135,data,Q,GeoNames,https://www.geonames.org/export/web-services.html,candidate_reference,candidate,backlog,地名服务需要注册用户名，免费/付费限额分开,"Geographic names require registered username, tiered limits"
+S136,restricted,R,X API,https://docs.x.com/x-api/getting-started/pricing,candidate_reference,candidate,backlog,按量预付费；赠送激励不是永久免费公开搜索,Prepaid usage; promotional incentives are not permanent free search
+S137,restricted,R,Reddit Data API,https://redditinc.com/policies/data-api-terms,candidate_reference,candidate,backlog,审批、用途和商用范围限制，不称无条件免费,"Approval/use/commercial restrictions, not unconditionally free"
+S138,restricted,R,Xiaohongshu,https://openaccount.xiaohongshu.com/docs/api-reference,candidate_reference,candidate,backlog,账号授权不等于通用笔记搜索；只保留已有公开索引路径,Account auth is not general note search; current indexed route retained
+S139,restricted,R,Weibo,https://open.weibo.com/wiki/API,candidate_reference,candidate,backlog,公开网页/开放平台不同；本机匿名热榜403,Public web differs from open-platform API; anonymous hot list 403 locally
+S140,restricted,W,Zhihu,https://www.zhihu.com/,candidate_reference,partial_or_existing_adapter,existing,实验热榜已接，不含完整站内检索/答案/评论,"Experimental hot list integrated, not full search/answers/comments"
+S141,restricted,W,Bilibili,https://www.bilibili.com/,candidate_reference,partial_or_existing_adapter,existing,热词已接，关键词接口本机412，字幕/评论另论,Hotwords integrated; native keyword search 412 locally; subtitles/comments separate
+S142,restricted,R,WeChat / Sogou WeChat,https://mp.weixin.qq.com/,candidate_reference,candidate,backlog,公众号授权接口不是公开全网公众号文章搜索 API,Authorized official-account APIs are not global article-search APIs
+S143,restricted,R,Douyin / Kuaishou,https://developer.open-douyin.com/,candidate_reference,candidate,backlog,业务授权 API，不等于任意视频/评论公共搜索,"Business-authorized APIs, not arbitrary public video/comment search"
+S144,restricted,W,Douban / Tieba / Juejin / CSDN / OSChina,https://www.douban.com/,candidate_reference,candidate,backlog,部分公开网页可读，不承诺稳定免费站内 API,"Some public pages readable, no stable free native API promise"
+S145,tools,S,SearXNG,https://docs.searxng.org/,candidate_reference,candidate,backlog,开源元搜索软件，不是免费托管源；自建路线仍移出范围,"Open-source metasearch software, not free hosting; self-hosting remains out of scope"
+S146,tools,S,RSSHub / RSS-Bridge,https://docs.rsshub.app/,candidate_reference,candidate,backlog,订阅转换工具，公共实例/目标登录/维护成本不能忽略,"Feed-conversion tools, not guaranteed public hosting or new independent indexes"
+S147,tools,S,Miniflux / FreshRSS,https://miniflux.app/,candidate_reference,candidate,backlog,订阅阅读器，不是新增新闻来源或搜索引擎,"Feed readers, not new news sources or search engines"
+S148,academic,A,DOAJ,https://doaj.org/api/docs,candidate_reference,candidate,backlog,开放期刊/文章元数据；不是所有文章正文下载接口,"Open journal/article metadata, not all article-body downloads"
+S149,academic,Q,NASA ADS,https://ui.adsabs.harvard.edu/help/api/,candidate_reference,candidate,backlog,天文物理论文检索需免费 token；具体限额待验收,Astronomy/physics literature with free token; limits need acceptance
+S150,academic,Q,BASE,https://www.base-search.net/about/en/about_develop.php,candidate_reference,candidate,backlog,科研聚合检索，API 接入/使用条件须申请核定,Research aggregation; API access/use conditions need approval review
+S151,patents,Q,USPTO Open Data Portal,https://data.uspto.gov/apis/api-catalog,candidate_reference,candidate,backlog,美国专利/商标数据，注册/Key 要求按 API 核对,US patent/trademark data; per-API registration/key rules
+S152,patents,Q,EPO Open Patent Services,https://www.epo.org/en/searching-for-patents/data/web-services/ops,candidate_reference,candidate,backlog,专利检索/书目信息，注册、免费额度与公平使用另核对,Patent/bibliographic data; signup/free quota/fair-use conditions
+S153,patents,W,Google Patents,https://patents.google.com/,candidate_reference,candidate,backlog,公开专利网页检索；不是无条件免费自动化 API,"Public patent search UI, not an unconditional free automation API"
+S154,patents,W,CNIPA public services,https://www.cnipa.gov.cn/,candidate_reference,candidate,backlog,专利公开信息入口，登录/验证码与接口权限须核对,Patent information portal; login/challenge/API access need verification
+S155,finance,Q,FRED,https://fred.stlouisfed.org/docs/api/fred/,candidate_reference,candidate,backlog,宏观/利率数据需免费 Key，非实时股票行情,"Macro/rate data with free key, not live equity quotes"
+S156,finance,A,US BLS public data,https://www.bls.gov/developers/,candidate_reference,candidate,backlog,统计时间序列；免注册与注册版本限额不同,Statistical time series; unregistered/registered limits differ
+S157,finance,Q,US Census data APIs,https://www.census.gov/data/developers/data-sets.html,candidate_reference,candidate,backlog,统计数据/API，Key 与数据集配额需核验,Statistical datasets/APIs; verify keys/dataset limits
+S158,finance,Q,Tushare,https://tushare.pro/document/1,candidate_reference,candidate,backlog,需 token，积分/权限不同；不能称全部行情免费,Token/points/access tiers; not all market data free
+S159,finance,A,BaoStock,https://www.baostock.com/,candidate_reference,candidate,backlog,匿名默认登录的历史行情候选；SDK协议/时效/许可待联调,Historical-market candidate with default anonymous login; verify SDK/freshness/terms
+S160,finance,Q,CoinGecko Demo API,https://docs.coingecko.com/reference/setting-up-your-api-key,candidate_reference,candidate,backlog,免费 Demo Key，配额与商业/实时能力另核对,Free demo key; quota/commercial/live scope needs verification
+S161,finance,W,Yahoo Finance public pages,https://finance.yahoo.com/,candidate_reference,candidate,backlog,公开行情页与非官方端点不同；不承诺稳定 API/实时许可,Public quote pages differ from unofficial APIs; no stability/live-rights promise
+S162,finance,W,Stooq historical data,https://stooq.com/db/h/,candidate_reference,candidate,backlog,历史资料候选，不代表免费实时行情或可再分发,"Historical data candidate, not free live quotes/redistribution rights"
+S163,podcasts,A,Apple iTunes Search API,https://performance-partners.apple.com/search-api,candidate_reference,candidate,backlog,播客/媒体元数据，音频全文和转录权限分开,Podcast/media metadata; audio/transcript rights separate
+S164,podcasts,Q,Podcast Index,https://podcastindex-org.github.io/docs-api/,candidate_reference,candidate,backlog,播客目录需开发 Key，不能当作任意节目转录 API,"Podcast catalog with developer key, not arbitrary transcript API"
+S165,podcasts,Q,Listen Notes,https://www.listennotes.com/api/pricing/,candidate_reference,candidate,backlog,播客检索有免费档候选，配额/用途须验收,Podcast-search free-tier candidate; verify quotas/use

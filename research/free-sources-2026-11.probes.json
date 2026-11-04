@@ -1,0 +1,298 @@
+{
+  "checked_on": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "documentation_vs_live": "Published references are not integration or license acceptance. One local question per new MCP source; API checks inspect shape only.",
+  "no_credentials_sent": true,
+  "connections_installed": false,
+  "mcp_list_checks": [
+    {
+      "source": "parallel",
+      "endpoint": "https://search.parallel.ai/mcp",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 1366,
+      "tools": [
+        "web_search",
+        "web_fetch"
+      ],
+      "protocol_version": "2025-03-26"
+    },
+    {
+      "source": "searchcode",
+      "endpoint": "https://api.searchcode.com/v1/mcp",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 3340,
+      "tools": [
+        "code_analyze",
+        "code_search",
+        "code_get_file",
+        "code_file_tree",
+        "code_get_files",
+        "code_get_findings",
+        "code_find_usages"
+      ],
+      "protocol_version": "2025-03-26"
+    },
+    {
+      "source": "grep",
+      "endpoint": "https://mcp.grep.app",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 1941,
+      "tools": [
+        "searchGitHub"
+      ],
+      "protocol_version": "2025-03-26"
+    },
+    {
+      "source": "mslearn",
+      "endpoint": "https://learn.microsoft.com/api/mcp",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 1418,
+      "tools": [
+        "microsoft_docs_search",
+        "microsoft_code_sample_search",
+        "microsoft_docs_fetch"
+      ],
+      "protocol_version": "2025-03-26"
+    },
+    {
+      "source": "mdn",
+      "endpoint": "https://mcp.mdn.mozilla.net/",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 3750,
+      "tools": [
+        "get-compat",
+        "get-doc",
+        "search"
+      ],
+      "protocol_version": "2025-03-26"
+    },
+    {
+      "source": "cloudflare-docs",
+      "endpoint": "https://docs.mcp.cloudflare.com/mcp",
+      "ok": true,
+      "phase": "tools/list",
+      "attempts": 3,
+      "elapsed_ms": 855,
+      "tools": [
+        "search_cloudflare_documentation",
+        "migrate_pages_to_workers_guide"
+      ],
+      "protocol_version": "2025-03-26"
+    }
+  ],
+  "mcp_queries": [
+    {
+      "source": "parallel",
+      "endpoint": "https://search.parallel.ai/mcp",
+      "tool": "web_search",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 885,
+      "total_ms": 1614,
+      "text_characters": 27508,
+      "links": [
+        "https://docs.python.org/3.12/library/asyncio-task.html",
+        "https://docs.python.org/3.14/library/asyncio-task.html",
+        "https://docs.python.org/3/library/asyncio-task.html?q=1789088134386",
+        "https://docs.python.org/3/library/asyncio-task.html?highlight=asyncio%2Brun",
+        "https://docs.python.org/3/library/asyncio-task.html?highlight=task"
+      ],
+      "error_code": null,
+      "retrieval_has_hits": true
+    },
+    {
+      "source": "searchcode",
+      "endpoint": "https://api.searchcode.com/v1/mcp",
+      "tool": "code_search",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 1013,
+      "total_ms": 2762,
+      "text_characters": 1392,
+      "links": [
+        "https://github.com/expressjs/express"
+      ],
+      "error_code": null,
+      "retrieval_has_hits": true
+    },
+    {
+      "source": "grep",
+      "endpoint": "https://mcp.grep.app",
+      "tool": "searchGitHub",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 677,
+      "total_ms": 1832,
+      "text_characters": 32,
+      "links": [],
+      "error_code": null,
+      "retrieval_has_hits": false
+    },
+    {
+      "source": "mslearn",
+      "endpoint": "https://learn.microsoft.com/api/mcp",
+      "tool": "microsoft_docs_search",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 702,
+      "total_ms": 1580,
+      "text_characters": 32913,
+      "links": [
+        "https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing#route-constraints",
+        "https://learn.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-trigger#usage",
+        "https://learn.microsoft.com/azure/azure-functions/functions-bindings-http-webhook-output",
+        "https://learn.microsoft.com/azure/azure-functions/functions-bindings-http-webhook",
+        "https://learn.microsoft.com/azure/azure-functions/manage-connections"
+      ],
+      "error_code": null,
+      "retrieval_has_hits": true
+    },
+    {
+      "source": "mdn",
+      "endpoint": "https://mcp.mdn.mozilla.net/",
+      "tool": "search",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 1477,
+      "total_ms": 3467,
+      "text_characters": 2809,
+      "links": [],
+      "error_code": null,
+      "retrieval_has_hits": true
+    },
+    {
+      "source": "cloudflare-docs",
+      "endpoint": "https://docs.mcp.cloudflare.com/mcp",
+      "tool": "search_cloudflare_documentation",
+      "ok": true,
+      "http_attempts": 3,
+      "tool_call_ms": 7493,
+      "total_ms": 7924,
+      "text_characters": 31666,
+      "links": [
+        "https://developers.cloudflare.com/kv/api/write-key-value-pairs/",
+        "https://developers.cloudflare.com/changelog/product-group/developer-platform/9/",
+        "https://developers.cloudflare.com/kv/examples/cache-data-with-workers-kv/",
+        "https://developers.cloudflare.com/changelog/product/kv/"
+      ],
+      "error_code": null,
+      "retrieval_has_hits": true
+    }
+  ],
+  "public_api_checks": [
+    {
+      "source": "gdelt",
+      "endpoint": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22renewable%20energy%22&mode=artlist&format=json&maxrecords=3&timespan=1d",
+      "ok": false,
+      "http_status": 429,
+      "http_attempts": 1,
+      "elapsed_ms": 10964,
+      "error": "HTTPError"
+    },
+    {
+      "source": "datacite",
+      "endpoint": "https://api.datacite.org/dois?query=wind%20energy&page%5Bsize%5D=1",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 2532,
+      "result_count": 1,
+      "response_characters": 6350,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "dblp",
+      "endpoint": "https://dblp.org/search/publ/api?q=agent%20search&format=json&h=1",
+      "ok": false,
+      "http_status": null,
+      "http_attempts": 1,
+      "elapsed_ms": 1193,
+      "error": "JSONDecodeError"
+    },
+    {
+      "source": "openlibrary",
+      "endpoint": "https://openlibrary.org/search.json?q=renewable%20energy&limit=1",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 1056,
+      "result_count": 1,
+      "response_characters": 690,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "devto",
+      "endpoint": "https://dev.to/api/articles?tag=python&per_page=1",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 841,
+      "result_count": 1,
+      "response_characters": 2486,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "bluesky",
+      "endpoint": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=python&limit=1",
+      "ok": false,
+      "http_status": 403,
+      "http_attempts": 1,
+      "elapsed_ms": 335,
+      "error": "HTTPError"
+    },
+    {
+      "source": "hal",
+      "endpoint": "https://api.archives-ouvertes.fr/search/?q=title_t:energy&fl=title_s,uri_s&rows=1&wt=json",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 1280,
+      "result_count": 1,
+      "response_characters": 284,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "zenodo",
+      "endpoint": "https://zenodo.org/api/records?q=wind&size=1",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 1520,
+      "result_count": 1,
+      "response_characters": 12581,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "figshare",
+      "endpoint": "https://api.figshare.com/v2/articles?page_size=1",
+      "ok": true,
+      "http_status": 200,
+      "http_attempts": 1,
+      "elapsed_ms": 2366,
+      "result_count": 1,
+      "response_characters": 1285,
+      "note": "Shape/transport check, not correctness or license acceptance."
+    },
+    {
+      "source": "semantic-scholar",
+      "endpoint": "https://api.semanticscholar.org/graph/v1/paper/search?query=wind%20energy&limit=1&fields=title,url",
+      "ok": false,
+      "http_status": 429,
+      "http_attempts": 1,
+      "elapsed_ms": 542,
+      "error": "HTTPError"
+    }
+  ],
+  "client_http_operations": 46,
+  "count_scope": "Client top-level HTTP operations; internal redirects and documentation browsing are not measured. No credentialed calls or provider account creation."
+}

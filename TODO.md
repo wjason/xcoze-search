@@ -43,6 +43,11 @@
 
 ## P0：当前效果与稳定性
 
+- [x] 165 条免费/公开来源候选与排除项盘点，6 个新 MCP 协议与真实查询、10 个公开 API 检查；[结果](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)不等于已接入。
+- [ ] 优先接入并评估 Parallel 匿名搜索/读取，关注 legacy 入口迁移、限额与初始化开销。
+- [ ] 优先补 Microsoft Learn、MDN、searchcode 的按任务接口；Cloudflare Docs 和 grep.app 先补尾延迟/命中验收。
+- [ ] 优先扩国家发改委、能源局、统计局的公开文件与日期解析；不以文件数量代表全量公告。
+
 - [x] v0.8.0：接入知乎热榜、B 站热搜词、V2EX 热门话题，实际调用验证；与关键词搜索/正文/评论能力分开。
 - [x] 小红书、微博索引链接区分账号主页与笔记/帖子，避免把主页当正文。
 - [x] v0.9.0：中新网即时/财经与 BBC RSS、中国政府网有限政策索引、Python/Rust 社区主帖；V2EX 主帖实现且保留本次 403。
@@ -74,7 +79,7 @@
 
 - [ ] Perplexity Search：增加原始搜索结果来源。
 - [ ] Firecrawl Search / Scrape：增加搜索和明确选择的网页提取路径。
-- [ ] Parallel Search：保留任务目标与字面查询的差别。
+- [ ] Parallel 带 Key Search API：与 P0 匿名 MCP 分开；保留任务目标与字面查询的差别。
 - [ ] Serper、SerpApi：按需求增加第三方 Google SERP 来源。
 - [ ] Jina Search：与已实现的免 Key Reader 分开接入和计费。
 
