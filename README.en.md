@@ -77,55 +77,7 @@ To add a service, say “Configure DeepSeek for xcoze search.” The Agent provi
 
 ## Sources
 
-### Source map: 165 entries
-
-The map includes integrated sources, items awaiting validation and restricted platforms. Counts are catalog entries; see details for integration and API availability.
-
-| Category | Count | Common entries (up to 10) | Details |
-|---|---:|---|---|
-| Web search | 15 | Parallel Search MCP, Exa hosted MCP, Bing RSS, DuckDuckGo HTML, DuckDuckGo Instant Answer, 360 / Baidu / Sogou public search pages, Google / Bing / Brave / Mojeek public UI, Tavily API, Exa API, Brave Search API | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#general-web-search-and-reading) |
-| Technical docs | 8 | Microsoft Learn MCP, MDN MCP, Cloudflare Docs MCP, OpenAI Docs MCP, Context7, Python official docs / Sphinx inventories, Rust std / docs.rs, Read the Docs / llms.txt publisher docs | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#official-technical-documentation) |
-| News feeds | 14 | China News Service RSS, BBC RSS, CCTV / CGTN RSS, Xinhua RSS, DW RSS, UN News RSS, NASA news feeds, GDELT DOC / Context, Google News RSS, Guardian Open Platform | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#news-and-publisher-feeds) |
-| Chinese policy | 19 | China gov.cn latest-policy index, NDRC notices / announcements, National Energy Administration, National Bureau of Statistics releases, National Data / NBS database, MIIT, Ministry of Commerce, Ministry of Ecology and Environment, People's Bank of China, CSRC | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#chinese-language-public-policy-disclosures-and-data) |
-| Global government | 8 | Federal Register API, SEC EDGAR public data, GOV.UK content/search, UK legislation, Eurostat, World Bank Indicators, OECD SDMX, api.data.gov / govinfo / Congress APIs | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#international-government-and-statistics) |
-| Research | 26 | arXiv, Crossref, DataCite, dblp, Europe PMC, NCBI PubMed / PMC E-utilities, HAL, OpenAIRE, Zenodo public records, Figshare public articles | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#papers-books-and-research) |
-| Code and packages | 17 | GitHub REST public repositories, GitLab public projects, Codeberg / Forgejo, Gitee API, npm registry, PyPI JSON / Simple, crates.io, Maven Central, NuGet, Packagist | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#code-packages-and-models) |
-| Communities | 10 | Hacker News / Algolia, Stack Exchange family, Discourse public communities, V2EX public API, DEV.to / Forem, Lobsters, Lemmy public instances, Mastodon, Bluesky public AppView, Cnblogs RSS | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#community-and-social-interfaces) |
-| Knowledge and media | 8 | Wikipedia, Wikidata, Wikimedia Commons, Openverse, GBIF, iNaturalist, ROR, ORCID public API | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#knowledge-entities-and-media) |
-| Archives | 3 | Common Crawl URL Index, Wayback / CDX, Arquivo.pt | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#historical-web-and-archives) |
-| Energy, weather and geography | 10 | USGS earthquake feeds/API, NOAA NCEI data service, weather.gov API, EIA Open Data, ENTSO-E Transparency, NASA public APIs, Open-Meteo, OpenStreetMap Nominatim, Overpass public API, GeoNames | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#weather-geography-energy-and-events) |
-| Restricted platforms | 9 | X API, Reddit Data API, Xiaohongshu, Weibo, Zhihu, Bilibili, WeChat / Sogou WeChat, Douyin / Kuaishou, Douban / Tieba / Juejin / CSDN / OSChina | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#platforms-without-unconditional-free-automation) |
-| Self-hosted tools | 3 | SearXNG, RSSHub / RSS-Bridge, Miniflux / FreshRSS | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#toolsself-hosting-not-hosted-sources) |
-| Patents | 4 | USPTO Open Data Portal, EPO Open Patent Services, Google Patents, CNIPA public services | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#patents-and-intellectual-property) |
-| Finance and economics | 8 | FRED, US BLS public data, US Census data APIs, Tushare, BaoStock, CoinGecko Demo API, Yahoo Finance public pages, Stooq historical data | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#finance-economics-and-market-data) |
-| Podcasts | 3 | Apple iTunes Search API, Podcast Index, Listen Notes | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#podcasts-and-audio-metadata) |
-
-Reference checks covered 165 entries: 136 returned 2xx, 8 redirected, 17 returned HTTP errors and 4 had network failures. **A 2xx reference page does not prove a working search API or integration.** [Per-entry audit](https://github.com/wjason/xcoze-search/blob/main/research/source-reference-audit-2026-11-05.json).
-
-Fifteen anonymous APIs were sampled: 14 returned expected structures and one returned 403. [View samples](https://github.com/wjason/xcoze-search/blob/main/research/source-functional-samples-2026-11-05.json).
-
-### News feeds, government policy and community originals
-
-- **Publisher RSS:** read China News Service latest/finance and BBC World feeds directly, with literal/date filtering of the current window. For example: “Find recent CIIE reports in the CNS feed, then read the originals.”
-- **Government policy:** filter the gov.cn latest-policy index for titles, portal publication dates and official links. This is not a complete nationwide notice database; read originals to check effective dates.
-- **Community originals:** read original posts on Python/Rust community forums. The V2EX original-post adapter is implemented but returned 403 on this network. Code indentation and links are retained; the original post is not a complete comment thread.
-
-These paths need no key or browser. If a feed has no matches, the Agent can search under existing preferences; an empty window does not establish that no relevant news exists. [Usage](references/feeds.en.md) · [Live search/read checks](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md)
-
-
-### Community trends (no key)
-
-Ask your Agent: “What questions are trending on Zhihu?” “What are Bilibili's hot search terms?” or “Show me V2EX's hot topics.”
-
-| Platform | Directly retrieved | Evidence limits |
-|---|---|---|
-| Zhihu | Public hot-list questions, excerpts, displayed heat and question links | No answer or comment bodies |
-| Bilibili | Public hotwords, native heat fields and search links | Hotwords are not video popularity rankings or video content |
-| V2EX | Hot-topic titles, nodes, creation times, reply counts and links | No topic bodies or replies |
-
-The Agent selects a feed when needed; ordinary searches do not request these feeds. Each snapshot retains its source order, retrieval time and metric meaning, without combining scores or promising complete coverage or availability. V2EX succeeded initially, then returned 403 during installed acceptance and was paused. One platform per call; no login, cookies or browser. See the [public-source checks and roadmap](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
-
-Xiaohongshu and Weibo currently use scoped public-index search. Links distinguish notes/posts, profiles and other pages. **Native site search, complete comments and live hot lists for these two platforms are not integrated.** The direct Weibo endpoint returned 403 in this check; the Xiaohongshu index sample mainly found profiles, not evidence that notes were read.
+These are the search, reading and trend sources currently integrated into xcoze search. Availability and rate limits depend on each upstream service.
 
 ### No key required
 
@@ -148,6 +100,28 @@ Xiaohongshu and Weibo currently use scoped public-index search. Links distinguis
 
 The Agent can reuse available native search, page reading and browser tools; this Skill does not install or take them over. Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX and Douban support scoped public-index search, which does not promise native site search, complete text or comments. Use existing authorized platform tools for those operations when available.
 
+### News feeds, government policy and community originals
+
+- **Publisher RSS:** read China News Service latest/finance and BBC World feeds directly, with literal/date filtering of the current window. For example: “Find recent CIIE reports in the CNS feed, then read the originals.”
+- **Government policy:** filter the gov.cn latest-policy index for titles, portal publication dates and official links. This is not a complete nationwide notice database; read originals to check effective dates.
+- **Community originals:** read original posts on Python/Rust community forums. The V2EX original-post adapter is implemented but returned 403 on this network. Code indentation and links are retained; the original post is not a complete comment thread.
+
+These paths need no key or browser. If a feed has no matches, the Agent can search under existing preferences; an empty window does not establish that no relevant news exists. [Usage](references/feeds.en.md) · [Live search/read checks](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md)
+
+### Community trends (no key)
+
+Ask your Agent: “What questions are trending on Zhihu?” “What are Bilibili's hot search terms?” or “Show me V2EX's hot topics.”
+
+| Platform | Directly retrieved | Evidence limits |
+|---|---|---|
+| Zhihu | Public hot-list questions, excerpts, displayed heat and question links | No answer or comment bodies |
+| Bilibili | Public hotwords, native heat fields and search links | Hotwords are not video popularity rankings or video content |
+| V2EX | Hot-topic titles, nodes, creation times, reply counts and links | No topic bodies or replies |
+
+The Agent selects a feed when needed; ordinary searches do not request these feeds. Each snapshot retains its source order, retrieval time and metric meaning, without combining scores or promising complete coverage or availability. V2EX succeeded initially, then returned 403 during installed acceptance and was paused. One platform per call; no login, cookies or browser. See the [public-source checks and roadmap](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
+
+Xiaohongshu and Weibo currently use scoped public-index search. Links distinguish notes/posts, profiles and other pages. **Native site search, complete comments and live hot lists for these two platforms are not integrated.** The direct Weibo endpoint returned 403 in this check; the Xiaohongshu index sample mainly found profiles, not evidence that notes were read.
+
 ### Bring your own key
 
 | Service | Implemented | Environment variable |
@@ -162,6 +136,303 @@ The Agent can reuse available native search, page reading and browser tools; thi
 Accounts and billing are independent. Configured, enabled keys participate in default quality-first routing. Free strategy excludes all keyed adapters, including accounts with promotional credits. See [provider contracts](references/providers.en.md).
 
 Implementation, account verification and search quality are separate. Local checks on 2026-11-03 obtained usable Bing RSS, GitHub, HN and Jina responses; Exa keyless MCP initially returned 403 but later search succeeded, DuckDuckGo returned a verification response, and GitHub README returned 403. These are network-specific observations, not availability promises. Keyed-provider evidence is in [validation](VALIDATION.en.md).
+
+### Source directory
+
+The directory covers all 165 entries in our research, including services not yet integrated and self-hosted tools outside the current scope. A directory entry or accessible website does not imply that its search API is available or supported. “Partially integrated” may refer to only some of the services or capabilities in an entry. Public endpoints may impose limits or usage conditions. [Research and verification details](research/free-sources-2026-11.en.md).
+
+<details>
+<summary>Web search and reading（15）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Parallel Search MCP](https://parallel.ai/mcp) | Public endpoint | Not integrated |
+| [Exa hosted MCP](https://exa.ai/docs/get-started/exa-mcp) | Public endpoint | Partially integrated |
+| [Bing RSS](https://www.bing.com/search?format=rss&q=python) | Public website | Partially integrated |
+| [DuckDuckGo HTML](https://html.duckduckgo.com/html/) | Public website | Partially integrated |
+| [DuckDuckGo Instant Answer](https://duckduckgo.com/api) | Public endpoint | Not integrated |
+| [360 / Baidu / Sogou public search pages](https://www.so.com/) | Public website | Partially integrated |
+| [Google / Bing / Brave / Mojeek public UI](https://www.google.com/) | Public website | Not integrated |
+| [Tavily API](https://www.tavily.com/pricing) | Registration or conditions | Partially integrated |
+| [Exa API](https://exa.ai/pricing) | Registration or conditions | Partially integrated |
+| [Brave Search API](https://api-dashboard.search.brave.com/documentation/resources/help-feedback) | Registration or conditions | Partially integrated |
+| [Firecrawl](https://www.firecrawl.dev/pricing) | Registration or conditions | Not integrated |
+| [Serper](https://serper.dev/) | Trial credits | Not integrated |
+| [SerpApi](https://serpapi.com/pricing) | Registration or conditions | Not integrated |
+| [Search1API](https://s1.dev/docs/essentials/credits-and-limits) | Trial credits | Not integrated |
+| [Jina Reader / Search](https://jina.ai/reader/) | Registration or conditions | Partially integrated |
+
+</details>
+
+<details>
+<summary>Technical documentation（8）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Microsoft Learn MCP](https://learn.microsoft.com/en-us/training/support/mcp) | Public endpoint | Not integrated |
+| [MDN MCP](https://developer.mozilla.org/en-US/mcp) | Public endpoint | Not integrated |
+| [Cloudflare Docs MCP](https://developers.cloudflare.com/workers/get-started/prompting/) | Public endpoint | Not integrated |
+| [OpenAI Docs MCP](https://developers.openai.com/resources/docs-mcp) | Public endpoint | Not integrated |
+| [Context7](https://github.com/upstash/context7) | Registration or conditions | Not integrated |
+| [Python official docs / Sphinx inventories](https://docs.python.org/3/) | Public website | Not integrated |
+| [Rust std / docs.rs](https://docs.rs/) | Public website | Not integrated |
+| [Read the Docs / llms.txt publisher docs](https://docs.readthedocs.com/platform/stable/reference/sitemaps.html) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>News and feeds（14）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [China News Service RSS](https://www.chinanews.com.cn/rss/) | Public endpoint | Partially integrated |
+| [BBC RSS](https://www.bbc.co.uk/news/10628494) | Public endpoint | Partially integrated |
+| [CCTV / CGTN RSS](https://english.cctv.cn/rss/) | Public website | Not integrated |
+| [Xinhua RSS](https://www.xinhuanet.com/english/rss/index.htm) | Public website | Not integrated |
+| [DW RSS](https://rss.dw.com/rdf/rss-en-all) | Public endpoint | Not integrated |
+| [UN News RSS](https://news.un.org/en/rss-feeds) | Public endpoint | Not integrated |
+| [NASA news feeds](https://www.nasa.gov/rss-feeds/) | Public endpoint | Not integrated |
+| [GDELT DOC / Context](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) | Public endpoint | Not integrated |
+| [Google News RSS](https://news.google.com/) | Public website | Not integrated |
+| [Guardian Open Platform](https://open-platform.theguardian.com/access/) | Registration or conditions | Not integrated |
+| [NewsAPI.org](https://newsapi.org/pricing) | Registration or conditions | Not integrated |
+| [GNews](https://gnews.io/pricing) | Registration or conditions | Not integrated |
+| [NewsData.io](https://newsdata.io/pricing) | Registration or conditions | Not integrated |
+| [TheNewsAPI](https://www.thenewsapi.com/pricing) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Chinese government and public data（19）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [China gov.cn latest-policy index](https://www.gov.cn/zhengce/zuixin/) | Public endpoint | Partially integrated |
+| [NDRC notices / announcements](https://www.ndrc.gov.cn/xxgk/zcfb/tz/) | Public website | Not integrated |
+| [National Energy Administration](https://www.nea.gov.cn/) | Public website | Not integrated |
+| [National Bureau of Statistics releases](https://www.stats.gov.cn/sj/zxfb/) | Public website | Not integrated |
+| [National Data / NBS database](https://data.stats.gov.cn/) | Public website | Not integrated |
+| [MIIT](https://www.miit.gov.cn/) | Public website | Not integrated |
+| [Ministry of Commerce](https://www.mofcom.gov.cn/) | Public website | Not integrated |
+| [Ministry of Ecology and Environment](https://www.mee.gov.cn/) | Public website | Not integrated |
+| [People's Bank of China](https://www.pbc.gov.cn/) | Public website | Not integrated |
+| [CSRC](https://www.csrc.gov.cn/) | Public website | Not integrated |
+| [SAMR standards disclosure](https://openstd.samr.gov.cn/) | Public website | Not integrated |
+| [National law database](https://flk.npc.gov.cn/) | Public website | Not integrated |
+| [China Government Procurement](https://www.ccgp.gov.cn/) | Public website | Not integrated |
+| [National public resource trading platform](https://www.ggzy.gov.cn/) | Public website | Not integrated |
+| [CNInfo public disclosures](https://www.cninfo.com.cn/new/index) | Public website | Not integrated |
+| [SSE / SZSE / BSE disclosures](https://www.sse.com.cn/disclosure/listedinfo/announcement/) | Public website | Not integrated |
+| [DATA.GOV.HK](https://data.gov.hk/en/help/api-spec) | Public endpoint | Not integrated |
+| [Beijing / Shanghai / Shenzhen open-data portals](https://data.sh.gov.cn/) | Public website | Not integrated |
+| [data.gov.tw](https://data.gov.tw/) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>International government and statistics（8）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | Public endpoint | Not integrated |
+| [SEC EDGAR public data](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | Public endpoint | Not integrated |
+| [GOV.UK content/search](https://docs.publishing.service.gov.uk/apis.html) | Public endpoint | Not integrated |
+| [UK legislation](https://www.legislation.gov.uk/developer) | Public endpoint | Not integrated |
+| [Eurostat](https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access) | Public endpoint | Not integrated |
+| [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | Public endpoint | Not integrated |
+| [OECD SDMX](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) | Public endpoint | Not integrated |
+| [api.data.gov / govinfo / Congress APIs](https://api.data.gov/) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Research and scholarly literature（26）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [arXiv](https://info.arxiv.org/help/api/index.html) | Public endpoint | Partially integrated |
+| [Crossref](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) | Public endpoint | Partially integrated |
+| [DataCite](https://support.datacite.org/docs/api) | Public endpoint | Not integrated |
+| [dblp](https://dblp.org/faq/How+to+use+the+dblp+search+API.html) | Public endpoint | Not integrated |
+| [Europe PMC](https://europepmc.org/RestfulWebService) | Public endpoint | Partially integrated |
+| [NCBI PubMed / PMC E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/) | Public endpoint | Not integrated |
+| [HAL](https://api.archives-ouvertes.fr/docs) | Public endpoint | Not integrated |
+| [OpenAIRE](https://graph.openaire.eu/develop/api.html) | Registration or conditions | Not integrated |
+| [Zenodo public records](https://developers.zenodo.org/) | Public endpoint | Not integrated |
+| [Figshare public articles](https://docs.figshare.com/) | Public endpoint | Not integrated |
+| [bioRxiv / medRxiv](https://api.biorxiv.org/) | Public endpoint | Not integrated |
+| [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | Public endpoint | Not integrated |
+| [OpenReview public notes](https://docs.openreview.net/) | Public endpoint | Not integrated |
+| [Open Library](https://openlibrary.org/developers/api) | Public endpoint | Not integrated |
+| [Internet Archive search](https://archive.org/developers/) | Public endpoint | Not integrated |
+| [Library of Congress](https://www.loc.gov/apis/) | Public endpoint | Not integrated |
+| [Wikisource](https://www.mediawiki.org/wiki/API:Main_page) | Public endpoint | Not integrated |
+| [OpenAlex](https://help.openalex.org/access/pricing/) | Registration or conditions | Not integrated |
+| [Semantic Scholar](https://www.semanticscholar.org/product/api) | Registration or conditions | Not integrated |
+| [CORE](https://core.ac.uk/services/api) | Registration or conditions | Not integrated |
+| [Unpaywall](https://unpaywall.org/products/api) | Registration or conditions | Not integrated |
+| [Google Books API](https://developers.google.com/books/docs/v1/using) | Registration or conditions | Not integrated |
+| [Europeana](https://pro.europeana.eu/page/apis) | Registration or conditions | Not integrated |
+| [DOAJ](https://doaj.org/api/docs) | Public endpoint | Not integrated |
+| [NASA ADS](https://ui.adsabs.harvard.edu/help/api/) | Registration or conditions | Not integrated |
+| [BASE](https://www.base-search.net/about/en/about_develop.php) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Code, packages and models（17）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [GitHub REST public repositories](https://docs.github.com/en/rest/search/search) | Public endpoint | Partially integrated |
+| [GitLab public projects](https://docs.gitlab.com/api/projects/) | Public endpoint | Partially integrated |
+| [Codeberg / Forgejo](https://codeberg.org/api/swagger) | Public endpoint | Not integrated |
+| [Gitee API](https://gitee.com/api/v5/swagger) | Registration or conditions | Not integrated |
+| [npm registry](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md) | Public endpoint | Partially integrated |
+| [PyPI JSON / Simple](https://docs.pypi.org/api/) | Public endpoint | Not integrated |
+| [crates.io](https://crates.io/data-access) | Public endpoint | Partially integrated |
+| [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | Public endpoint | Not integrated |
+| [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | Public endpoint | Not integrated |
+| [Packagist](https://packagist.org/apidoc) | Public endpoint | Not integrated |
+| [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | Public endpoint | Not integrated |
+| [Go module proxy](https://go.dev/ref/mod#module-proxy) | Public endpoint | Not integrated |
+| [Hugging Face Hub](https://huggingface.co/docs/hub/api) | Public endpoint | Partially integrated |
+| [Docker Hub](https://docs.docker.com/reference/api/hub/latest/) | Registration or conditions | Not integrated |
+| [searchcode MCP](https://searchcode.com/) | Public endpoint | Not integrated |
+| [grep.app MCP](https://vercel.com/blog/grep-a-million-github-repositories-via-mcp) | Public endpoint | Not integrated |
+| [Libraries.io](https://libraries.io/api) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Communities and social media（10）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Hacker News / Algolia](https://hn.algolia.com/api) | Public endpoint | Partially integrated |
+| [Stack Exchange family](https://api.stackexchange.com/docs) | Public endpoint | Partially integrated |
+| [Discourse public communities](https://docs.discourse.org/) | Public endpoint | Partially integrated |
+| [V2EX public API](https://www.v2ex.com/p/7v9TEc53) | Public endpoint | Partially integrated |
+| [DEV.to / Forem](https://developers.forem.com/api) | Public endpoint | Not integrated |
+| [Lobsters](https://lobste.rs/) | Public endpoint | Not integrated |
+| [Lemmy public instances](https://join-lemmy.org/api/) | Public endpoint | Not integrated |
+| [Mastodon](https://docs.joinmastodon.org/methods/search/) | Registration or conditions | Not integrated |
+| [Bluesky public AppView](https://docs.bsky.app/docs/advanced-guides/api-directory) | Public endpoint | Not integrated |
+| [Cnblogs RSS](https://www.cnblogs.com/) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>Encyclopedias and resources（8）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Wikipedia](https://www.mediawiki.org/wiki/API:Search) | Public endpoint | Partially integrated |
+| [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | Public endpoint | Not integrated |
+| [Wikimedia Commons](https://commons.wikimedia.org/wiki/Commons:API) | Public endpoint | Not integrated |
+| [Openverse](https://docs.openverse.org/api/) | Public endpoint | Not integrated |
+| [GBIF](https://www.gbif.org/developer/summary) | Public endpoint | Not integrated |
+| [iNaturalist](https://api.inaturalist.org/v1/docs/) | Public endpoint | Not integrated |
+| [ROR](https://ror.readme.io/docs/rest-api) | Public endpoint | Not integrated |
+| [ORCID public API](https://info.orcid.org/documentation/integration-guide/orcid-api-2/) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Web archives（3）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Common Crawl URL Index](https://index.commoncrawl.org/) | Public endpoint | Not integrated |
+| [Wayback / CDX](https://archive.org/developers/wayback-cdx-server.html) | Public endpoint | Not integrated |
+| [Arquivo.pt](https://arquivo.pt/api) | Public endpoint | Not integrated |
+
+</details>
+
+<details>
+<summary>Weather, geography and energy（10）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | Public endpoint | Not integrated |
+| [NOAA NCEI data service](https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation) | Public endpoint | Not integrated |
+| [weather.gov API](https://www.weather.gov/documentation/services-web-api) | Public endpoint | Not integrated |
+| [EIA Open Data](https://www.eia.gov/opendata/) | Registration or conditions | Not integrated |
+| [ENTSO-E Transparency](https://transparency.entsoe.eu/) | Registration or conditions | Not integrated |
+| [NASA public APIs](https://api.nasa.gov/) | Registration or conditions | Not integrated |
+| [Open-Meteo](https://open-meteo.com/en/pricing) | Registration or conditions | Not integrated |
+| [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | Public endpoint | Not integrated |
+| [Overpass public API](https://wiki.openstreetmap.org/wiki/Overpass_API) | Public endpoint | Not integrated |
+| [GeoNames](https://www.geonames.org/export/web-services.html) | Registration or conditions | Not integrated |
+
+</details>
+
+<details>
+<summary>Restricted platforms（9）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [X API](https://docs.x.com/x-api/getting-started/pricing) | Restricted | Not integrated |
+| [Reddit Data API](https://redditinc.com/policies/data-api-terms) | Restricted | Not integrated |
+| [Xiaohongshu](https://openaccount.xiaohongshu.com/docs/api-reference) | Restricted | Not integrated |
+| [Weibo](https://open.weibo.com/wiki/API) | Restricted | Not integrated |
+| [Zhihu](https://www.zhihu.com/) | Public website | Partially integrated |
+| [Bilibili](https://www.bilibili.com/) | Public website | Partially integrated |
+| [WeChat / Sogou WeChat](https://mp.weixin.qq.com/) | Restricted | Not integrated |
+| [Douyin / Kuaishou](https://developer.open-douyin.com/) | Restricted | Not integrated |
+| [Douban / Tieba / Juejin / CSDN / OSChina](https://www.douban.com/) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>Self-hosted tools（3）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [SearXNG](https://docs.searxng.org/) | Self-hosted | Out of scope |
+| [RSSHub / RSS-Bridge](https://docs.rsshub.app/) | Self-hosted | Out of scope |
+| [Miniflux / FreshRSS](https://miniflux.app/) | Self-hosted | Out of scope |
+
+</details>
+
+<details>
+<summary>Patents（4）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [USPTO Open Data Portal](https://data.uspto.gov/apis/api-catalog) | Registration or conditions | Not integrated |
+| [EPO Open Patent Services](https://www.epo.org/en/searching-for-patents/data/web-services/ops) | Registration or conditions | Not integrated |
+| [Google Patents](https://patents.google.com/) | Public website | Not integrated |
+| [CNIPA public services](https://www.cnipa.gov.cn/) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>Finance and economics（8）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [FRED](https://fred.stlouisfed.org/docs/api/fred/) | Registration or conditions | Not integrated |
+| [US BLS public data](https://www.bls.gov/developers/) | Public endpoint | Not integrated |
+| [US Census data APIs](https://www.census.gov/data/developers/data-sets.html) | Registration or conditions | Not integrated |
+| [Tushare](https://tushare.pro/document/1) | Registration or conditions | Not integrated |
+| [BaoStock](https://www.baostock.com/) | Public endpoint | Not integrated |
+| [CoinGecko Demo API](https://docs.coingecko.com/reference/setting-up-your-api-key) | Registration or conditions | Not integrated |
+| [Yahoo Finance public pages](https://finance.yahoo.com/) | Public website | Not integrated |
+| [Stooq historical data](https://stooq.com/db/h/) | Public website | Not integrated |
+
+</details>
+
+<details>
+<summary>Podcasts and audio（3）</summary>
+
+| Source | Access | Project status |
+|---|---|---|
+| [Apple iTunes Search API](https://performance-partners.apple.com/search-api) | Public endpoint | Not integrated |
+| [Podcast Index](https://podcastindex-org.github.io/docs-api/) | Registration or conditions | Not integrated |
+| [Listen Notes](https://www.listennotes.com/api/pricing/) | Registration or conditions | Not integrated |
+
+</details>
 
 ## Automatic routing
 

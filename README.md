@@ -77,55 +77,7 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 ## 支持的来源
 
-### 来源图谱：165 项
-
-图谱包含已接入来源、待验证来源和受限平台。数量是图谱条目数，按类别列出常用入口；是否已接入及接口能否使用，请查看详情。
-
-| 类别 | 数量 | 常用入口（最多 10 项） | 详情 |
-|---|---:|---|---|
-| 通用搜索 | 15 | Parallel Search MCP、Exa hosted MCP、Bing RSS、DuckDuckGo HTML、DuckDuckGo Instant Answer、360 / Baidu / Sogou public search pages、Google / Bing / Brave / Mojeek public UI、Tavily API、Exa API、Brave Search API | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#通用网页搜索与阅读) |
-| 技术文档 | 8 | Microsoft Learn MCP、MDN MCP、Cloudflare Docs MCP、OpenAI Docs MCP、Context7、Python official docs / Sphinx inventories、Rust std / docs.rs、Read the Docs / llms.txt publisher docs | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#官方技术文档) |
-| 新闻订阅 | 14 | China News Service RSS、BBC RSS、CCTV / CGTN RSS、Xinhua RSS、DW RSS、UN News RSS、NASA news feeds、GDELT DOC / Context、Google News RSS、Guardian Open Platform | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#新闻与订阅) |
-| 中文政务与公告 | 19 | China gov.cn latest-policy index、NDRC notices / announcements、National Energy Administration、National Bureau of Statistics releases、National Data / NBS database、MIIT、Ministry of Commerce、Ministry of Ecology and Environment、People's Bank of China、CSRC | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#中文政务公告与公共数据) |
-| 国际政务与统计 | 8 | Federal Register API、SEC EDGAR public data、GOV.UK content/search、UK legislation、Eurostat、World Bank Indicators、OECD SDMX、api.data.gov / govinfo / Congress APIs | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#国际政务与统计) |
-| 论文与科研 | 26 | arXiv、Crossref、DataCite、dblp、Europe PMC、NCBI PubMed / PMC E-utilities、HAL、OpenAIRE、Zenodo public records、Figshare public articles | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#论文图书与科研) |
-| 代码与软件包 | 17 | GitHub REST public repositories、GitLab public projects、Codeberg / Forgejo、Gitee API、npm registry、PyPI JSON / Simple、crates.io、Maven Central、NuGet、Packagist | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#代码软件包与模型) |
-| 社区 | 10 | Hacker News / Algolia、Stack Exchange family、Discourse public communities、V2EX public API、DEV.to / Forem、Lobsters、Lemmy public instances、Mastodon、Bluesky public AppView、Cnblogs RSS | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#社区与社交公开接口) |
-| 百科与素材 | 8 | Wikipedia、Wikidata、Wikimedia Commons、Openverse、GBIF、iNaturalist、ROR、ORCID public API | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#百科实体与素材) |
-| 历史档案 | 3 | Common Crawl URL Index、Wayback / CDX、Arquivo.pt | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#历史网页与档案) |
-| 能源、天气与地理 | 10 | USGS earthquake feeds/API、NOAA NCEI data service、weather.gov API、EIA Open Data、ENTSO-E Transparency、NASA public APIs、Open-Meteo、OpenStreetMap Nominatim、Overpass public API、GeoNames | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#天气地理能源与事件) |
-| 受限平台 | 9 | X API、Reddit Data API、Xiaohongshu、Weibo、Zhihu、Bilibili、WeChat / Sogou WeChat、Douyin / Kuaishou、Douban / Tieba / Juejin / CSDN / OSChina | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#不能承诺免费自动化的平台) |
-| 自建工具 | 3 | SearXNG、RSSHub / RSS-Bridge、Miniflux / FreshRSS | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#工具与自建不计作托管来源) |
-| 专利 | 4 | USPTO Open Data Portal、EPO Open Patent Services、Google Patents、CNIPA public services | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#专利与知识产权) |
-| 金融与经济 | 8 | FRED、US BLS public data、US Census data APIs、Tushare、BaoStock、CoinGecko Demo API、Yahoo Finance public pages、Stooq historical data | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#金融经济与行情) |
-| 播客 | 3 | Apple iTunes Search API、Podcast Index、Listen Notes | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#播客与音频资料) |
-
-入口检查覆盖 165 项：136 个返回 2xx，8 个重定向，17 个返回 HTTP 错误，4 个网络失败。**2xx 只说明参考页面响应，不代表搜索接口可用或已接入。** [逐项检查记录](https://github.com/wjason/xcoze-search/blob/main/research/source-reference-audit-2026-11-05.json)。
-
-另对 15 个匿名 API 做真实样例查询，14 个返回预期结构、1 个 403；[查看样例](https://github.com/wjason/xcoze-search/blob/main/research/source-functional-samples-2026-11-05.json)。
-
-### 新闻 RSS、政府政策与社区原文
-
-- **新闻 RSS**：直接读取中新网即时/财经、BBC World 订阅源，可按关键词和日期筛选当前窗口。比如“看看中新网最近关于进博会的报道，再读原文”。
-- **政府政策**：检索中国政府网“最新政策”栏目，返回标题、栏目发布日期与官方链接。支持关键词和日期条件；它不是全国公告全集，生效日期需要读政策正文核对。
-- **社区主帖**：直接读取 Python、Rust 官方社区论坛主帖；V2EX 主帖适配已实现，但本次网络返回 403，暂不可用。保留主帖代码缩进和链接，不把主帖当完整评论区。
-
-这些路径无需 Key，也不依赖浏览器。订阅源没有命中时，Agent 再按原有偏好搜索，不会把空列表解释成“没有相关新闻”。[使用方法](references/feeds.md) · [真实检索与阅读记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)
-
-
-### 社区热点（无需 Key）
-
-直接问 Agent：“知乎现在有哪些热议问题？”“B 站热搜有哪些？”“看看 V2EX 的热门话题。”
-
-| 平台 | 直接取得的内容 | 继续查证时要注意 |
-|---|---|---|
-| 知乎 | 公开热榜的问题、摘录、热度文字与问题链接 | 不包含答案和评论正文 |
-| B 站 | 公开热搜词、原生热度字段与搜索链接 | 热搜词不是热门视频排行，也不是视频内容 |
-| V2EX | 热门话题标题、节点、创建时间、回复数与链接 | 不包含话题正文和回复 |
-
-Agent 按问题选择榜单；普通搜索不会额外请求这些接口。榜单保留各自顺序、检索时间与热度含义，不混排分数，不保证覆盖全站或持续可用；V2EX 本轮首次成功，安装后复测遇到 403，已按规则暂停。每次只请求一个平台，不需要登录、Cookie 或浏览器。见 [公开源实测与接入计划](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.md)。
-
-小红书、微博目前支持下方的公开索引搜索；返回链接会区分笔记/帖子、账号主页和其他页面。**尚未接入两者的原生站内搜索、完整评论或实时热榜**。本轮微博直接入口返回 403；小红书公开索引样例主要命中账号主页，不能据此宣称读到了笔记。
+以下是 xcoze search 目前已接入的搜索、阅读和热点来源。各来源的可用性和限额取决于上游服务。
 
 ### 无需 Key
 
@@ -148,6 +100,28 @@ Agent 按问题选择榜单；普通搜索不会额外请求这些接口。榜�
 
 宿主已有搜索、网页读取及浏览器工具由 Agent 按需复用，Skill 不安装或接管宿主工具。知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣支持公开索引定向搜索；这不等同站内搜索、完整正文或评论读取。需要站内能力时，可使用环境中已有且已授权的平台工具。
 
+### 新闻 RSS、政府政策与社区原文
+
+- **新闻 RSS**：直接读取中新网即时/财经、BBC World 订阅源，可按关键词和日期筛选当前窗口。比如“看看中新网最近关于进博会的报道，再读原文”。
+- **政府政策**：检索中国政府网“最新政策”栏目，返回标题、栏目发布日期与官方链接。支持关键词和日期条件；它不是全国公告全集，生效日期需要读政策正文核对。
+- **社区主帖**：直接读取 Python、Rust 官方社区论坛主帖；V2EX 主帖适配已实现，但本次网络返回 403，暂不可用。保留主帖代码缩进和链接，不把主帖当完整评论区。
+
+这些路径无需 Key，也不依赖浏览器。订阅源没有命中时，Agent 再按原有偏好搜索，不会把空列表解释成“没有相关新闻”。[使用方法](references/feeds.md) · [真实检索与阅读记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)
+
+### 社区热点（无需 Key）
+
+直接问 Agent：“知乎现在有哪些热议问题？”“B 站热搜有哪些？”“看看 V2EX 的热门话题。”
+
+| 平台 | 直接取得的内容 | 继续查证时要注意 |
+|---|---|---|
+| 知乎 | 公开热榜的问题、摘录、热度文字与问题链接 | 不包含答案和评论正文 |
+| B 站 | 公开热搜词、原生热度字段与搜索链接 | 热搜词不是热门视频排行，也不是视频内容 |
+| V2EX | 热门话题标题、节点、创建时间、回复数与链接 | 不包含话题正文和回复 |
+
+Agent 按问题选择榜单；普通搜索不会额外请求这些接口。榜单保留各自顺序、检索时间与热度含义，不混排分数，不保证覆盖全站或持续可用；V2EX 本轮首次成功，安装后复测遇到 403，已按规则暂停。每次只请求一个平台，不需要登录、Cookie 或浏览器。见 [公开源实测与接入计划](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.md)。
+
+小红书、微博目前支持下方的公开索引搜索；返回链接会区分笔记/帖子、账号主页和其他页面。**尚未接入两者的原生站内搜索、完整评论或实时热榜**。本轮微博直接入口返回 403；小红书公开索引样例主要命中账号主页，不能据此宣称读到了笔记。
+
 ### 使用自己的 Key
 
 | 服务 | 已实现能力 | 环境变量 |
@@ -162,6 +136,303 @@ Agent 按问题选择榜单；普通搜索不会额外请求这些接口。榜�
 各服务独立开通和计费。配置且未禁用的 Key 会参与默认效果优先选路；免费模式排除全部带 Key 的适配器，即使账号仍有赠送额度。服务能力和参数见 [接口说明](references/providers.md)。
 
 实现、账号验证和检索质量分别记录。2026-11-03 本机验证中，Bing RSS、GitHub、HN、Jina 返回可用内容；Exa 免 Key MCP 初次 403、后续搜索通过，DuckDuckGo 返回验证响应；GitHub README 本次 403。这些是当时网络的调用结果，不是所有用户的可用性承诺。六家带 Key 服务的验证范围见 [验证记录](VALIDATION.md)。
+
+### 完整来源清单
+
+这里列出调研中的全部 165 项，包括尚未接入的服务和当前不规划的自建工具。清单中的网站能访问，不代表搜索接口可用或已接入；“部分接入”也可能只覆盖该条目中的部分服务或能力。公开入口可能有额度和使用条件。[查看调研与核验记录](research/free-sources-2026-11.md)。
+
+<details>
+<summary>通用搜索与阅读（15）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Parallel Search MCP](https://parallel.ai/mcp) | 公开入口 | 未接入 |
+| [Exa hosted MCP](https://exa.ai/docs/get-started/exa-mcp) | 公开入口 | 部分接入 |
+| [Bing RSS](https://www.bing.com/search?format=rss&q=python) | 公开网页 | 部分接入 |
+| [DuckDuckGo HTML](https://html.duckduckgo.com/html/) | 公开网页 | 部分接入 |
+| [DuckDuckGo Instant Answer](https://duckduckgo.com/api) | 公开入口 | 未接入 |
+| [360 / Baidu / Sogou public search pages](https://www.so.com/) | 公开网页 | 部分接入 |
+| [Google / Bing / Brave / Mojeek public UI](https://www.google.com/) | 公开网页 | 未接入 |
+| [Tavily API](https://www.tavily.com/pricing) | 需注册或有使用条件 | 部分接入 |
+| [Exa API](https://exa.ai/pricing) | 需注册或有使用条件 | 部分接入 |
+| [Brave Search API](https://api-dashboard.search.brave.com/documentation/resources/help-feedback) | 需注册或有使用条件 | 部分接入 |
+| [Firecrawl](https://www.firecrawl.dev/pricing) | 需注册或有使用条件 | 未接入 |
+| [Serper](https://serper.dev/) | 试用额度 | 未接入 |
+| [SerpApi](https://serpapi.com/pricing) | 需注册或有使用条件 | 未接入 |
+| [Search1API](https://s1.dev/docs/essentials/credits-and-limits) | 试用额度 | 未接入 |
+| [Jina Reader / Search](https://jina.ai/reader/) | 需注册或有使用条件 | 部分接入 |
+
+</details>
+
+<details>
+<summary>技术文档（8）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Microsoft Learn MCP](https://learn.microsoft.com/en-us/training/support/mcp) | 公开入口 | 未接入 |
+| [MDN MCP](https://developer.mozilla.org/en-US/mcp) | 公开入口 | 未接入 |
+| [Cloudflare Docs MCP](https://developers.cloudflare.com/workers/get-started/prompting/) | 公开入口 | 未接入 |
+| [OpenAI Docs MCP](https://developers.openai.com/resources/docs-mcp) | 公开入口 | 未接入 |
+| [Context7](https://github.com/upstash/context7) | 需注册或有使用条件 | 未接入 |
+| [Python official docs / Sphinx inventories](https://docs.python.org/3/) | 公开网页 | 未接入 |
+| [Rust std / docs.rs](https://docs.rs/) | 公开网页 | 未接入 |
+| [Read the Docs / llms.txt publisher docs](https://docs.readthedocs.com/platform/stable/reference/sitemaps.html) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>新闻与订阅（14）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [China News Service RSS](https://www.chinanews.com.cn/rss/) | 公开入口 | 部分接入 |
+| [BBC RSS](https://www.bbc.co.uk/news/10628494) | 公开入口 | 部分接入 |
+| [CCTV / CGTN RSS](https://english.cctv.cn/rss/) | 公开网页 | 未接入 |
+| [Xinhua RSS](https://www.xinhuanet.com/english/rss/index.htm) | 公开网页 | 未接入 |
+| [DW RSS](https://rss.dw.com/rdf/rss-en-all) | 公开入口 | 未接入 |
+| [UN News RSS](https://news.un.org/en/rss-feeds) | 公开入口 | 未接入 |
+| [NASA news feeds](https://www.nasa.gov/rss-feeds/) | 公开入口 | 未接入 |
+| [GDELT DOC / Context](https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/) | 公开入口 | 未接入 |
+| [Google News RSS](https://news.google.com/) | 公开网页 | 未接入 |
+| [Guardian Open Platform](https://open-platform.theguardian.com/access/) | 需注册或有使用条件 | 未接入 |
+| [NewsAPI.org](https://newsapi.org/pricing) | 需注册或有使用条件 | 未接入 |
+| [GNews](https://gnews.io/pricing) | 需注册或有使用条件 | 未接入 |
+| [NewsData.io](https://newsdata.io/pricing) | 需注册或有使用条件 | 未接入 |
+| [TheNewsAPI](https://www.thenewsapi.com/pricing) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>中国政务与公共数据（19）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [China gov.cn latest-policy index](https://www.gov.cn/zhengce/zuixin/) | 公开入口 | 部分接入 |
+| [NDRC notices / announcements](https://www.ndrc.gov.cn/xxgk/zcfb/tz/) | 公开网页 | 未接入 |
+| [National Energy Administration](https://www.nea.gov.cn/) | 公开网页 | 未接入 |
+| [National Bureau of Statistics releases](https://www.stats.gov.cn/sj/zxfb/) | 公开网页 | 未接入 |
+| [National Data / NBS database](https://data.stats.gov.cn/) | 公开网页 | 未接入 |
+| [MIIT](https://www.miit.gov.cn/) | 公开网页 | 未接入 |
+| [Ministry of Commerce](https://www.mofcom.gov.cn/) | 公开网页 | 未接入 |
+| [Ministry of Ecology and Environment](https://www.mee.gov.cn/) | 公开网页 | 未接入 |
+| [People's Bank of China](https://www.pbc.gov.cn/) | 公开网页 | 未接入 |
+| [CSRC](https://www.csrc.gov.cn/) | 公开网页 | 未接入 |
+| [SAMR standards disclosure](https://openstd.samr.gov.cn/) | 公开网页 | 未接入 |
+| [National law database](https://flk.npc.gov.cn/) | 公开网页 | 未接入 |
+| [China Government Procurement](https://www.ccgp.gov.cn/) | 公开网页 | 未接入 |
+| [National public resource trading platform](https://www.ggzy.gov.cn/) | 公开网页 | 未接入 |
+| [CNInfo public disclosures](https://www.cninfo.com.cn/new/index) | 公开网页 | 未接入 |
+| [SSE / SZSE / BSE disclosures](https://www.sse.com.cn/disclosure/listedinfo/announcement/) | 公开网页 | 未接入 |
+| [DATA.GOV.HK](https://data.gov.hk/en/help/api-spec) | 公开入口 | 未接入 |
+| [Beijing / Shanghai / Shenzhen open-data portals](https://data.sh.gov.cn/) | 公开网页 | 未接入 |
+| [data.gov.tw](https://data.gov.tw/) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>国际政务与统计（8）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | 公开入口 | 未接入 |
+| [SEC EDGAR public data](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | 公开入口 | 未接入 |
+| [GOV.UK content/search](https://docs.publishing.service.gov.uk/apis.html) | 公开入口 | 未接入 |
+| [UK legislation](https://www.legislation.gov.uk/developer) | 公开入口 | 未接入 |
+| [Eurostat](https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access) | 公开入口 | 未接入 |
+| [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | 公开入口 | 未接入 |
+| [OECD SDMX](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) | 公开入口 | 未接入 |
+| [api.data.gov / govinfo / Congress APIs](https://api.data.gov/) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>论文与科研（26）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [arXiv](https://info.arxiv.org/help/api/index.html) | 公开入口 | 部分接入 |
+| [Crossref](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) | 公开入口 | 部分接入 |
+| [DataCite](https://support.datacite.org/docs/api) | 公开入口 | 未接入 |
+| [dblp](https://dblp.org/faq/How+to+use+the+dblp+search+API.html) | 公开入口 | 未接入 |
+| [Europe PMC](https://europepmc.org/RestfulWebService) | 公开入口 | 部分接入 |
+| [NCBI PubMed / PMC E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/) | 公开入口 | 未接入 |
+| [HAL](https://api.archives-ouvertes.fr/docs) | 公开入口 | 未接入 |
+| [OpenAIRE](https://graph.openaire.eu/develop/api.html) | 需注册或有使用条件 | 未接入 |
+| [Zenodo public records](https://developers.zenodo.org/) | 公开入口 | 未接入 |
+| [Figshare public articles](https://docs.figshare.com/) | 公开入口 | 未接入 |
+| [bioRxiv / medRxiv](https://api.biorxiv.org/) | 公开入口 | 未接入 |
+| [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | 公开入口 | 未接入 |
+| [OpenReview public notes](https://docs.openreview.net/) | 公开入口 | 未接入 |
+| [Open Library](https://openlibrary.org/developers/api) | 公开入口 | 未接入 |
+| [Internet Archive search](https://archive.org/developers/) | 公开入口 | 未接入 |
+| [Library of Congress](https://www.loc.gov/apis/) | 公开入口 | 未接入 |
+| [Wikisource](https://www.mediawiki.org/wiki/API:Main_page) | 公开入口 | 未接入 |
+| [OpenAlex](https://help.openalex.org/access/pricing/) | 需注册或有使用条件 | 未接入 |
+| [Semantic Scholar](https://www.semanticscholar.org/product/api) | 需注册或有使用条件 | 未接入 |
+| [CORE](https://core.ac.uk/services/api) | 需注册或有使用条件 | 未接入 |
+| [Unpaywall](https://unpaywall.org/products/api) | 需注册或有使用条件 | 未接入 |
+| [Google Books API](https://developers.google.com/books/docs/v1/using) | 需注册或有使用条件 | 未接入 |
+| [Europeana](https://pro.europeana.eu/page/apis) | 需注册或有使用条件 | 未接入 |
+| [DOAJ](https://doaj.org/api/docs) | 公开入口 | 未接入 |
+| [NASA ADS](https://ui.adsabs.harvard.edu/help/api/) | 需注册或有使用条件 | 未接入 |
+| [BASE](https://www.base-search.net/about/en/about_develop.php) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>代码、软件包与模型（17）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [GitHub REST public repositories](https://docs.github.com/en/rest/search/search) | 公开入口 | 部分接入 |
+| [GitLab public projects](https://docs.gitlab.com/api/projects/) | 公开入口 | 部分接入 |
+| [Codeberg / Forgejo](https://codeberg.org/api/swagger) | 公开入口 | 未接入 |
+| [Gitee API](https://gitee.com/api/v5/swagger) | 需注册或有使用条件 | 未接入 |
+| [npm registry](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md) | 公开入口 | 部分接入 |
+| [PyPI JSON / Simple](https://docs.pypi.org/api/) | 公开入口 | 未接入 |
+| [crates.io](https://crates.io/data-access) | 公开入口 | 部分接入 |
+| [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | 公开入口 | 未接入 |
+| [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | 公开入口 | 未接入 |
+| [Packagist](https://packagist.org/apidoc) | 公开入口 | 未接入 |
+| [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | 公开入口 | 未接入 |
+| [Go module proxy](https://go.dev/ref/mod#module-proxy) | 公开入口 | 未接入 |
+| [Hugging Face Hub](https://huggingface.co/docs/hub/api) | 公开入口 | 部分接入 |
+| [Docker Hub](https://docs.docker.com/reference/api/hub/latest/) | 需注册或有使用条件 | 未接入 |
+| [searchcode MCP](https://searchcode.com/) | 公开入口 | 未接入 |
+| [grep.app MCP](https://vercel.com/blog/grep-a-million-github-repositories-via-mcp) | 公开入口 | 未接入 |
+| [Libraries.io](https://libraries.io/api) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>社区与社交（10）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Hacker News / Algolia](https://hn.algolia.com/api) | 公开入口 | 部分接入 |
+| [Stack Exchange family](https://api.stackexchange.com/docs) | 公开入口 | 部分接入 |
+| [Discourse public communities](https://docs.discourse.org/) | 公开入口 | 部分接入 |
+| [V2EX public API](https://www.v2ex.com/p/7v9TEc53) | 公开入口 | 部分接入 |
+| [DEV.to / Forem](https://developers.forem.com/api) | 公开入口 | 未接入 |
+| [Lobsters](https://lobste.rs/) | 公开入口 | 未接入 |
+| [Lemmy public instances](https://join-lemmy.org/api/) | 公开入口 | 未接入 |
+| [Mastodon](https://docs.joinmastodon.org/methods/search/) | 需注册或有使用条件 | 未接入 |
+| [Bluesky public AppView](https://docs.bsky.app/docs/advanced-guides/api-directory) | 公开入口 | 未接入 |
+| [Cnblogs RSS](https://www.cnblogs.com/) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>百科与素材（8）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Wikipedia](https://www.mediawiki.org/wiki/API:Search) | 公开入口 | 部分接入 |
+| [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | 公开入口 | 未接入 |
+| [Wikimedia Commons](https://commons.wikimedia.org/wiki/Commons:API) | 公开入口 | 未接入 |
+| [Openverse](https://docs.openverse.org/api/) | 公开入口 | 未接入 |
+| [GBIF](https://www.gbif.org/developer/summary) | 公开入口 | 未接入 |
+| [iNaturalist](https://api.inaturalist.org/v1/docs/) | 公开入口 | 未接入 |
+| [ROR](https://ror.readme.io/docs/rest-api) | 公开入口 | 未接入 |
+| [ORCID public API](https://info.orcid.org/documentation/integration-guide/orcid-api-2/) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>历史网页与档案（3）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Common Crawl URL Index](https://index.commoncrawl.org/) | 公开入口 | 未接入 |
+| [Wayback / CDX](https://archive.org/developers/wayback-cdx-server.html) | 公开入口 | 未接入 |
+| [Arquivo.pt](https://arquivo.pt/api) | 公开入口 | 未接入 |
+
+</details>
+
+<details>
+<summary>天气、地理与能源（10）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | 公开入口 | 未接入 |
+| [NOAA NCEI data service](https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation) | 公开入口 | 未接入 |
+| [weather.gov API](https://www.weather.gov/documentation/services-web-api) | 公开入口 | 未接入 |
+| [EIA Open Data](https://www.eia.gov/opendata/) | 需注册或有使用条件 | 未接入 |
+| [ENTSO-E Transparency](https://transparency.entsoe.eu/) | 需注册或有使用条件 | 未接入 |
+| [NASA public APIs](https://api.nasa.gov/) | 需注册或有使用条件 | 未接入 |
+| [Open-Meteo](https://open-meteo.com/en/pricing) | 需注册或有使用条件 | 未接入 |
+| [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | 公开入口 | 未接入 |
+| [Overpass public API](https://wiki.openstreetmap.org/wiki/Overpass_API) | 公开入口 | 未接入 |
+| [GeoNames](https://www.geonames.org/export/web-services.html) | 需注册或有使用条件 | 未接入 |
+
+</details>
+
+<details>
+<summary>受限平台（9）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [X API](https://docs.x.com/x-api/getting-started/pricing) | 访问受限 | 未接入 |
+| [Reddit Data API](https://redditinc.com/policies/data-api-terms) | 访问受限 | 未接入 |
+| [Xiaohongshu](https://openaccount.xiaohongshu.com/docs/api-reference) | 访问受限 | 未接入 |
+| [Weibo](https://open.weibo.com/wiki/API) | 访问受限 | 未接入 |
+| [Zhihu](https://www.zhihu.com/) | 公开网页 | 部分接入 |
+| [Bilibili](https://www.bilibili.com/) | 公开网页 | 部分接入 |
+| [WeChat / Sogou WeChat](https://mp.weixin.qq.com/) | 访问受限 | 未接入 |
+| [Douyin / Kuaishou](https://developer.open-douyin.com/) | 访问受限 | 未接入 |
+| [Douban / Tieba / Juejin / CSDN / OSChina](https://www.douban.com/) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>自建工具（3）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [SearXNG](https://docs.searxng.org/) | 自建 | 当前不规划 |
+| [RSSHub / RSS-Bridge](https://docs.rsshub.app/) | 自建 | 当前不规划 |
+| [Miniflux / FreshRSS](https://miniflux.app/) | 自建 | 当前不规划 |
+
+</details>
+
+<details>
+<summary>专利（4）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [USPTO Open Data Portal](https://data.uspto.gov/apis/api-catalog) | 需注册或有使用条件 | 未接入 |
+| [EPO Open Patent Services](https://www.epo.org/en/searching-for-patents/data/web-services/ops) | 需注册或有使用条件 | 未接入 |
+| [Google Patents](https://patents.google.com/) | 公开网页 | 未接入 |
+| [CNIPA public services](https://www.cnipa.gov.cn/) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>金融与经济（8）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [FRED](https://fred.stlouisfed.org/docs/api/fred/) | 需注册或有使用条件 | 未接入 |
+| [US BLS public data](https://www.bls.gov/developers/) | 公开入口 | 未接入 |
+| [US Census data APIs](https://www.census.gov/data/developers/data-sets.html) | 需注册或有使用条件 | 未接入 |
+| [Tushare](https://tushare.pro/document/1) | 需注册或有使用条件 | 未接入 |
+| [BaoStock](https://www.baostock.com/) | 公开入口 | 未接入 |
+| [CoinGecko Demo API](https://docs.coingecko.com/reference/setting-up-your-api-key) | 需注册或有使用条件 | 未接入 |
+| [Yahoo Finance public pages](https://finance.yahoo.com/) | 公开网页 | 未接入 |
+| [Stooq historical data](https://stooq.com/db/h/) | 公开网页 | 未接入 |
+
+</details>
+
+<details>
+<summary>播客（3）</summary>
+
+| 来源 | 访问方式 | 项目状态 |
+|---|---|---|
+| [Apple iTunes Search API](https://performance-partners.apple.com/search-api) | 公开入口 | 未接入 |
+| [Podcast Index](https://podcastindex-org.github.io/docs-api/) | 需注册或有使用条件 | 未接入 |
+| [Listen Notes](https://www.listennotes.com/api/pricing/) | 需注册或有使用条件 | 未接入 |
+
+</details>
 
 ## 自动调度
 
