@@ -37,7 +37,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.8.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.8.0/xcoze-search-skill-v0.8.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.9.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.9.0/xcoze-search-skill-v0.9.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 在 Agent 中使用
 
@@ -76,6 +76,15 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 需要添加服务时，说“帮我配置 xcoze search 的 DeepSeek 搜索”即可。Agent 提供官方申请链接，再引导你在本机隐藏输入窗口填写，**不要把 Key 发到聊天里**。完整流程见 [配置 Key](#配置-key)和[配置与排错](references/setup.md)。
 
 ## 支持的来源
+
+### 新闻 RSS、政府政策与社区原文
+
+- **新闻 RSS**：直接读取中新网即时/财经、BBC World 订阅源，可按关键词和日期筛选当前窗口。比如“看看中新网最近关于进博会的报道，再读原文”。
+- **政府政策**：检索中国政府网“最新政策”栏目，返回标题、栏目发布日期与官方链接。支持关键词和日期条件；它不是全国公告全集，生效日期需要读政策正文核对。
+- **社区主帖**：直接读取 Python、Rust 官方社区论坛主帖；V2EX 主帖适配已实现，但本次网络返回 403，暂不可用。保留主帖代码缩进和链接，不把主帖当完整评论区。
+
+这些路径无需 Key，也不依赖浏览器。订阅源没有命中时，Agent 再按原有偏好搜索，不会把空列表解释成“没有相关新闻”。[使用方法](references/feeds.md) · [真实检索与阅读记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)
+
 
 ### 社区热点（无需 Key）
 
@@ -138,7 +147,7 @@ Smart 当前采用透明的能力/来源规则与 Agent 的语义判断，没有
 
 2026-11-03 用六道真实任务和两道中文留出题做了同题比较：付费源更快，但官方资料与近期平台讨论并非每题更好，已据此调整默认选路。查看[实测报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.md)（含耗时、费用估算和局限）；结果不代表通用准确率。
 
-免 Key 接口/读取适配器共 15 个（14 个可搜索、1 个纯读取），另有 1 条可选本地浏览器搜索路径。平台能力与已有工具的检测见 `platforms`，不把安装状态当实测通过。详见[开放来源与平台协作](references/open-sources.md)和[本轮实测/Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
+免 Key 搜索/读取适配器共 17 个（15 个可搜索、2 个纯读取），另有 3 个新闻 RSS 源、3 条社区热点和 1 条可选浏览器路径。平台能力与已有工具的检测见 `platforms`，不把安装状态当实测通过。详见[开放来源与平台协作](references/open-sources.md)和[本轮实测/Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
 
 ## Exa 限额与浏览器兜底
 
@@ -165,6 +174,10 @@ Agent 只提供官方申请链接，不自动打开网页；准备好后启动�
 以下命令通常由 Agent 定位 Skill 后执行，用户无需查找文件：
 
 ```bash
+python3 scripts/xcoze_search.py feeds
+python3 scripts/xcoze_search.py feed --source cns-finance --query '进博会'
+python3 scripts/xcoze_search.py search '登记管理' --platform govcn --strategy free
+python3 scripts/xcoze_search.py fetch 'https://discuss.python.org/t/109869' --strategy free
 python3 scripts/xcoze_search.py trending --platform zhihu --count 10
 python3 scripts/xcoze_search.py trending --platform bilibili --count 10
 python3 scripts/xcoze_search.py trending --platform v2ex --count 10

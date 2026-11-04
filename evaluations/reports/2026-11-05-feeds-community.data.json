@@ -1,0 +1,499 @@
+{
+  "date": "2026-11-05",
+  "timezone": "Asia/Shanghai",
+  "runtime_version": "0.9.0",
+  "scope": "Nine real operations; endpoint discovery/documentation excluded. No accuracy leaderboard.",
+  "operations": [
+    {
+      "case": "cns-finance-cife",
+      "elapsed_ms": 156.52,
+      "ok": true,
+      "operation": "feed",
+      "retrieved_at": "2026-11-04T22:40:42.807972+00:00",
+      "url": null,
+      "provider": null,
+      "result_count": 3,
+      "content_characters": 0,
+      "truncated": null,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "cns-finance": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": {
+        "window_only": true,
+        "historical_search": false,
+        "filter_semantics": "all_whitespace_separated_literal_terms_in_title_or_excerpt",
+        "date_filter_timezone": "UTC+08:00",
+        "source_row_count": 30,
+        "matched_count": 3,
+        "shown_count": 3,
+        "duplicate_urls_removed": 0,
+        "unknown_dates_excluded": 0,
+        "newest_publication": "2026-11-04T23:45:50+08:00",
+        "oldest_publication": "2026-11-04T18:38:33+08:00",
+        "window_complete": false,
+        "facts_verified": false
+      },
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "cns-finance",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 156.5
+        }
+      ]
+    },
+    {
+      "case": "cns-today",
+      "elapsed_ms": 151.39,
+      "ok": true,
+      "operation": "feed",
+      "retrieved_at": "2026-11-04T22:40:42.962570+00:00",
+      "url": null,
+      "provider": null,
+      "result_count": 1,
+      "content_characters": 0,
+      "truncated": null,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "cns-scroll": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": {
+        "window_only": true,
+        "historical_search": false,
+        "filter_semantics": "all_whitespace_separated_literal_terms_in_title_or_excerpt",
+        "date_filter_timezone": "UTC+08:00",
+        "source_row_count": 30,
+        "matched_count": 1,
+        "shown_count": 1,
+        "duplicate_urls_removed": 0,
+        "unknown_dates_excluded": 0,
+        "newest_publication": "2026-11-05T00:09:38+08:00",
+        "oldest_publication": "2026-11-04T22:17:17+08:00",
+        "window_complete": false,
+        "facts_verified": false
+      },
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "cns-scroll",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 151.37
+        }
+      ]
+    },
+    {
+      "case": "bbc-world",
+      "elapsed_ms": 944.18,
+      "ok": true,
+      "operation": "feed",
+      "retrieved_at": "2026-11-04T22:40:43.908878+00:00",
+      "url": null,
+      "provider": null,
+      "result_count": 3,
+      "content_characters": 0,
+      "truncated": null,
+      "budget": {
+        "limit": 1,
+        "attempts": 1,
+        "remaining": 0,
+        "by_provider": {
+          "bbc-world": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": {
+        "window_only": true,
+        "historical_search": false,
+        "filter_semantics": "all_whitespace_separated_literal_terms_in_title_or_excerpt",
+        "date_filter_timezone": "UTC+08:00",
+        "source_row_count": 23,
+        "matched_count": 23,
+        "shown_count": 3,
+        "duplicate_urls_removed": 0,
+        "unknown_dates_excluded": 0,
+        "newest_publication": "2026-11-04T20:22:40+00:00",
+        "oldest_publication": "2026-11-02T14:24:25+00:00",
+        "window_complete": false,
+        "facts_verified": false
+      },
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "bbc-world",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 944.16
+        }
+      ]
+    },
+    {
+      "case": "gov-policy",
+      "elapsed_ms": 437.08,
+      "ok": true,
+      "operation": "search",
+      "retrieved_at": "2026-11-04T22:40:44.349832+00:00",
+      "url": null,
+      "provider": null,
+      "result_count": 1,
+      "content_characters": 0,
+      "truncated": null,
+      "budget": {
+        "limit": 12,
+        "attempts": 1,
+        "remaining": 11,
+        "by_provider": {
+          "govcn": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": null,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "govcn",
+          "ok": true,
+          "attempts": 1,
+          "window_only": true,
+          "source_row_count": 1109,
+          "matched_count": 1,
+          "newest_publication": "2026-11-01",
+          "oldest_publication": "2020-01-05",
+          "elapsed_ms": 435.54
+        }
+      ]
+    },
+    {
+      "case": "python-original",
+      "elapsed_ms": 758.56,
+      "ok": true,
+      "operation": "fetch",
+      "retrieved_at": "2026-11-04T22:40:45.110507+00:00",
+      "url": "https://discuss.python.org/t/109869",
+      "provider": "community",
+      "result_count": 0,
+      "content_characters": 885,
+      "truncated": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "community": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": null,
+      "facts_verified": false,
+      "content_sha256": "9c9a6f27e37a4dcdddb872d80887097a4b1c683a47bf507f9ebf2a4cef33a363",
+      "requests": [
+        {
+          "provider": "community",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 758.31
+        }
+      ]
+    },
+    {
+      "case": "rust-original",
+      "elapsed_ms": 1271.76,
+      "ok": true,
+      "operation": "fetch",
+      "retrieved_at": "2026-11-04T22:40:46.385886+00:00",
+      "url": "https://users.rust-lang.org/t/forum-code-formatting-and-syntax-highlighting/42214",
+      "provider": "community",
+      "result_count": 0,
+      "content_characters": 1261,
+      "truncated": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "community": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [],
+      "metadata": null,
+      "facts_verified": false,
+      "content_sha256": "a8dba4018e2533a97f2dca21aaaeddb61dda7e624d5222bcdd22c36bd7734d8d",
+      "requests": [
+        {
+          "provider": "community",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 1271.19
+        }
+      ]
+    },
+    {
+      "case": "v2ex-original",
+      "elapsed_ms": 436.9,
+      "ok": false,
+      "operation": "fetch",
+      "retrieved_at": "2026-11-04T22:40:46.826696+00:00",
+      "url": "https://www.v2ex.com/t/1254349",
+      "provider": null,
+      "result_count": 0,
+      "content_characters": 0,
+      "truncated": null,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "community": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [
+        {
+          "provider": "community",
+          "code": "http_error",
+          "message": "Access denied; check permissions or target-site policy.",
+          "http_status": 403,
+          "category": "access",
+          "retryable": false,
+          "attempts": 1
+        }
+      ],
+      "metadata": null,
+      "facts_verified": false,
+      "requests": [
+        {
+          "provider": "community",
+          "ok": false,
+          "attempts": 1,
+          "elapsed_ms": 436.29
+        }
+      ]
+    },
+    {
+      "case": "news-original",
+      "elapsed_ms": 1192.13,
+      "ok": true,
+      "operation": "fetch",
+      "retrieved_at": "2026-11-04T22:40:48.028041+00:00",
+      "url": "https://www.chinanews.com.cn/cj/2026/11-04/10726333.shtml",
+      "provider": "exa-free",
+      "result_count": 0,
+      "content_characters": 2942,
+      "truncated": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 2,
+        "remaining": 1,
+        "by_provider": {
+          "jina": 1,
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [
+        {
+          "provider": "jina",
+          "code": "http_error",
+          "message": "API key is invalid or expired.",
+          "http_status": 401,
+          "category": "access",
+          "retryable": false,
+          "attempts": 1
+        }
+      ],
+      "metadata": null,
+      "facts_verified": false,
+      "content_sha256": "b3bed94880bce509f375146981b92796fc34ac20a14fd8da164fdd564ee8a664",
+      "requests": [
+        {
+          "provider": "jina",
+          "ok": false,
+          "attempts": 1,
+          "elapsed_ms": 757.46
+        },
+        {
+          "provider": "exa-free",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 434.12
+        }
+      ]
+    },
+    {
+      "case": "policy-original",
+      "elapsed_ms": 1141.47,
+      "ok": true,
+      "operation": "fetch",
+      "retrieved_at": "2026-11-04T22:40:49.174196+00:00",
+      "url": "https://www.gov.cn/zhengce/content/202610/content_7084279.htm",
+      "provider": "exa-free",
+      "result_count": 0,
+      "content_characters": 4982,
+      "truncated": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 2,
+        "remaining": 1,
+        "by_provider": {
+          "jina": 1,
+          "exa-free": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "errors": [
+        {
+          "provider": "jina",
+          "code": "http_error",
+          "message": "API key is invalid or expired.",
+          "http_status": 401,
+          "category": "access",
+          "retryable": false,
+          "attempts": 1
+        }
+      ],
+      "metadata": null,
+      "facts_verified": false,
+      "content_sha256": "c15ff0947ef31dba67e7f717febc655e99503ff9e409ce5cbea7dc8eddefee3f",
+      "requests": [
+        {
+          "provider": "jina",
+          "ok": false,
+          "attempts": 1,
+          "elapsed_ms": 474.15
+        },
+        {
+          "provider": "exa-free",
+          "ok": true,
+          "attempts": 1,
+          "elapsed_ms": 666.79
+        }
+      ]
+    }
+  ],
+  "api_http_attempts": 11,
+  "keyed_api_attempts": 0,
+  "browser_navigation_attempts": 0,
+  "body_evidence_published": false,
+  "corrected_reply_accounting_checks": [
+    {
+      "url": "https://discuss.python.org/t/109869",
+      "ok": true,
+      "source_attached_replies": 3,
+      "comments_fetched": true,
+      "comments_included": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "community": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "returned_characters": 885
+    },
+    {
+      "url": "https://users.rust-lang.org/t/forum-code-formatting-and-syntax-highlighting/42214",
+      "ok": true,
+      "source_attached_replies": 5,
+      "comments_fetched": true,
+      "comments_included": false,
+      "budget": {
+        "limit": 3,
+        "attempts": 1,
+        "remaining": 2,
+        "by_provider": {
+          "community": 1
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "returned_characters": 1261
+    }
+  ],
+  "installed_acceptance": {
+    "version": "0.9.0",
+    "files_matched": 45,
+    "checks": [
+      {
+        "case": "news",
+        "ok": true,
+        "elapsed_ms": 281.59,
+        "result_count": 3,
+        "returned_characters": null,
+        "budget": {
+          "limit": 1,
+          "attempts": 1,
+          "remaining": 0,
+          "by_provider": {
+            "cns-finance": 1
+          },
+          "scope": "current_invocation",
+          "unit": "provider_api_http_attempts"
+        }
+      },
+      {
+        "case": "government",
+        "ok": true,
+        "elapsed_ms": 577.94,
+        "result_count": 5,
+        "returned_characters": null,
+        "budget": {
+          "limit": 12,
+          "attempts": 1,
+          "remaining": 11,
+          "by_provider": {
+            "govcn": 1
+          },
+          "scope": "current_invocation",
+          "unit": "provider_api_http_attempts"
+        }
+      },
+      {
+        "case": "community",
+        "ok": true,
+        "elapsed_ms": 963.26,
+        "result_count": 0,
+        "returned_characters": 885,
+        "budget": {
+          "limit": 3,
+          "attempts": 1,
+          "remaining": 2,
+          "by_provider": {
+            "community": 1
+          },
+          "scope": "current_invocation",
+          "unit": "provider_api_http_attempts"
+        }
+      }
+    ]
+  }
+}

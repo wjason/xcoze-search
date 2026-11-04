@@ -1,6 +1,13 @@
-# 输出契约 v0.8.0
+# 输出契约 v0.9.0
 
 **简体中文** | [English](output.en.md)
+
+## 新闻与社区新增字段
+
+feeds 完全离线。feed 每次一个固定源，返回 results、metadata、requests、budget、execution_summary；content_kind 为 feed_excerpt 或 official_policy_index。filter 只作用于当前返回窗口，metadata 保留窗口行数、匹配数、日期范围和去重/未知日期计数，window_complete:false。合法窗口无匹配可成功空结果，源错误不是空窗口；日期过滤为 UTC+08:00 日历日。govcn 搜索 requests 也带相同窗口元数据，正常 Smart 备用规则仍适用。
+
+Community Fetch 返回 community_original_post、content_format、source_url、reply_count、source_attached_replies、comments_fetched、comments_included:false、thread_complete:false、completeness_verified:false，以及 max_characters/returned_characters/truncated。Discourse 默认响应可能附带回复：comments_fetched 不伪报为 false，但这些回复正文不输出。只读主帖，不代表完整评论区。独立社区冷却不计 HTTP，访问拒绝后自动读取停止换服务。顶层 budget.by_provider 仍用 community 计数，内部限频按站点独立。
+
 
 ## 社区热点动作
 

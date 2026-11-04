@@ -2,6 +2,11 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.9.0 — 2026-11-05
+
+170 offline tests pass. Live CNS/BBC feeds, gov.cn index and Python/Rust originals succeeded. V2EX original reading returned 403 and stopped reader fan-out. News/policy links were read through keyless readers (Jina 401, Exa recovered). Nine operations used 11 API HTTP attempts, no keyed calls/browser. The gov.cn window's newest entry was 2026-11-01, not real-time complete government coverage. See [live evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md).
+
+
 ## v0.8.0 — 2026-11-05
 
 159 offline tests pass. All three new feeds succeeded through the real adapters, one HTTP each: Bilibili about 0.22 s, Zhihu 0.28 s and V2EX 0.60 s, with no keyed requests, cookies or browser. Separate free Xiaohongshu/Weibo searches each used one anonymous Exa call, about 0.73/1.16 s. Xiaohongshu mainly returned profiles; Weibo mixed posts/profiles. This does not establish native search or read bodies.

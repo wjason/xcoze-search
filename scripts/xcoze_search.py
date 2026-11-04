@@ -31,19 +31,22 @@ from search_common import SearchError, RequestBudget, invalid, public_url, text_
 from search_providers import REGISTRY, get_provider as get_key_provider
 from public_providers import PUBLIC_REGISTRY, domain_matches, platform_item_type
 from public_trends import TRENDING, TREND_PROVIDERS, run_trending
+from content_sources import FEEDS, run_feed
+import http.client
 from search_quality import filter_experimental
 from public_access import request_slot
 from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.8.0"
+VERSION = "0.9.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
 ENDPOINTS.update({name + "_fetch": p.fetch_endpoint for name, p in ALL_REGISTRY.items() if p.fetch_endpoint})
 ENDPOINTS["fetch"] = REGISTRY["deepseek"].fetch_endpoint
 ENDPOINTS.update({name: provider.endpoint for name, provider in TREND_PROVIDERS.items()})
+ENDPOINTS.update({name: provider.endpoint for name, provider in FEEDS.items()})
 ENV_KEYS = {name: p.env_keys for name, p in REGISTRY.items()}
 KEY_URLS = {name: p.key_url for name, p in REGISTRY.items()}
 MAX_RESPONSE = 16 * 1024 * 1024
@@ -51,6 +54,8 @@ CONFIG_SCHEMA = 2
 
 
 def get_provider(name):
+    if name in FEEDS:
+        return FEEDS[name]
     if name in TREND_PROVIDERS:
         return TREND_PROVIDERS[name]
     if name in PUBLIC_REGISTRY:
@@ -251,7 +256,8 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
         try:
             if not budget.data()["remaining"]:
                 raise SearchError("budget_exhausted", "HTTP attempt budget exhausted; no further requests sent.")
-            with request_slot(name, req.full_url, max_wait=min(3, max(0, timeout - 1))) as slot:
+            slot_name = provider.access_scope(payload) if name == "community" else name
+            with request_slot(slot_name, req.full_url, max_wait=min(3, max(0, timeout - 1))) as slot:
                 budget.consume(name)
                 with transport.open(req, timeout=max(1, timeout - (slot.waited_seconds if slot else 0))) as response:
                     if response.status != 200:
@@ -279,13 +285,14 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
             if name == "exa-free" and exc.code in (429, 503): error.retryable = False
             if not provider.requires_key and exc.code in (401, 403):
                 error.category = "access"
+                error.args = ("Public source denied anonymous access; no user API key was sent.",)
             retry_after = exc.headers.get("Retry-After", "") if exc.headers else ""
             exc.close()
             try:
                 wait = max(wait, float(retry_after))
             except ValueError:
                 pass
-        except (urllib.error.URLError, TimeoutError, OSError):
+        except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException):
             error = SearchError("network_error", "Network/TLS failure or timeout.", retryable=True)
         except SearchError as exc:
             error = exc
@@ -329,7 +336,8 @@ def run_search(args, config, *, budget=None):
             else:
                 raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
             try:
-                rows, meta = normalize(p, raw, args.count)
+                rows, meta = (get_provider(p).normalize_search(raw, args) if p == "govcn"
+                              else normalize(p, raw, args.count))
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
@@ -393,8 +401,8 @@ def run_fetch(args, config, *, budget=None):
     if getattr(args, "strategy", None) == "free":
         plan(args, config, credential, fetch=True)
     provider = get_provider(name)
-    if limit is not None and name not in ("jina", "exa-free"):
-        raise SearchError("unsupported_option", "--max-characters is supported by Jina and keyless Exa readers only.")
+    if limit is not None and name not in ("jina", "exa-free", "community"):
+        raise SearchError("unsupported_option", "--max-characters is supported by Jina, keyless Exa and community readers only.")
     if not provider.fetch_endpoint:
         raise SearchError("unsupported_operation", provider.label + " does not support fetch.")
     payload = provider.fetch_payload(args)
@@ -408,7 +416,7 @@ def run_fetch(args, config, *, budget=None):
     except SearchError as error:
         error.attempts = attempts
         raise
-    if name in ("jina", "exa-free"):
+    if name in ("jina", "exa-free", "community"):
         limit = getattr(args, "max_characters", None) or 24000
         text = data["content"]
         data.update(content=text[:limit], max_characters=limit, returned_characters=min(len(text), limit),
@@ -463,6 +471,9 @@ def run_routed(args, config, *, budget=None, fetch=False):
         except SearchError as exc:
             errors.append({"provider": name, **exc.data()})
             requests.append({"provider": name, "ok": False, "attempts": budget.used - before})
+            if name == "community" and (exc.status in (401, 403, 412) or exc.code in ("source_cooldown", "source_busy")):
+                requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
+                break  # Do not fan out other readers after this platform's access denial/pause.
         requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
         if rows and complement and index > 0:
             break  # A failed complement must not discard evidence or trigger extra paid fan-out.
@@ -705,6 +716,14 @@ def parser():
     trending.add_argument("--platform", required=True, choices=tuple(TRENDING))
     trending.add_argument("--count", type=int, choices=range(1, 51), metavar="1..50", default=10)
     trending.add_argument("--timeout", type=int, choices=range(1, 121), metavar="1..120", default=8)
+    sub.add_parser("feeds", help="Offline catalog of fixed news RSS and policy sources")
+    feed = sub.add_parser("feed", help="One current RSS/policy window with local literal/date filtering")
+    feed.add_argument("--source", required=True, choices=tuple(FEEDS))
+    feed.add_argument("--query", default="", help="All literal whitespace-separated terms; not historical or semantic search")
+    feed.add_argument("--start-date")
+    feed.add_argument("--end-date")
+    feed.add_argument("--count", type=int, choices=range(1, 51), metavar="1..50", default=10)
+    feed.add_argument("--timeout", type=int, choices=range(1, 121), metavar="1..120", default=8)
     configure = sub.add_parser("setup", help="Hidden local input: desktop dialog or user's visible terminal")
     configure.add_argument("--provider", required=True, choices=PROVIDERS)
     configure.add_argument("--gui", action="store_true", help="Open a local hidden-input dialog; safe to launch from an agent")
@@ -760,6 +779,14 @@ def parser():
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "feeds":
+            print(json.dumps({"ok": True, "operation": "feeds", "network_requests": 0,
+                              "sources": [{"source": p.name, "label": p.label, "endpoint": p.endpoint,
+                                           "window_only": True} for p in FEEDS.values()]}, ensure_ascii=False, indent=2))
+            return 0
+        if args.command == "feed":
+            print(json.dumps(run_feed(args, request_api, VERSION), ensure_ascii=False, indent=2))
+            return 0
         if args.command == "trending":
             result = run_trending(args, request_api, VERSION)
             print(json.dumps(result, ensure_ascii=False, indent=2))

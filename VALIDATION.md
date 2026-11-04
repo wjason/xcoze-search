@@ -2,6 +2,11 @@
 
 **简体中文** | [English](VALIDATION.en.md)
 
+## v0.9.0 — 2026-11-05
+
+170 项离线测试通过。本机实际路径：中新网两个 RSS、BBC RSS、中国政府网索引、Python/Rust 主帖成功；V2EX 主帖 403，停止阅读服务扩散。两个已检索新闻/政策链接通过免 Key 阅读得到原文（Jina 401、Exa 备用成功），9 项操作共 11 次 API HTTP，零带 Key 请求/浏览器。中国政府网当时返回的最新条目为 2026-11-01，不称实时全量公告。完整[实测记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)。
+
+
 ## v0.8.0 — 2026-11-05
 
 159 项离线测试通过。三条新 feed 通过实际适配路径，每条一次 HTTP；B 站约 0.22 秒、知乎约 0.28 秒、V2EX 约 0.60 秒，无带 Key 请求、Cookie 或浏览器。另以免费模式检索小红书、微博，各一次 Exa 免 Key请求，约 0.73/1.16 秒；小红书主要为账号主页，微博混合帖子与主页，不据此宣称站内搜索或正文已读。

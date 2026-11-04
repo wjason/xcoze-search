@@ -37,7 +37,7 @@ The optional Skills CLI installation method requires Node.js:
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.8.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.8.0/xcoze-search-skill-v0.8.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.9.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.9.0/xcoze-search-skill-v0.9.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Use in your Agent
 
@@ -76,6 +76,15 @@ To request it explicitly, start with “Use xcoze search.” If the Agent does n
 To add a service, say “Configure DeepSeek for xcoze search.” The Agent provides the official signup link, then guides you through a local hidden-input dialog. **Never paste keys into chat.** See [configure keys](#configure-keys) and [setup and troubleshooting](references/setup.en.md).
 
 ## Sources
+
+### News feeds, government policy and community originals
+
+- **Publisher RSS:** read China News Service latest/finance and BBC World feeds directly, with literal/date filtering of the current window. For example: “Find recent CIIE reports in the CNS feed, then read the originals.”
+- **Government policy:** filter the gov.cn latest-policy index for titles, portal publication dates and official links. This is not a complete nationwide notice database; read originals to check effective dates.
+- **Community originals:** read original posts on Python/Rust community forums. The V2EX original-post adapter is implemented but returned 403 on this network. Code indentation and links are retained; the original post is not a complete comment thread.
+
+These paths need no key or browser. If a feed has no matches, the Agent can search under existing preferences; an empty window does not establish that no relevant news exists. [Usage](references/feeds.en.md) · [Live search/read checks](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md)
+
 
 ### Community trends (no key)
 
@@ -138,7 +147,7 @@ Smart combines transparent capability/source rules and Agent judgment. It does n
 
 Six live tasks and two Chinese holdouts on 2026-11-03 found paid retrieval faster in this sample, with keyless/native routes adding useful primary and dated evidence. Routing was revised accordingly. See the [dated comparison](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03.en.md), including latency, estimated costs and limitations; this is not a general accuracy claim.
 
-There are 15 keyless API/reader adapters (14 search-capable, one reader-only), plus an optional local-browser search path. Offline `platforms` distinguishes scope and optional executable presence from live verification. See [open sources and local-tool cooperation](references/open-sources.en.md) and [live checks/Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
+There are 17 keyless search/reader adapters (15 search-capable, two reader-only), plus three publisher RSS sources, three community hot-list paths and an optional local browser. Offline `platforms` distinguishes scope and optional executable presence from live verification. See [open sources and local-tool cooperation](references/open-sources.en.md) and [live checks/Agent Reach study](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.en.md).
 
 ## Exa limits and browser fallback
 
@@ -165,6 +174,10 @@ Credentials are currently plaintext protected by local permissions, without OS c
 The Agent normally locates the Skill and runs these commands; users do not need to find files:
 
 ```bash
+python3 scripts/xcoze_search.py feeds
+python3 scripts/xcoze_search.py feed --source bbc-world --query 'election'
+python3 scripts/xcoze_search.py search '能源' --platform govcn --strategy free
+python3 scripts/xcoze_search.py fetch 'https://discuss.python.org/t/109869' --strategy free
 python3 scripts/xcoze_search.py trending --platform zhihu --count 10
 python3 scripts/xcoze_search.py trending --platform bilibili --count 10
 python3 scripts/xcoze_search.py trending --platform v2ex --count 10

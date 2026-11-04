@@ -45,7 +45,8 @@ Updated 2026-11-05. Focus: Agent web search and source reading. Default automati
 
 - [x] v0.8.0: integrate and live-check Zhihu hot questions, Bilibili hotwords and V2EX hot topics, separately from keyword search/bodies/comments.
 - [x] Distinguish Xiaohongshu/Weibo profiles from note/post links in indexed results.
-- [ ] **Next public sources:** evaluate publisher RSS/Atom, government notices and V2EX latest topics/single-topic reading. Validate freshness and originals on real tasks before adapting.
+- [x] v0.9.0: CNS latest/finance and BBC RSS, bounded gov.cn policy index, Python/Rust originals; V2EX reading implemented with the live 403 retained.
+- [ ] V2EX latest topics/cross-network reading and further ministry/local notice sources; finite indexes are not complete notice databases.
 - [ ] **Xiaohongshu/Weibo native actions:** verify public endpoints and existing authorized tools. Retain Weibo 403 and Bilibili search 412; do not copy competitor cookies or relabel third-party feeds as official live rankings.
 - [ ] Cross-network/schema-change/denial-pause acceptance for experimental Zhihu/Bilibili feeds; hot-list retrieval is not answer-support evaluation.
 

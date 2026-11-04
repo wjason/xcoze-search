@@ -2,6 +2,15 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.9.0 — 2026-11-05
+
+- Add fixed publisher RSS/Atom windows with literal/date filtering and coverage metadata: CNS latest/finance and BBC World. Read originals only when needed.
+- Add native-first govcn finite latest-policy retrieval; preserve portal dates without claiming complete government coverage or effective dates.
+- Add native original-post reading for Python/Rust Discourse and V2EX with per-site pacing/pauses, bounds and explicit truncation. Reject reply targets, do not claim complete threads, and stop reader fan-out after access denial.
+- Count incomplete HTTP bodies as redacted network failures. Keyless 401/403 no longer blames the user's key.
+- 170 offline tests pass. Eight of nine live operations succeeded; V2EX returned 403. News/policy index-to-original flows passed: 11 API HTTP attempts, no keyed calls/browser. Publish bilingual evidence with failures and source-window limits.
+
+
 ## v0.8.0 — 2026-11-05
 
 - Add keyless `trending` actions for Zhihu's hot list, Bilibili hotwords and V2EX hot topics. One endpoint, no retries, credentials or browser; ordinary keyword searches do not request feeds.

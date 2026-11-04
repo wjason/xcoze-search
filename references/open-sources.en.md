@@ -6,6 +6,9 @@ Local search here means the local Agent calls public services directly and still
 
 ## Native indexes
 
+See [publisher feeds, finite government policy and community originals](feeds.en.md) for commands, date semantics and limits. govcn adds native bounded index retrieval; community adds original-post reading. Three publisher feeds remain separate from ordinary keyword search.
+
+
 ### Community snapshots
 
 `trending --platform bilibili|zhihu|v2ex --count 10` is separate from keyword search: one public endpoint, at most one HTTP attempt, an 8-second default timeout and no retries. Bilibili returns hotwords/search links/native heat; Zhihu returns question links/excerpts without reading answers; V2EX returns topic metadata without bodies/replies. Preserve source order, units and retrieval time. Unknown Bilibili/Zhihu publication times stay null. The catalog declares native_trending separately from native keyword-search coverage.

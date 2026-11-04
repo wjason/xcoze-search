@@ -1,6 +1,13 @@
-# Output contract v0.8.0
+# Output contract v0.9.0
 
 [简体中文](output.md) | **English**
+
+## Feed and community fields
+
+Feeds is offline. Feed reads one fixed source and returns results, metadata, requests, budget and execution_summary. Content kinds are feed_excerpt/official_policy_index. Filtering is limited to the returned window; metadata retains row/match counts, date coverage and duplicate/unknown-date exclusions, with window_complete:false. Valid unmatched windows may succeed empty; source errors are not empty windows. Dates use UTC+08:00 calendar days. GovCN search requests retain the same coverage metadata under normal bounded fallback rules.
+
+Community Fetch adds community_original_post, content_format, source_url, reply_count, source_attached_replies, comments_fetched, comments_included:false, thread_complete:false, completeness_verified:false and character-bound/truncation fields. Discourse can attach replies to its response: comments_fetched reflects that transfer, but reply bodies are not exposed. This is original-post reading, not a complete thread. Per-community cooldown sends no HTTP; automatic readers stop fan-out after access denial. Budget.by_provider uses community while pacing is separated by host.
+
 
 ## Community-trending action
 

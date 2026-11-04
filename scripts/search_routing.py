@@ -16,7 +16,7 @@ PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhih
              "stackexchange": "stackoverflow.com", "arxiv": "arxiv.org", "crossref": "doi.org",
              "npm": "npmjs.com", "crates": "crates.io", "gitlab": "gitlab.com", "europepmc": "europepmc.org",
              "huggingface": "huggingface.co", "youtube": "youtube.com", "bilibili": "bilibili.com",
-             "reddit": "reddit.com", "twitter": "x.com", "v2ex": "v2ex.com", "douban": "douban.com"}
+             "reddit": "reddit.com", "twitter": "x.com", "v2ex": "v2ex.com", "douban": "douban.com", "govcn": "gov.cn"}
 NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
 
 
@@ -37,6 +37,7 @@ def platform_catalog(platform=None):
         trend = TRENDING.get(name)
         rows[-1].update({"native_trending": bool(trend), "trending_provider": trend.name if trend else None,
                          "trending_scope": trend.feed_scope if trend else None})
+        if name == "v2ex": rows[-1].update(native_fetch=True, fetch_provider="community", fetch_scope="original_post_only")
     return {"platforms": rows, "local_tools": [
         {"name": name, "present": bool(shutil.which(name)), "role": role,
          "live_verified": False, "automatic_execution": False} for name, role in (
@@ -140,6 +141,8 @@ def plan(args, config, credential, *, fetch=False):
             if host == "github.com" and len(urlsplit(args.url).path.strip("/").split("/")) == 2:
                 specialized = "github"
             elif host == "news.ycombinator.com": specialized = "hackernews"
+            elif host in ("www.v2ex.com", "discuss.python.org", "users.rust-lang.org"):
+                specialized = "community"
             keyed = [p for p in available if ALL[p].fetch_endpoint]
             # Known-URL reading prefers existing/native readers in the Skill, then these keyless readers.
             candidates = public if strategy == "free" else public[:1] + keyed + public[1:]
@@ -169,7 +172,7 @@ def plan(args, config, credential, *, fetch=False):
                 continue
         try:
             if fetch:
-                if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free"):
+                if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free", "community"):
                     raise SearchError("unsupported_option", "Source does not support adjustable reading length.")
                 if not provider.fetch_endpoint:
                     raise SearchError("unsupported_operation", "Source does not read URLs.")

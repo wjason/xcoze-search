@@ -744,5 +744,6 @@ class HuggingFace(OpenSource):
 OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace())
 
 from browser_search import Browser
+from content_sources import GovCN, CommunityReader
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser())}
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader())}
