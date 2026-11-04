@@ -31,6 +31,10 @@ B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开�
 | gitlab | GitLab.com 公开项目 | 名称/路径/描述搜索，按星标排序；不提供出版日期过滤 | 不是代码搜索/官方身份验证；[Projects API](https://docs.gitlab.com/api/projects/) |
 | europepmc | 生物医学文献 | start/end 为 FIRST_PDATE，上游可能推定缺失日期 | 摘要不等于全文，不据此验证临床结论；[API](https://europepmc.org/RestfulWebService) |
 | huggingface | 公开模型 | 按下载量排序，创建/修改日期留在元数据 | 不读完整模型卡、不下载/推理，gated 权限另行开通；[API](https://huggingface.co/docs/hub/api) |
+| openlibrary | 图书和作者 | 无日期筛选 | 作品元数据，不包含图书全文；[API](https://openlibrary.org/dev/docs/api/search) |
+| datacite | 研究成果 DOI | 无日期筛选 | 元数据，不包含成果全文；[API](https://support.datacite.org/docs/api) |
+| zenodo | 公开研究成果 | 无日期筛选 | 摘要及元数据，不下载文件；[API](https://developers.zenodo.org/) |
+| wikidata | 知识实体 | --language 支持 en/zh | 实体标签与描述，不等于完整知识图谱；[API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
 
 每个新增适配器最多 20 条，基础命令默认 10 条，不自动分页；限制可能比上游严格。`--site` 仍需匹配对应来源，Crossref 平台使用 doi.org 稳定记录链接。原生来源可由 --provider 直接指定；禁用来源不会自动启用。通用查询不会无差别广播到这些平台，Agent 从原问题选择平台或保留通用搜索。
 

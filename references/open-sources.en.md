@@ -31,6 +31,10 @@ Weibo and Xiaohongshu are searched through public web indexes. Native Weibo tren
 | gitlab | GitLab.com public projects | Name/path/description matching, star-count sorting; no publication-date filter | No code/private search or official-identity proof; [Projects API](https://docs.gitlab.com/api/projects/) |
 | europepmc | Biomedical literature | FIRST_PDATE; upstream may infer missing date parts | Abstracts, no full text or clinical validation; [API](https://europepmc.org/RestfulWebService) |
 | huggingface | Public models | Download sorting; created/modified dates remain metadata | No full cards/downloads/inference; gated access is separate; [API](https://huggingface.co/docs/hub/api) |
+| openlibrary | Books and authors | No date filter | Work metadata, not full books; [API](https://openlibrary.org/dev/docs/api/search) |
+| datacite | Research DOIs | No date filter | Metadata, not full text; [API](https://support.datacite.org/docs/api) |
+| zenodo | Public research records | No date filter | Abstract and metadata, no file download; [API](https://developers.zenodo.org/) |
+| wikidata | Knowledge entities | --language en/zh | Entity labels and descriptions, not the full knowledge graph; [API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
 
 New adapters cap results at 20, default search count 10, without pagination. Adapter limits may be stricter than upstream limits. Sites must match each source; Crossref uses stable doi.org record links. --provider can pin a native source. Disabled sources stay excluded. General queries are not broadcast to every platform; the Agent chooses from the original question.
 

@@ -24,13 +24,17 @@
 | arXiv | 搜索预印本、读取摘要和论文信息 |
 | Crossref | 搜索 DOI、作者和出版信息 |
 | Europe PMC | 搜索生物医学文献及摘要 |
+| DataCite | 搜索研究成果 DOI 和元数据 |
+| Zenodo | 搜索公开研究成果及摘要 |
+| Open Library | 搜索图书及作者信息 |
+| Wikidata | 搜索中英文实体名称和描述 |
 | npm | 搜索 JavaScript 软件包及版本信息 |
 | crates.io | 搜索 Rust 软件包及版本信息 |
 | Hugging Face | 搜索公开模型信息 |
 | 中国政府网 | 搜索“最新政策”栏目中的文件和解读 |
 | Python、Rust 社区论坛，V2EX | 读取公开话题主帖 |
 
-Bing RSS、DuckDuckGo HTML 和部分社区入口的访问结果可能随网站调整或网络环境变化。GitHub 适配面向仓库，不包含代码搜索或私有仓库；论文和社区搜索返回的摘要也不代表已读取全文或完整讨论。中国政府网的栏目不覆盖全国所有公告。
+Bing RSS、DuckDuckGo HTML 和部分社区入口的访问结果可能随网站调整或网络环境变化。GitHub 适配面向仓库，不包含代码搜索或私有仓库；论文、数据和图书结果主要为元数据或摘要，不代表已读取全文；社区搜索也不代表已读取完整讨论。中国政府网的栏目不覆盖全国所有公告。
 
 ### 新闻与社区热点
 
@@ -64,6 +68,8 @@ Bing RSS、DuckDuckGo HTML 和部分社区入口的访问结果可能随网站�
 ### 浏览器兜底
 
 当其他可用搜索路径无法返回结果时，Skill 可以使用本机已有的 [agent-browser](https://github.com/vercel-labs/agent-browser) 和浏览器尝试搜索。默认使用 360 搜索，也可指定 Bing 或 Google。此功能是可选的；基础安装不会自动安装浏览器或使用你的浏览器登录状态。也可以让 Agent 关闭浏览器兜底。
+
+[查看来源可用性检查记录](../evaluations/reports/2026-11-05-source-audit.md)。
 
 更多能力说明见[开放来源与平台](open-sources.md)、[新闻与社区内容](feeds.md)和[搜索方式](routing.md)。我们也整理了一份[完整来源调研清单](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)，其中包含尚未接入的来源。
 

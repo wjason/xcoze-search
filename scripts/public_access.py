@@ -14,7 +14,7 @@ import urllib.error
 from search_common import SearchError
 
 INTERVALS = {"wikipedia": 1, "stackexchange": 1, "arxiv": 3, "crossref": 1,
-             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "exa-free": 1, "duckduckgo": 1, "browser": 0}
+             "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "openlibrary": 1, "datacite": 1, "zenodo": 1, "wikidata": 1, "exa-free": 1, "duckduckgo": 1, "browser": 0}
 INTERVALS.update({"bilibili-trending": 2, "zhihu-trending": 2, "v2ex-trending": 2})
 INTERVALS.update({"cns-scroll": 2, "cns-finance": 2, "bbc-world": 2, "govcn": 2,
                   "community-v2ex": 2, "community-python": 2, "community-rust": 2})

@@ -78,8 +78,9 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 | 通用网页搜索 | 3 | Bing RSS、DuckDuckGo HTML、Exa MCP |
 | 网页阅读 | 2 | Jina Reader、Exa MCP |
 | 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
-| 论文与科研 | 3 | arXiv、Crossref、Europe PMC |
-| 百科与问答 | 2 | Wikipedia、Stack Exchange |
+| 论文与科研 | 5 | arXiv、Crossref、Europe PMC、DataCite、Zenodo |
+| 百科、知识库与问答 | 3 | Wikipedia、Wikidata、Stack Exchange |
+| 图书 | 1 | Open Library |
 | 社区内容 | 4 | Hacker News、Python 社区论坛、Rust 社区论坛、V2EX |
 | 新闻订阅 | 2 | 中新网、BBC |
 | 政府政策 | 1 | 中国政府网 |

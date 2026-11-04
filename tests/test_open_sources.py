@@ -35,7 +35,11 @@ EPMC = {'hitCount': 1, 'resultList': {'result': [{'source': 'MED', 'id': '123', 
          'firstPublicationDate': '2026-11-01', 'abstractText': '<p>Abstract only</p>'}]}}
 HF = [{'id': 'example/model', 'pipeline_tag': 'text-generation', 'gated': 'auto', 'private': False}]
 FIXTURES = {'wikipedia': WIKI, 'stackexchange': SE, 'arxiv': ATOM, 'crossref': CROSSREF,
-            'npm': NPM, 'crates': CRATES, 'gitlab': GL, 'europepmc': EPMC, 'huggingface': HF}
+            'npm': NPM, 'crates': CRATES, 'gitlab': GL, 'europepmc': EPMC, 'huggingface': HF,
+            'openlibrary': {'docs': [{'key':'/works/OL1W','title':'A book','author_name':['An author'],'first_publish_year':2020}]},
+            'datacite': {'data': [{'attributes': {'doi':'10.1234/example','titles':[{'title':'Dataset'}],'publicationYear':2025}}]},
+            'zenodo': {'hits': {'hits': [{'id':1,'metadata':{'title':'A dataset','description':'<p>Summary</p>','publication_date':'2025-01-01'}}]}},
+            'wikidata': {'search': [{'id':'Q1','label':'Universe','description':'All space and time'}]}}
 
 
 class OpenSourceTests(unittest.TestCase):
@@ -282,3 +286,25 @@ class AccessTests(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+class AdditionalPublicSourceTests(unittest.TestCase):
+    def test_new_sources_reject_unsupported_filters_and_invalid_records(self):
+        for name in ('openlibrary', 'datacite', 'zenodo', 'wikidata'):
+            with self.subTest(provider=name):
+                with self.assertRaises(x.SearchError):
+                    PUBLIC[name].search_payload(args(query='wind energy', start_date='2026-01-01'))
+                with self.assertRaises(x.SearchError):
+                    PUBLIC[name].normalize({}, 3)
+        with self.assertRaises(x.SearchError):
+            PUBLIC['openlibrary'].normalize({'docs': [{'key': '/works/../../evil', 'title': 'Bad'}]}, 3)
+        with self.assertRaises(x.SearchError):
+            PUBLIC['wikidata'].search_payload(args(query='wind', language='fr'))
+
+    def test_results_are_metadata_and_never_duplicate_raw_record_lists(self):
+        for name in ('openlibrary', 'datacite', 'zenodo', 'wikidata'):
+            with self.subTest(provider=name):
+                rows, meta = PUBLIC[name].normalize(FIXTURES[name], 3)
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]['content'], '')
+                for field in ('docs', 'data', 'hits', 'search'):
+                    self.assertNotIn(field, meta['provider_metadata'])

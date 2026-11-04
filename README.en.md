@@ -78,8 +78,9 @@ A preference for future searches is saved; a request for “this search” appli
 | General web search | 3 | Bing RSS, DuckDuckGo HTML, Exa MCP |
 | Page reading | 2 | Jina Reader, Exa MCP |
 | Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
-| Research | 3 | arXiv, Crossref, Europe PMC |
-| Encyclopedias and Q&A | 2 | Wikipedia, Stack Exchange |
+| Research | 5 | arXiv, Crossref, Europe PMC, DataCite, Zenodo |
+| Encyclopedias, knowledge and Q&A | 3 | Wikipedia, Wikidata, Stack Exchange |
+| Books | 1 | Open Library |
 | Community content | 4 | Hacker News, Python community forum, Rust community forum, V2EX |
 | News feeds | 2 | China News Service, BBC |
 | Government policy | 1 | gov.cn |

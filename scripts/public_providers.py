@@ -419,7 +419,7 @@ class OpenSource(PublicProvider):
     def metadata(self, raw, rows, count):
         value = super().metadata(raw, rows, count)
         value["provider_metadata"] = {k: v for k, v in raw.items() if k not in (
-            "items", "query", "message", "objects", "crates", "resultList", "entries")}
+            "items", "query", "message", "objects", "crates", "resultList", "entries", "docs", "data", "hits", "search")}
         for container, field in (("message", "items"), ("query", "search")):
             if isinstance(raw.get(container), dict):
                 value["provider_metadata"][container] = {k: v for k, v in raw[container].items() if k != field}
@@ -741,7 +741,112 @@ class HuggingFace(OpenSource):
         return self.rows(raw, items, count)
 
 
-OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace())
+class OpenLibrary(OpenSource):
+    name, label = "openlibrary", "Open Library books"
+    endpoint = "https://openlibrary.org/search.json"
+    sites = ("openlibrary.org",)
+    result_kind, search_scope = "book_metadata", "open_library_catalog"
+    documentation_url = "https://openlibrary.org/dev/docs/api/search"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"q": args.query, "limit": args.count, "fields": "key,title,author_name,first_publish_year"}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "docs"):
+            key = item.get("key")
+            if not isinstance(key, str) or not re.fullmatch(r"/works/OL[0-9]+W", key):
+                raise SearchError("invalid_response", "Invalid Open Library work identifier.")
+            authors = item.get("author_name") or []
+            if not isinstance(authors, list) or any(not isinstance(a, str) for a in authors):
+                raise SearchError("invalid_response", "Invalid Open Library authors.")
+            items.append({**item, "url": "https://openlibrary.org" + key,
+                          "snippet": ", ".join(authors),
+                          "date_semantics": "first_publication_year_of_work"})
+        return self.rows(raw, items, count)
+
+
+class DataCite(OpenSource):
+    name, label = "datacite", "DataCite research records"
+    endpoint = "https://api.datacite.org/dois"
+    sites = ("doi.org",)
+    result_kind, search_scope = "research_metadata", "datacite_registered_records"
+    documentation_url = "https://support.datacite.org/docs/api"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"query": args.query, "page[size]": args.count}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "data"):
+            attrs = item.get("attributes")
+            if not isinstance(attrs, dict): raise SearchError("invalid_response", "Invalid DataCite record.")
+            doi, titles = attrs.get("doi"), attrs.get("titles")
+            if not isinstance(doi, str) or not doi.startswith("10.") or not isinstance(titles, list) or not titles or not isinstance(titles[0], dict):
+                raise SearchError("invalid_response", "Invalid DataCite DOI or title.")
+            items.append({"title": titles[0].get("title") or doi,
+                          "url": "https://doi.org/" + urllib.parse.quote(doi, safe="/"),
+                          "creators": attrs.get("creators"), "publisher": attrs.get("publisher"),
+                          "publication_year": attrs.get("publicationYear"), "types": attrs.get("types"),
+                          "date_semantics": "publication_year_metadata"})
+        return self.rows(raw, items, count)
+
+
+class Zenodo(OpenSource):
+    name, label = "zenodo", "Zenodo research records"
+    endpoint = "https://zenodo.org/api/records"
+    sites = ("zenodo.org",)
+    result_kind, search_scope = "research_metadata", "zenodo_public_records"
+    documentation_url = "https://developers.zenodo.org/"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"q": args.query, "size": args.count, "page": 1}
+
+    def normalize(self, raw, count):
+        hits = raw.get("hits")
+        if not isinstance(hits, dict): raise SearchError("invalid_response", "Invalid Zenodo response.")
+        items = []
+        for item in record_array(hits, "hits"):
+            meta, ident = item.get("metadata"), item.get("id")
+            if not isinstance(meta, dict) or type(ident) is not int or ident < 1:
+                raise SearchError("invalid_response", "Invalid Zenodo record.")
+            items.append({"title": meta.get("title"), "url": "https://zenodo.org/records/" + str(ident),
+                          "description_text": clean_html(meta.get("description") or ""),
+                          "published": meta.get("publication_date"), "doi": meta.get("doi"),
+                          "creators": meta.get("creators"), "access_right": meta.get("access_right"),
+                          "date_semantics": "zenodo_record_publication_date"})
+        return self.rows(raw, items, count, published="published", summary="description_text")
+
+
+class Wikidata(OpenSource):
+    name, label = "wikidata", "Wikidata entities"
+    endpoint = "https://www.wikidata.org/w/api.php"
+    sites = ("wikidata.org",)
+    options = frozenset(("site", "language"))
+    result_kind, search_scope = "entity_metadata", "wikidata_entity_labels_and_descriptions"
+    documentation_url = "https://www.wikidata.org/wiki/Wikidata:Data_access"
+
+    def build_search(self, args):
+        self.check_site(args)
+        lang = option(args, "language") or ("zh" if re.search(r"[\u4e00-\u9fff]", args.query) else "en")
+        if lang not in ("en", "zh"): raise SearchError("unsupported_option", "Wikidata supports en or zh language in this adapter.")
+        return {"action": "wbsearchentities", "search": args.query, "language": lang, "format": "json", "limit": args.count}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "search"):
+            ident = item.get("id")
+            if not isinstance(ident, str) or not re.fullmatch(r"Q[1-9][0-9]*", ident):
+                raise SearchError("invalid_response", "Invalid Wikidata entity identifier.")
+            items.append({"title": item.get("label") or ident, "url": "https://www.wikidata.org/wiki/" + ident,
+                          "snippet": item.get("description") or "", "entity_id": ident})
+        return self.rows(raw, items, count)
+
+
+OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace(), OpenLibrary(), DataCite(), Zenodo(), Wikidata())
 
 from browser_search import Browser
 from content_sources import GovCN, CommunityReader

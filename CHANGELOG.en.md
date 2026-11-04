@@ -2,6 +2,11 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## Unreleased
+
+- Add public metadata search for Open Library, DataCite, Zenodo and Wikidata.
+- Check supported keyless sources with live requests and record access limits.
+
 ## v0.9.1 — 2026-11-05
 
 - Distinguish configuration permission failures, configuration read errors and other local permission failures.
