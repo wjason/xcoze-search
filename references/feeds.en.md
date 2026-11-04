@@ -35,6 +35,6 @@ Python/Rust use public Discourse Topic JSON and select post_number:1; V2EX uses 
 
 Only the original body is exposed. Discourse may attach initial replies in its response: comments_fetched/source_attached_replies describes that transfer, while comments_included:false means reply bodies are not exposed. No reply pagination. Thread/completeness verification stays false; this is not a complete discussion or independent fact verification.
 
-Pacing and pauses are per community. HTTP 401/403/412 pauses for 15 minutes; automatic fetch stops reader fan-out after denial/cooldown, without identity/proxy/browser changes. V2EX returned 403 in this network; Python/Rust originals succeeded. Other communities do not use this native adapter; existing authorized host tools may help.
+Pacing and pauses are per community. HTTP 401/403/412 pauses for 15 minutes; automatic fetch stops reader fan-out after denial/cooldown, without identity/proxy/browser changes. V2EX access may be restricted by the network or platform. Other communities do not use this native adapter; existing authorized host tools may help.
 
 [Live checks](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md) · [Output contract](output.en.md)

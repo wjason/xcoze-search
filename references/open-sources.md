@@ -15,7 +15,7 @@
 
 B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开放平台 API；V2EX 按其 [API 公平使用规则](https://www.v2ex.com/p/7v9TEc53)使用。来源每 2 秒最多一次、跨进程串行；401/403/412 后该 feed 暂停 15 分钟，429/503 遵守 Retry-After，无额外说明时暂停 60 秒。不换 Cookie、IP 或浏览器继续请求。
 
-微博直接入口本次 403，没有接入原生热榜；小红书没有确认到可匿名使用的官方通用笔记搜索接口。其[账号开放文档](https://openaccount.xiaohongshu.com/docs/api-reference)不等于内容搜索 API。两者仍用公开索引，结果新增 URL 类型标记，账号主页不代表笔记/帖子正文。完整评论或站内检索优先评估用户已有授权工具，仍未内置执行桥接。[本轮实测与下一步](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.md)。
+微博和小红书目前通过公开网页索引定向搜索，未接入微博原生热榜或小红书站内搜索。结果会区分账号主页和帖子链接；完整评论或站内检索可以使用已有的授权工具。
 
 ### 关键词与专业索引
 
@@ -62,11 +62,11 @@ python3 scripts/xcoze_search.py search 'Qwen' --platform huggingface
 
 正文默认最多 24000 字符，需要遗漏段落时再执行 `fetch URL --max-characters 100000`；仅 Jina/Exa 免 Key支持，最大 200000。`truncated` 表示本机裁剪或已触及请求上限的风险，`completeness_verified:false` 始终保留，不能据长度声称整页已完整读取。
 
-[本轮实测与 Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
+[开放来源与 Agent Reach 研究](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-open-sources.md)。
 
 ## 可选浏览器搜索
 
-browser 现已接入已有 agent-browser，独立匿名 Chrome 会话，不是 Agent Reach 执行桥接。支持 360（默认）、Bing/Google（显式选择），一次导航，不自动轮换引擎。接口成功不启动，失败后仍需遵守网站验证与冷却。等可见自然结果而非仅节点存在，不为图片等整页资源延迟结果提取；广告/AI 卡片不作来源。360 的明确无匹配与空壳、隐藏节点、超时分开处理。v0.7.1 已用真实页面跑通文档、CPI 和公告转载检索，以及真实 API 验证失败后的自动兜底；GitHub 公开索引仍有缺口。见[真实测试](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)和[调度](routing.md)，不据此承诺跨网络或完整平台覆盖。
+当 API 路径不可用时，可以使用已有的 agent-browser 进行匿名浏览器搜索。默认使用 360，也可以指定 Bing 或 Google；已有 API 返回可用结果时不会自动启动浏览器。此功能需要单独安装本地工具，使用前请遵守网站的访问规则。
 
 ```bash
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
@@ -75,4 +75,4 @@ python3 scripts/xcoze_search.py preferences --browser auto
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```
 
-v0.7.2 对照表明：360 适合补线索，不承担英文官方文档或 GitHub 索引完整性承诺。GitHub 优先 API 且不预留浏览器名额；DDG 验证暂停与逐条相关性/明显时间冲突检查见[调度](routing.md)。[新对照记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)保留 Exa 真实限额及到期后的正常成功，不清除暂停制造恢复。
+更多选路规则见[自动调度](routing.md)。

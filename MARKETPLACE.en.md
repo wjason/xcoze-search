@@ -4,7 +4,7 @@
 
 Name: **xcoze search**
 ID: `xcoze-search`
-Version: `0.7.0` preview
+Version: `0.9.1`
 Maintainer: XCoze
 Repository: [wjason/xcoze-search](https://github.com/wjason/xcoze-search)
 
@@ -14,9 +14,9 @@ Automatically select keyless and commercial sources for Agent web search, page r
 
 ## Description
 
-Ask normally after installation. No keys use public routes; configured keys default to quality-first. Balanced/free/default-source preferences are optional. Source/HTTP/time budgets bound automatic fallback; the Agent assesses evidence gaps and checks originals.
+Ask normally after installation. No keys use public routes; configured keys default to quality-first. Balanced/free/default-source preferences are optional. The Agent chooses sources for the question and reads original pages when needed.
 
-Keyless routes: Bing RSS, DuckDuckGo HTML, Exa hosted MCP, GitHub public repositories and Hacker News; Jina Reader extracts pages. BYOK: DeepSeek, Yuanbao, Tavily, Exa, Brave and Bocha. Zhihu/Xiaohongshu/Weibo have scoped public-index search, not guaranteed native search, complete text or comments.
+Search public web pages, news, policy, papers, open-source projects, community content, and trends. You can also configure API keys for DeepSeek, Yuanbao, Tavily, Exa, Brave, and Bocha. See [sources and integrations](references/sources.en.md) for the full list.
 
 ## Installation and requirements
 
@@ -30,4 +30,6 @@ Python 3.10+, no pip/browser runtime dependency; a host with Agent Skills and lo
 
 Queries/URLs go to the selected source without an XCoze relay. Keyless still uses external services and their limits. Credentials are permission-protected plaintext without OS credential-store integration. Search success is not factual verification; live retrieval does not promise immediate indexing. Self-hosted search, enterprise documents and full-site crawling are outside scope.
 
-See [validation](VALIDATION.en.md) for offline/live evidence and unverified items. No marketplace is selected; this file does not establish listing, certification or approval. Suggested tags: search, agent, keyless, research, citations, web-fetch.
+Learn more: [Sources and integrations](references/sources.en.md) · [Validation](VALIDATION.en.md).
+
+Tags: search, agent, keyless, research, citations, web-fetch.

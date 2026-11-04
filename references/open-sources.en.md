@@ -15,7 +15,7 @@ See [publisher feeds, finite government policy and community originals](feeds.en
 
 Bilibili and Zhihu use experimental public website endpoints, not stable open-platform APIs with an SLA. Follow the [V2EX API fair-use rules](https://www.v2ex.com/p/7v9TEc53). Each feed is serialized across local processes with a two-second interval. Access denials (401/403/412) pause that feed for 15 minutes; 429/503 honor Retry-After, defaulting to 60 seconds when absent. Do not rotate cookies, IPs or browsers to retry a blocked feed.
 
-The direct Weibo endpoint returned 403; no native feed was added. No anonymous official general note-search API was confirmed for Xiaohongshu; its [account API documentation](https://openaccount.xiaohongshu.com/docs/api-reference) is not content search. Both still use public indexes, now with URL destination labels. Profiles are not note/post bodies. Authorized existing tools remain an optional path for native search/comments; no execution bridge has been added. See [live checks and next steps](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-public-platforms.en.md).
+Weibo and Xiaohongshu are searched through public web indexes. Native Weibo trends and Xiaohongshu site search are not integrated. Results distinguish profiles from post links; existing authorized tools can provide additional site-specific search or comments.
 
 ### Keyword and specialist indexes
 
@@ -66,7 +66,7 @@ Reading defaults to 24000 characters. Use `fetch URL --max-characters 100000` on
 
 ## Optional browser search
 
-browser now executes an existing agent-browser in an isolated anonymous Chrome session; it is not an Agent Reach execution bridge. 360 is default, Bing/Google explicit, one navigation without engine rotation. API success prevents startup; verification/cooldowns still apply. Wait for visible organic rows rather than node existence or all page resources; exclude ads/AI cards. Explicit 360 no-match pages are distinct from shells, hidden placeholders and timeouts. v0.7.1 retrieved docs, a CPI release and a filing reproduction from real pages, including automatic recovery after a real API challenge. A GitHub public-index gap remains. See [live evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md) and [routing](routing.en.md); this is not multi-network or full-platform acceptance.
+When API paths are unavailable, an existing agent-browser can perform an anonymous browser search. It defaults to 360; Bing or Google can also be selected. A successful API result does not automatically start the browser. This optional feature requires local tools and is subject to the website’s access rules.
 
 ```bash
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --strategy free
@@ -75,4 +75,4 @@ python3 scripts/xcoze_search.py preferences --browser auto
 python3 scripts/xcoze_search.py search 'Python asyncio TaskGroup' --provider browser --browser-engine 360
 ```
 
-v0.7.2 observations support 360 as a lead fallback, without complete English-doc/GitHub indexing. GitHub keeps API priority without reserving a browser slot. DDG pauses and per-row topic/explicit-time-conflict checks are in [routing](routing.en.md). [Evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.en.md) retains real Exa limits and later normal recovery without clearing pauses.
+See [routing](routing.en.md) for source selection details.

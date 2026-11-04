@@ -2,7 +2,7 @@
 
 [简体中文](providers.md) | **English**
 
-## v0.4.0 keyless routes
+## Keyless routes
 
 | ID | Fixed entry point | Scope and limits |
 |---|---|---|
@@ -91,6 +91,6 @@ Maps data.webPages.value and retains name/url/snippet/summary/siteName/datePubli
 
 Queries and content URLs go directly to user-selected providers. Providers activate and bill independently. Multi-provider requests, retries, advanced depth, content extraction, and generated content may add charges. Budgets limit actual HTTP attempts, not money. Only provider-reported usage and cost are returned; missing values are null, with no price-table estimates.
 
-The four added providers have not been tested with live accounts. Protocol and offline validation do not establish account authorization, balance, reachability, retrieval quality, or operational acceptance.
+Account authorization, balance, and access can be checked with a live search after configuration. See [validation](../VALIDATION.en.md) for the project’s verification records.
 
 See [open sources](open-sources.en.md) for public native indexes and existing-tool cooperation. No new base dependencies; native APIs, public indexes and specialist content tools remain separate.

@@ -73,66 +73,24 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 ## 支持的来源
 
-下面列出目前已接入的来源。公开服务可能有访问限制、限额或地区差异；搜索结果和网页内容的使用还需遵守各来源的规则。
+| 分类 | 数量 | 来源 |
+|---|---:|---|
+| 通用网页搜索 | 3 | Bing RSS、DuckDuckGo HTML、Exa MCP |
+| 网页阅读 | 2 | Jina Reader、Exa MCP |
+| 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
+| 论文与科研 | 3 | arXiv、Crossref、Europe PMC |
+| 百科与问答 | 2 | Wikipedia、Stack Exchange |
+| 社区内容 | 4 | Hacker News、Python 社区论坛、Rust 社区论坛、V2EX |
+| 新闻订阅 | 2 | 中新网、BBC |
+| 政府政策 | 1 | 中国政府网 |
+| 社区热点 | 3 | 知乎、B 站、V2EX |
+| 平台定向搜索 | 9 | 知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣 |
+| 可配置 API | 6 | DeepSeek、腾讯元宝、Tavily、Exa、Brave Search、博查 |
+| 可选浏览器搜索 | 3 | 360 搜索、Bing、Google |
 
-### 免 Key 搜索与阅读
+数量按每类中列出的来源或平台计算，同一来源可能同时出现在多个类别，不能相加作为独立来源总数。平台定向搜索使用公开网页索引；新闻按发布机构计数，其中中新网有即时、财经两个订阅源。浏览器搜索需要额外的本地工具。
 
-| 来源 | 可以做什么 |
-|---|---|
-| Bing RSS | 搜索公开网页 |
-| DuckDuckGo HTML | 搜索公开网页 |
-| Exa 托管 MCP | 搜索公开网页、读取网页内容 |
-| Jina Reader | 读取网页内容 |
-| GitHub | 搜索公开仓库、读取仓库 README |
-| GitLab.com | 搜索公开项目 |
-| Hacker News | 搜索帖子、读取单条帖子或评论 |
-| Wikipedia | 搜索中英文百科条目 |
-| Stack Exchange | 搜索 Stack Overflow 等七个社区的问题 |
-| arXiv | 搜索预印本、读取摘要和论文信息 |
-| Crossref | 搜索 DOI、作者和出版信息 |
-| Europe PMC | 搜索生物医学文献及摘要 |
-| npm | 搜索 JavaScript 软件包及版本信息 |
-| crates.io | 搜索 Rust 软件包及版本信息 |
-| Hugging Face | 搜索公开模型信息 |
-| 中国政府网 | 搜索“最新政策”栏目中的文件和解读 |
-| Python、Rust 社区论坛，V2EX | 读取公开话题主帖 |
-
-Bing RSS、DuckDuckGo HTML 和部分社区入口的访问结果可能随网站调整或网络环境变化。GitHub 适配面向仓库，不包含代码搜索或私有仓库；论文和社区搜索返回的摘要也不代表已读取全文或完整讨论。中国政府网的栏目不覆盖全国所有公告。
-
-### 新闻与社区热点
-
-| 来源 | 可以做什么 |
-|---|---|
-| 中新网 | 读取即时新闻、财经新闻订阅 |
-| BBC | 读取 World 新闻订阅 |
-| 知乎 | 查看公开热榜问题及摘要 |
-| B 站 | 查看公开热搜词 |
-| V2EX | 查看公开热门话题 |
-
-新闻订阅覆盖的是各来源当前提供的内容窗口。社区榜单展示各平台各自提供的内容，不包含完整的回答、视频或评论。
-
-### 平台定向搜索
-
-可以在公开网页索引中限定**知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣**。这类搜索取决于网页是否被索引，和平台内搜索、登录后内容或完整评论读取不同。
-
-### 使用自己的 API Key
-
-| 服务 | 支持的能力 |
-|---|---|
-| DeepSeek | Search、Fetch |
-| 腾讯元宝 | SearchPro 搜索与摘要 |
-| Tavily | Search、Extract |
-| Exa | Search、Contents |
-| Brave Search | Web Search |
-| 博查 | Web Search |
-
-各服务需要单独开通，额度和费用以服务商为准。Exa 的免 Key MCP 和带 Key API 是不同入口。服务的参数与限制见[接口说明](references/providers.md)。
-
-### 浏览器兜底
-
-当其他可用搜索路径无法返回结果时，Skill 可以使用本机已有的 [agent-browser](https://github.com/vercel-labs/agent-browser) 和浏览器尝试搜索。默认使用 360 搜索，也可指定 Bing 或 Google。此功能是可选的；基础安装不会自动安装浏览器或使用你的浏览器登录状态。也可以让 Agent 关闭浏览器兜底。
-
-更多能力说明见[开放来源与平台](references/open-sources.md)、[新闻与社区内容](references/feeds.md)和[搜索方式](references/routing.md)。我们也整理了一份[完整来源调研清单](research/free-sources-2026-11.md)，其中包含尚未接入的来源。
+[查看完整来源与适配情况 →](references/sources.md)
 
 ## 配置 API Key
 

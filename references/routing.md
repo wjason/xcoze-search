@@ -72,7 +72,7 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 
 显式 source 不自动备用；both 和逗号列表的已有语义保留。auto 和默认 fetch 在 v0.4.0 改变，需要固定旧行为的调用方应显式指定来源。
 
-## v0.7.0：快速路径与限额恢复
+## 浏览器兜底与限额恢复
 
 - 默认先 API。有 browser 可用时，execution_candidates 默认是前两条兼容 API + browser；无 browser 时最多三个 API。来源上限 2 时是一条 API + browser，上限 1 时不加兜底。浏览器不是质量互补来源：只要已有 API 结果就不启动。用户显式选择 browser（本次或默认源）可覆盖默认优先级。
 - 自动 API 每源超时最多 8 秒，浏览器最多 15 秒且裁剪到剩余时间/--timeout；总调度 45 秒，关闭另有最多 6 秒宽限。原生 API 成功一源结束，quality reference/current 最多保留两家 API 结果，第二家失败也不丢首家。
@@ -81,23 +81,19 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 - `--browser off`/`preferences --browser off` 可禁用，auto 恢复。browser 被 disable 后不自动启用。没有 CLI 时不安装；冷却、禁用、不兼容和 HTTP/来源/时间预算可使本次没有浏览器路径。
 - 原生约束不为 browser 放宽：browser 目前仅通用 query/site，日期、语言等显式条件不兼容时跳过。浏览器真实子请求数未知；API budget 的单位为 provider_api_http_attempts，浏览器另计一次导航和本地命令，不能混为实际 HTTP。
 
-[故障测试与实际限制](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.md)。
 
-## v0.7.1：真实浏览器检索修正
+## 浏览器搜索结果
 
-默认浏览器引擎改为 360，Bing/Google 仍可用 --browser-engine 显式指定；每次只使用所选引擎，不探测/轮换。匿名会话先启动空白页，固定脚本发起一次导航，再等可见、标题非空的自然结果，不等待整页 load 作为结果可用条件。360 从自然结果的 data-mdurl 取目标网址，排除广告、AI 答案卡片及搜索引擎内部链接。
+默认浏览器引擎为 360，Bing/Google 仍可用 --browser-engine 显式指定；每次只使用所选引擎，不探测/轮换。匿名会话先启动空白页，固定脚本发起一次导航，再等可见、标题非空的自然结果，不等待整页 load 作为结果可用条件。360 从自然结果的 data-mdurl 取目标网址，排除广告、AI 答案卡片及搜索引擎内部链接。
 
 明确无匹配返回空列表和 browser_explicit_no_matches:true，不设置失败冷却，也不代表全网没有资料。隐藏结果报告 browser_results_hidden；命令超时保留 browser_timeout，网络错误页为 browser_navigation_failed。后者与空壳等暂缓 60 秒；验证码仍暂缓 900 秒。browser_failure_stage 和 browser_stage_timings_ms 记录失败阶段与启动/导航/等待/提取/关闭耗时，不保存网页正文或上游错误文本。中英文明显无主题重合可拒绝，但这不是语义质量分类器。
 
-API 优先、免费隔离、来源和等待上限保持不变。真实检索约 3–5 秒，仍比健康 API 更重，所以不会让浏览器补充已成功的 API 结果。三题检索和真实 DDG 到浏览器的兜底通过；公开索引 GitHub 无匹配和较弱文档查询仍保留在[测试报告](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.md)，多网络与多操作系统运行时验收继续保留待办。
 
-## v0.7.2：实测后的来源和延迟控制
+## 来源选择与结果过滤
 
-- 360 继续作为应急兜底，不提升为通用主源。本机真实比较中，它能补中文新闻线索，英文官方文档和 GitHub 公开索引仍有缺口。接口成功不启动浏览器，不因主接口结果需要进一步阅读就自动转浏览器。
+- 360 用于搜索兜底；API 已返回可用结果时不会自动启动浏览器。浏览器索引覆盖范围因搜索引擎而异。
 - GitHub 任务不强制预留 browser 位置，按已有顺序用原生/通用 API 填满最多三源预算。更低上限、禁用和显式 browser 选择仍有效；若 API 数量不足，browser 仍可能使用剩余位置。browser_slot_policy 解释本次策略。
 - quality 的 reference/current 仅在下一候选为已配置服务或 Exa 免 Key 时自动互补。下一项只有 Bing/DDG/browser 时，主源有结果就停止；主源失败仍按现有预算备用。互补在已有证据后最多给 3 秒请求超时，主 API 仍为 8 秒；显式多源不受这条自动互补上限影响。网络/DNS 不因此成为硬截止或服务等级保证。
 - RSS/HTML/browser 逐条拒绝明显中文跑题、缺失查询中函数/代码标识、显式冲突年份及部分月份/半年期间；紧凑 /YYYYMM/ 路径也参与年份检查。缺日期保持未知。dropped_irrelevant_count 记录丢弃数量，保留其余原始 rank，不用跨源分数重排。不影响语义 API 或原生仓库结果，也不等于事实、版本、完整时间筛选或语义质量验证；有漏判/误拒可能，Agent 继续核验。
 - DDG 验证响应暂停 900 秒，自动 plan 在本机冷却内跳过，减少重复 HTTP。浏览器的相关性拒绝属于本次查询质量，不再触发全源冷却；空壳/网络超时/验证码仍按其恢复规则处理。
 - 要求原始来源且已知官方域名时，Agent 应使用 --site 和短查询；官网无索引时读取已经定位的官方 URL/相关页导航，不能把增加浏览器重试当作补齐证据。
-
-[六题真实对照、限额与恢复](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.md)。

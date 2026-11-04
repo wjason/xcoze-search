@@ -2,7 +2,7 @@
 
 **简体中文** | [English](setup.en.md)
 
-`config_permission_denied` 表示配置文件或目录访问被拒绝，请检查权限和所有者；`config_io_error` 表示其他配置读取故障；`local_permission_denied` 表示其他本地文件或目录权限问题。不要读取、展示凭据，也不要自动修改权限。
+安装后无需配置即可使用公开来源。需要使用带 Key 的服务时，可通过 Agent 配置，也可以选择终端或环境变量。
 
 ## 无 Key 开始与可选偏好
 
@@ -81,6 +81,9 @@ status 不联网，显示配置来源、schema 和是否可迁移；search_verif
 
 | 现象或错误码 | 处理 |
 |---|---|
+| config_permission_denied | 配置文件或目录访问被拒绝；请检查所有者与权限，不要展示凭据。 |
+| config_io_error | 配置文件读取失败；请检查文件和目录是否可访问。 |
+| local_permission_denied | 本地文件或目录访问被拒绝；请检查相关权限。 |
 | missing_api_key / invalid_key | 为目标服务配置正确类型的 Key；不借用其他服务凭据 |
 | interactive_required | 使用自己的可见终端，或在有桌面的环境选择 --gui |
 | gui_unavailable / gui_failed | 改用可见终端或受控环境变量；不使用聊天/明文输入 |

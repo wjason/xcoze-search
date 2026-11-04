@@ -73,66 +73,24 @@ A preference for future searches is saved; a request for “this search” appli
 
 ## Supported sources
 
-These sources are currently integrated. Public services may have access restrictions, rate limits, or regional differences. The use of results and content is subject to each source's terms.
+| Category | Count | Sources |
+|---|---:|---|
+| General web search | 3 | Bing RSS, DuckDuckGo HTML, Exa MCP |
+| Page reading | 2 | Jina Reader, Exa MCP |
+| Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
+| Research | 3 | arXiv, Crossref, Europe PMC |
+| Encyclopedias and Q&A | 2 | Wikipedia, Stack Exchange |
+| Community content | 4 | Hacker News, Python community forum, Rust community forum, V2EX |
+| News feeds | 2 | China News Service, BBC |
+| Government policy | 1 | gov.cn |
+| Community trends | 3 | Zhihu, Bilibili, V2EX |
+| Platform-scoped search | 9 | Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, Douban |
+| Configurable APIs | 6 | DeepSeek, Tencent Yuanbao, Tavily, Exa, Brave Search, Bocha |
+| Optional browser search | 3 | 360 Search, Bing, Google |
 
-### Keyless search and reading
+Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds. Browser search requires additional local tools.
 
-| Source | What you can do |
-|---|---|
-| Bing RSS | Search public web pages |
-| DuckDuckGo HTML | Search public web pages |
-| Exa hosted MCP | Search and read web pages |
-| Jina Reader | Read web pages |
-| GitHub | Search public repositories and read their READMEs |
-| GitLab.com | Search public projects |
-| Hacker News | Search stories and read individual stories or comments |
-| Wikipedia | Search English and Chinese articles |
-| Stack Exchange | Search questions across Stack Overflow and six other communities |
-| arXiv | Search preprints, abstracts, and paper metadata |
-| Crossref | Search DOIs, authors, and publication metadata |
-| Europe PMC | Search biomedical literature and abstracts |
-| npm | Search JavaScript packages and version metadata |
-| crates.io | Search Rust packages and version metadata |
-| Hugging Face | Search public model metadata |
-| gov.cn | Search China's latest-policy listing |
-| Python and Rust community forums, V2EX | Read public topic posts |
-
-Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Abstracts and community search results do not imply that a full paper or discussion has been read. The gov.cn listing does not cover all announcements in China.
-
-### News and community trends
-
-| Source | What you can do |
-|---|---|
-| China News Service | Read latest-news and finance feeds |
-| BBC | Read the World news feed |
-| Zhihu | View trending questions and excerpts |
-| Bilibili | View trending search terms |
-| V2EX | View trending topics |
-
-News feeds cover each publisher's current feed window. Trend lists contain what each platform provides; they do not include complete answers, videos, or comments.
-
-### Platform-scoped search
-
-Public web searches can be scoped to **Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, and Douban**. Results depend on what the web index has indexed; this differs from searching within a platform or reading signed-in content and complete comment threads.
-
-### Bring your own API key
-
-| Service | Supported features |
-|---|---|
-| DeepSeek | Search, Fetch |
-| Tencent Yuanbao | SearchPro search and summaries |
-| Tavily | Search, Extract |
-| Exa | Search, Contents |
-| Brave Search | Web Search |
-| Bocha | Web Search |
-
-Each service must be enabled separately, and its provider sets the applicable limits and charges. Exa's keyless MCP and keyed API are separate endpoints. See the [provider reference](references/providers.en.md) for options and limits.
-
-### Browser fallback
-
-When other available search paths cannot return results, the Skill can use an existing local [agent-browser](https://github.com/vercel-labs/agent-browser) and browser to search. It defaults to 360 Search; Bing and Google can also be selected. This is optional: the base installation does not install a browser or use your browser login state. You can also ask your Agent to turn browser fallback off.
-
-See [public sources and platforms](references/open-sources.en.md), [news and community content](references/feeds.en.md), and [search routing](references/routing.en.md) for details. The [full source research directory](research/free-sources-2026-11.en.md) also includes sources that are not yet integrated.
+[View all sources and integration details →](references/sources.en.md)
 
 ## Configure API keys
 

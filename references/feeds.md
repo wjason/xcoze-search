@@ -35,6 +35,6 @@ Python/Rust 使用 Discourse 公开 Topic JSON，选择 post_number:1；V2EX 使
 
 只输出主帖。Discourse 响应可能附带首批回复，comments_fetched/source_attached_replies 记录实际附带数量，comments_included:false 表示回复正文未输出；不额外翻页拉评论。thread_complete:false、completeness_verified:false，不声称读过完整讨论，也不把用户观点当事实结论。
 
-三站各自限频和冷却；HTTP 401/403/412 暂停 15 分钟，自动 fetch 在访问拒绝或冷却时停止切换阅读服务，不换身份/代理/浏览器。当前网络下 V2EX 本轮返回 403，保留受限状态；Python/Rust 两站实际取得主帖。其他任意社区暂不走此原生适配，可按既有授权使用宿主阅读工具。
+三站各自限频和冷却；HTTP 401/403/412 暂停 15 分钟，自动 fetch 在访问拒绝或冷却时停止切换阅读服务，不换身份/代理/浏览器。V2EX 的访问可能受到网络环境或平台限制。其他任意社区暂不走此原生适配，可按既有授权使用宿主阅读工具。
 
 [真实测试记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md) · [输出契约](output.md)

@@ -2,7 +2,7 @@
 
 [简体中文](setup.md) | **English**
 
-`config_permission_denied` indicates that access to the configuration file or directory was denied; check ownership and permissions. `config_io_error` indicates another config read failure; `local_permission_denied` indicates access denial elsewhere. Do not expose credentials or silently change permissions.
+Public sources work without configuration. To use a service that requires a key, ask your Agent to configure it or use your own terminal or environment variables.
 
 ## Start without keys; optional preferences
 
@@ -81,6 +81,9 @@ Uninstalling removes program files only. To remove credentials, locally remove t
 
 | Symptom or code | Action |
 |---|---|
+| config_permission_denied | Configuration file or directory access denied; check ownership and permissions without exposing credentials. |
+| config_io_error | Configuration read failed; check that the file and directory are accessible. |
+| local_permission_denied | Access to a local file or directory was denied; check its permissions. |
 | missing_api_key / invalid_key | Configure the correct key type for the target service; do not borrow credentials |
 | interactive_required | Use the user's visible terminal or --gui on an accessible desktop |
 | gui_unavailable / gui_failed | Use a visible terminal or managed variables; never chat/plaintext input |

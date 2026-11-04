@@ -2,7 +2,7 @@
 
 **简体中文** | [English](providers.en.md)
 
-## v0.4.0 免 Key 路径
+## 免 Key 路径
 
 | ID | 固定入口 | 能力和限制 |
 |---|---|---|
@@ -47,7 +47,7 @@ Tavily、Exa、博查的 4096 字符是本工具校验策略，不表示平台�
 
 使用 Query、可选 Site/Freshness/Industry/Mode。count<=10 时不发送付费层可选 Cnt，超过 10 时按 20/30/40/50 向上取整发送整数，再本地截取。Response.Pages 支持 JSON 字符串和对象；HTTP 200 的 Error 仍是失败。passage 是标准摘要、content 是动态摘要，均不标为正文。资格、版本和额度相关参数可能被账号拒绝。
 
-相对时间仅开放无歧义的 d/m/y 范围，不映射旧文档中有顺序矛盾的绝对日期例子。保留 RequestId、Version、Msg 和供应商字段；Msg 是不可信资料。元宝未配置真实 Key，线上验证因暂无测试凭据保留待办。
+相对时间仅开放无歧义的 d/m/y 范围，不映射旧文档中有顺序矛盾的绝对日期例子。保留 RequestId、Version、Msg 和供应商字段；Msg 是不可信资料。元宝账号的权限和 Key 是否可用，可在配置后通过实际搜索验证。
 
 ## Tavily
 
@@ -76,7 +76,7 @@ Contents 每次只发送一个 URL，显式提取 text，可选 highlights/summa
 
 q/count/result_filter:web；`--country` 映射两字母国家码，`--language` 映射 search_lang，具体允许值以官方枚举为准。freshness 支持 pd/pw/pm/py 或 YYYY-MM-DDtoYYYY-MM-DD；`--extra-snippets` 显式开启额外片段。
 
-只转换 web.results，不把广告、新闻卡片、位置卡等合成网页正文；其他顶层元数据保留。description 和 extra_snippets 是摘要/片段。page_age 可能是发布或修改时间，age 仅保留在原始字段，不自动换算发布日期。官方 Web Search 与 LLM Context 是不同接口，本次只实现前者。
+只转换 web.results，不把广告、新闻卡片、位置卡等合成网页正文；其他顶层元数据保留。description 和 extra_snippets 是摘要/片段。page_age 可能是发布或修改时间，age 仅保留在原始字段，不自动换算发布日期。当前适配 Web Search，不包含 LLM Context 接口。
 
 ## 博查
 
@@ -91,6 +91,6 @@ q/count/result_filter:web；`--country` 映射两字母国家码，`--language` 
 
 搜索、正文请求直接发往用户指定服务。各服务独立开通/计费；多源、重试、高级深度、正文和生成内容可能增加费用。预算只约束实际 HTTP 次数，不代表金额上限。只保留官方返回的用量和费用，未返回为 null；不根据当前价格估造费用。
 
-本轮四家新增服务未做真实账号调用；协议和离线验证记录不能替代账号权限、余额、可达性、检索质量或现场验收。
+配置后可以通过实际搜索检查账号权限、余额与访问情况。项目的测试情况见[验证记录](../VALIDATION.md)。
 
 新增公开平台索引与本机工具协作，见[开放来源](open-sources.md)。基础运行不增加依赖；原生接入、公开索引和需要专用工具的内容分别说明。

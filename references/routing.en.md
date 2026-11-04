@@ -72,7 +72,7 @@ python3 scripts/xcoze_search.py search 'industrial vision' --provider yuanbao
 
 Explicit sources never fall back outside their selection. Both and comma-list semantics remain. Auto and Fetch defaults changed in v0.4.0; pin a source to retain older deterministic behavior.
 
-## v0.7.0: fast paths and quota recovery
+## Browser fallback and quota recovery
 
 - APIs first by default. With a compatible browser, execution_candidates defaults to two API routes plus browser; without it, up to three APIs. Cap 2 means one API plus browser, cap 1 no fallback. A browser never complements existing API evidence. Explicit current/saved browser-source preference may override order.
 - Auto API timeout caps at 8 seconds per source, browser work at 15 seconds clipped to remaining time/--timeout. The schedule is 45 seconds plus up to 6 seconds browser-close grace. Successful native APIs stop immediately. Quality reference/current retains up to two API result sets and keeps the first when a complement fails.
@@ -81,23 +81,19 @@ Explicit sources never fall back outside their selection. Both and comma-list se
 - --browser off / preferences --browser off disable fallback; auto restores lazy use. Disabled browser stays excluded. Missing CLI triggers no install. Pauses, constraints and source/HTTP/time budgets may prevent browser use.
 - Browser only supports general query/site; explicit unsupported dates/languages are not dropped. API budget unit is provider_api_http_attempts. Browser navigation/commands are separate and actual subrequest counts remain unknown.
 
-[Fault tests and observed limits](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-fallback.en.md).
 
-## v0.7.1: real browser retrieval fixes
+## Browser search results
 
-360 is now the default browser engine; --browser-engine explicitly selects Bing/Google. One selected engine, without probes/rotation. An anonymous session launches a blank page, schedules one navigation through a fixed script and waits for visible organic rows with nonempty titles, rather than page load. 360 destination URLs come from organic data-mdurl attributes; ads, AI answer cards and internal engine links are excluded.
+360 is the default browser engine; --browser-engine explicitly selects Bing/Google. One selected engine, without probes/rotation. An anonymous session launches a blank page, schedules one navigation through a fixed script and waits for visible organic rows with nonempty titles, rather than page load. 360 destination URLs come from organic data-mdurl attributes; ads, AI answer cards and internal engine links are excluded.
 
 Explicit no-match pages return an empty list and browser_explicit_no_matches:true, without failure cooldown or a claim of web-wide absence. Hidden rows produce browser_results_hidden, action timeouts remain browser_timeout and browser network pages produce browser_navigation_failed. These failures pause 60 seconds; challenges still pause 900. browser_failure_stage and browser_stage_timings_ms retain bounded stage/timing diagnostics for launch/navigation/wait/extraction/close, without page bodies or upstream error text. Conservative English/Chinese zero-topic-overlap rejection is not a semantic classifier.
 
-API priority, free isolation and source/time caps remain. Real browser retrieval took around 3–5 seconds and is heavier than a healthy API, so it never complements successful API results. Three retrieval tasks and real DDG-to-browser recovery passed; a GitHub index miss and weaker documentation queries remain in the [report](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-browser.en.md). Multi-network and multi-OS runtime acceptance remain pending.
 
-## v0.7.2: measured source and latency policy
+## Source selection and result filtering
 
-- Keep 360 as emergency fallback, not a general primary. It supplied Chinese-news leads here, with English-doc/GitHub index gaps. API success prevents browser startup; needing source reading alone does not trigger a browser.
+- 360 is a browser fallback; it does not start automatically when an API has returned usable results. Index coverage varies by search engine.
 - GitHub does not reserve a browser slot: fill the existing three-source cap with native/general APIs in their original order. Lower caps, disabled sources and explicit browser selection remain. Browser may occupy a leftover slot when fewer APIs qualify; browser_slot_policy explains the plan.
 - Quality reference/current complements only when the next candidate is configured/keyed or keyless Exa. If only Bing/DDG/browser remains, stop on usable primary evidence, while keeping failure fallback. A complement after usable evidence receives at most a 3-second request timeout; primary APIs retain 8 seconds. Explicit multi-source calls keep their own limits. This is not a hard DNS/network deadline or SLA.
 - RSS/HTML/browser rows reject obvious Chinese mismatch, missing queried code identifiers, conflicting explicit years and some month/half-year periods. Compact /YYYYMM/ release paths participate in year checks; missing dates stay unknown. dropped_irrelevant_count records removal and retained ranks stay original. Semantic APIs/native repository data are unaffected. This is not factual/version/full-date/semantic verification; false rejection and missed conflicts remain possible.
 - DDG verification pauses for 900 seconds and automatic plans skip it locally, avoiding repeated HTTP. Browser topic rejection is query-specific and no longer pauses the source; shells/network timeouts/challenges keep their recovery rules.
 - For requested primary sources with known official domains, the Agent should use --site and short queries. When an official page is not indexed, read an already located URL or follow verified official navigation rather than retrying the browser repeatedly.
-
-[Six-task live comparison, limits and recovery](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-03-comparison.en.md).
