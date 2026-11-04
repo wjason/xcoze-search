@@ -37,7 +37,7 @@ The optional Skills CLI installation method requires Node.js:
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-Alternatively unpack the [v0.9.0 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.9.0/xcoze-search-skill-v0.9.0.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
+Alternatively unpack the [v0.9.1 Skill ZIP](https://github.com/wjason/xcoze-search/releases/download/v0.9.1/xcoze-search-skill-v0.9.1.zip) into your assistant's skill directory. Start a new session or reload as required by the host. See [installation](INSTALL.en.md).
 
 ## Use in your Agent
 
@@ -76,6 +76,33 @@ To request it explicitly, start with “Use xcoze search.” If the Agent does n
 To add a service, say “Configure DeepSeek for xcoze search.” The Agent provides the official signup link, then guides you through a local hidden-input dialog. **Never paste keys into chat.** See [configure keys](#configure-keys) and [setup and troubleshooting](references/setup.en.md).
 
 ## Sources
+
+### Source map: 165 entries
+
+The map includes integrated sources, items awaiting validation and restricted platforms. Counts are catalog entries; see details for integration and API availability.
+
+| Category | Count | Common entries (up to 10) | Details |
+|---|---:|---|---|
+| Web search | 15 | Parallel Search MCP, Exa hosted MCP, Bing RSS, DuckDuckGo HTML, DuckDuckGo Instant Answer, 360 / Baidu / Sogou public search pages, Google / Bing / Brave / Mojeek public UI, Tavily API, Exa API, Brave Search API | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#general-web-search-and-reading) |
+| Technical docs | 8 | Microsoft Learn MCP, MDN MCP, Cloudflare Docs MCP, OpenAI Docs MCP, Context7, Python official docs / Sphinx inventories, Rust std / docs.rs, Read the Docs / llms.txt publisher docs | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#official-technical-documentation) |
+| News feeds | 14 | China News Service RSS, BBC RSS, CCTV / CGTN RSS, Xinhua RSS, DW RSS, UN News RSS, NASA news feeds, GDELT DOC / Context, Google News RSS, Guardian Open Platform | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#news-and-publisher-feeds) |
+| Chinese policy | 19 | China gov.cn latest-policy index, NDRC notices / announcements, National Energy Administration, National Bureau of Statistics releases, National Data / NBS database, MIIT, Ministry of Commerce, Ministry of Ecology and Environment, People's Bank of China, CSRC | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#chinese-language-public-policy-disclosures-and-data) |
+| Global government | 8 | Federal Register API, SEC EDGAR public data, GOV.UK content/search, UK legislation, Eurostat, World Bank Indicators, OECD SDMX, api.data.gov / govinfo / Congress APIs | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#international-government-and-statistics) |
+| Research | 26 | arXiv, Crossref, DataCite, dblp, Europe PMC, NCBI PubMed / PMC E-utilities, HAL, OpenAIRE, Zenodo public records, Figshare public articles | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#papers-books-and-research) |
+| Code and packages | 17 | GitHub REST public repositories, GitLab public projects, Codeberg / Forgejo, Gitee API, npm registry, PyPI JSON / Simple, crates.io, Maven Central, NuGet, Packagist | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#code-packages-and-models) |
+| Communities | 10 | Hacker News / Algolia, Stack Exchange family, Discourse public communities, V2EX public API, DEV.to / Forem, Lobsters, Lemmy public instances, Mastodon, Bluesky public AppView, Cnblogs RSS | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#community-and-social-interfaces) |
+| Knowledge and media | 8 | Wikipedia, Wikidata, Wikimedia Commons, Openverse, GBIF, iNaturalist, ROR, ORCID public API | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#knowledge-entities-and-media) |
+| Archives | 3 | Common Crawl URL Index, Wayback / CDX, Arquivo.pt | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#historical-web-and-archives) |
+| Energy, weather and geography | 10 | USGS earthquake feeds/API, NOAA NCEI data service, weather.gov API, EIA Open Data, ENTSO-E Transparency, NASA public APIs, Open-Meteo, OpenStreetMap Nominatim, Overpass public API, GeoNames | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#weather-geography-energy-and-events) |
+| Restricted platforms | 9 | X API, Reddit Data API, Xiaohongshu, Weibo, Zhihu, Bilibili, WeChat / Sogou WeChat, Douyin / Kuaishou, Douban / Tieba / Juejin / CSDN / OSChina | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#platforms-without-unconditional-free-automation) |
+| Self-hosted tools | 3 | SearXNG, RSSHub / RSS-Bridge, Miniflux / FreshRSS | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#toolsself-hosting-not-hosted-sources) |
+| Patents | 4 | USPTO Open Data Portal, EPO Open Patent Services, Google Patents, CNIPA public services | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#patents-and-intellectual-property) |
+| Finance and economics | 8 | FRED, US BLS public data, US Census data APIs, Tushare, BaoStock, CoinGecko Demo API, Yahoo Finance public pages, Stooq historical data | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#finance-economics-and-market-data) |
+| Podcasts | 3 | Apple iTunes Search API, Podcast Index, Listen Notes | [More](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md#podcasts-and-audio-metadata) |
+
+Reference checks covered 165 entries: 136 returned 2xx, 8 redirected, 17 returned HTTP errors and 4 had network failures. **A 2xx reference page does not prove a working search API or integration.** [Per-entry audit](https://github.com/wjason/xcoze-search/blob/main/research/source-reference-audit-2026-11-05.json).
+
+Fifteen anonymous APIs were sampled: 14 returned expected structures and one returned 403. [View samples](https://github.com/wjason/xcoze-search/blob/main/research/source-functional-samples-2026-11-05.json).
 
 ### News feeds, government policy and community originals
 

@@ -2,6 +2,12 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.9.1 — 2026-11-05
+
+- Distinguish configuration permission failures, configuration read errors and other local permission failures.
+- Summarize the source map on the homepage and check 165 reference endpoints; page responses do not establish search API acceptance or integration.
+- 174 offline tests pass.
+
 ## v0.9.0 — 2026-11-05
 
 - Add fixed publisher RSS/Atom windows with literal/date filtering and coverage metadata: CNS latest/finance and BBC World. Read originals only when needed.

@@ -3,7 +3,7 @@ name: xcoze-search
 description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索，以及知乎、B 站、V2EX 公开热点快照。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
 metadata:
   author: XCoze
-  version: "0.9.0"
+  version: "0.9.1"
 ---
 
 # xcoze search

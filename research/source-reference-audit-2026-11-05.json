@@ -1,0 +1,995 @@
+{
+  "scope": "One anonymous request to each candidate reference page, grouped by host; this does not verify search APIs, licensing, functionality or integration. Redirects not followed; later same-host checks skipped after denial/rate-limit.",
+  "results": [
+    {
+      "id": "S001",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 600
+    },
+    {
+      "id": "S002",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1060
+    },
+    {
+      "id": "S003",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1131
+    },
+    {
+      "id": "S004",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 414
+    },
+    {
+      "id": "S005",
+      "status": "redirect_unfollowed",
+      "http_status": 302,
+      "elapsed_ms": 447
+    },
+    {
+      "id": "S006",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 669
+    },
+    {
+      "id": "S007",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 324
+    },
+    {
+      "id": "S008",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 973
+    },
+    {
+      "id": "S009",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 267
+    },
+    {
+      "id": "S010",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1077
+    },
+    {
+      "id": "S011",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1479
+    },
+    {
+      "id": "S012",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 941
+    },
+    {
+      "id": "S013",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 600
+    },
+    {
+      "id": "S014",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1060
+    },
+    {
+      "id": "S015",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 792
+    },
+    {
+      "id": "S016",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 659
+    },
+    {
+      "id": "S017",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 757
+    },
+    {
+      "id": "S018",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 397
+    },
+    {
+      "id": "S019",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1154
+    },
+    {
+      "id": "S020",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 949
+    },
+    {
+      "id": "S021",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 298
+    },
+    {
+      "id": "S022",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 662
+    },
+    {
+      "id": "S023",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 746
+    },
+    {
+      "id": "S024",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 306
+    },
+    {
+      "id": "S025",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 976
+    },
+    {
+      "id": "S026",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 444
+    },
+    {
+      "id": "S027",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 581
+    },
+    {
+      "id": "S028",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 466
+    },
+    {
+      "id": "S029",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 698
+    },
+    {
+      "id": "S030",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 454
+    },
+    {
+      "id": "S031",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 678
+    },
+    {
+      "id": "S032",
+      "status": "redirect_unfollowed",
+      "http_status": 302,
+      "elapsed_ms": 283
+    },
+    {
+      "id": "S033",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 563
+    },
+    {
+      "id": "S034",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 571
+    },
+    {
+      "id": "S035",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1129
+    },
+    {
+      "id": "S036",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1711
+    },
+    {
+      "id": "S037",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1488
+    },
+    {
+      "id": "S038",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 309
+    },
+    {
+      "id": "S039",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 175
+    },
+    {
+      "id": "S040",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 240
+    },
+    {
+      "id": "S041",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 702
+    },
+    {
+      "id": "S042",
+      "status": "redirect_unfollowed",
+      "http_status": 302,
+      "elapsed_ms": 848
+    },
+    {
+      "id": "S043",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 347
+    },
+    {
+      "id": "S044",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 302
+    },
+    {
+      "id": "S045",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 483
+    },
+    {
+      "id": "S046",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 477
+    },
+    {
+      "id": "S047",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 196
+    },
+    {
+      "id": "S048",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 550
+    },
+    {
+      "id": "S049",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 471
+    },
+    {
+      "id": "S050",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 557
+    },
+    {
+      "id": "S051",
+      "status": "RemoteDisconnected",
+      "http_status": null,
+      "elapsed_ms": 523
+    },
+    {
+      "id": "S052",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 490
+    },
+    {
+      "id": "S053",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 478
+    },
+    {
+      "id": "S054",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1291
+    },
+    {
+      "id": "S055",
+      "status": "http_error",
+      "http_status": 412,
+      "elapsed_ms": 380
+    },
+    {
+      "id": "S056",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 2081
+    },
+    {
+      "id": "S057",
+      "status": "redirect_unfollowed",
+      "http_status": 302,
+      "elapsed_ms": 908
+    },
+    {
+      "id": "S058",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 301
+    },
+    {
+      "id": "S059",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 954
+    },
+    {
+      "id": "S060",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 567
+    },
+    {
+      "id": "S061",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 2069
+    },
+    {
+      "id": "S062",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1735
+    },
+    {
+      "id": "S063",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 437
+    },
+    {
+      "id": "S064",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 2073
+    },
+    {
+      "id": "S065",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1581
+    },
+    {
+      "id": "S066",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1920
+    },
+    {
+      "id": "S067",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 656
+    },
+    {
+      "id": "S068",
+      "status": "reference_page_accessible",
+      "http_status": 202,
+      "elapsed_ms": 878
+    },
+    {
+      "id": "S069",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 445
+    },
+    {
+      "id": "S070",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 305
+    },
+    {
+      "id": "S071",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1009
+    },
+    {
+      "id": "S072",
+      "status": "URLError",
+      "http_status": null,
+      "elapsed_ms": 7009
+    },
+    {
+      "id": "S073",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1129
+    },
+    {
+      "id": "S074",
+      "status": "redirect_unfollowed",
+      "http_status": 301,
+      "elapsed_ms": 2200
+    },
+    {
+      "id": "S075",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1113
+    },
+    {
+      "id": "S076",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 666
+    },
+    {
+      "id": "S077",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1005
+    },
+    {
+      "id": "S078",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1235
+    },
+    {
+      "id": "S079",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 704
+    },
+    {
+      "id": "S080",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 571
+    },
+    {
+      "id": "S081",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 314
+    },
+    {
+      "id": "S082",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 402
+    },
+    {
+      "id": "S083",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 614
+    },
+    {
+      "id": "S084",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 753
+    },
+    {
+      "id": "S085",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1096
+    },
+    {
+      "id": "S086",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1265
+    },
+    {
+      "id": "S087",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 578
+    },
+    {
+      "id": "S088",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 485
+    },
+    {
+      "id": "S089",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 442
+    },
+    {
+      "id": "S090",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 857
+    },
+    {
+      "id": "S091",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 558
+    },
+    {
+      "id": "S092",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 894
+    },
+    {
+      "id": "S093",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 734
+    },
+    {
+      "id": "S094",
+      "status": "http_error",
+      "http_status": 404,
+      "elapsed_ms": 616
+    },
+    {
+      "id": "S095",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 592
+    },
+    {
+      "id": "S096",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 518
+    },
+    {
+      "id": "S097",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 576
+    },
+    {
+      "id": "S098",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1223
+    },
+    {
+      "id": "S099",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 566
+    },
+    {
+      "id": "S100",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 626
+    },
+    {
+      "id": "S101",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1181
+    },
+    {
+      "id": "S102",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1113
+    },
+    {
+      "id": "S103",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 777
+    },
+    {
+      "id": "S104",
+      "status": "TimeoutError",
+      "http_status": null,
+      "elapsed_ms": 7298
+    },
+    {
+      "id": "S105",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 592
+    },
+    {
+      "id": "S106",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 778
+    },
+    {
+      "id": "S107",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 686
+    },
+    {
+      "id": "S108",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 628
+    },
+    {
+      "id": "S109",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 2392
+    },
+    {
+      "id": "S110",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1139
+    },
+    {
+      "id": "S111",
+      "status": "http_error",
+      "http_status": 404,
+      "elapsed_ms": 1374
+    },
+    {
+      "id": "S112",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 932
+    },
+    {
+      "id": "S113",
+      "status": "redirect_unfollowed",
+      "http_status": 308,
+      "elapsed_ms": 369
+    },
+    {
+      "id": "S114",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 322
+    },
+    {
+      "id": "S115",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 279
+    },
+    {
+      "id": "S116",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 322
+    },
+    {
+      "id": "S117",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1165
+    },
+    {
+      "id": "S118",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 558
+    },
+    {
+      "id": "S119",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 809
+    },
+    {
+      "id": "S120",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1151
+    },
+    {
+      "id": "S121",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1326
+    },
+    {
+      "id": "S122",
+      "status": "http_error",
+      "http_status": 404,
+      "elapsed_ms": 1624
+    },
+    {
+      "id": "S123",
+      "status": "URLError",
+      "http_status": null,
+      "elapsed_ms": 430
+    },
+    {
+      "id": "S124",
+      "status": "http_error",
+      "http_status": 404,
+      "elapsed_ms": 798
+    },
+    {
+      "id": "S125",
+      "status": "redirect_unfollowed",
+      "http_status": 302,
+      "elapsed_ms": 1085
+    },
+    {
+      "id": "S126",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 751
+    },
+    {
+      "id": "S127",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 2181
+    },
+    {
+      "id": "S128",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 748
+    },
+    {
+      "id": "S129",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 781
+    },
+    {
+      "id": "S130",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1258
+    },
+    {
+      "id": "S131",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1992
+    },
+    {
+      "id": "S132",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 453
+    },
+    {
+      "id": "S133",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1226
+    },
+    {
+      "id": "S134",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1194
+    },
+    {
+      "id": "S135",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 813
+    },
+    {
+      "id": "S136",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 319
+    },
+    {
+      "id": "S137",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 298
+    },
+    {
+      "id": "S138",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 334
+    },
+    {
+      "id": "S139",
+      "status": "http_error",
+      "http_status": 432,
+      "elapsed_ms": 360
+    },
+    {
+      "id": "S140",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 222
+    },
+    {
+      "id": "S141",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 225
+    },
+    {
+      "id": "S142",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 501
+    },
+    {
+      "id": "S143",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 617
+    },
+    {
+      "id": "S144",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 548
+    },
+    {
+      "id": "S145",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1532
+    },
+    {
+      "id": "S146",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 442
+    },
+    {
+      "id": "S147",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 971
+    },
+    {
+      "id": "S148",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 515
+    },
+    {
+      "id": "S149",
+      "status": "reference_page_accessible",
+      "http_status": 202,
+      "elapsed_ms": 1885
+    },
+    {
+      "id": "S150",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1595
+    },
+    {
+      "id": "S151",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1402
+    },
+    {
+      "id": "S152",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1306
+    },
+    {
+      "id": "S153",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 296
+    },
+    {
+      "id": "S154",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 392
+    },
+    {
+      "id": "S155",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 759
+    },
+    {
+      "id": "S156",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 486
+    },
+    {
+      "id": "S157",
+      "status": "http_error",
+      "http_status": 403,
+      "elapsed_ms": 808
+    },
+    {
+      "id": "S158",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 539
+    },
+    {
+      "id": "S159",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 282
+    },
+    {
+      "id": "S160",
+      "status": "redirect_unfollowed",
+      "http_status": 308,
+      "elapsed_ms": 781
+    },
+    {
+      "id": "S161",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 416
+    },
+    {
+      "id": "S162",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1167
+    },
+    {
+      "id": "S163",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 1098
+    },
+    {
+      "id": "S164",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 617
+    },
+    {
+      "id": "S165",
+      "status": "reference_page_accessible",
+      "http_status": 200,
+      "elapsed_ms": 914
+    }
+  ]
+}

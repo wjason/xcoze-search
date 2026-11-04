@@ -2,6 +2,8 @@
 
 **简体中文** | [English](setup.en.md)
 
+`config_permission_denied` 表示配置文件或目录访问被拒绝，请检查权限和所有者；`config_io_error` 表示其他配置读取故障；`local_permission_denied` 表示其他本地文件或目录权限问题。不要读取、展示凭据，也不要自动修改权限。
+
 ## 无 Key 开始与可选偏好
 
 普通搜索无需配置 Key，安装后直接提问。仅在用户需要添加/更换商用服务时进入下面的配置流程。配置并启用 Key 后默认 Smart 采用效果优先；已保存的 free/balanced 等偏好继续优先，不因新增 Key 被覆盖。

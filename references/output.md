@@ -2,6 +2,8 @@
 
 **简体中文** | [English](output.en.md)
 
+`config_permission_denied`、`config_io_error` 分别表示配置权限与配置读取故障，`local_permission_denied` 表示其他本地权限拒绝；均不包含系统错误原文或密钥。
+
 ## 新闻与社区新增字段
 
 feeds 完全离线。feed 每次一个固定源，返回 results、metadata、requests、budget、execution_summary；content_kind 为 feed_excerpt 或 official_policy_index。filter 只作用于当前返回窗口，metadata 保留窗口行数、匹配数、日期范围和去重/未知日期计数，window_complete:false。合法窗口无匹配可成功空结果，源错误不是空窗口；日期过滤为 UTC+08:00 日历日。govcn 搜索 requests 也带相同窗口元数据，正常 Smart 备用规则仍适用。

@@ -19,6 +19,8 @@
 
 “已接部分”只说明仓库 v0.9.0 存在对应适配，不表示表中该平台的所有动作已接入。`candidate_reference` 只是官方或项目参考入口，可能未完成本次文档细读/接口验证；实际探测另有明确结果。API 免费不等于文章全文可任意再发布；按需检索/引用与建内容镜像不同。
 
+对 165 条参考入口各做一次匿名访问检查：136 个返回 2xx、8 个重定向、17 个 HTTP 错误、4 个网络失败。检查的是参考页面响应，不能代替关键词搜索、权限、额度、许可或实际接入验收。逐项状态见 [检查记录](source-reference-audit-2026-11-05.json)和 CSV。
+
 ## 最值得优先补的缺口
 
 1. **Parallel 匿名 MCP**：补通用搜索/阅读；官方旧文档标为 legacy，本轮匿名查询仍成功，需关注迁移及匿名限额。不要把付费 REST API 与免 Key 入口等同。
@@ -39,6 +41,8 @@
 - [NewsAPI](https://newsapi.org/pricing)免费开发版文章延迟 24 小时；[GNews](https://gnews.io/pricing)、[NewsData.io](https://newsdata.io/pricing)免费档存在 12 小时延迟及用途/内容限制，不能列为实时新闻主路。
 
 现有 `free` 仍排除所有带 Key 适配器，包括有赠送额度的账号。本调研没有新增“免费额度模式”，也没有自动启用充值或替用户注册。若将来做额度专用策略，需要显式配置、余额/硬限额与用完停止，不能默认余额免费。
+
+补充 15 个匿名接口实测：14 个返回非空预期结构，US BLS 返回 403。包括 Wikidata、Packagist、RubyGems、Maven、NuGet、世界银行、USGS、Federal Register、PyPI、bioRxiv、ClinicalTrials.gov、ROR、Openverse 和 Nominatim。每项只测一个样例，不代表已接入或完整验收。[逐项结果](source-functional-samples-2026-11-05.json)。
 
 ## 本轮真实探测
 
@@ -137,12 +141,12 @@
 
 | ID | 来源 | 类型 | 范围与限制 | 验证/接入状态 | 优先级 |
 |---|---|---|---|---|---|
-| S057 | [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | A | 美国联邦规则/公告检索；法定原件另核对 govinfo | 候选参考，未全面验收 | backlog |
+| S057 | [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | A | 美国联邦规则/公告检索；法定原件另核对 govinfo | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S058 | [SEC EDGAR public data](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | A | 公司申报/XBRL免 Key；提交历史不等于全站全文检索 | 候选参考，未全面验收 | P1 |
 | S059 | [GOV.UK content/search](https://docs.publishing.service.gov.uk/apis.html) | A | 英国政府公开内容/API，区分搜索与单页内容 | 候选参考，未全面验收 | backlog |
 | S060 | [UK legislation](https://www.legislation.gov.uk/developer) | A | 法律数据/格式访问，非法律结论验证 | 候选参考，未全面验收 | backlog |
 | S061 | [Eurostat](https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access) | A | 欧洲统计 API，指标有发布滞后 | 候选参考，未全面验收 | backlog |
-| S062 | [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | A | 宏观/经济指标，非实时行情 | 候选参考，未全面验收 | backlog |
+| S062 | [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | A | 宏观/经济指标，非实时行情 | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S063 | [OECD SDMX](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) | A | 经济统计，限频/数据集范围待联调 | 候选参考，未全面验收 | backlog |
 | S064 | [api.data.gov / govinfo / Congress APIs](https://api.data.gov/) | Q | 很多联邦服务用免费 Key；不是所有 data.gov 数据同一鉴权 | 候选参考，未全面验收 | backlog |
 
@@ -160,8 +164,8 @@
 | S072 | [OpenAIRE](https://graph.openaire.eu/develop/api.html) | Q | 开放科研图谱；当前端点注册/鉴权政策未核定，不列为已确认免 Key | 候选参考，未全面验收 | backlog |
 | S073 | [Zenodo public records](https://developers.zenodo.org/) | A | 公开 records 搜索本轮免 Key 成功；上传/私有接口需授权 | 本轮有真实返回 | P1 |
 | S074 | [Figshare public articles](https://docs.figshare.com/) | A | 公开科研记录本轮免 Key 成功；受限文件另行授权 | 本轮有真实返回 | P2 |
-| S075 | [bioRxiv / medRxiv](https://api.biorxiv.org/) | A | 按日期/DOI/类别获取预印本；不等于通用关键词搜索 | 候选参考，未全面验收 | backlog |
-| S076 | [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | A | 试验注册资料，不证明疗效 | 候选参考，未全面验收 | backlog |
+| S075 | [bioRxiv / medRxiv](https://api.biorxiv.org/) | A | 按日期/DOI/类别获取预印本；不等于通用关键词搜索 | 候选参考，未全面验收；匿名样例成功 | backlog |
+| S076 | [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | A | 试验注册资料，不证明疗效 | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S077 | [OpenReview public notes](https://docs.openreview.net/) | A | 公开论文/评审，权限按 venue/记录区分 | 候选参考，未全面验收 | backlog |
 | S078 | [Open Library](https://openlibrary.org/developers/api) | A | 图书元数据查询本轮成功；不等于免费借阅/下载整书 | 本轮有真实返回 | P1 |
 | S079 | [Internet Archive search](https://archive.org/developers/) | A | 馆藏/元数据与部分全文，受限资源不可等同开放 | 候选参考，未全面验收 | backlog |
@@ -186,12 +190,12 @@
 | S090 | [Codeberg / Forgejo](https://codeberg.org/api/swagger) | A | 公开项目 API；实例限额和索引范围要验证 | 候选参考，未全面验收 | backlog |
 | S091 | [Gitee API](https://gitee.com/api/v5/swagger) | Q | 国内开源项目，可读范围/令牌与限频逐端点核对 | 候选参考，未全面验收 | backlog |
 | S092 | [npm registry](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md) | A | 已接包搜索和元数据，不是质量/安全结论 | 候选参考，未全面验收；已接部分 | existing |
-| S093 | [PyPI JSON / Simple](https://docs.pypi.org/api/) | A | 包名/版本/依赖元数据；不是全站关键词搜索 API | 候选参考，未全面验收 | P1 |
+| S093 | [PyPI JSON / Simple](https://docs.pypi.org/api/) | A | 包名/版本/依赖元数据；不是全站关键词搜索 API | 候选参考，未全面验收；匿名样例成功 | P1 |
 | S094 | [crates.io](https://crates.io/data-access) | A | 已接 Rust 包检索，版本/稳定版要区分 | 候选参考，未全面验收；已接部分 | existing |
-| S095 | [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | A | Java 构件元数据搜索 | 候选参考，未全面验收 | P1 |
-| S096 | [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | A | .NET 包搜索/元数据 | 候选参考，未全面验收 | P2 |
-| S097 | [Packagist](https://packagist.org/apidoc) | A | PHP 包搜索/元数据，多数读取免认证 | 候选参考，未全面验收 | backlog |
-| S098 | [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | A | Ruby 包搜索/元数据，写操作需 Key | 候选参考，未全面验收 | backlog |
+| S095 | [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | A | Java 构件元数据搜索 | 候选参考，未全面验收；匿名样例成功 | P1 |
+| S096 | [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | A | .NET 包搜索/元数据 | 候选参考，未全面验收；匿名样例成功 | P2 |
+| S097 | [Packagist](https://packagist.org/apidoc) | A | PHP 包搜索/元数据，多数读取免认证 | 候选参考，未全面验收；匿名样例成功 | backlog |
+| S098 | [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | A | Ruby 包搜索/元数据，写操作需 Key | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S099 | [Go module proxy](https://go.dev/ref/mod#module-proxy) | A | 按模块路径查版本；不是全站关键词搜索 | 候选参考，未全面验收 | backlog |
 | S100 | [Hugging Face Hub](https://huggingface.co/docs/hub/api) | A | 模型已接，可扩数据集/Space；受限内容需授权 | 候选参考，未全面验收；已接部分 | existing |
 | S101 | [Docker Hub](https://docs.docker.com/reference/api/hub/latest/) | Q | 公开镜像元数据，拉取/搜索配额及认证另核对 | 候选参考，未全面验收 | backlog |
@@ -219,12 +223,12 @@
 | ID | 来源 | 类型 | 范围与限制 | 验证/接入状态 | 优先级 |
 |---|---|---|---|---|---|
 | S115 | [Wikipedia](https://www.mediawiki.org/wiki/API:Search) | A | 已接中英文条目；编辑日期非发布日期 | 候选参考，未全面验收；已接部分 | existing |
-| S116 | [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | A | 实体/关系/标识符，SPARQL有限流，不是新闻搜索 | 候选参考，未全面验收 | P1 |
+| S116 | [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | A | 实体/关系/标识符，SPARQL有限流，不是新闻搜索 | 候选参考，未全面验收；匿名样例成功 | P1 |
 | S117 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/Commons:API) | A | 图片/音视频元数据；逐项署名许可 | 候选参考，未全面验收 | backlog |
-| S118 | [Openverse](https://docs.openverse.org/api/) | A | 开放许可图片/音频；匿名与认证限额不同 | 候选参考，未全面验收 | P2 |
+| S118 | [Openverse](https://docs.openverse.org/api/) | A | 开放许可图片/音频；匿名与认证限额不同 | 候选参考，未全面验收；匿名样例成功 | P2 |
 | S119 | [GBIF](https://www.gbif.org/developer/summary) | A | 物种/生物多样性，下载任务与读取权限不同 | 候选参考，未全面验收 | backlog |
 | S120 | [iNaturalist](https://api.inaturalist.org/v1/docs/) | A | 物种观察记录，逐数据/图片许可 | 候选参考，未全面验收 | backlog |
-| S121 | [ROR](https://ror.readme.io/docs/rest-api) | A | 机构标识/名称消歧；不是文章搜索 | 候选参考，未全面验收 | backlog |
+| S121 | [ROR](https://ror.readme.io/docs/rest-api) | A | 机构标识/名称消歧；不是文章搜索 | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S122 | [ORCID public API](https://info.orcid.org/documentation/integration-guide/orcid-api-2/) | Q | 研究者身份信息；公开 API 凭据/使用范围要核对 | 候选参考，未全面验收 | backlog |
 
 ### 历史网页与档案
@@ -239,14 +243,14 @@
 
 | ID | 来源 | 类型 | 范围与限制 | 验证/接入状态 | 优先级 |
 |---|---|---|---|---|---|
-| S126 | [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | A | 事件与地震资料，已提供标准公开接口 | 候选参考，未全面验收 | backlog |
+| S126 | [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | A | 事件与地震资料，已提供标准公开接口 | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S127 | [NOAA NCEI data service](https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation) | A | 特定气象历史数据无需统一通用搜索 | 候选参考，未全面验收 | backlog |
 | S128 | [weather.gov API](https://www.weather.gov/documentation/services-web-api) | A | 美国天气预报/告警，User-Agent与限频要求 | 候选参考，未全面验收 | backlog |
 | S129 | [EIA Open Data](https://www.eia.gov/opendata/) | Q | 能源、电力、油气数据，免费 Key | 候选参考，未全面验收 | backlog |
 | S130 | [ENTSO-E Transparency](https://transparency.entsoe.eu/) | Q | 欧洲电力，注册 token 与数据条款核对 | 候选参考，未全面验收 | backlog |
 | S131 | [NASA public APIs](https://api.nasa.gov/) | Q | 多数接口使用免费 Key，演示 Key 限额低 | 候选参考，未全面验收 | backlog |
 | S132 | [Open-Meteo](https://open-meteo.com/en/pricing) | Q | 免费端点用于评估/原型；商用需订阅许可 | 候选参考，未全面验收 | backlog |
-| S133 | [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | A | 地名/地理编码，严格公共服务用量规范，不是全网搜索 | 候选参考，未全面验收 | backlog |
+| S133 | [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | A | 地名/地理编码，严格公共服务用量规范，不是全网搜索 | 候选参考，未全面验收；匿名样例成功 | backlog |
 | S134 | [Overpass public API](https://wiki.openstreetmap.org/wiki/Overpass_API) | A | OSM地理要素查询，实例容量有限，不默认广播 | 候选参考，未全面验收 | backlog |
 | S135 | [GeoNames](https://www.geonames.org/export/web-services.html) | Q | 地名服务需要注册用户名，免费/付费限额分开 | 候选参考，未全面验收 | backlog |
 
@@ -286,7 +290,7 @@
 | ID | 来源 | 类型 | 范围与限制 | 验证/接入状态 | 优先级 |
 |---|---|---|---|---|---|
 | S155 | [FRED](https://fred.stlouisfed.org/docs/api/fred/) | Q | 宏观/利率数据需免费 Key，非实时股票行情 | 候选参考，未全面验收 | backlog |
-| S156 | [US BLS public data](https://www.bls.gov/developers/) | A | 统计时间序列；免注册与注册版本限额不同 | 候选参考，未全面验收 | backlog |
+| S156 | [US BLS public data](https://www.bls.gov/developers/) | A | 统计时间序列；免注册与注册版本限额不同 | 候选参考，未全面验收；匿名样例 403 | backlog |
 | S157 | [US Census data APIs](https://www.census.gov/data/developers/data-sets.html) | Q | 统计数据/API，Key 与数据集配额需核验 | 候选参考，未全面验收 | backlog |
 | S158 | [Tushare](https://tushare.pro/document/1) | Q | 需 token，积分/权限不同；不能称全部行情免费 | 候选参考，未全面验收 | backlog |
 | S159 | [BaoStock](https://www.baostock.com/) | A | 匿名默认登录的历史行情候选；SDK协议/时效/许可待联调 | 候选参考，未全面验收 | backlog |

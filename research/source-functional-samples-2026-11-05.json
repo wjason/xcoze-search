@@ -1,0 +1,124 @@
+{
+  "scope": "15 independent anonymous sample calls; no keys, retries, user sessions or paid requests. Not an exhaustive API or commercial-use acceptance.",
+  "results": [
+    {
+      "source": "wikidata",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 712,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "packagist",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 575,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "rubygems",
+      "ok": true,
+      "http_status": 200,
+      "count": 30,
+      "elapsed_ms": 1129,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "maven",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 1096,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "nuget",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 1074,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "worldbank",
+      "ok": true,
+      "http_status": 200,
+      "count": 2,
+      "elapsed_ms": 343,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "usgs",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 726,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "federal-register",
+      "ok": true,
+      "http_status": 200,
+      "count": 20,
+      "elapsed_ms": 913,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "usbls",
+      "ok": false,
+      "http_status": 403,
+      "elapsed_ms": 559,
+      "error": "HTTPError"
+    },
+    {
+      "source": "pypi",
+      "ok": true,
+      "http_status": 200,
+      "count": 30,
+      "elapsed_ms": 337,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "biorxiv",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 1407,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "clinicaltrials",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 482,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "ror",
+      "ok": true,
+      "http_status": 200,
+      "count": 20,
+      "elapsed_ms": 2187,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "openverse",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 9734,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    },
+    {
+      "source": "nominatim",
+      "ok": true,
+      "http_status": 200,
+      "count": 1,
+      "elapsed_ms": 537,
+      "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+    }
+  ]
+}

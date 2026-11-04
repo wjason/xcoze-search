@@ -2,6 +2,8 @@
 
 [简体中文](setup.md) | **English**
 
+`config_permission_denied` indicates that access to the configuration file or directory was denied; check ownership and permissions. `config_io_error` indicates another config read failure; `local_permission_denied` indicates access denial elsewhere. Do not expose credentials or silently change permissions.
+
 ## Start without keys; optional preferences
 
 Ordinary search needs no key setup. Install and ask normally; use the setup flow below only to add/replace a commercial service. Configured, enabled keys make default Smart quality-first. Saved free/balanced preferences retain precedence after adding a key.

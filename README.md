@@ -37,7 +37,7 @@
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
 
-也可下载 [v0.9.0 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.9.0/xcoze-search-skill-v0.9.0.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
+也可下载 [v0.9.1 Skill 包](https://github.com/wjason/xcoze-search/releases/download/v0.9.1/xcoze-search-skill-v0.9.1.zip) 解压到助手技能目录。安装后按宿主要求新建会话或重新加载。详见 [安装教程](INSTALL.zh-CN.md)。
 
 ## 在 Agent 中使用
 
@@ -76,6 +76,33 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 需要添加服务时，说“帮我配置 xcoze search 的 DeepSeek 搜索”即可。Agent 提供官方申请链接，再引导你在本机隐藏输入窗口填写，**不要把 Key 发到聊天里**。完整流程见 [配置 Key](#配置-key)和[配置与排错](references/setup.md)。
 
 ## 支持的来源
+
+### 来源图谱：165 项
+
+图谱包含已接入来源、待验证来源和受限平台。数量是图谱条目数，按类别列出常用入口；是否已接入及接口能否使用，请查看详情。
+
+| 类别 | 数量 | 常用入口（最多 10 项） | 详情 |
+|---|---:|---|---|
+| 通用搜索 | 15 | Parallel Search MCP、Exa hosted MCP、Bing RSS、DuckDuckGo HTML、DuckDuckGo Instant Answer、360 / Baidu / Sogou public search pages、Google / Bing / Brave / Mojeek public UI、Tavily API、Exa API、Brave Search API | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#通用网页搜索与阅读) |
+| 技术文档 | 8 | Microsoft Learn MCP、MDN MCP、Cloudflare Docs MCP、OpenAI Docs MCP、Context7、Python official docs / Sphinx inventories、Rust std / docs.rs、Read the Docs / llms.txt publisher docs | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#官方技术文档) |
+| 新闻订阅 | 14 | China News Service RSS、BBC RSS、CCTV / CGTN RSS、Xinhua RSS、DW RSS、UN News RSS、NASA news feeds、GDELT DOC / Context、Google News RSS、Guardian Open Platform | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#新闻与订阅) |
+| 中文政务与公告 | 19 | China gov.cn latest-policy index、NDRC notices / announcements、National Energy Administration、National Bureau of Statistics releases、National Data / NBS database、MIIT、Ministry of Commerce、Ministry of Ecology and Environment、People's Bank of China、CSRC | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#中文政务公告与公共数据) |
+| 国际政务与统计 | 8 | Federal Register API、SEC EDGAR public data、GOV.UK content/search、UK legislation、Eurostat、World Bank Indicators、OECD SDMX、api.data.gov / govinfo / Congress APIs | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#国际政务与统计) |
+| 论文与科研 | 26 | arXiv、Crossref、DataCite、dblp、Europe PMC、NCBI PubMed / PMC E-utilities、HAL、OpenAIRE、Zenodo public records、Figshare public articles | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#论文图书与科研) |
+| 代码与软件包 | 17 | GitHub REST public repositories、GitLab public projects、Codeberg / Forgejo、Gitee API、npm registry、PyPI JSON / Simple、crates.io、Maven Central、NuGet、Packagist | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#代码软件包与模型) |
+| 社区 | 10 | Hacker News / Algolia、Stack Exchange family、Discourse public communities、V2EX public API、DEV.to / Forem、Lobsters、Lemmy public instances、Mastodon、Bluesky public AppView、Cnblogs RSS | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#社区与社交公开接口) |
+| 百科与素材 | 8 | Wikipedia、Wikidata、Wikimedia Commons、Openverse、GBIF、iNaturalist、ROR、ORCID public API | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#百科实体与素材) |
+| 历史档案 | 3 | Common Crawl URL Index、Wayback / CDX、Arquivo.pt | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#历史网页与档案) |
+| 能源、天气与地理 | 10 | USGS earthquake feeds/API、NOAA NCEI data service、weather.gov API、EIA Open Data、ENTSO-E Transparency、NASA public APIs、Open-Meteo、OpenStreetMap Nominatim、Overpass public API、GeoNames | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#天气地理能源与事件) |
+| 受限平台 | 9 | X API、Reddit Data API、Xiaohongshu、Weibo、Zhihu、Bilibili、WeChat / Sogou WeChat、Douyin / Kuaishou、Douban / Tieba / Juejin / CSDN / OSChina | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#不能承诺免费自动化的平台) |
+| 自建工具 | 3 | SearXNG、RSSHub / RSS-Bridge、Miniflux / FreshRSS | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#工具与自建不计作托管来源) |
+| 专利 | 4 | USPTO Open Data Portal、EPO Open Patent Services、Google Patents、CNIPA public services | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#专利与知识产权) |
+| 金融与经济 | 8 | FRED、US BLS public data、US Census data APIs、Tushare、BaoStock、CoinGecko Demo API、Yahoo Finance public pages、Stooq historical data | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#金融经济与行情) |
+| 播客 | 3 | Apple iTunes Search API、Podcast Index、Listen Notes | [更多](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md#播客与音频资料) |
+
+入口检查覆盖 165 项：136 个返回 2xx，8 个重定向，17 个返回 HTTP 错误，4 个网络失败。**2xx 只说明参考页面响应，不代表搜索接口可用或已接入。** [逐项检查记录](https://github.com/wjason/xcoze-search/blob/main/research/source-reference-audit-2026-11-05.json)。
+
+另对 15 个匿名 API 做真实样例查询，14 个返回预期结构、1 个 403；[查看样例](https://github.com/wjason/xcoze-search/blob/main/research/source-functional-samples-2026-11-05.json)。
 
 ### 新闻 RSS、政府政策与社区原文
 

@@ -2,6 +2,8 @@
 
 [简体中文](output.md) | **English**
 
+`config_permission_denied` and `config_io_error` distinguish config access denial from other config read failures; `local_permission_denied` identifies other local access denials. Errors omit OS details and credentials.
+
 ## Feed and community fields
 
 Feeds is offline. Feed reads one fixed source and returns results, metadata, requests, budget and execution_summary. Content kinds are feed_excerpt/official_policy_index. Filtering is limited to the returned window; metadata retains row/match counts, date coverage and duplicate/unknown-date exclusions, with window_complete:false. Valid unmatched windows may succeed empty; source errors are not empty windows. Dates use UTC+08:00 calendar days. GovCN search requests retain the same coverage metadata under normal bounded fallback rules.

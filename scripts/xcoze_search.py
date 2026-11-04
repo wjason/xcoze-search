@@ -39,7 +39,7 @@ from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.9.0"
+VERSION = "0.9.1"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -96,17 +96,23 @@ def check_config_path(path):
 
 
 def read_config():
-    path = config_path()
-    check_config_path(path)
-    if not path.exists():
-        return {"schema_version": CONFIG_SCHEMA, "providers": {}}
     try:
+        path = config_path()
+        check_config_path(path)
+        try:
+            path.stat()
+        except FileNotFoundError:
+            return {"schema_version": CONFIG_SCHEMA, "providers": {}}
         return validate_config(json.loads(path.read_text(encoding="utf-8")))
-    except (ValueError, OSError, UnicodeError):
+    except PermissionError:
+        raise SearchError("config_permission_denied", "Cannot access the configuration file or directory; check its permissions and ownership.", category="configuration") from None
+    except OSError:
+        raise SearchError("config_io_error", "Cannot read the configuration file or directory; check local storage.", category="configuration") from None
+    except (ValueError, UnicodeError):
         raise SearchError("invalid_config", "Invalid local config; original file has not been changed.") from None
 
 
-def save_config(data):
+def _save_config(data):
     validate_config(data)
     data = {**data, "schema_version": CONFIG_SCHEMA}
     path = config_path()
@@ -124,6 +130,13 @@ def save_config(data):
     return path
 
 
+def save_config(data):
+    try:
+        return _save_config(data)
+    except PermissionError:
+        raise SearchError("config_permission_denied", "Cannot write the configuration file or directory; check its permissions and ownership.", category="configuration") from None
+
+
 def migrate_config(config):
     if config["schema_version"] == CONFIG_SCHEMA:
         return {"ok": True, "operation": "migrate-config", "migrated": False, "schema_version": CONFIG_SCHEMA}
@@ -133,13 +146,20 @@ def migrate_config(config):
     # Exclusive backup: never replace an existing backup or follow its symlink.
     try:
         fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    except PermissionError:
+        raise SearchError("config_permission_denied", "Cannot create a configuration backup; check permissions and ownership.", category="configuration") from None
     except FileExistsError:
         raise SearchError("invalid_config", "Migration backup already exists; inspect it locally before retrying.") from None
     try:
         with os.fdopen(fd, "wb") as stream:
             stream.write(source.read_bytes())
         save_config(config)
-    except (OSError, SearchError):
+    except PermissionError:
+        raise SearchError("config_permission_denied", "Cannot access the configuration file or directory; check its permissions and ownership. The original file and backup were not intentionally removed.", category="configuration") from None
+    except SearchError as error:
+        if error.code == "config_permission_denied": raise
+        raise SearchError("invalid_config", "Migration failed; keep the original file and private backup for local recovery.") from None
+    except OSError:
         raise SearchError("invalid_config", "Migration failed; keep the original file and private backup for local recovery.") from None
     return {"ok": True, "operation": "migrate-config", "migrated": True,
             "schema_version": CONFIG_SCHEMA, "backup_created": True}
@@ -827,6 +847,9 @@ def main(argv=None):
     except (KeyboardInterrupt, EOFError):
         print('{"ok":false,"error":{"code":"cancelled","message":"Cancelled."}}', file=sys.stderr)
         return 130
+    except PermissionError:
+        print('{"ok":false,"error":{"code":"local_permission_denied","message":"Access to a local file or directory was denied; check its permissions and ownership."}}', file=sys.stderr)
+        return 1
     except (OSError, UnicodeError):
         print('{"ok":false,"error":{"code":"local_io_error","message":"Local I/O failed."}}', file=sys.stderr)
         return 1

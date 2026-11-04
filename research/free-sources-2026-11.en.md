@@ -19,6 +19,8 @@ Checked 2026-11-05, Asia/Shanghai; project baseline v0.9.0. **165 entries** cove
 
 Existing/partial means an adapter exists in v0.9.0, not every platform action. candidate_reference is only a primary/project reference, potentially without detailed documentation or API acceptance in this pass. Live observations are explicit. Free API access does not grant unrestricted republication of source content.
 
+One anonymous reference-page check per entry: 136 returned 2xx, 8 redirected, 17 returned HTTP errors and 4 had network failures. These checks do not verify keyword search, authentication, quotas, licenses or integration. See the [per-entry audit](source-reference-audit-2026-11-05.json) and CSV.
+
 ## Priority gaps
 
 1. **Parallel anonymous MCP:** general search/fetch. Its older documentation is marked legacy, although this anonymous query succeeded. Verify migration/limits before integration; keyed REST is separate.
@@ -39,6 +41,8 @@ Existing/partial means an adapter exists in v0.9.0, not every platform action. c
 - [NewsAPI](https://newsapi.org/pricing) free development articles have a 24h delay; [GNews](https://gnews.io/pricing)/[NewsData.io](https://newsdata.io/pricing) free tiers include 12h delays and use/content restrictions, unsuitable as real-time defaults.
 
 Existing free mode still excludes keyed adapters, including promotional-credit accounts. No free-credit strategy, automatic top-ups or signup were added. A future allowance-only strategy would need explicit configuration, balance/hard limits and stop-at-exhaustion behavior.
+
+An additional 15 anonymous API samples produced 14 nonempty expected structures; US BLS returned 403. Each is a single sample, not an integration or full acceptance. [Per-source results](source-functional-samples-2026-11-05.json).
 
 ## Live checks
 
@@ -137,12 +141,12 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 
 | ID | Source | Access | Scope and limits | Verification/integration | Priority |
 |---|---|---|---|---|---|
-| S057 | [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | A | US federal rules/notices discovery; authoritative originals via govinfo | candidate_reference | backlog |
+| S057 | [Federal Register API](https://www.federalregister.gov/developers/documentation/api/v1) | A | US federal rules/notices discovery; authoritative originals via govinfo | candidate_reference; anonymous sample succeeded | backlog |
 | S058 | [SEC EDGAR public data](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | A | Keyless submissions/XBRL; not universal full-text search | candidate_reference | P1 |
 | S059 | [GOV.UK content/search](https://docs.publishing.service.gov.uk/apis.html) | A | UK public content/APIs, distinguish search and page content | candidate_reference | backlog |
 | S060 | [UK legislation](https://www.legislation.gov.uk/developer) | A | Legislation data/formats, not legal conclusion verification | candidate_reference | backlog |
 | S061 | [Eurostat](https://ec.europa.eu/eurostat/web/user-guides/data-browser/api-data-access) | A | European statistical APIs, release lags apply | candidate_reference | backlog |
-| S062 | [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | A | Macroeconomic indicators, not live market quotes | candidate_reference | backlog |
+| S062 | [World Bank Indicators](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation) | A | Macroeconomic indicators, not live market quotes | candidate_reference; anonymous sample succeeded | backlog |
 | S063 | [OECD SDMX](https://www.oecd.org/en/data/insights/data-explainers/2024/09/api.html) | A | Economic statistics; verify limits/dataset scope | candidate_reference | backlog |
 | S064 | [api.data.gov / govinfo / Congress APIs](https://api.data.gov/) | Q | Many federal services use free keys; not uniform authentication | candidate_reference | backlog |
 
@@ -160,8 +164,8 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 | S072 | [OpenAIRE](https://graph.openaire.eu/develop/api.html) | Q | Open research graph; current endpoint signup/auth policy unconfirmed, not accepted as keyless | candidate_reference | backlog |
 | S073 | [Zenodo public records](https://developers.zenodo.org/) | A | Anonymous public records succeeded; upload/private APIs require auth | live_response | P1 |
 | S074 | [Figshare public articles](https://docs.figshare.com/) | A | Anonymous public articles succeeded; restricted files separate | live_response | P2 |
-| S075 | [bioRxiv / medRxiv](https://api.biorxiv.org/) | A | Date/DOI/category preprint retrieval, not generic keyword search | candidate_reference | backlog |
-| S076 | [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | A | Trial registrations, not proof of efficacy | candidate_reference | backlog |
+| S075 | [bioRxiv / medRxiv](https://api.biorxiv.org/) | A | Date/DOI/category preprint retrieval, not generic keyword search | candidate_reference; anonymous sample succeeded | backlog |
+| S076 | [ClinicalTrials.gov](https://clinicaltrials.gov/data-api/api) | A | Trial registrations, not proof of efficacy | candidate_reference; anonymous sample succeeded | backlog |
 | S077 | [OpenReview public notes](https://docs.openreview.net/) | A | Public notes/reviews; venue/record permissions vary | candidate_reference | backlog |
 | S078 | [Open Library](https://openlibrary.org/developers/api) | A | Book metadata succeeded; not unrestricted book downloads/loans | live_response | P1 |
 | S079 | [Internet Archive search](https://archive.org/developers/) | A | Catalog/metadata/some text; restricted resources separate | candidate_reference | backlog |
@@ -186,12 +190,12 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 | S090 | [Codeberg / Forgejo](https://codeberg.org/api/swagger) | A | Public-project API; verify instance limits/coverage | candidate_reference | backlog |
 | S091 | [Gitee API](https://gitee.com/api/v5/swagger) | Q | Chinese repos; verify per-endpoint token/access/limits | candidate_reference | backlog |
 | S092 | [npm registry](https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md) | A | Integrated package search/metadata, not quality/security verdicts | candidate_reference; existing/partial adapter | existing |
-| S093 | [PyPI JSON / Simple](https://docs.pypi.org/api/) | A | Named package/version/dependency metadata, not global text-search API | candidate_reference | P1 |
+| S093 | [PyPI JSON / Simple](https://docs.pypi.org/api/) | A | Named package/version/dependency metadata, not global text-search API | candidate_reference; anonymous sample succeeded | P1 |
 | S094 | [crates.io](https://crates.io/data-access) | A | Integrated Rust package search; stable/prerelease distinction | candidate_reference; existing/partial adapter | existing |
-| S095 | [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | A | Java artifact metadata search | candidate_reference | P1 |
-| S096 | [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | A | .NET package search/metadata | candidate_reference | P2 |
-| S097 | [Packagist](https://packagist.org/apidoc) | A | PHP package search/metadata; many reads anonymous | candidate_reference | backlog |
-| S098 | [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | A | Ruby package reads/search; writes need keys | candidate_reference | backlog |
+| S095 | [Maven Central](https://central.sonatype.org/search/rest-api-guide/) | A | Java artifact metadata search | candidate_reference; anonymous sample succeeded | P1 |
+| S096 | [NuGet](https://learn.microsoft.com/en-us/nuget/api/search-query-service-resource) | A | .NET package search/metadata | candidate_reference; anonymous sample succeeded | P2 |
+| S097 | [Packagist](https://packagist.org/apidoc) | A | PHP package search/metadata; many reads anonymous | candidate_reference; anonymous sample succeeded | backlog |
+| S098 | [RubyGems](https://guides.rubygems.org/rubygems-org-api/) | A | Ruby package reads/search; writes need keys | candidate_reference; anonymous sample succeeded | backlog |
 | S099 | [Go module proxy](https://go.dev/ref/mod#module-proxy) | A | Module-path/version lookup, not universal keyword search | candidate_reference | backlog |
 | S100 | [Hugging Face Hub](https://huggingface.co/docs/hub/api) | A | Models integrated; datasets/Spaces candidates, gated content separate | candidate_reference; existing/partial adapter | existing |
 | S101 | [Docker Hub](https://docs.docker.com/reference/api/hub/latest/) | Q | Public image metadata; pull/search quotas/auth vary | candidate_reference | backlog |
@@ -219,12 +223,12 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 | ID | Source | Access | Scope and limits | Verification/integration | Priority |
 |---|---|---|---|---|---|
 | S115 | [Wikipedia](https://www.mediawiki.org/wiki/API:Search) | A | English/Chinese articles integrated; edit date is not publication | candidate_reference; existing/partial adapter | existing |
-| S116 | [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | A | Entities/relations/IDs, SPARQL limits, not news search | candidate_reference | P1 |
+| S116 | [Wikidata](https://www.wikidata.org/wiki/Wikidata:Data_access) | A | Entities/relations/IDs, SPARQL limits, not news search | candidate_reference; anonymous sample succeeded | P1 |
 | S117 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/Commons:API) | A | Media metadata; attribution/license per item | candidate_reference | backlog |
-| S118 | [Openverse](https://docs.openverse.org/api/) | A | Open-license images/audio; anonymous/authenticated limits differ | candidate_reference | P2 |
+| S118 | [Openverse](https://docs.openverse.org/api/) | A | Open-license images/audio; anonymous/authenticated limits differ | candidate_reference; anonymous sample succeeded | P2 |
 | S119 | [GBIF](https://www.gbif.org/developer/summary) | A | Species/biodiversity; download jobs differ from public reads | candidate_reference | backlog |
 | S120 | [iNaturalist](https://api.inaturalist.org/v1/docs/) | A | Species observations, per-data/image rights | candidate_reference | backlog |
-| S121 | [ROR](https://ror.readme.io/docs/rest-api) | A | Institution IDs/name disambiguation, not article search | candidate_reference | backlog |
+| S121 | [ROR](https://ror.readme.io/docs/rest-api) | A | Institution IDs/name disambiguation, not article search | candidate_reference; anonymous sample succeeded | backlog |
 | S122 | [ORCID public API](https://info.orcid.org/documentation/integration-guide/orcid-api-2/) | Q | Researcher identities; verify public API credentials/scope | candidate_reference | backlog |
 
 ### Historical web and archives
@@ -239,14 +243,14 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 
 | ID | Source | Access | Scope and limits | Verification/integration | Priority |
 |---|---|---|---|---|---|
-| S126 | [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | A | Standard public earthquake/event data | candidate_reference | backlog |
+| S126 | [USGS earthquake feeds/API](https://earthquake.usgs.gov/fdsnws/event/1/) | A | Standard public earthquake/event data | candidate_reference; anonymous sample succeeded | backlog |
 | S127 | [NOAA NCEI data service](https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation) | A | Dataset-specific historical weather, not general search | candidate_reference | backlog |
 | S128 | [weather.gov API](https://www.weather.gov/documentation/services-web-api) | A | US forecasts/alerts with UA/rate requirements | candidate_reference | backlog |
 | S129 | [EIA Open Data](https://www.eia.gov/opendata/) | Q | Energy/electricity/oil/gas data with free key | candidate_reference | backlog |
 | S130 | [ENTSO-E Transparency](https://transparency.entsoe.eu/) | Q | European power data; register token and check data terms | candidate_reference | backlog |
 | S131 | [NASA public APIs](https://api.nasa.gov/) | Q | Many APIs use free keys; demo-key limits are low | candidate_reference | backlog |
 | S132 | [Open-Meteo](https://open-meteo.com/en/pricing) | Q | Free endpoint for evaluation/prototyping; commercial subscription differs | candidate_reference | backlog |
-| S133 | [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | A | Place/geocoding with strict public-service usage limits | candidate_reference | backlog |
+| S133 | [OpenStreetMap Nominatim](https://operations.osmfoundation.org/policies/nominatim/) | A | Place/geocoding with strict public-service usage limits | candidate_reference; anonymous sample succeeded | backlog |
 | S134 | [Overpass public API](https://wiki.openstreetmap.org/wiki/Overpass_API) | A | OSM feature queries; instance capacity limited, no fan-out default | candidate_reference | backlog |
 | S135 | [GeoNames](https://www.geonames.org/export/web-services.html) | Q | Geographic names require registered username, tiered limits | candidate_reference | backlog |
 
@@ -286,7 +290,7 @@ Of ten public API checks, DataCite, Open Library, DEV.to, HAL, Zenodo and Figsha
 | ID | Source | Access | Scope and limits | Verification/integration | Priority |
 |---|---|---|---|---|---|
 | S155 | [FRED](https://fred.stlouisfed.org/docs/api/fred/) | Q | Macro/rate data with free key, not live equity quotes | candidate_reference | backlog |
-| S156 | [US BLS public data](https://www.bls.gov/developers/) | A | Statistical time series; unregistered/registered limits differ | candidate_reference | backlog |
+| S156 | [US BLS public data](https://www.bls.gov/developers/) | A | Statistical time series; unregistered/registered limits differ | candidate_reference; anonymous sample 403 | backlog |
 | S157 | [US Census data APIs](https://www.census.gov/data/developers/data-sets.html) | Q | Statistical datasets/APIs; verify keys/dataset limits | candidate_reference | backlog |
 | S158 | [Tushare](https://tushare.pro/document/1) | Q | Token/points/access tiers; not all market data free | candidate_reference | backlog |
 | S159 | [BaoStock](https://www.baostock.com/) | A | Historical-market candidate with default anonymous login; verify SDK/freshness/terms | candidate_reference | backlog |

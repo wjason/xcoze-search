@@ -6,7 +6,7 @@ from pathlib import Path
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.9.0"
+VERSION = "0.9.1"
 RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents/openai.yaml",
                  "scripts/xcoze_search.py", "scripts/setup.command", "references/setup.md",
                  "references/providers.md", "references/output.md", "VALIDATION.md",
@@ -47,6 +47,8 @@ SOURCE_EXTRA += ["tests/test_trending.py", "evaluations/reports/2026-11-05-publi
 
 SOURCE_EXTRA += ["tests/test_content_sources.py", "evaluations/reports/2026-11-05-feeds-community.md",
                  "evaluations/reports/2026-11-05-feeds-community.en.md", "evaluations/reports/2026-11-05-feeds-community.data.json"]
+
+SOURCE_EXTRA += ["tests/test_config_permissions.py", "research/free-sources-2026-11.md", "research/free-sources-2026-11.en.md", "research/free-sources-2026-11.csv", "research/free-sources-2026-11.data.json", "research/free-sources-2026-11.probes.json", "research/source-reference-audit-2026-11-05.json", "research/source-functional-samples-2026-11-05.json"]
 
 
 def main():

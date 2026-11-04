@@ -49,7 +49,13 @@
         ],
         "error_code": null
       },
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S001",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 600
+      }
     },
     {
       "id": "S002",
@@ -61,7 +67,13 @@
       "notes_en": "Integrated; anonymous limits differ from the keyed API plan",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S002",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1060
+      }
     },
     {
       "id": "S003",
@@ -73,7 +85,13 @@
       "notes_en": "Integrated experimental feed, not a stable free API contract",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S003",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1131
+      }
     },
     {
       "id": "S004",
@@ -85,7 +103,13 @@
       "notes_en": "Integrated experimental HTML; verification may block",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S004",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 414
+      }
     },
     {
       "id": "S005",
@@ -97,7 +121,13 @@
       "notes_en": "Instant answers/knowledge data, not full web SERP",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S005",
+        "status": "redirect_unfollowed",
+        "http_status": 302,
+        "elapsed_ms": 447
+      }
     },
     {
       "id": "S006",
@@ -109,7 +139,13 @@
       "notes_en": "360 browser fallback integrated; others unverified, public UI is not API",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S006",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 669
+      }
     },
     {
       "id": "S007",
@@ -121,7 +157,13 @@
       "notes_en": "Optional browser candidates; access/region/index differ",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S007",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 324
+      }
     },
     {
       "id": "S008",
@@ -133,7 +175,13 @@
       "notes_en": "1000 credits/month, key required, no card; keyed adapter integrated",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S008",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 973
+      }
     },
     {
       "id": "S009",
@@ -145,7 +193,13 @@
       "notes_en": "Monthly $10 credits plus $10 onboarding bonus; key required, not anonymous MCP",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S009",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 267
+      }
     },
     {
       "id": "S010",
@@ -157,7 +211,13 @@
       "notes_en": "Monthly $5 credits; key/card required, no standalone free plan",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S010",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1077
+      }
     },
     {
       "id": "S011",
@@ -169,7 +229,13 @@
       "notes_en": "1000 credits/month, about 500 searches or 1000 scraped pages; key required",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S011",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1479
+      }
     },
     {
       "id": "S012",
@@ -181,7 +247,13 @@
       "notes_en": "2500 free trial queries, not a monthly allowance; third-party Google SERP",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S012",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 941
+      }
     },
     {
       "id": "S013",
@@ -193,7 +265,13 @@
       "notes_en": "250 free searches/month, key required; third-party SERP service",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S013",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 600
+      }
     },
     {
       "id": "S014",
@@ -205,7 +283,13 @@
       "notes_en": "100 signup credits, not monthly; key required",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S014",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1060
+      }
     },
     {
       "id": "S015",
@@ -217,7 +301,13 @@
       "notes_en": "Anonymous Reader fallback integrated, local 401 observed; verify Search/keyed access separately",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S015",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 792
+      }
     },
     {
       "id": "S016",
@@ -247,7 +337,13 @@
         ],
         "error_code": null
       },
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S016",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 659
+      }
     },
     {
       "id": "S017",
@@ -271,7 +367,13 @@
         "links": [],
         "error_code": null
       },
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S017",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 757
+      }
     },
     {
       "id": "S018",
@@ -301,7 +403,13 @@
         ],
         "error_code": null
       },
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S018",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 397
+      }
     },
     {
       "id": "S019",
@@ -313,7 +421,13 @@
       "notes_en": "Official OpenAI docs; documentation discovery only, no live call here",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S019",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1154
+      }
     },
     {
       "id": "S020",
@@ -325,7 +439,13 @@
       "notes_en": "Docs recommend keys for higher limits; verify anonymous scope/current plan",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S020",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 949
+      }
     },
     {
       "id": "S021",
@@ -337,7 +457,13 @@
       "notes_en": "Readable docs/inventories, not a universal search API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S021",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 298
+      }
     },
     {
       "id": "S022",
@@ -349,7 +475,13 @@
       "notes_en": "Standard/crate docs; distinguish versions",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S022",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 662
+      }
     },
     {
       "id": "S023",
@@ -361,7 +493,13 @@
       "notes_en": "Sitemaps/doc indexes aid discovery, not complete/live retrieval",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S023",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 746
+      }
     },
     {
       "id": "S024",
@@ -373,7 +511,13 @@
       "notes_en": "Latest/finance integrated; more publisher channels can be added",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S024",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 306
+      }
     },
     {
       "id": "S025",
@@ -385,7 +529,13 @@
       "notes_en": "World integrated; other publisher feeds are candidates",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S025",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 976
+      }
     },
     {
       "id": "S026",
@@ -397,7 +547,13 @@
       "notes_en": "Official RSS listing exists; verify freshness of older endpoints",
       "verification": "historical_official_listing_freshness_unverified",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S026",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 444
+      }
     },
     {
       "id": "S027",
@@ -409,7 +565,13 @@
       "notes_en": "Legacy official feeds; freshness/use scope needs checking",
       "verification": "historical_official_listing_freshness_unverified",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S027",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 581
+      }
     },
     {
       "id": "S028",
@@ -421,7 +583,13 @@
       "notes_en": "International news feed; distinguish excerpts from originals",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S028",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 466
+      }
     },
     {
       "id": "S029",
@@ -433,7 +601,13 @@
       "notes_en": "UN multilingual news, finite feed windows",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S029",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 698
+      }
     },
     {
       "id": "S030",
@@ -445,7 +619,13 @@
       "notes_en": "Official space/research news, not general full-text search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S030",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 454
+      }
     },
     {
       "id": "S031",
@@ -466,7 +646,13 @@
         "elapsed_ms": 10964,
         "error": "HTTPError"
       },
-      "priority": "P1-validation"
+      "priority": "P1-validation",
+      "reference_check": {
+        "id": "S031",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 678
+      }
     },
     {
       "id": "S032",
@@ -478,7 +664,13 @@
       "notes_en": "Experimental news-index candidate, not an official free News API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S032",
+        "status": "redirect_unfollowed",
+        "http_status": 302,
+        "elapsed_ms": 283
+      }
     },
     {
       "id": "S033",
@@ -490,7 +682,13 @@
       "notes_en": "Free developer key is non-commercial; commercial/mining use differs",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S033",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 563
+      }
     },
     {
       "id": "S034",
@@ -502,7 +700,13 @@
       "notes_en": "100/day, development/testing, 24h article delay; unsuitable as live default",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S034",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 571
+      }
     },
     {
       "id": "S035",
@@ -514,7 +718,13 @@
       "notes_en": "100/day, non-commercial, 12h delay and truncated content",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S035",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1129
+      }
     },
     {
       "id": "S036",
@@ -526,7 +736,13 @@
       "notes_en": "200 credits/day, testing/personal use, 12h delay",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S036",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1711
+      }
     },
     {
       "id": "S037",
@@ -538,7 +754,13 @@
       "notes_en": "100/day, three articles/request; verify production terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S037",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1488
+      }
     },
     {
       "id": "S038",
@@ -550,7 +772,13 @@
       "notes_en": "Integrated finite JSON list incl. explainers, not national completeness",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S038",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 309
+      }
     },
     {
       "id": "S039",
@@ -562,7 +790,13 @@
       "notes_en": "Public originals/dates; site-specific parsing, not stable API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S039",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 175
+      }
     },
     {
       "id": "S040",
@@ -574,7 +808,13 @@
       "notes_en": "Energy policy, notices, statistics and press releases",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S040",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 240
+      }
     },
     {
       "id": "S041",
@@ -586,7 +826,13 @@
       "notes_en": "Original statistical releases including PMI/CPI/GDP",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S041",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 702
+      }
     },
     {
       "id": "S042",
@@ -598,7 +844,13 @@
       "notes_en": "Statistics portal with changed frontend; old endpoints not stable contracts",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S042",
+        "status": "redirect_unfollowed",
+        "http_status": 302,
+        "elapsed_ms": 848
+      }
     },
     {
       "id": "S043",
@@ -610,7 +862,13 @@
       "notes_en": "Industrial/software/equipment/telecom policy originals",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S043",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 347
+      }
     },
     {
       "id": "S044",
@@ -622,7 +880,13 @@
       "notes_en": "Trade/export policy; on-demand public-page reading",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S044",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 302
+      }
     },
     {
       "id": "S045",
@@ -634,7 +898,13 @@
       "notes_en": "Environment/carbon-market/standards notices",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S045",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 483
+      }
     },
     {
       "id": "S046",
@@ -646,7 +916,13 @@
       "notes_en": "Monetary policy and financial statistics releases",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S046",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 477
+      }
     },
     {
       "id": "S047",
@@ -658,7 +934,13 @@
       "notes_en": "Securities rules, notices and policy",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S047",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 196
+      }
     },
     {
       "id": "S048",
@@ -670,7 +952,13 @@
       "notes_en": "Public standards/catalogs, not all standards free or bulk-accessible",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S048",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 550
+      }
     },
     {
       "id": "S049",
@@ -682,7 +970,13 @@
       "notes_en": "Law originals; browser tool 403 here, no open API promise",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S049",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 471
+      }
     },
     {
       "id": "S050",
@@ -694,7 +988,13 @@
       "notes_en": "Procurement/tender notices; search controls need adaptation",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S050",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 557
+      }
     },
     {
       "id": "S051",
@@ -706,7 +1006,13 @@
       "notes_en": "Public works/land/property trading notices",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S051",
+        "status": "RemoteDisconnected",
+        "http_status": null,
+        "elapsed_ms": 523
+      }
     },
     {
       "id": "S052",
@@ -718,7 +1024,13 @@
       "notes_en": "Public disclosure pages/PDFs; data API has separate access/plans",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1-validation"
+      "priority": "P1-validation",
+      "reference_check": {
+        "id": "S052",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 490
+      }
     },
     {
       "id": "S053",
@@ -730,7 +1042,13 @@
       "notes_en": "Exchange original disclosures, not licensed data feeds for free",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S053",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 478
+      }
     },
     {
       "id": "S054",
@@ -742,7 +1060,13 @@
       "notes_en": "Public dataset catalog/APIs; check dataset-specific terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S054",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1291
+      }
     },
     {
       "id": "S055",
@@ -754,7 +1078,13 @@
       "notes_en": "Catalogs public; some APIs require signup, not universally keyless",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S055",
+        "status": "http_error",
+        "http_status": 412,
+        "elapsed_ms": 380
+      }
     },
     {
       "id": "S056",
@@ -766,7 +1096,13 @@
       "notes_en": "Open-data catalog, dataset-specific access/licensing",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S056",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 2081
+      }
     },
     {
       "id": "S057",
@@ -778,7 +1114,21 @@
       "notes_en": "US federal rules/notices discovery; authoritative originals via govinfo",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S057",
+        "status": "redirect_unfollowed",
+        "http_status": 302,
+        "elapsed_ms": 908
+      },
+      "functional_sample": {
+        "source": "federal-register",
+        "ok": true,
+        "http_status": 200,
+        "count": 20,
+        "elapsed_ms": 913,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S058",
@@ -790,7 +1140,13 @@
       "notes_en": "Keyless submissions/XBRL; not universal full-text search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S058",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 301
+      }
     },
     {
       "id": "S059",
@@ -802,7 +1158,13 @@
       "notes_en": "UK public content/APIs, distinguish search and page content",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S059",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 954
+      }
     },
     {
       "id": "S060",
@@ -814,7 +1176,13 @@
       "notes_en": "Legislation data/formats, not legal conclusion verification",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S060",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 567
+      }
     },
     {
       "id": "S061",
@@ -826,7 +1194,13 @@
       "notes_en": "European statistical APIs, release lags apply",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S061",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 2069
+      }
     },
     {
       "id": "S062",
@@ -838,7 +1212,21 @@
       "notes_en": "Macroeconomic indicators, not live market quotes",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S062",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1735
+      },
+      "functional_sample": {
+        "source": "worldbank",
+        "ok": true,
+        "http_status": 200,
+        "count": 2,
+        "elapsed_ms": 343,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S063",
@@ -850,7 +1238,13 @@
       "notes_en": "Economic statistics; verify limits/dataset scope",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S063",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 437
+      }
     },
     {
       "id": "S064",
@@ -862,7 +1256,13 @@
       "notes_en": "Many federal services use free keys; not uniform authentication",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S064",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 2073
+      }
     },
     {
       "id": "S065",
@@ -874,7 +1274,13 @@
       "notes_en": "Integrated metadata/abstracts; PDFs separate",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S065",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1581
+      }
     },
     {
       "id": "S066",
@@ -886,7 +1292,13 @@
       "notes_en": "Integrated DOI/publication metadata, not guaranteed full text",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S066",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1920
+      }
     },
     {
       "id": "S067",
@@ -909,7 +1321,13 @@
         "response_characters": 6350,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S067",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 656
+      }
     },
     {
       "id": "S068",
@@ -930,7 +1348,13 @@
         "elapsed_ms": 1193,
         "error": "JSONDecodeError"
       },
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S068",
+        "status": "reference_page_accessible",
+        "http_status": 202,
+        "elapsed_ms": 878
+      }
     },
     {
       "id": "S069",
@@ -942,7 +1366,13 @@
       "notes_en": "Integrated biomedical abstracts/metadata, not clinical validation",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S069",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 445
+      }
     },
     {
       "id": "S070",
@@ -954,7 +1384,13 @@
       "notes_en": "Metadata/open-text subset; optional key raises limits",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S070",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 305
+      }
     },
     {
       "id": "S071",
@@ -977,7 +1413,13 @@
         "response_characters": 284,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P2"
+      "priority": "P2",
+      "reference_check": {
+        "id": "S071",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1009
+      }
     },
     {
       "id": "S072",
@@ -989,7 +1431,13 @@
       "notes_en": "Open research graph; current endpoint signup/auth policy unconfirmed, not accepted as keyless",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S072",
+        "status": "URLError",
+        "http_status": null,
+        "elapsed_ms": 7009
+      }
     },
     {
       "id": "S073",
@@ -1012,7 +1460,13 @@
         "response_characters": 12581,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S073",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1129
+      }
     },
     {
       "id": "S074",
@@ -1035,7 +1489,13 @@
         "response_characters": 1285,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P2"
+      "priority": "P2",
+      "reference_check": {
+        "id": "S074",
+        "status": "redirect_unfollowed",
+        "http_status": 301,
+        "elapsed_ms": 2200
+      }
     },
     {
       "id": "S075",
@@ -1047,7 +1507,21 @@
       "notes_en": "Date/DOI/category preprint retrieval, not generic keyword search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S075",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1113
+      },
+      "functional_sample": {
+        "source": "biorxiv",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 1407,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S076",
@@ -1059,7 +1533,21 @@
       "notes_en": "Trial registrations, not proof of efficacy",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S076",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 666
+      },
+      "functional_sample": {
+        "source": "clinicaltrials",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 482,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S077",
@@ -1071,7 +1559,13 @@
       "notes_en": "Public notes/reviews; venue/record permissions vary",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S077",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1005
+      }
     },
     {
       "id": "S078",
@@ -1094,7 +1588,13 @@
         "response_characters": 690,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S078",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1235
+      }
     },
     {
       "id": "S079",
@@ -1106,7 +1606,13 @@
       "notes_en": "Catalog/metadata/some text; restricted resources separate",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S079",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 704
+      }
     },
     {
       "id": "S080",
@@ -1118,7 +1624,13 @@
       "notes_en": "Public collection JSON/search; rights per item",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S080",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 571
+      }
     },
     {
       "id": "S081",
@@ -1130,7 +1642,13 @@
       "notes_en": "Open textual library via MediaWiki interfaces",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S081",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 314
+      }
     },
     {
       "id": "S082",
@@ -1142,7 +1660,13 @@
       "notes_en": "API key now required; $1/day free, no payment method, not keyless",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P2-opt-in-key"
+      "priority": "P2-opt-in-key",
+      "reference_check": {
+        "id": "S082",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 402
+      }
     },
     {
       "id": "S083",
@@ -1163,7 +1687,13 @@
         "elapsed_ms": 542,
         "error": "HTTPError"
       },
-      "priority": "P2-opt-in-key"
+      "priority": "P2-opt-in-key",
+      "reference_check": {
+        "id": "S083",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 614
+      }
     },
     {
       "id": "S084",
@@ -1175,7 +1705,13 @@
       "notes_en": "Open research aggregation; verify free/key/limit terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S084",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 753
+      }
     },
     {
       "id": "S085",
@@ -1187,7 +1723,13 @@
       "notes_en": "DOI-to-OA links with email identification, not general paper search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S085",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1096
+      }
     },
     {
       "id": "S086",
@@ -1199,7 +1741,13 @@
       "notes_en": "Book metadata/previews; key/quota separate from text rights",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S086",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1265
+      }
     },
     {
       "id": "S087",
@@ -1211,7 +1759,13 @@
       "notes_en": "Cultural collections; developer keys and item rights separate",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S087",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 578
+      }
     },
     {
       "id": "S088",
@@ -1223,7 +1777,13 @@
       "notes_en": "Integrated repos/README; anonymous limits, code search needs auth",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S088",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 485
+      }
     },
     {
       "id": "S089",
@@ -1235,7 +1795,13 @@
       "notes_en": "Integrated public projects, not anonymous global code search",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S089",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 442
+      }
     },
     {
       "id": "S090",
@@ -1247,7 +1813,13 @@
       "notes_en": "Public-project API; verify instance limits/coverage",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S090",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 857
+      }
     },
     {
       "id": "S091",
@@ -1259,7 +1831,13 @@
       "notes_en": "Chinese repos; verify per-endpoint token/access/limits",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S091",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 558
+      }
     },
     {
       "id": "S092",
@@ -1271,7 +1849,13 @@
       "notes_en": "Integrated package search/metadata, not quality/security verdicts",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S092",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 894
+      }
     },
     {
       "id": "S093",
@@ -1283,7 +1867,21 @@
       "notes_en": "Named package/version/dependency metadata, not global text-search API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S093",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 734
+      },
+      "functional_sample": {
+        "source": "pypi",
+        "ok": true,
+        "http_status": 200,
+        "count": 30,
+        "elapsed_ms": 337,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S094",
@@ -1295,7 +1893,13 @@
       "notes_en": "Integrated Rust package search; stable/prerelease distinction",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S094",
+        "status": "http_error",
+        "http_status": 404,
+        "elapsed_ms": 616
+      }
     },
     {
       "id": "S095",
@@ -1307,7 +1911,21 @@
       "notes_en": "Java artifact metadata search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S095",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 592
+      },
+      "functional_sample": {
+        "source": "maven",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 1096,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S096",
@@ -1319,7 +1937,21 @@
       "notes_en": ".NET package search/metadata",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P2"
+      "priority": "P2",
+      "reference_check": {
+        "id": "S096",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 518
+      },
+      "functional_sample": {
+        "source": "nuget",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 1074,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S097",
@@ -1331,7 +1963,21 @@
       "notes_en": "PHP package search/metadata; many reads anonymous",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S097",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 576
+      },
+      "functional_sample": {
+        "source": "packagist",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 575,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S098",
@@ -1343,7 +1989,21 @@
       "notes_en": "Ruby package reads/search; writes need keys",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S098",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1223
+      },
+      "functional_sample": {
+        "source": "rubygems",
+        "ok": true,
+        "http_status": 200,
+        "count": 30,
+        "elapsed_ms": 1129,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S099",
@@ -1355,7 +2015,13 @@
       "notes_en": "Module-path/version lookup, not universal keyword search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S099",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 566
+      }
     },
     {
       "id": "S100",
@@ -1367,7 +2033,13 @@
       "notes_en": "Models integrated; datasets/Spaces candidates, gated content separate",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S100",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 626
+      }
     },
     {
       "id": "S101",
@@ -1379,7 +2051,13 @@
       "notes_en": "Public image metadata; pull/search quotas/auth vary",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S101",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1181
+      }
     },
     {
       "id": "S102",
@@ -1405,7 +2083,13 @@
         ],
         "error_code": null
       },
-      "priority": "P0"
+      "priority": "P0",
+      "reference_check": {
+        "id": "S102",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1113
+      }
     },
     {
       "id": "S103",
@@ -1430,7 +2114,13 @@
         "error_code": null,
         "retrieval_has_hits": false
       },
-      "priority": "P1-validation"
+      "priority": "P1-validation",
+      "reference_check": {
+        "id": "S103",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 777
+      }
     },
     {
       "id": "S104",
@@ -1442,7 +2132,13 @@
       "notes_en": "Dependency/package index; verify keys/free scope/data terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S104",
+        "status": "TimeoutError",
+        "http_status": null,
+        "elapsed_ms": 7298
+      }
     },
     {
       "id": "S105",
@@ -1454,7 +2150,13 @@
       "notes_en": "Integrated story search; item/comment-tree reading separate",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S105",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 592
+      }
     },
     {
       "id": "S106",
@@ -1466,7 +2168,13 @@
       "notes_en": "Questions integrated; answers/comments candidates, attribution required",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S106",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 778
+      }
     },
     {
       "id": "S107",
@@ -1478,7 +2186,13 @@
       "notes_en": "Python/Rust originals integrated; sites may disable public access",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S107",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 686
+      }
     },
     {
       "id": "S108",
@@ -1490,7 +2204,13 @@
       "notes_en": "Hot/original adapters implemented; local 403, not currently accepted",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S108",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 628
+      }
     },
     {
       "id": "S109",
@@ -1513,7 +2233,13 @@
         "response_characters": 2486,
         "note": "Shape/transport check, not correctness or license acceptance."
       },
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S109",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 2392
+      }
     },
     {
       "id": "S110",
@@ -1525,7 +2251,13 @@
       "notes_en": "Technical link-community RSS/JSON candidate, not live-tested",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S110",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1139
+      }
     },
     {
       "id": "S111",
@@ -1537,7 +2269,13 @@
       "notes_en": "Public posts/comments vary by instance; no arbitrary public default",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S111",
+        "status": "http_error",
+        "http_status": 404,
+        "elapsed_ms": 1374
+      }
     },
     {
       "id": "S112",
@@ -1549,7 +2287,13 @@
       "notes_en": "Full-text search often needs token/index support, not global federation",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S112",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 932
+      }
     },
     {
       "id": "S113",
@@ -1570,7 +2314,13 @@
         "elapsed_ms": 335,
         "error": "HTTPError"
       },
-      "priority": "P2-validation"
+      "priority": "P2-validation",
+      "reference_check": {
+        "id": "S113",
+        "status": "redirect_unfollowed",
+        "http_status": 308,
+        "elapsed_ms": 369
+      }
     },
     {
       "id": "S114",
@@ -1582,7 +2332,13 @@
       "notes_en": "Personal/community tech feeds, per-feed validation needed",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S114",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 322
+      }
     },
     {
       "id": "S115",
@@ -1594,7 +2350,13 @@
       "notes_en": "English/Chinese articles integrated; edit date is not publication",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S115",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 279
+      }
     },
     {
       "id": "S116",
@@ -1606,7 +2368,21 @@
       "notes_en": "Entities/relations/IDs, SPARQL limits, not news search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P1"
+      "priority": "P1",
+      "reference_check": {
+        "id": "S116",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 322
+      },
+      "functional_sample": {
+        "source": "wikidata",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 712,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S117",
@@ -1618,7 +2394,13 @@
       "notes_en": "Media metadata; attribution/license per item",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S117",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1165
+      }
     },
     {
       "id": "S118",
@@ -1630,7 +2412,21 @@
       "notes_en": "Open-license images/audio; anonymous/authenticated limits differ",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "P2"
+      "priority": "P2",
+      "reference_check": {
+        "id": "S118",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 558
+      },
+      "functional_sample": {
+        "source": "openverse",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 9734,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S119",
@@ -1642,7 +2438,13 @@
       "notes_en": "Species/biodiversity; download jobs differ from public reads",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S119",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 809
+      }
     },
     {
       "id": "S120",
@@ -1654,7 +2456,13 @@
       "notes_en": "Species observations, per-data/image rights",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S120",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1151
+      }
     },
     {
       "id": "S121",
@@ -1666,7 +2474,21 @@
       "notes_en": "Institution IDs/name disambiguation, not article search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S121",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1326
+      },
+      "functional_sample": {
+        "source": "ror",
+        "ok": true,
+        "http_status": 200,
+        "count": 20,
+        "elapsed_ms": 2187,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S122",
@@ -1678,7 +2500,13 @@
       "notes_en": "Researcher identities; verify public API credentials/scope",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S122",
+        "status": "http_error",
+        "http_status": 404,
+        "elapsed_ms": 1624
+      }
     },
     {
       "id": "S123",
@@ -1690,7 +2518,13 @@
       "notes_en": "Crawl-snapshot URL index, not live full-text search; no self-built index scope",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S123",
+        "status": "URLError",
+        "http_status": null,
+        "elapsed_ms": 430
+      }
     },
     {
       "id": "S124",
@@ -1702,7 +2536,13 @@
       "notes_en": "Historical URL/snapshots, not current-page evidence",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S124",
+        "status": "http_error",
+        "http_status": 404,
+        "elapsed_ms": 798
+      }
     },
     {
       "id": "S125",
@@ -1714,7 +2554,13 @@
       "notes_en": "Archived full-text/URL retrieval, not live web",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S125",
+        "status": "redirect_unfollowed",
+        "http_status": 302,
+        "elapsed_ms": 1085
+      }
     },
     {
       "id": "S126",
@@ -1726,7 +2572,21 @@
       "notes_en": "Standard public earthquake/event data",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S126",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 751
+      },
+      "functional_sample": {
+        "source": "usgs",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 726,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S127",
@@ -1738,7 +2598,13 @@
       "notes_en": "Dataset-specific historical weather, not general search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S127",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 2181
+      }
     },
     {
       "id": "S128",
@@ -1750,7 +2616,13 @@
       "notes_en": "US forecasts/alerts with UA/rate requirements",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S128",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 748
+      }
     },
     {
       "id": "S129",
@@ -1762,7 +2634,13 @@
       "notes_en": "Energy/electricity/oil/gas data with free key",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S129",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 781
+      }
     },
     {
       "id": "S130",
@@ -1774,7 +2652,13 @@
       "notes_en": "European power data; register token and check data terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S130",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1258
+      }
     },
     {
       "id": "S131",
@@ -1786,7 +2670,13 @@
       "notes_en": "Many APIs use free keys; demo-key limits are low",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S131",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1992
+      }
     },
     {
       "id": "S132",
@@ -1798,7 +2688,13 @@
       "notes_en": "Free endpoint for evaluation/prototyping; commercial subscription differs",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S132",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 453
+      }
     },
     {
       "id": "S133",
@@ -1810,7 +2706,21 @@
       "notes_en": "Place/geocoding with strict public-service usage limits",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S133",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1226
+      },
+      "functional_sample": {
+        "source": "nominatim",
+        "ok": true,
+        "http_status": 200,
+        "count": 1,
+        "elapsed_ms": 537,
+        "evidence": "one anonymous query and expected nonempty response shape; relevance, freshness and licensing not fully assessed"
+      }
     },
     {
       "id": "S134",
@@ -1822,7 +2732,13 @@
       "notes_en": "OSM feature queries; instance capacity limited, no fan-out default",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S134",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1194
+      }
     },
     {
       "id": "S135",
@@ -1834,7 +2750,13 @@
       "notes_en": "Geographic names require registered username, tiered limits",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S135",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 813
+      }
     },
     {
       "id": "S136",
@@ -1846,7 +2768,13 @@
       "notes_en": "Prepaid usage; promotional incentives are not permanent free search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S136",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 319
+      }
     },
     {
       "id": "S137",
@@ -1858,7 +2786,13 @@
       "notes_en": "Approval/use/commercial restrictions, not unconditionally free",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S137",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 298
+      }
     },
     {
       "id": "S138",
@@ -1870,7 +2804,13 @@
       "notes_en": "Account auth is not general note search; current indexed route retained",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S138",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 334
+      }
     },
     {
       "id": "S139",
@@ -1882,7 +2822,13 @@
       "notes_en": "Public web differs from open-platform API; anonymous hot list 403 locally",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S139",
+        "status": "http_error",
+        "http_status": 432,
+        "elapsed_ms": 360
+      }
     },
     {
       "id": "S140",
@@ -1894,7 +2840,13 @@
       "notes_en": "Experimental hot list integrated, not full search/answers/comments",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S140",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 222
+      }
     },
     {
       "id": "S141",
@@ -1906,7 +2858,13 @@
       "notes_en": "Hotwords integrated; native keyword search 412 locally; subtitles/comments separate",
       "verification": "candidate_reference",
       "integration": "partial_or_existing_adapter",
-      "priority": "existing"
+      "priority": "existing",
+      "reference_check": {
+        "id": "S141",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 225
+      }
     },
     {
       "id": "S142",
@@ -1918,7 +2876,13 @@
       "notes_en": "Authorized official-account APIs are not global article-search APIs",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S142",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 501
+      }
     },
     {
       "id": "S143",
@@ -1930,7 +2894,13 @@
       "notes_en": "Business-authorized APIs, not arbitrary public video/comment search",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S143",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 617
+      }
     },
     {
       "id": "S144",
@@ -1942,7 +2912,13 @@
       "notes_en": "Some public pages readable, no stable free native API promise",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S144",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 548
+      }
     },
     {
       "id": "S145",
@@ -1954,7 +2930,13 @@
       "notes_en": "Open-source metasearch software, not free hosting; self-hosting remains out of scope",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S145",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1532
+      }
     },
     {
       "id": "S146",
@@ -1966,7 +2948,13 @@
       "notes_en": "Feed-conversion tools, not guaranteed public hosting or new independent indexes",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S146",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 442
+      }
     },
     {
       "id": "S147",
@@ -1978,7 +2966,13 @@
       "notes_en": "Feed readers, not new news sources or search engines",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S147",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 971
+      }
     },
     {
       "id": "S148",
@@ -1990,7 +2984,13 @@
       "notes_en": "Open journal/article metadata, not all article-body downloads",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S148",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 515
+      }
     },
     {
       "id": "S149",
@@ -2002,7 +3002,13 @@
       "notes_en": "Astronomy/physics literature with free token; limits need acceptance",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S149",
+        "status": "reference_page_accessible",
+        "http_status": 202,
+        "elapsed_ms": 1885
+      }
     },
     {
       "id": "S150",
@@ -2014,7 +3020,13 @@
       "notes_en": "Research aggregation; API access/use conditions need approval review",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S150",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1595
+      }
     },
     {
       "id": "S151",
@@ -2026,7 +3038,13 @@
       "notes_en": "US patent/trademark data; per-API registration/key rules",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S151",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1402
+      }
     },
     {
       "id": "S152",
@@ -2038,7 +3056,13 @@
       "notes_en": "Patent/bibliographic data; signup/free quota/fair-use conditions",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S152",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1306
+      }
     },
     {
       "id": "S153",
@@ -2050,7 +3074,13 @@
       "notes_en": "Public patent search UI, not an unconditional free automation API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S153",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 296
+      }
     },
     {
       "id": "S154",
@@ -2062,7 +3092,13 @@
       "notes_en": "Patent information portal; login/challenge/API access need verification",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S154",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 392
+      }
     },
     {
       "id": "S155",
@@ -2074,7 +3110,13 @@
       "notes_en": "Macro/rate data with free key, not live equity quotes",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S155",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 759
+      }
     },
     {
       "id": "S156",
@@ -2086,7 +3128,20 @@
       "notes_en": "Statistical time series; unregistered/registered limits differ",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S156",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 486
+      },
+      "functional_sample": {
+        "source": "usbls",
+        "ok": false,
+        "http_status": 403,
+        "elapsed_ms": 559,
+        "error": "HTTPError"
+      }
     },
     {
       "id": "S157",
@@ -2098,7 +3153,13 @@
       "notes_en": "Statistical datasets/APIs; verify keys/dataset limits",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S157",
+        "status": "http_error",
+        "http_status": 403,
+        "elapsed_ms": 808
+      }
     },
     {
       "id": "S158",
@@ -2110,7 +3171,13 @@
       "notes_en": "Token/points/access tiers; not all market data free",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S158",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 539
+      }
     },
     {
       "id": "S159",
@@ -2122,7 +3189,13 @@
       "notes_en": "Historical-market candidate with default anonymous login; verify SDK/freshness/terms",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S159",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 282
+      }
     },
     {
       "id": "S160",
@@ -2134,7 +3207,13 @@
       "notes_en": "Free demo key; quota/commercial/live scope needs verification",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S160",
+        "status": "redirect_unfollowed",
+        "http_status": 308,
+        "elapsed_ms": 781
+      }
     },
     {
       "id": "S161",
@@ -2146,7 +3225,13 @@
       "notes_en": "Public quote pages differ from unofficial APIs; no stability/live-rights promise",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S161",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 416
+      }
     },
     {
       "id": "S162",
@@ -2158,7 +3243,13 @@
       "notes_en": "Historical data candidate, not free live quotes/redistribution rights",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S162",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1167
+      }
     },
     {
       "id": "S163",
@@ -2170,7 +3261,13 @@
       "notes_en": "Podcast/media metadata; audio/transcript rights separate",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S163",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 1098
+      }
     },
     {
       "id": "S164",
@@ -2182,7 +3279,13 @@
       "notes_en": "Podcast catalog with developer key, not arbitrary transcript API",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S164",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 617
+      }
     },
     {
       "id": "S165",
@@ -2194,7 +3297,13 @@
       "notes_en": "Podcast-search free-tier candidate; verify quotas/use",
       "verification": "candidate_reference",
       "integration": "candidate",
-      "priority": "backlog"
+      "priority": "backlog",
+      "reference_check": {
+        "id": "S165",
+        "status": "reference_page_accessible",
+        "http_status": 200,
+        "elapsed_ms": 914
+      }
     }
   ]
 }
