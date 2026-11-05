@@ -31,13 +31,15 @@
 
 需要支持 Skill 并能执行本地脚本的 Agent，以及 Python 3.10 或更高版本。基础功能只使用 Python 标准库。安装和使用公开搜索源不需要 API Key。
 
-### 其他安装方式
+### 使用 Skills CLI 安装
 
 如果已安装 Node.js，也可以使用 Skills CLI：
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
+
+运行后按照提示选择要安装到的 Agent。
 
 也可以从 [GitHub Releases](https://github.com/wjason/xcoze-search/releases) 下载 Skill 安装包。更多方式见[安装教程](INSTALL.zh-CN.md)。
 

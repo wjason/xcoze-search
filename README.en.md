@@ -31,13 +31,15 @@ Use xcoze search to find microsoft/markitdown on GitHub. Tell me what it does an
 
 You need an Agent that supports Skills and can run local scripts, plus Python 3.10 or newer. The base features use only the Python standard library. Installation and public-source searches do not require an API key.
 
-### Other installation methods
+### Install with the Skills CLI
 
 If Node.js is installed, you can also use the Skills CLI:
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
+
+Follow the prompts to choose which Agent to install it for.
 
 Alternatively, download the Skill package from [GitHub Releases](https://github.com/wjason/xcoze-search/releases). See the [installation guide](INSTALL.en.md) for details.
 
