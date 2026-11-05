@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Add recent public NDRC, National Bureau of Statistics and National Energy Administration listings; document additional Chinese public sources.
 - Add public NASA media, U.S. Federal Register, World Bank indicator and recent USGS earthquake sources.
 - Add public metadata search for Open Library, DataCite, Zenodo and Wikidata.
 - Check supported keyless sources with live requests and record access limits.

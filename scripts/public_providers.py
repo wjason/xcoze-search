@@ -983,6 +983,6 @@ class USGSEarthquakes(OpenSource):
 OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace(), OpenLibrary(), DataCite(), Zenodo(), Wikidata(), NasaMedia(), FederalRegister(), WorldBank(), USGSEarthquakes())
 
 from browser_search import Browser
-from content_sources import GovCN, CommunityReader
+from content_sources import GovCN, CommunityReader, NDRCIndex, NationalStatisticsIndex, NationalEnergyIndex
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader())}
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex())}

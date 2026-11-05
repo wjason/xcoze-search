@@ -199,6 +199,110 @@ class GovCN(FixedPublic):
         return rows[:count], self.metadata(raw, rows, count)
 
 
+class OfficialListParser(HTMLParser):
+    """Extract official list entries only; nested related links are separate items."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack = []
+        self.records = []
+        self.hidden = 0
+        self.anchor = None
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag in ('script', 'style'): self.hidden += 1
+        if tag == 'li': self.stack.append({'links': [], 'dates': []})
+        if tag == 'a' and self.stack and not self.hidden:
+            self.anchor = {'href': attrs.get('href', ''), 'title': attrs.get('title', ''), 'text': []}
+
+    def handle_data(self, data):
+        if self.hidden or not self.stack: return
+        if self.anchor is not None: self.anchor['text'].append(data)
+        self.stack[-1]['dates'].extend(re.findall(r'(?<!\d)(20\d\d)[/-](\d{2})[/-](\d{2})(?!\d)', data))
+
+    def handle_endtag(self, tag):
+        if tag == 'a' and self.anchor is not None:
+            if self.stack: self.stack[-1]['links'].append(self.anchor)
+            self.anchor = None
+        if tag == 'li' and self.stack: self.records.append(self.stack.pop())
+        if tag in ('script', 'style'): self.hidden = max(0, self.hidden - 1)
+
+
+class ChinaOfficialIndex(GovCN):
+    """A locally filtered current HTML list, not full-archive search."""
+    content_host = ''
+    path_pattern = ''
+    index_scope = ''
+    max_count = 20
+
+    def build_search(self, args):
+        if option(args, 'site') not in (None, '', *self.sites): invalid('This source only covers its official site.')
+        dates(args)
+        return {}
+
+    def capabilities(self):
+        return {**super().capabilities(), 'search_scope': self.index_scope,
+                'result_type': 'official_index', 'supported_sites': list(self.sites),
+                'documentation_url': self.endpoint, 'historical_search': False}
+
+    def decode_response(self, raw):
+        try: page = raw.decode('utf-8') if isinstance(raw, bytes) else raw
+        except UnicodeError: raise bad_response() from None
+        if not isinstance(page, str) or '<html' not in page.lower(): raise bad_response()
+        parser = OfficialListParser()
+        try: parser.feed(page)
+        except Exception: raise bad_response() from None
+        return {'list_items': parser.records}
+
+    def records(self, raw):
+        rows = []
+        for frame in raw['list_items']:
+            for link in frame['links']:
+                href = link.get('href') or ''
+                absolute = urllib.parse.urljoin(self.endpoint, href)
+                parsed = urllib.parse.urlsplit(absolute)
+                if parsed.hostname != self.content_host or not re.fullmatch(self.path_pattern, parsed.path): continue
+                url = urllib.parse.urlunsplit(('https', parsed.netloc, parsed.path, '', ''))
+                title = (link.get('title') or ''.join(link.get('text', []))).strip()
+                if not title or not public_url(url): continue
+                day = None
+                if frame['dates']:
+                    try: day = datetime(*map(int, frame['dates'][-1])).strftime('%Y-%m-%d')
+                    except ValueError: day = None
+                mapped = {'title': html_text(title), 'url': url, 'snippet': '', 'published_at': day,
+                          'index_scope': self.index_scope, 'publication_semantics': 'index_display_date_not_effective_date'}
+                row = result(self.name, len(rows)+1, mapped, published='published_at')
+                row['content_kind'] = 'official_index'
+                rows.append(row)
+                break
+        if not rows: raise bad_response()
+        return rows
+
+
+class NDRCIndex(ChinaOfficialIndex):
+    name, label = 'ndrc', '国家发展改革委通知栏目'
+    endpoint = 'https://www.ndrc.gov.cn/xxgk/zcfb/tz/'
+    content_host, sites = 'www.ndrc.gov.cn', ('ndrc.gov.cn', 'www.ndrc.gov.cn')
+    path_pattern = r'/xxgk/zcfb/tz/20\d{4}/t20\d{6}_\d+\.html'
+    index_scope = 'ndrc_recent_notice_page_only'
+
+
+class NationalStatisticsIndex(ChinaOfficialIndex):
+    name, label = 'nbs', '国家统计局数据发布栏目'
+    endpoint = 'https://www.stats.gov.cn/sj/zxfb/'
+    content_host, sites = 'www.stats.gov.cn', ('stats.gov.cn', 'www.stats.gov.cn')
+    path_pattern = r'/sj/zxfb/20\d{4}/t20\d{6}_\d+\.html'
+    index_scope = 'nbs_recent_data_release_page_only'
+
+
+class NationalEnergyIndex(ChinaOfficialIndex):
+    name, label = 'nea', '国家能源局首页资讯'
+    endpoint = 'https://www.nea.gov.cn/'
+    content_host, sites = 'www.nea.gov.cn', ('nea.gov.cn', 'www.nea.gov.cn')
+    path_pattern = r'/20\d{6}/[a-f0-9]{32}/c\.html'
+    index_scope = 'nea_homepage_recent_news_and_notices_only'
+
+
 class CommunityReader(FixedPublic):
     name, label = "community", "Public community original post"
     fetch_endpoint = "https://www.v2ex.com/api/topics/show.json"

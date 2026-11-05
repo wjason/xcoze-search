@@ -83,7 +83,8 @@ A preference for future searches is saved; a request for “this search” appli
 | Books | 1 | Open Library |
 | Community content | 4 | Hacker News, Python community forum, Rust community forum, V2EX |
 | News feeds | 2 | China News Service, BBC |
-| Government policy | 2 | gov.cn, U.S. Federal Register |
+| Government policy | 3 | gov.cn, NDRC, U.S. Federal Register |
+| China statistics and energy | 2 | National Bureau of Statistics, National Energy Administration |
 | Space media | 1 | NASA Image and Video Library |
 | International statistics | 1 | World Bank |
 | Earthquakes | 1 | USGS |

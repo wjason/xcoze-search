@@ -1,0 +1,242 @@
+[
+  {
+    "name": "国家发展改革委通知",
+    "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/",
+    "http": 200,
+    "final_url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/",
+    "bytes_sample": 4096,
+    "ms": 554
+  },
+  {
+    "name": "国家统计局数据发布",
+    "url": "https://www.stats.gov.cn/sj/zxfb/",
+    "http": 200,
+    "final_url": "https://www.stats.gov.cn/sj/zxfb/",
+    "bytes_sample": 4096,
+    "ms": 1083
+  },
+  {
+    "name": "国家数据",
+    "url": "https://data.stats.gov.cn/",
+    "http": 200,
+    "final_url": "https://data.stats.gov.cn/dg/website/page.html#/pc/national/home",
+    "bytes_sample": 3198,
+    "ms": 1458
+  },
+  {
+    "name": "国家能源局",
+    "url": "https://www.nea.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.nea.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 828
+  },
+  {
+    "name": "工信部政务公开",
+    "url": "https://www.miit.gov.cn/zwgk/index.html",
+    "http": 200,
+    "final_url": "https://www.miit.gov.cn/zwgk/index.html",
+    "bytes_sample": 4096,
+    "ms": 488
+  },
+  {
+    "name": "生态环境部",
+    "url": "https://www.mee.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.mee.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 435
+  },
+  {
+    "name": "商务部",
+    "url": "https://www.mofcom.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.mofcom.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 792
+  },
+  {
+    "name": "国家气象科学数据中心",
+    "url": "https://data.cma.cn/",
+    "http": 200,
+    "final_url": "https://data.cma.cn/",
+    "bytes_sample": 534,
+    "ms": 1635
+  },
+  {
+    "name": "中国天气网",
+    "url": "https://www.weather.com.cn/",
+    "http": 200,
+    "final_url": "https://www.weather.com.cn/",
+    "bytes_sample": 4096,
+    "ms": 774
+  },
+  {
+    "name": "应急管理部统计",
+    "url": "https://www.mem.gov.cn/gk/tjsj/index.shtml",
+    "http": 200,
+    "final_url": "https://www.mem.gov.cn/gk/tjsj/index.shtml",
+    "bytes_sample": 4096,
+    "ms": 851
+  },
+  {
+    "name": "人民银行统计",
+    "url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html",
+    "http": 200,
+    "final_url": "https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html",
+    "bytes_sample": 4096,
+    "ms": 321
+  },
+  {
+    "name": "证监会",
+    "url": "https://www.csrc.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.csrc.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 294
+  },
+  {
+    "name": "巨潮资讯",
+    "url": "https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Flist%2Fnotice",
+    "http": 200,
+    "final_url": "https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Flist%2Fnotice",
+    "bytes_sample": 4096,
+    "ms": 416
+  },
+  {
+    "name": "上海证券交易所",
+    "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/",
+    "http": 200,
+    "final_url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/",
+    "bytes_sample": 4096,
+    "ms": 588
+  },
+  {
+    "name": "深圳证券交易所",
+    "url": "https://www.szse.cn/disclosure/listed/notice/",
+    "http": 200,
+    "final_url": "https://www.szse.cn/disclosure/listed/notice/",
+    "bytes_sample": 4096,
+    "ms": 288
+  },
+  {
+    "name": "北京证券交易所",
+    "url": "https://www.bse.cn/",
+    "http": 200,
+    "final_url": "https://www.bse.cn/",
+    "bytes_sample": 4096,
+    "ms": 656
+  },
+  {
+    "name": "国家标准公开系统",
+    "url": "https://openstd.samr.gov.cn/",
+    "http": 200,
+    "final_url": "https://openstd.samr.gov.cn/",
+    "bytes_sample": 241,
+    "ms": 446
+  },
+  {
+    "name": "国家法律法规数据库",
+    "url": "https://flk.npc.gov.cn/",
+    "http": 200,
+    "final_url": "https://flk.npc.gov.cn/",
+    "bytes_sample": 552,
+    "ms": 481
+  },
+  {
+    "name": "中国政府采购网",
+    "url": "https://www.ccgp.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.ccgp.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 375
+  },
+  {
+    "name": "全国公共资源交易平台",
+    "url": "https://www.ggzy.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.ggzy.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 427
+  },
+  {
+    "name": "国家航天局",
+    "url": "https://www.cnsa.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.cnsa.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 1659
+  },
+  {
+    "name": "中国科学院",
+    "url": "https://www.cas.cn/",
+    "http": 200,
+    "final_url": "https://www.cas.cn/",
+    "bytes_sample": 4096,
+    "ms": 541
+  },
+  {
+    "name": "科学数据银行",
+    "url": "https://www.scidb.cn/",
+    "http": 200,
+    "final_url": "https://www.scidb.cn/",
+    "bytes_sample": 4096,
+    "ms": 571
+  },
+  {
+    "name": "中国地震台网",
+    "url": "https://www.ceic.ac.cn/",
+    "http": 200,
+    "final_url": "https://www.ceic.ac.cn/",
+    "bytes_sample": 400,
+    "ms": 344
+  },
+  {
+    "name": "中国海洋预报台",
+    "url": "https://www.nmefc.cn/",
+    "http": 200,
+    "final_url": "https://www.nmefc.cn/",
+    "bytes_sample": 2552,
+    "ms": 661
+  },
+  {
+    "name": "中国地质调查局",
+    "url": "https://www.cgs.gov.cn/",
+    "http": 200,
+    "final_url": "https://www.cgs.gov.cn/",
+    "bytes_sample": 4096,
+    "ms": 467
+  },
+  {
+    "name": "香港政府数据一线通",
+    "url": "https://data.gov.hk/tc/",
+    "http": 200,
+    "final_url": "https://data.gov.hk/tc/",
+    "bytes_sample": 4096,
+    "ms": 316
+  },
+  {
+    "name": "香港天文台",
+    "url": "https://www.hko.gov.hk/sc/abouthko/opendata_intro.htm",
+    "http": 200,
+    "final_url": "https://www.hko.gov.hk/sc/abouthko/opendata_intro.htm",
+    "bytes_sample": 4096,
+    "ms": 647
+  },
+  {
+    "name": "中国新闻社 RSS",
+    "url": "https://www.chinanews.com.cn/rss/",
+    "http": 200,
+    "final_url": "https://www.chinanews.com.cn/rss/",
+    "bytes_sample": 4096,
+    "ms": 556
+  },
+  {
+    "name": "新华网",
+    "url": "https://www.news.cn/",
+    "http": 200,
+    "final_url": "https://www.news.cn/",
+    "bytes_sample": 4096,
+    "ms": 781
+  }
+]

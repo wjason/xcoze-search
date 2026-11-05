@@ -356,7 +356,7 @@ def run_search(args, config, *, budget=None):
             else:
                 raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
             try:
-                rows, meta = (get_provider(p).normalize_search(raw, args) if p == "govcn"
+                rows, meta = (get_provider(p).normalize_search(raw, args) if p in ("govcn", "ndrc", "nbs", "nea")
                               else normalize(p, raw, args.count))
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]

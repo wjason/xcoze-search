@@ -152,3 +152,38 @@ class ContentSourceTests(unittest.TestCase):
 
 
 if __name__ == '__main__':unittest.main()
+
+class ChinaOfficialIndexTests(unittest.TestCase):
+    def test_official_html_parsing_and_literal_window(self):
+        from public_providers import PUBLIC_REGISTRY
+        fixtures = {
+            'ndrc': ('https://www.ndrc.gov.cn/xxgk/zcfb/tz/202611/t20261104_1408591.html', '生态政策', '2026/11/04'),
+            'nbs': ('https://www.stats.gov.cn/sj/zxfb/202611/t20261103_1965738.html', '价格数据', '2026-11-04'),
+            'nea': ('http://www.nea.gov.cn/20261102/af04409304d44bfb89c9880f55b70dff/c.html', '能源公告', '2026-11-02'),
+        }
+        for name, (url, title, day) in fixtures.items():
+            with self.subTest(source=name):
+                p = PUBLIC_REGISTRY[name]
+                html = ('<html><ul><li><a href="' + url + '">' + title + '</a><div><ul><li>'
+                        '<a href="https://evil.example/202611/t20261104_1.html">相关解读</a></li></ul></div>'
+                        '<span>' + day + '</span></li></ul></html>').encode()
+                raw = p.decode_response(html)
+                args_match = x.parser().parse_args(['search', title[:2], '--provider', name, '--strategy', 'free'])
+                rows, meta = p.normalize_search(raw, args_match)
+                self.assertEqual(len(rows), 1)
+                self.assertEqual(rows[0]['title'], title)
+                self.assertEqual(rows[0]['published_at'], day.replace('/', '-'))
+                self.assertTrue(rows[0]['url'].startswith('https://'))
+                self.assertEqual(rows[0]['content_kind'], 'official_index')
+                self.assertFalse(meta['historical_search'])
+                self.assertNotIn('list_items', meta.get('provider_metadata', {}))
+                args_miss = x.parser().parse_args(['search', '不存在', '--provider', name, '--strategy', 'free'])
+                self.assertEqual(p.normalize_search(raw, args_miss)[0], [])
+                with self.assertRaises(x.SearchError): p.records(p.decode_response(b'<html>unrelated</html>'))
+
+    def test_missing_display_date_is_not_inferred_from_url(self):
+        from public_providers import PUBLIC_REGISTRY
+        p = PUBLIC_REGISTRY['nea']
+        html = b'<html><li><a href="https://www.nea.gov.cn/20261102/af04409304d44bfb89c9880f55b70dff/c.html">Energy</a></li></html>'
+        rows = p.records(p.decode_response(html))
+        self.assertIsNone(rows[0]['published_at'])

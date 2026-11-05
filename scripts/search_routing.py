@@ -18,7 +18,8 @@ PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhih
              "huggingface": "huggingface.co", "openlibrary": "openlibrary.org", "datacite": "doi.org",
              "zenodo": "zenodo.org", "wikidata": "wikidata.org", "nasa": "images.nasa.gov",
              "federalregister": "federalregister.gov", "worldbank": "data.worldbank.org", "usgs": "earthquake.usgs.gov", "youtube": "youtube.com", "bilibili": "bilibili.com",
-             "reddit": "reddit.com", "twitter": "x.com", "v2ex": "v2ex.com", "douban": "douban.com", "govcn": "gov.cn"}
+             "reddit": "reddit.com", "twitter": "x.com", "v2ex": "v2ex.com", "douban": "douban.com", "govcn": "gov.cn",
+             "ndrc": "ndrc.gov.cn", "nbs": "stats.gov.cn", "nea": "nea.gov.cn"}
 NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
 
 
