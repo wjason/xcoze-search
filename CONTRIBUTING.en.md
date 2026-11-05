@@ -44,6 +44,8 @@ Also:
 
 See the [completion criteria](TODO.en.md#provider-completion-criteria).
 
+When adding or changing a source, update its support status: run a live check, record sanitized results, then use `python3 evaluations/build_source_status.py --audit <sanitized-results.json>` to regenerate the bilingual tables, and update statuses shown in the source lists. Mark unchecked capabilities as not tested and update the candidate list when a source is integrated.
+
 ## Maintain both languages
 
 README.md and existing Chinese files remain the default entry points; English counterparts use .en.md. Update commands, limits, verification state, versions, and links together. Keep agent language behavior consistent in SKILL.md and SKILL.en.md. Every page retains reciprocal language links, and release manifests include both versions.

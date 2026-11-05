@@ -101,7 +101,7 @@ A preference for future searches is saved; a request for “this search” appli
 
 Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds and Xinhua uses its homepage. China public indexes scope searches to each website; coverage and freshness depend on the search engine’s index. Browser search requires additional local tools.
 
-[View all sources and integration details →](references/sources.en.md)
+[View all sources and capabilities →](references/sources.en.md) · [Support status and planned sources](references/source-status.en.md)
 
 ## Configure API keys
 

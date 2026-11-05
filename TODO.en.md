@@ -56,7 +56,8 @@ Updated 2026-11-05. Focus: Agent web search and source reading. Default automati
 - [ ] Cross-network/schema-change/denial-pause acceptance for experimental Zhihu/Bilibili feeds; hot-list retrieval is not answer-support evaluation.
 
 - [ ] Shared Chinese news/policy/docs/ecosystem/community/video tasks with blinded answer support, freshness and body/comment/subtitle evidence review before competitive claims.
-- [ ] Evaluate Open Library, DBLP, Wikidata and Hugging Face datasets; distinguish current indexes from archival material and source count from utility.
+- [x] Integrate and check Open Library books and Wikidata entities.
+- [ ] Evaluate DBLP and Hugging Face datasets; distinguish current indexes from archival material.
 - [ ] Evaluate optional platform execution adapters and action health, reusing authorized tools; browser search is wired; other platform-tool bridges remain discovery-only.
 
 

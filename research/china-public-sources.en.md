@@ -6,82 +6,82 @@
 
 This directory covers public portals for government, statistics, finance, science, weather and news. The Skill searches recent official listings, the DATA.GOV.HK update feed, and site-scoped web indexes. Results link back to their publishers; listing windows and index coverage vary. See [sources](../references/sources.en.md).
 
-The 30 links below returned HTTP 200 during a one-time homepage request on 2026-11-05 (Beijing time). This checks page response only, not that an API, search, data download, commercial use or future access works. The search check returned results for 13 scoped sites; its final Exa request reached a rate limit, and the separate Hong Kong Observatory browser sample had no hits. [Page checks](china-public-sources-2026-11-05.json) · [Search checks](china-public-index-probes-2026-11-05.json).
+The 30 links below returned HTTP 200 during a one-time homepage request on 2026-11-05 (Beijing time). This checks page response only, not that an API, search, data download, commercial use or future access works. The latest search checks returned results for each of the 30 entries through its listed search or feed path. Results vary over time and by network. [Page checks](china-public-sources-2026-11-05.json) · [Latest action checks](../evaluations/reports/2026-11-05-source-status.json).
 
 ## Policy and government
 
-| Source | Content | Integration |
-|---|---|---|
-| [NDRC notices](https://www.ndrc.gov.cn/xxgk/zcfb/tz/) | Notice listing | Current page integrated |
-| [Ministry of Industry and Information Technology](https://www.miit.gov.cn/zwgk/index.html) | Industry and IT policy documents | Current listing integrated |
-| [Ministry of Commerce](https://www.mofcom.gov.cn/) | Commerce policy and public information | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [NDRC notices](https://www.ndrc.gov.cn/xxgk/zcfb/tz/) | Notice listing | Current page integrated | Supported · Passed |
+| [Ministry of Industry and Information Technology](https://www.miit.gov.cn/zwgk/index.html) | Industry and IT policy documents | Current listing integrated | Supported · Passed |
+| [Ministry of Commerce](https://www.mofcom.gov.cn/) | Commerce policy and public information | Current listing integrated | Supported · Passed |
 
 ## Statistics and economics
 
-| Source | Content | Integration |
-|---|---|---|
-| [National Bureau of Statistics releases](https://www.stats.gov.cn/sj/zxfb/) | Data release listing | Current page integrated |
-| [National Data](https://data.stats.gov.cn/) | Statistical data portal | Site-scoped search |
-| [People’s Bank of China statistics](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html) | Financial statistics releases | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [National Bureau of Statistics releases](https://www.stats.gov.cn/sj/zxfb/) | Data release listing | Current page integrated | Supported · Passed |
+| [National Data](https://data.stats.gov.cn/) | Statistical data portal | Site-scoped search | Supported · Passed |
+| [People’s Bank of China statistics](https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html) | Financial statistics releases | Current listing integrated | Supported · Passed |
 
 ## Energy and environment
 
-| Source | Content | Integration |
-|---|---|---|
-| [National Energy Administration](https://www.nea.gov.cn/) | Energy news and notices | Homepage listing integrated |
-| [Ministry of Ecology and Environment](https://www.mee.gov.cn/) | Environmental policy and public information | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [National Energy Administration](https://www.nea.gov.cn/) | Energy news and notices | Homepage listing integrated | Supported · Passed |
+| [Ministry of Ecology and Environment](https://www.mee.gov.cn/) | Environmental policy and public information | Current listing integrated | Supported · Passed |
 
 ## Weather and hazards
 
-| Source | Content | Integration |
-|---|---|---|
-| [National Meteorological Information Center](https://data.cma.cn/) | Meteorological data services | Site-scoped search |
-| [China Weather](https://www.weather.com.cn/) | Weather forecasts and news | Site-scoped search |
-| [Ministry of Emergency Management statistics](https://www.mem.gov.cn/gk/tjsj/index.shtml) | Disaster and emergency statistics | Current listing integrated |
-| [China Earthquake Networks Center](https://www.ceic.ac.cn/) | Earthquake information | Site-scoped search |
-| [National Marine Environmental Forecasting Center](https://www.nmefc.cn/) | Marine forecasts and warnings | Site-scoped search |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [National Meteorological Information Center](https://data.cma.cn/) | Meteorological data services | Site-scoped search | Supported · Passed |
+| [China Weather](https://www.weather.com.cn/) | Weather forecasts and news | Site-scoped search | Supported · Passed |
+| [Ministry of Emergency Management statistics](https://www.mem.gov.cn/gk/tjsj/index.shtml) | Disaster and emergency statistics | Current listing integrated | Supported · Passed |
+| [China Earthquake Networks Center](https://www.ceic.ac.cn/) | Earthquake information | Site-scoped search | Supported · Passed |
+| [National Marine Environmental Forecasting Center](https://www.nmefc.cn/) | Marine forecasts and warnings | Site-scoped search | Supported · Passed |
 
 ## Securities and finance
 
-| Source | Content | Integration |
-|---|---|---|
-| [China Securities Regulatory Commission](https://www.csrc.gov.cn/) | Securities regulatory notices | Current listing integrated |
-| [CNInfo](https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Flist%2Fnotice) | Listed-company disclosures | Site-scoped search |
-| [Shanghai Stock Exchange](https://www.sse.com.cn/disclosure/listedinfo/announcement/) | Listed-company announcements | Site-scoped search |
-| [Shenzhen Stock Exchange](https://www.szse.cn/disclosure/listed/notice/) | Listed-company announcements | Site-scoped search |
-| [Beijing Stock Exchange](https://www.bse.cn/) | Market and company information | Site-scoped search |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [China Securities Regulatory Commission](https://www.csrc.gov.cn/) | Securities regulatory notices | Current listing integrated | Supported · Passed |
+| [CNInfo](https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Flist%2Fnotice) | Listed-company disclosures | Site-scoped search | Supported · Passed |
+| [Shanghai Stock Exchange](https://www.sse.com.cn/disclosure/listedinfo/announcement/) | Listed-company announcements | Site-scoped search | Supported · Passed |
+| [Shenzhen Stock Exchange](https://www.szse.cn/disclosure/listed/notice/) | Listed-company announcements | Site-scoped search | Supported · Passed |
+| [Beijing Stock Exchange](https://www.bse.cn/) | Market and company information | Site-scoped search | Supported · Passed |
 
 ## Law, standards and procurement
 
-| Source | Content | Integration |
-|---|---|---|
-| [National standards disclosure system](https://openstd.samr.gov.cn/) | National standards catalog and public content | Site-scoped search |
-| [National database of laws and regulations](https://flk.npc.gov.cn/) | Laws and regulations | Site-scoped search |
-| [China Government Procurement](https://www.ccgp.gov.cn/) | Government procurement notices | Current listing integrated |
-| [National public resource trading platform](https://www.ggzy.gov.cn/) | Public resource trading information | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [National standards disclosure system](https://openstd.samr.gov.cn/) | National standards catalog and public content | Site-scoped search | Supported · Passed |
+| [National database of laws and regulations](https://flk.npc.gov.cn/) | Laws and regulations | Site-scoped search | Supported · Passed |
+| [China Government Procurement](https://www.ccgp.gov.cn/) | Government procurement notices | Current listing integrated | Supported · Passed |
+| [National public resource trading platform](https://www.ggzy.gov.cn/) | Public resource trading information | Current listing integrated | Supported · Passed |
 
 ## Research, space and geoscience
 
-| Source | Content | Integration |
-|---|---|---|
-| [China National Space Administration](https://www.cnsa.gov.cn/) | Space news and data policies | Site-scoped search |
-| [Chinese Academy of Sciences](https://www.cas.cn/) | Research news and institutional resources | Current listing integrated |
-| [Science Data Bank](https://www.scidb.cn/) | Research datasets | Site-scoped search |
-| [China Geological Survey](https://www.cgs.gov.cn/) | Geoscience news and data resources | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [China National Space Administration](https://www.cnsa.gov.cn/) | Space news and data policies | Site-scoped search | Supported · Passed |
+| [Chinese Academy of Sciences](https://www.cas.cn/) | Research news and institutional resources | Current listing integrated | Supported · Passed |
+| [Science Data Bank](https://www.scidb.cn/) | Research datasets | Site-scoped search | Supported · Passed |
+| [China Geological Survey](https://www.cgs.gov.cn/) | Geoscience news and data resources | Current listing integrated | Supported · Passed |
 
 ## Regional public data
 
-| Source | Content | Integration |
-|---|---|---|
-| [DATA.GOV.HK](https://data.gov.hk/tc/) | Government open-data catalog | Dataset update RSS |
-| [Hong Kong Observatory](https://www.hko.gov.hk/sc/abouthko/opendata_intro.htm) | Hong Kong observations and forecasts | Site-scoped search; sample had no hits |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [DATA.GOV.HK](https://data.gov.hk/tc/) | Government open-data catalog | Dataset update RSS | Supported · Passed |
+| [Hong Kong Observatory](https://www.hko.gov.hk/sc/abouthko/opendata_intro.htm) | Hong Kong observations and forecasts | Site-scoped search | Supported · Passed |
 
 ## News
 
-| Source | Content | Integration |
-|---|---|---|
-| [China News Service RSS](https://www.chinanews.com.cn/rss/) | News feeds | Latest and finance feeds integrated |
-| [Xinhua](https://www.news.cn/) | News | Current listing integrated |
+| Source | Content | Integration | Test status |
+|---|---|---|---|
+| [China News Service RSS](https://www.chinanews.com.cn/rss/) | News feeds | Latest and finance feeds integrated | Supported · Passed |
+| [Xinhua](https://www.news.cn/) | News | Current listing integrated | Supported · Passed |
 
 ## Weather and financial data
 
