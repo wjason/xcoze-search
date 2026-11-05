@@ -387,7 +387,7 @@ class PublicProtocolTests(unittest.TestCase):
         for name, p in FREE.items():
             if not p.supports_search: continue
             if p.method == "LOCAL_BROWSER": continue
-            payload = p.search_payload(args())
+            payload = p.search_payload(args(query="CN,SP.POP.TOTL" if name == "worldbank" else "2.5,day" if name == "usgs" else "wind"))
             request = p.build_request(payload, "synthetic-do-not-send", "0.4.0")
             self.assertIsNone(request.get_header("Authorization"))
             self.assertNotIn("synthetic-do-not-send", request.full_url + str(request.data))

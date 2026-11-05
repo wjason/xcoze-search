@@ -32,9 +32,13 @@ This page lists the sources and features already integrated into xcoze search. P
 | crates.io | Search Rust packages and version metadata |
 | Hugging Face | Search public model metadata |
 | gov.cn | Search China's latest-policy listing |
+| U.S. Federal Register | Search federal notices, rules and abstracts |
+| NASA Image and Video Library | Search image, video and audio metadata |
+| World Bank | Look up economic and social indicators by country and code |
+| USGS | Retrieve recent earthquake magnitude, location and event time |
 | Python and Rust community forums, V2EX | Read public topic posts |
 
-Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Research and book results are metadata or abstracts and do not imply full text was read; community search results do not imply the full discussion was read. The gov.cn listing does not cover all announcements in China.
+Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Research and book results are metadata or abstracts and do not imply full text was read; community search results do not imply the full discussion was read. The gov.cn listing does not cover all announcements in China. A Federal Register publication date is not an effective date. NASA returns media metadata, not the media itself. World Bank observations are identified by year and are not live market prices. USGS earthquake data may be revised.
 
 ### News and community trends
 
@@ -70,6 +74,8 @@ Each service must be enabled separately, and its provider sets the applicable li
 When other available search paths cannot return results, the Skill can use an existing local [agent-browser](https://github.com/vercel-labs/agent-browser) and browser to search. It defaults to 360 Search; Bing and Google can also be selected. This is optional: the base installation does not install a browser or use your browser login state. You can also ask your Agent to turn browser fallback off.
 
 [View the source availability check](../evaluations/reports/2026-11-05-source-audit.en.md).
+
+See [public data source research](../research/global-public-data.en.md) for weather, stock data and other organizations.
 
 See [public sources and platforms](open-sources.en.md), [news and community content](feeds.en.md), and [search routing](routing.en.md) for details. The [full source research directory](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md) also includes sources that are not yet integrated.
 

@@ -35,6 +35,10 @@ Weibo and Xiaohongshu are searched through public web indexes. Native Weibo tren
 | datacite | Research DOIs | No date filter | Metadata, not full text; [API](https://support.datacite.org/docs/api) |
 | zenodo | Public research records | No date filter | Abstract and metadata, no file download; [API](https://developers.zenodo.org/) |
 | wikidata | Knowledge entities | --language en/zh | Entity labels and descriptions, not the full knowledge graph; [API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
+| nasa | Space images, video and audio | No date filter | Media metadata; files are not downloaded; [API](https://api.nasa.gov/) |
+| federalregister | U.S. federal notices and rules | No date filter | Publication date is not effective date; [API](https://www.federalregister.gov/developers/documentation/api/v1) |
+| worldbank | Economic and social indicators | Query is country code,indicator code | Observation year and value, not live market prices; [API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) |
+| usgs | Recent earthquakes | Query is magnitude,period | UTC event time; data may be revised; [API](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) |
 
 New adapters cap results at 20, default search count 10, without pagination. Adapter limits may be stricter than upstream limits. Sites must match each source; Crossref uses stable doi.org record links. --provider can pin a native source. Disabled sources stay excluded. General queries are not broadcast to every platform; the Agent chooses from the original question.
 

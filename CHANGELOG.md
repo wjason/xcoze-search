@@ -4,6 +4,7 @@
 
 ## 尚未发布
 
+- 新增 NASA 素材、美国联邦公报、世界银行指标和 USGS 近期地震公开来源。
 - 接入 Open Library、DataCite、Zenodo 和 Wikidata 公开元数据检索。
 - 对已支持来源进行免 Key 实际调用检查，记录可用结果和访问限制。
 

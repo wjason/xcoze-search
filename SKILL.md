@@ -42,7 +42,9 @@ Python/Rust 论坛和 V2EX 的标准 HTTPS 主帖根链接可用 fetch，自动�
 
 小红书、微博公开索引结果的 `platform_item_type` 标明笔记/帖子链接、账号主页或其他页面，只是 URL 形态识别。用户要笔记/帖子内容时，账号主页不能充当正文证据；需要读取原文，受限时说明实际缺口。找作者时账号主页仍可使用。
 
-根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface|openlibrary|datacite|zenodo|wikidata`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
+根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface|openlibrary|datacite|zenodo|wikidata|nasa|federalregister|worldbank|usgs`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
+
+NASA 素材用 `--platform nasa`（素材元数据，不等于原图或科研全文），美国联邦公告用 `--platform federalregister`（发布日期不等于生效日期）。世界银行指标使用 `--platform worldbank`，查询格式为国家代码,指标代码，例如 `CN,SP.POP.TOTL`；国家和指标代码需事先确认，观察年份不是发布日期，空值不补造。USGS 近期地震使用 `--platform usgs`，查询格式为震级门槛,时间窗口，例如 `2.5,day`；保留事件时间、震级、位置和后续修订状态，不当作全球所有机构的完整实时记录。对天气预测和股票行情，需要使用已验证的专用来源与时间标记，未接入的候选不能声称已支持。
 
 需要平台正文、评论或字幕等专用能力时读[开放来源与平台协作](references/open-sources.md)。已有授权工具可按其 Skill 补缺口，不自动安装/更新工具、打开登录窗口或复制登录态。索引摘要、问题摘录、论文摘要、视频描述、评论 ID 和字幕轨道列表分别判断，不能互相替代。第三方平台动作仍按其限流/登录/验证码停止条件执行。
 

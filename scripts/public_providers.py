@@ -419,7 +419,7 @@ class OpenSource(PublicProvider):
     def metadata(self, raw, rows, count):
         value = super().metadata(raw, rows, count)
         value["provider_metadata"] = {k: v for k, v in raw.items() if k not in (
-            "items", "query", "message", "objects", "crates", "resultList", "entries", "docs", "data", "hits", "search")}
+            "items", "query", "message", "objects", "crates", "resultList", "entries", "docs", "data", "hits", "search", "collection", "observations", "results", "features")}
         for container, field in (("message", "items"), ("query", "search")):
             if isinstance(raw.get(container), dict):
                 value["provider_metadata"][container] = {k: v for k, v in raw[container].items() if k != field}
@@ -846,7 +846,141 @@ class Wikidata(OpenSource):
         return self.rows(raw, items, count)
 
 
-OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace(), OpenLibrary(), DataCite(), Zenodo(), Wikidata())
+class NasaMedia(OpenSource):
+    name, label = "nasa", "NASA Image and Video Library"
+    endpoint = "https://images-api.nasa.gov/search"
+    sites = ("images.nasa.gov",)
+    result_kind, search_scope = "media_metadata", "nasa_image_video_audio_metadata"
+    documentation_url = "https://api.nasa.gov/"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"q": args.query, "page_size": args.count}
+
+    def normalize(self, raw, count):
+        collection = raw.get("collection")
+        if not isinstance(collection, dict): raise SearchError("invalid_response", "Invalid NASA collection.")
+        items = []
+        for record in record_array(collection, "items"):
+            data = record.get("data")
+            if not isinstance(data, list) or not data or not isinstance(data[0], dict):
+                raise SearchError("invalid_response", "Invalid NASA media metadata.")
+            info = data[0]; ident = info.get("nasa_id")
+            if not isinstance(ident, str) or not ident.strip() or len(ident) > 256:
+                raise SearchError("invalid_response", "Invalid NASA identifier.")
+            items.append({"title": info.get("title"), "url": "https://images.nasa.gov/details-" + urllib.parse.quote(ident, safe=""),
+                          "summary_text": clean_html(info.get("description") or ""), "created": info.get("date_created"),
+                          "nasa_id": ident, "media_type": info.get("media_type"), "center": info.get("center"),
+                          "rights_owner": info.get("secondary_creator"), "date_semantics": "media_creation_date"})
+        return self.rows(raw, items, count, published="created", summary="summary_text")
+
+
+class FederalRegister(OpenSource):
+    name, label = "federalregister", "U.S. Federal Register"
+    endpoint = "https://www.federalregister.gov/api/v1/documents.json"
+    sites = ("federalregister.gov",)
+    result_kind, search_scope = "official_notice_metadata", "us_federal_register_documents"
+    documentation_url = "https://www.federalregister.gov/developers/documentation/api/v1"
+
+    def build_search(self, args):
+        self.check_site(args)
+        return {"conditions[term]": args.query, "per_page": args.count, "order": "newest"}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "results"):
+            url = item.get("html_url")
+            if not isinstance(url, str) or not domain_matches(url, "federalregister.gov") or not public_url(url):
+                raise SearchError("invalid_response", "Invalid Federal Register document link.")
+            items.append({"title": item.get("title"), "url": url, "abstract_text": clean_html(item.get("abstract") or ""),
+                          "published": item.get("publication_date"), "document_number": item.get("document_number"),
+                          "document_type": item.get("type"), "agencies": item.get("agencies"),
+                          "date_semantics": "publication_date_not_effective_date"})
+        return self.rows(raw, items, count, published="published", summary="abstract_text")
+
+
+class WorldBank(OpenSource):
+    name, label = "worldbank", "World Bank indicators"
+    endpoint = "https://api.worldbank.org/v2/country/"
+    sites = ("data.worldbank.org",)
+    result_kind, search_scope = "statistical_observation", "world_bank_indicator_by_country_and_code"
+    documentation_url = "https://datahelpdesk.worldbank.org/knowledgebase/articles/889392"
+
+    def build_search(self, args):
+        self.check_site(args)
+        match = re.fullmatch(r"\s*([A-Za-z]{2,3})\s*,\s*([A-Za-z0-9][A-Za-z0-9_.-]{1,79})\s*", args.query)
+        if not match: raise SearchError("invalid_input", "World Bank query requires country code,indicator code (e.g. CN,SP.POP.TOTL).")
+        return {"country": match.group(1).upper(), "indicator": match.group(2).upper(), "format": "json", "per_page": args.count, "mrv": args.count}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        values = dict(payload); country = values.pop("country"); indicator = values.pop("indicator")
+        url = self.endpoint + country + "/indicator/" + urllib.parse.quote(indicator, safe=".-_") + "?" + urllib.parse.urlencode(values)
+        return urllib.request.Request(url, headers={"User-Agent": "xcoze-search/" + version + " (+https://github.com/wjason/xcoze-search)", "Accept": "application/json", "Accept-Encoding": "gzip"})
+
+    def decode_response(self, raw):
+        try: value = json.loads(raw)
+        except (ValueError, UnicodeError): raise SearchError("invalid_response", "Invalid World Bank JSON.") from None
+        if not isinstance(value, list) or len(value) != 2 or not isinstance(value[0], dict) or not isinstance(value[1], list):
+            raise SearchError("invalid_response", "Invalid World Bank data response.")
+        return {"page_metadata": value[0], "observations": value[1]}
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "observations"):
+            indicator, country = item.get("indicator"), item.get("country")
+            if not isinstance(indicator, dict) or not isinstance(country, dict):
+                raise SearchError("invalid_response", "Invalid World Bank observation.")
+            code, region = indicator.get("id"), country.get("id")
+            if not isinstance(code, str) or not re.fullmatch(r"[A-Za-z0-9_.-]+", code) or not isinstance(region, str) or not re.fullmatch(r"[A-Za-z0-9]+", region):
+                raise SearchError("invalid_response", "Invalid World Bank indicator or country.")
+            items.append({"title": str(indicator.get("value") or code) + " — " + str(country.get("value") or region),
+                          "url": "https://data.worldbank.org/indicator/" + code + "?locations=" + region,
+                          "year": item.get("date"), "value": item.get("value"), "unit": item.get("unit"),
+                          "country": country, "indicator": indicator, "date_semantics": "observation_year_not_publication_date"})
+        return self.rows(raw, items, count)
+
+
+class USGSEarthquakes(OpenSource):
+    name, label = "usgs", "USGS recent earthquake feed"
+    endpoint = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/"
+    sites = ("earthquake.usgs.gov",)
+    result_kind, search_scope = "earthquake_observation", "usgs_recent_earthquake_summary_feed"
+    documentation_url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php"
+
+    def build_search(self, args):
+        self.check_site(args)
+        match = re.fullmatch(r"\s*(all|significant|1\.0|2\.5|4\.5)\s*,\s*(hour|day|week|month)\s*", args.query, re.I)
+        if not match: raise SearchError("invalid_input", "USGS query requires magnitude,period (e.g. 2.5,day).")
+        return {"feed": match.group(1).lower() + "_" + match.group(2).lower()}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        feed = payload["feed"]
+        if not re.fullmatch(r"(?:all|significant|1\.0|2\.5|4\.5)_(?:hour|day|week|month)", feed):
+            raise SearchError("invalid_input", "Invalid earthquake feed.")
+        return urllib.request.Request(self.endpoint + feed + ".geojson", headers={"User-Agent": "xcoze-search/" + version + " (+https://github.com/wjason/xcoze-search)", "Accept": "application/json", "Accept-Encoding": "gzip"})
+
+    def normalize(self, raw, count):
+        items = []
+        for item in record_array(raw, "features"):
+            props, geometry = item.get("properties"), item.get("geometry")
+            if not isinstance(props, dict) or not isinstance(geometry, dict):
+                raise SearchError("invalid_response", "Invalid USGS earthquake event.")
+            url = props.get("url")
+            if not isinstance(url, str) or not domain_matches(url, "earthquake.usgs.gov") or not public_url(url):
+                raise SearchError("invalid_response", "Invalid USGS event link.")
+            millis = props.get("time")
+            if type(millis) not in (int, float): raise SearchError("invalid_response", "Invalid USGS event time.")
+            try: event_time = datetime.fromtimestamp(millis / 1000, timezone.utc).isoformat().replace("+00:00", "Z")
+            except (OverflowError, OSError, ValueError): raise SearchError("invalid_response", "Invalid USGS event time.") from None
+            items.append({"title": props.get("title"), "url": url, "event_time": event_time,
+                          "magnitude": props.get("mag"), "location": props.get("place"),
+                          "updated_epoch_ms": props.get("updated"), "status": props.get("status"),
+                          "coordinates_longitude_latitude_depth_km": geometry.get("coordinates"),
+                          "date_semantics": "earthquake_event_time_utc_not_publication_time"})
+        return self.rows(raw, items, count)
+
+
+OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates(), GitLab(), EuropePMC(), HuggingFace(), OpenLibrary(), DataCite(), Zenodo(), Wikidata(), NasaMedia(), FederalRegister(), WorldBank(), USGSEarthquakes())
 
 from browser_search import Browser
 from content_sources import GovCN, CommunityReader

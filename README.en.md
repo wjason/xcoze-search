@@ -83,7 +83,10 @@ A preference for future searches is saved; a request for “this search” appli
 | Books | 1 | Open Library |
 | Community content | 4 | Hacker News, Python community forum, Rust community forum, V2EX |
 | News feeds | 2 | China News Service, BBC |
-| Government policy | 1 | gov.cn |
+| Government policy | 2 | gov.cn, U.S. Federal Register |
+| Space media | 1 | NASA Image and Video Library |
+| International statistics | 1 | World Bank |
+| Earthquakes | 1 | USGS |
 | Community trends | 3 | Zhihu, Bilibili, V2EX |
 | Platform-scoped search | 9 | Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, Douban |
 | Configurable APIs | 6 | DeepSeek, Tencent Yuanbao, Tavily, Exa, Brave Search, Bocha |

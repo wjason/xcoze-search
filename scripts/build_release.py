@@ -17,7 +17,8 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "scripts/public_trends.py", "scripts/content_sources.py", "references/feeds.md", "references/feeds.en.md",
                  "references/open-sources.md", "references/open-sources.en.md", "references/routing.md", "references/routing.en.md",
                  "references/sources.md", "references/sources.en.md",
-                 "evaluations/reports/2026-11-05-source-audit.md", "evaluations/reports/2026-11-05-source-audit.en.md"]
+                 "evaluations/reports/2026-11-05-source-audit.md", "evaluations/reports/2026-11-05-source-audit.en.md",
+                 "research/global-public-data.md", "research/global-public-data.en.md"]
 SOURCE_EXTRA = [".gitignore",
                 ".github/workflows/test.yml", ".github/workflows/release.yml",
                 "scripts/build_release.py", "scripts/prepare_release.py",

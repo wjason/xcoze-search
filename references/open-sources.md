@@ -35,6 +35,10 @@ B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开�
 | datacite | 研究成果 DOI | 无日期筛选 | 元数据，不包含成果全文；[API](https://support.datacite.org/docs/api) |
 | zenodo | 公开研究成果 | 无日期筛选 | 摘要及元数据，不下载文件；[API](https://developers.zenodo.org/) |
 | wikidata | 知识实体 | --language 支持 en/zh | 实体标签与描述，不等于完整知识图谱；[API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
+| nasa | 航天图片、视频、音频 | 无日期筛选 | 素材元数据与描述，不下载媒体；[API](https://api.nasa.gov/) |
+| federalregister | 美国联邦公告和法规 | 无日期筛选 | 发布日期不等于生效日期；[API](https://www.federalregister.gov/developers/documentation/api/v1) |
+| worldbank | 经济和社会指标 | 查询为国家代码,指标代码 | 返回观察年份和数值，并非实时行情；[API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) |
+| usgs | 近期地震 | 查询为震级门槛,时间窗口 | 事件时间为 UTC，结果可修订；[API](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) |
 
 每个新增适配器最多 20 条，基础命令默认 10 条，不自动分页；限制可能比上游严格。`--site` 仍需匹配对应来源，Crossref 平台使用 doi.org 稳定记录链接。原生来源可由 --provider 直接指定；禁用来源不会自动启用。通用查询不会无差别广播到这些平台，Agent 从原问题选择平台或保留通用搜索。
 

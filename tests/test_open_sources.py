@@ -39,7 +39,11 @@ FIXTURES = {'wikipedia': WIKI, 'stackexchange': SE, 'arxiv': ATOM, 'crossref': C
             'openlibrary': {'docs': [{'key':'/works/OL1W','title':'A book','author_name':['An author'],'first_publish_year':2020}]},
             'datacite': {'data': [{'attributes': {'doi':'10.1234/example','titles':[{'title':'Dataset'}],'publicationYear':2025}}]},
             'zenodo': {'hits': {'hits': [{'id':1,'metadata':{'title':'A dataset','description':'<p>Summary</p>','publication_date':'2025-01-01'}}]}},
-            'wikidata': {'search': [{'id':'Q1','label':'Universe','description':'All space and time'}]}}
+            'wikidata': {'search': [{'id':'Q1','label':'Universe','description':'All space and time'}]},
+            'nasa': {'collection': {'items': [{'data': [{'nasa_id':'ABC-1','title':'Space','description':'A photo','date_created':'2025-01-01'}]}]}},
+            'federalregister': {'results':[{'title':'Rule','html_url':'https://www.federalregister.gov/documents/2025/01/01/example','publication_date':'2025-01-01','abstract':'Rule summary'}]},
+            'worldbank': {'page_metadata':{},'observations':[{'indicator':{'id':'SP.POP.TOTL','value':'Population'},'country':{'id':'CN','value':'China'},'date':'2025','value':1}]},
+            'usgs': {'features':[{'properties':{'title':'M 2.5 - Somewhere','url':'https://earthquake.usgs.gov/earthquakes/eventpage/example','time':1767225600000,'mag':2.5},'geometry':{'coordinates':[1,2,3]}}]}}
 
 
 class OpenSourceTests(unittest.TestCase):
@@ -55,10 +59,10 @@ class OpenSourceTests(unittest.TestCase):
         for provider in OPEN_SOURCES:
             with self.subTest(provider=provider.name):
                 raw = FIXTURES[provider.name]
-                raw = raw if isinstance(raw, bytes) else json.dumps(raw).encode()
+                raw = (json.dumps([raw['page_metadata'], raw['observations']]).encode() if provider.name == 'worldbank' else raw if isinstance(raw, bytes) else json.dumps(raw).encode())
                 transport = QueueTransport(raw)
                 with patch.object(x.urllib.request, 'build_opener', return_value=transport):
-                    output = x.run_search(args(provider=provider.name), {'providers': {}})
+                    output = x.run_search(args(provider=provider.name, query='CN,SP.POP.TOTL' if provider.name == 'worldbank' else '2.5,day' if provider.name == 'usgs' else 'wind'), {'providers': {}})
                 self.assertTrue(output['ok'])
                 self.assertEqual(output['budget']['attempts'], 1)
                 row = output['results'][0]
@@ -71,7 +75,7 @@ class OpenSourceTests(unittest.TestCase):
         config = {'providers': {'deepseek': {'api_key': 'synthetic-only'}}}
         for provider in OPEN_SOURCES:
             for strategy in ('smart', 'free', 'balanced'):
-                route = x.plan(args(platform=provider.name, strategy=strategy), config, x.credential)
+                route = x.plan(args(platform=provider.name, strategy=strategy, query='CN,SP.POP.TOTL' if provider.name == 'worldbank' else '2.5,day' if provider.name == 'usgs' else 'wind'), config, x.credential)
                 self.assertEqual(route['candidates'][0], provider.name)
                 self.assertFalse(route['complementary_search'])
                 if strategy == 'free': self.assertNotIn('deepseek', route['candidates'])
@@ -308,3 +312,38 @@ class AdditionalPublicSourceTests(unittest.TestCase):
                 self.assertEqual(rows[0]['content'], '')
                 for field in ('docs', 'data', 'hits', 'search'):
                     self.assertNotIn(field, meta['provider_metadata'])
+
+class OfficialGlobalSourcesTests(unittest.TestCase):
+    def test_world_bank_uses_exact_country_indicator_and_preserves_observation(self):
+        provider = PUBLIC['worldbank']
+        request = provider.build_request(provider.search_payload(args(query='CN,SP.POP.TOTL')), '', 'test')
+        self.assertTrue(request.full_url.startswith('https://api.worldbank.org/v2/country/CN/indicator/SP.POP.TOTL?'))
+        rows, meta = provider.normalize(FIXTURES['worldbank'], 1)
+        self.assertEqual(rows[0]['provider_fields']['year'], '2025')
+        self.assertEqual(rows[0]['provider_fields']['value'], 1)
+        self.assertIsNone(rows[0]['published_at'])
+        self.assertNotIn('observations', meta['provider_metadata'])
+        for query in ('China population', '../secret,SP.POP.TOTL', 'CN,../../path'):
+            with self.assertRaises(x.SearchError): provider.search_payload(args(query=query))
+
+    def test_official_sources_have_public_links_and_no_raw_duplicate_results(self):
+        for name in ('nasa', 'federalregister'):
+            rows, meta = PUBLIC[name].normalize(FIXTURES[name], 1)
+            self.assertTrue(rows[0]['url'].startswith('https://'))
+            self.assertEqual(rows[0]['content'], '')
+            self.assertNotIn('collection', meta['provider_metadata'])
+            self.assertNotIn('results', meta['provider_metadata'])
+        with self.assertRaises(x.SearchError):
+            PUBLIC['federalregister'].normalize({'results':[{'html_url':'https://evil.example/page'}]}, 1)
+
+class EarthquakeSourceTests(unittest.TestCase):
+    def test_feed_is_bounded_and_event_time_is_distinct(self):
+        provider = PUBLIC['usgs']
+        req = provider.build_request(provider.search_payload(args(query='2.5,day')), '', 'test')
+        self.assertEqual(req.full_url, provider.endpoint + '2.5_day.geojson')
+        rows, meta = provider.normalize(FIXTURES['usgs'], 1)
+        self.assertEqual(rows[0]['provider_fields']['event_time'], '2026-01-01T00:00:00Z')
+        self.assertIsNone(rows[0]['published_at'])
+        self.assertNotIn('features', meta['provider_metadata'])
+        for bad in ('Taiwan', '../private,day', '5,century'):
+            with self.assertRaises(x.SearchError): provider.search_payload(args(query=bad))

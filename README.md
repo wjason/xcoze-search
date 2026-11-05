@@ -83,7 +83,10 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 | 图书 | 1 | Open Library |
 | 社区内容 | 4 | Hacker News、Python 社区论坛、Rust 社区论坛、V2EX |
 | 新闻订阅 | 2 | 中新网、BBC |
-| 政府政策 | 1 | 中国政府网 |
+| 政府政策 | 2 | 中国政府网、美国联邦公报 |
+| 航天素材 | 1 | NASA 素材库 |
+| 国际经济统计 | 1 | 世界银行 |
+| 地震 | 1 | 美国地质调查局 USGS |
 | 社区热点 | 3 | 知乎、B 站、V2EX |
 | 平台定向搜索 | 9 | 知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣 |
 | 可配置 API | 6 | DeepSeek、腾讯元宝、Tavily、Exa、Brave Search、博查 |
