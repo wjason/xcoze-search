@@ -5,9 +5,11 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-xcoze search is a web search Skill for Agents. It brings together public search sources, specialist databases, and optional search APIs to help Agents find information, locate original sources, and read web pages.
+**xcoze search is intelligent aggregated search for AI agents, helping them search more broadly and find more relevant results.**
 
-Ask a question after installation to get started. No API key is required for public sources. You can add your own keys to use other services, choose a source for a request, or save a search preference.
+It brings together public information sources and search services across the web, news, policy, research papers, open-source projects, and public data. Agents can choose suitable sources for a question, find information, read original pages, and provide source links.
+
+Free search is available after installation. You can also connect search services of your choice and change how searches are performed.
 
 [Install](#install) · [Usage](#usage) · [Supported sources](#supported-sources) · [Configure API keys](#configure-api-keys) · [Contributing](#contributing)
 
