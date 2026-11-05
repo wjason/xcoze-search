@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Add 11 recent official China listings, DATA.GOV.HK update RSS, and 14 public-index scopes; scoped indexes are not native APIs.
 - Add recent public NDRC, National Bureau of Statistics and National Energy Administration listings; document additional Chinese public sources.
 - Add public NASA media, U.S. Federal Register, World Bank indicator and recent USGS earthquake sources.
 - Add public metadata search for Open Library, DataCite, Zenodo and Wikidata.

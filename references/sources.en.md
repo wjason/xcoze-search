@@ -35,6 +35,18 @@ This page lists the sources and features already integrated into xcoze search. P
 | NDRC | Filter titles on the current notices page |
 | National Bureau of Statistics | Filter titles on the current data releases page |
 | National Energy Administration | Filter recent homepage titles |
+| Ministry of Industry and Information Technology | Recent public policy document titles |
+| Ministry of Ecology and Environment | Recent homepage news releases |
+| Ministry of Emergency Management | Recent disaster statistics releases |
+| People’s Bank of China | Recent financial statistics releases |
+| National Public Resource Trading Platform | Recent homepage trading notices |
+| Ministry of Commerce | Recent homepage news |
+| China Securities Regulatory Commission | Public information on its homepage |
+| China Government Procurement | Recent homepage procurement notices |
+| Chinese Academy of Sciences | Recent homepage research news |
+| China Geological Survey | Recent homepage news |
+| Xinhua | Recent homepage news |
+| DATA.GOV.HK | RSS feed of recent dataset updates |
 | U.S. Federal Register | Search federal notices, rules and abstracts |
 | NASA Image and Video Library | Search image, video and audio metadata |
 | World Bank | Look up economic and social indicators by country and code |
@@ -57,7 +69,9 @@ News feeds cover each publisher's current feed window. Trend lists contain what 
 
 ### Platform-scoped search
 
-Public web searches can be scoped to **Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, and Douban**. Results depend on what the web index has indexed; this differs from searching within a platform or reading signed-in content and complete comment threads.
+Public web searches can be scoped to **Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, and Douban**. Results depend on the coverage and freshness of the web index.
+
+China public sources can also be scoped: National Data, National Meteorological Information Center, China Weather, CNInfo, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, and Hong Kong Observatory. A 360 browser sample returned no Hong Kong Observatory results.
 
 ### Bring your own API key
 

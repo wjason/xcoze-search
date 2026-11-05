@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 import json
+import posixpath
 import re
 import time
 import urllib.parse
@@ -211,20 +212,20 @@ class OfficialListParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if tag in ('script', 'style'): self.hidden += 1
-        if tag == 'li': self.stack.append({'links': [], 'dates': []})
+        if tag in ('li', 'tr'): self.stack.append({'tag': tag, 'links': [], 'dates': []})
         if tag == 'a' and self.stack and not self.hidden:
             self.anchor = {'href': attrs.get('href', ''), 'title': attrs.get('title', ''), 'text': []}
 
     def handle_data(self, data):
         if self.hidden or not self.stack: return
-        if self.anchor is not None: self.anchor['text'].append(data)
+        if self.anchor is not None and not re.fullmatch(r'\s*20\d\d[/-]\d{2}[/-]\d{2}(?:\s+\d{1,2}:\d{2})?\s*', data): self.anchor['text'].append(data)
         self.stack[-1]['dates'].extend(re.findall(r'(?<!\d)(20\d\d)[/-](\d{2})[/-](\d{2})(?!\d)', data))
 
     def handle_endtag(self, tag):
         if tag == 'a' and self.anchor is not None:
             if self.stack: self.stack[-1]['links'].append(self.anchor)
             self.anchor = None
-        if tag == 'li' and self.stack: self.records.append(self.stack.pop())
+        if tag in ('li', 'tr') and self.stack and self.stack[-1]['tag'] == tag: self.records.append(self.stack.pop())
         if tag in ('script', 'style'): self.hidden = max(0, self.hidden - 1)
 
 
@@ -261,8 +262,9 @@ class ChinaOfficialIndex(GovCN):
                 href = link.get('href') or ''
                 absolute = urllib.parse.urljoin(self.endpoint, href)
                 parsed = urllib.parse.urlsplit(absolute)
-                if parsed.hostname != self.content_host or not re.fullmatch(self.path_pattern, parsed.path): continue
-                url = urllib.parse.urlunsplit(('https', parsed.netloc, parsed.path, '', ''))
+                path = posixpath.normpath(parsed.path)
+                if parsed.hostname != self.content_host or not re.fullmatch(self.path_pattern, path): continue
+                url = urllib.parse.urlunsplit(('https', parsed.netloc, path, '', ''))
                 title = (link.get('title') or ''.join(link.get('text', []))).strip()
                 if not title or not public_url(url): continue
                 day = None
@@ -301,6 +303,94 @@ class NationalEnergyIndex(ChinaOfficialIndex):
     content_host, sites = 'www.nea.gov.cn', ('nea.gov.cn', 'www.nea.gov.cn')
     path_pattern = r'/20\d{6}/[a-f0-9]{32}/c\.html'
     index_scope = 'nea_homepage_recent_news_and_notices_only'
+
+
+class MIITIndex(ChinaOfficialIndex):
+    name, label = 'miit', '工业和信息化部政务公开'
+    endpoint = 'https://www.miit.gov.cn/zwgk/index.html'
+    content_host, sites = 'www.miit.gov.cn', ('miit.gov.cn', 'www.miit.gov.cn')
+    path_pattern = r'/zwgk/zcwj/wjfb/[a-z]+/art/20\d{2}/art_[a-f0-9]{32}\.html'
+    index_scope = 'miit_government_disclosure_homepage_recent_documents_only'
+
+
+class MEEIndex(ChinaOfficialIndex):
+    name, label = 'mee', '生态环境部新闻发布'
+    endpoint = 'https://www.mee.gov.cn/'
+    content_host, sites = 'www.mee.gov.cn', ('mee.gov.cn', 'www.mee.gov.cn')
+    path_pattern = r'/ywdt/xwfb/20\d{4}/t20\d{6}_\d+\.shtml'
+    index_scope = 'mee_homepage_recent_news_releases_only'
+
+
+class MEMIndex(ChinaOfficialIndex):
+    name, label = 'mem', '应急管理部统计数据'
+    endpoint = 'https://www.mem.gov.cn/gk/tjsj/index.shtml'
+    content_host, sites = 'www.mem.gov.cn', ('mem.gov.cn', 'www.mem.gov.cn')
+    path_pattern = r'/xw/yjglbgzdt/20\d{4}/t20\d{6}_\d+\.shtml'
+    index_scope = 'mem_recent_disaster_statistics_page_only'
+
+
+class PBCIndex(ChinaOfficialIndex):
+    name, label = 'pbc', '中国人民银行金融统计'
+    endpoint = 'https://www.pbc.gov.cn/diaochatongjisi/116219/116225/index.html'
+    content_host, sites = 'www.pbc.gov.cn', ('pbc.gov.cn', 'www.pbc.gov.cn')
+    path_pattern = r'/diaochatongjisi/116219/116225/20\d{17}/index\.html'
+    index_scope = 'pbc_recent_financial_statistics_page_only'
+
+
+class GGZYIndex(ChinaOfficialIndex):
+    name, label = 'ggzy', '全国公共资源交易平台'
+    endpoint = 'https://www.ggzy.gov.cn/'
+    content_host, sites = 'www.ggzy.gov.cn', ('ggzy.gov.cn', 'www.ggzy.gov.cn')
+    path_pattern = r'/information/deal/html/a/\d+/\d+/20\d{6}/[a-f0-9]+\.html'
+    index_scope = 'national_public_resource_trading_homepage_recent_notices_only'
+
+
+class MOFCOMIndex(ChinaOfficialIndex):
+    name, label = 'mofcom', '商务部首页新闻'
+    endpoint = 'https://www.mofcom.gov.cn/'
+    content_host, sites = 'www.mofcom.gov.cn', ('mofcom.gov.cn', 'www.mofcom.gov.cn')
+    path_pattern = r'/syxwfb/art/20\d{2}/art_[a-f0-9]{32}\.html'
+    index_scope = 'mofcom_homepage_main_news_only'
+
+
+class CSRCIndex(ChinaOfficialIndex):
+    name, label = 'csrc', '中国证监会首页信息'
+    endpoint = 'https://www.csrc.gov.cn/'
+    content_host, sites = 'www.csrc.gov.cn', ('csrc.gov.cn', 'www.csrc.gov.cn')
+    path_pattern = r'/csrc/c\d+/c\d+/content\.shtml'
+    index_scope = 'csrc_homepage_public_information_only'
+
+
+class CCGPIndex(ChinaOfficialIndex):
+    name, label = 'ccgp', '中国政府采购网首页公告'
+    endpoint = 'https://www.ccgp.gov.cn/'
+    content_host, sites = 'www.ccgp.gov.cn', ('ccgp.gov.cn', 'www.ccgp.gov.cn')
+    path_pattern = r'/cggg/[a-z]+/[a-z]+/20\d{4}/t20\d{6}_\d+\.htm'
+    index_scope = 'china_government_procurement_homepage_recent_notices_only'
+
+
+class CASIndex(ChinaOfficialIndex):
+    name, label = 'cas', '中国科学院首页科研动态'
+    endpoint = 'https://www.cas.cn/'
+    content_host, sites = 'www.cas.cn', ('cas.cn', 'www.cas.cn')
+    path_pattern = r'/syky/20\d{4}/t20\d{6}_\d+\.shtml'
+    index_scope = 'chinese_academy_of_sciences_homepage_research_news_only'
+
+
+class CGSIndex(ChinaOfficialIndex):
+    name, label = 'cgs', '中国地质调查局首页要闻'
+    endpoint = 'https://www.cgs.gov.cn/'
+    content_host, sites = 'www.cgs.gov.cn', ('cgs.gov.cn', 'www.cgs.gov.cn')
+    path_pattern = r'/ywdt/ddyw/20\d{4}/t20\d{6}_\d+\.html'
+    index_scope = 'china_geological_survey_homepage_recent_news_only'
+
+
+class XinhuaIndex(ChinaOfficialIndex):
+    name, label = 'xinhua', '新华网首页新闻'
+    endpoint = 'https://www.news.cn/'
+    content_host, sites = 'www.news.cn', ('news.cn', 'www.news.cn')
+    path_pattern = r'/(?:[a-z0-9_-]+/)*20\d{6}/[a-f0-9]{32}/c\.html'
+    index_scope = 'xinhua_homepage_recent_news_only'
 
 
 class CommunityReader(FixedPublic):
@@ -381,6 +471,7 @@ class CommunityReader(FixedPublic):
 FEEDS = {p.name: p for p in (
     PublisherFeed("cns-scroll", "中新网即时新闻 RSS", "https://www.chinanews.com.cn/rss/scroll-news.xml", "https://www.chinanews.com.cn/rss/"),
     PublisherFeed("cns-finance", "中新网财经 RSS", "https://www.chinanews.com.cn/rss/finance.xml", "https://www.chinanews.com.cn/rss/"),
+    PublisherFeed("hk-data", "香港政府开放数据更新 RSS", "https://data.gov.hk/filestore/feeds/data_rss_en.xml", "https://data.gov.hk/en-datasets/search"),
     PublisherFeed("bbc-world", "BBC World RSS", "https://feeds.bbci.co.uk/news/world/rss.xml", "https://www.bbc.co.uk/news/10628494"),
     GovCN())}
 

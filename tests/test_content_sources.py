@@ -187,3 +187,60 @@ class ChinaOfficialIndexTests(unittest.TestCase):
         html = b'<html><li><a href="https://www.nea.gov.cn/20261102/af04409304d44bfb89c9880f55b70dff/c.html">Energy</a></li></html>'
         rows = p.records(p.decode_response(html))
         self.assertIsNone(rows[0]['published_at'])
+
+class ChinaPublicBatchTests(unittest.TestCase):
+    def test_eleven_public_index_shapes_and_safe_source_urls(self):
+        from public_providers import PUBLIC_REGISTRY
+        cases = {
+            'miit': ('/zwgk/zcwj/wjfb/tz/art/2026/art_0e076dfcb9854ee2be816c49b053184e.html', '工业标准', '2026-11-03', 'li'),
+            'mee': ('/ywdt/xwfb/202610/t20261029_1184815.shtml', '环境质量', '2026-10-29', 'li'),
+            'mem': ('/xw/yjglbgzdt/202610/t20261022_736602.shtml', '自然灾害', '2026-10-22', 'li'),
+            'pbc': ('/diaochatongjisi/116219/116225/2026110416143085995/index.html', '金融统计', '2026-11-04', 'tr'),
+            'ggzy': ('/information/deal/html/a/610000/9001/20261105/0061ee692d32122e479e8bedf64f9774a964.html', '项目公告', '2026-11-05', 'li'),
+            'mofcom': ('/syxwfb/art/2026/art_2d11cc8218d248a3b4c98ea465781427.html', '商务资讯', '2026-11-01', 'li'),
+            'csrc': ('/csrc/c100028/c7668092/content.shtml', '证券监管', '2026-11-01', 'li'),
+            'ccgp': ('/cggg/dfgg/zbgg/202611/t20261105_27630401.htm', '采购项目', '2026-11-05', 'li'),
+            'cas': ('//www.cas.cn/../../syky/202611/t20261105_5123509.shtml', '科学发现', '2026-11-05', 'li'),
+            'cgs': ('/ywdt/ddyw/202611/t20261104_871443.html', '地质调查', '2026-11-04', 'li'),
+            'xinhua': ('/20261105/17dfbf4604f14ddc8ce41be818763986/c.html', '中国新闻', '2026-11-05', 'li'),
+        }
+        for name, (path, title, day, tag) in cases.items():
+            with self.subTest(source=name):
+                p = PUBLIC_REGISTRY[name]
+                html = ('<html><' + tag + '><a href="' + path + '">' + title + '<span>' + day + '</span></a></' + tag + '></html>').encode()
+                row = p.records(p.decode_response(html))[0]
+                self.assertEqual(row['title'], title)
+                self.assertEqual(row['published_at'], day)
+                self.assertEqual(urllib.parse.urlsplit(row['url']).hostname, p.content_host)
+                self.assertNotIn('/../', row['url'])
+                self.assertEqual(row['content_kind'], 'official_index')
+                self.assertFalse(p.capabilities()['historical_search'])
+                with self.assertRaises(x.SearchError):
+                    p.records(p.decode_response(b'<html><li><a href="https://evil.example/fake">fake</a></li></html>'))
+
+    def test_hk_data_is_a_feed_not_full_catalog_search(self):
+        p = FEEDS['hk-data']
+        self.assertEqual(p.endpoint, 'https://data.gov.hk/filestore/feeds/data_rss_en.xml')
+        rows = p.records(p.decode_response(RSS))
+        self.assertEqual(rows[0]['content_kind'], 'feed_excerpt')
+        self.assertFalse(p.supports_search)
+
+class ChinaIndexScopedRoutingTests(unittest.TestCase):
+    def test_public_index_scopes_are_declared_without_claiming_native_access(self):
+        from search_routing import PLATFORMS, platform_catalog
+        expected = {'china-data':'data.stats.gov.cn', 'cma-data':'data.cma.cn', 'china-weather':'weather.com.cn',
+                    'cninfo':'cninfo.com.cn', 'sse':'sse.com.cn', 'szse':'szse.cn', 'bse':'bse.cn',
+                    'china-standards':'openstd.samr.gov.cn', 'china-laws':'flk.npc.gov.cn', 'cnsa':'cnsa.gov.cn',
+                    'scidb':'scidb.cn', 'ceic':'ceic.ac.cn', 'nmefc':'nmefc.cn', 'hko':'hko.gov.hk'}
+        for name, domain in expected.items():
+            with self.subTest(platform=name):
+                self.assertEqual(PLATFORMS[name], domain)
+                row = platform_catalog(name)['platforms'][0]
+                self.assertEqual(row['coverage'], 'public_index_only')
+                self.assertIsNone(row['native_provider'])
+                self.assertFalse(row['live_verified'])
+                route = x.plan(args(query='test', platform=name, strategy='free'), {'providers': {}}, x.credential)
+                self.assertFalse(any(x.ALL_REGISTRY[p].requires_key for p in route['candidates']))
+                site_route = x.plan(args(query='test', site=domain, strategy='free'), {'providers': {}}, x.credential)
+                self.assertEqual(route['candidates'], site_route['candidates'])
+                self.assertEqual(route['payloads'], site_route['payloads'])

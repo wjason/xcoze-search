@@ -9,13 +9,14 @@ python3 scripts/xcoze_search.py feeds
 python3 scripts/xcoze_search.py feed --source cns-scroll --start-date 2026-11-05 --end-date 2026-11-05
 python3 scripts/xcoze_search.py feed --source cns-finance --query '进博会' --count 5
 python3 scripts/xcoze_search.py feed --source bbc-world --count 5
+python3 scripts/xcoze_search.py feed --source hk-data --count 5
 python3 scripts/xcoze_search.py feed --source govcn --query '登记管理'
 python3 scripts/xcoze_search.py search '登记管理' --platform govcn --strategy free
 ```
 
 The catalog is offline. Feed reads one fixed source with an 8-second default timeout, one HTTP attempt and no retries, credential reading or browser. --query requires all whitespace-separated literal terms in title/excerpt; use short terms, not a semantic question. Dates are inclusive UTC+08:00 calendar days; unknown dates are excluded under date constraints. RSS pubDate/Atom published retains source publication semantics; Atom updated does not become publication. URL deduplication removes fragments and retains the first row/source rank, without cross-site independence claims.
 
-Sources: CNS latest/finance RSS, BBC World RSS and the gov.cn latest-policy JSON. Only the returned window is read: no historical pagination or persistent subscription. Metadata reports source_row_count, matched_count, shown_count, newest/oldest publication, unknown_dates_excluded and duplicate_urls_removed; window_complete stays false. Latest publication is not source update time or proof of exhaustive coverage. BBC publication offsets are retained; date filtering converts to Beijing time.
+Sources: CNS latest/finance RSS, BBC World RSS, DATA.GOV.HK dataset-update RSS and the gov.cn latest-policy JSON. The Hong Kong feed lists recent dataset updates in English. Only the returned window is read: no historical pagination or persistent subscription. Metadata reports source_row_count, matched_count, shown_count, newest/oldest publication, unknown_dates_excluded and duplicate_urls_removed; window_complete stays false. Latest publication is not source update time or proof of exhaustive coverage. BBC publication offsets are retained; date filtering converts to Beijing time.
 
 GovCN also participates in native-first search with --platform govcn, respecting free mode, disabled sources and existing budgets. Its finite list includes policy documents and explainers, not all national/local notices. Verify publication, document and effective dates separately from originals. For no match or a stale window, the Agent can continue search under existing preferences, without claiming no relevant information exists.
 

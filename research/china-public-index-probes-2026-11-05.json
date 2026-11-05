@@ -1,0 +1,128 @@
+[
+  {
+    "name": "国家数据",
+    "site": "data.stats.gov.cn",
+    "query": "人口 数据",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "气象数据中心",
+    "site": "data.cma.cn",
+    "query": "气象 数据",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "中国天气网",
+    "site": "weather.com.cn",
+    "query": "北京 天气 预报",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "巨潮资讯",
+    "site": "cninfo.com.cn",
+    "query": "上市公司 公告",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "上交所",
+    "site": "sse.com.cn",
+    "query": "上市公司 公告",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "深交所",
+    "site": "szse.cn",
+    "query": "上市公司 公告",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "北交所",
+    "site": "bse.cn",
+    "query": "上市公司 公告",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "国家标准",
+    "site": "openstd.samr.gov.cn",
+    "query": "国家标准",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "法律法规",
+    "site": "flk.npc.gov.cn",
+    "query": "法律",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "国家航天局",
+    "site": "cnsa.gov.cn",
+    "query": "探月 航天",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "科学数据银行",
+    "site": "scidb.cn",
+    "query": "科学数据",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "地震台网",
+    "site": "ceic.ac.cn",
+    "query": "地震 速报",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "海洋预报台",
+    "site": "nmefc.cn",
+    "query": "海洋 预报",
+    "ok": true,
+    "count": 3,
+    "errors": []
+  },
+  {
+    "name": "香港政府数据",
+    "site": "data.gov.hk",
+    "query": "weather data",
+    "ok": false,
+    "count": 0,
+    "errors": [
+      {
+        "code": "source_rate_limited",
+        "http_status": null
+      }
+    ]
+  },
+  {
+    "name": "香港天文台",
+    "site": "hko.gov.hk",
+    "query": "香港 天文台 天气",
+    "provider": "browser:360",
+    "ok": true,
+    "count": 0,
+    "note": "no matching results in this sample"
+  }
+]

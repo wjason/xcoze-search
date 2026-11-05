@@ -82,18 +82,24 @@ A preference for future searches is saved; a request for “this search” appli
 | Encyclopedias, knowledge and Q&A | 3 | Wikipedia, Wikidata, Stack Exchange |
 | Books | 1 | Open Library |
 | Community content | 4 | Hacker News, Python community forum, Rust community forum, V2EX |
-| News feeds | 2 | China News Service, BBC |
-| Government policy | 3 | gov.cn, NDRC, U.S. Federal Register |
-| China statistics and energy | 2 | National Bureau of Statistics, National Energy Administration |
+| News | 3 | China News Service, BBC, Xinhua |
+| Government policy | 5 | gov.cn, NDRC, MIIT, MOFCOM, U.S. Federal Register |
+| China statistics and energy | 3 | National Bureau of Statistics, National Energy Administration, People’s Bank of China |
+| Environment and emergencies | 2 | MEE, Ministry of Emergency Management |
+| Procurement and trading | 2 | China Government Procurement, National Public Resource Trading Platform |
+| Securities regulation | 1 | China Securities Regulatory Commission |
+| China research and geology | 2 | Chinese Academy of Sciences, China Geological Survey |
+| Open-data updates | 1 | DATA.GOV.HK |
 | Space media | 1 | NASA Image and Video Library |
 | International statistics | 1 | World Bank |
 | Earthquakes | 1 | USGS |
 | Community trends | 3 | Zhihu, Bilibili, V2EX |
 | Platform-scoped search | 9 | Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, Douban |
+| China public indexes | 14 | National Data, National Meteorological Information Center, China Weather, CNInfo, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, Hong Kong Observatory |
 | Configurable APIs | 6 | DeepSeek, Tencent Yuanbao, Tavily, Exa, Brave Search, Bocha |
 | Optional browser search | 3 | 360 Search, Bing, Google |
 
-Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds. Browser search requires additional local tools.
+Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds and Xinhua uses its homepage. China public indexes scope searches to each website; coverage and freshness depend on the search engine’s index. Browser search requires additional local tools.
 
 [View all sources and integration details →](references/sources.en.md)
 

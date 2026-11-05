@@ -44,7 +44,9 @@ Python/Rust 论坛和 V2EX 的标准 HTTPS 主帖根链接可用 fetch，自动�
 
 根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface|openlibrary|datacite|zenodo|wikidata|nasa|federalregister|worldbank|usgs`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
 
-国家发展改革委通知、国家统计局数据发布和国家能源局首页资讯可分别用 `--platform ndrc|nbs|nea`。每个来源只对当前页面的标题做字面词筛选，不是全站或历史数据库；先用短关键词，未命中后按既有偏好搜索，不把空结果当没有文件。保留栏目显示日期；能源局首页部分条目无日期，不能从 URL 补造。需要正文、生效日期或统计口径时读取原文。
+国家发展改革委、国家统计局、国家能源局、工信部、生态环境部、应急管理部、人民银行、公共资源交易平台、商务部、证监会、政府采购网、中科院、地调局、新华网的近期栏目可分别用 `--platform ndrc|nbs|nea|miit|mee|mem|pbc|ggzy|mofcom|csrc|ccgp|cas|cgs|xinhua`。香港政府公开数据近期更新用 `feed --source hk-data`，只覆盖该 RSS 窗口。每个来源只对当前页面的标题做字面词筛选，不是全站或历史数据库；先用短关键词，未命中后按既有偏好搜索，不把空结果当没有文件。保留栏目显示日期；能源局首页部分条目无日期，不能从 URL 补造。需要正文、生效日期或统计口径时读取原文。
+
+国内国家数据、气象中心、交易所、法规标准等平台可通过 `platforms` 查询其公开索引范围；这是域名限定网页搜索，不是原生接口或站内搜索，不能把链接当已读取正文、实时行情或已获下载许可。香港天文台的定向查询可能无命中，若结果不足应明确说明。
 
 NASA 素材用 `--platform nasa`（素材元数据，不等于原图或科研全文），美国联邦公告用 `--platform federalregister`（发布日期不等于生效日期）。世界银行指标使用 `--platform worldbank`，查询格式为国家代码,指标代码，例如 `CN,SP.POP.TOTL`；国家和指标代码需事先确认，观察年份不是发布日期，空值不补造。USGS 近期地震使用 `--platform usgs`，查询格式为震级门槛,时间窗口，例如 `2.5,day`；保留事件时间、震级、位置和后续修订状态，不当作全球所有机构的完整实时记录。对天气预测和股票行情，需要使用已验证的专用来源与时间标记，未接入的候选不能声称已支持。
 
