@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-08",
+  "notice": "Public retrieval benchmark. Review result relevance and dates manually; this is not an automatic accuracy oracle.",
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "category": "中文政策",
+      "question": "查找国家能源局关于海上风电的政策或新闻，给出官方链接和日期。",
+      "query": "国家能源局 海上风电 政策",
+      "intent": "reference",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "官方页面与海上风电直接相关",
+        "核对发布日期"
+      ]
+    },
+    {
+      "id": "cn-statistics",
+      "category": "中文统计",
+      "question": "查找国家统计局最新经济数据发布及其日期。",
+      "query": "国家统计局 国民经济 统计 数据 最新",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "统计局原始发布",
+        "核对发布时间和统计期"
+      ]
+    },
+    {
+      "id": "cn-news",
+      "category": "中文新闻",
+      "question": "查找中文媒体关于人工智能的近期报道。",
+      "query": "人工智能 最新 新闻",
+      "intent": "current",
+      "criteria": [
+        "与人工智能直接相关的新闻",
+        "核对报道时间"
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "category": "英文技术文档",
+      "question": "找到 Python TaskGroup 的异常处理官方文档。",
+      "query": "Python asyncio TaskGroup exception cancellation official documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "官方 TaskGroup 文档涉及异常与取消"
+      ]
+    },
+    {
+      "id": "github-markitdown",
+      "category": "开源项目",
+      "question": "找到 microsoft/markitdown 的 GitHub 官方仓库。",
+      "query": "microsoft/markitdown",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "仓库为 github.com/microsoft/markitdown"
+      ]
+    },
+    {
+      "id": "research-rag",
+      "category": "科研",
+      "question": "搜索关于检索增强生成的公开论文。",
+      "query": "retrieval augmented generation",
+      "platform": "arxiv",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "结果为相关论文",
+        "标明论文日期"
+      ]
+    },
+    {
+      "id": "financial-disclosure",
+      "category": "金融",
+      "question": "查找巨潮资讯关于上市公司年度报告的公开信息。",
+      "query": "上市公司 年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "链接指向巨潮资讯且内容相关",
+        "核对报告期"
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "community-hn",
+      "category": "社区",
+      "question": "找到 Hacker News 上关于 SQLite 的讨论。",
+      "query": "SQLite",
+      "platform": "hackernews",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "链接为实际讨论页面",
+        "核对发布日期"
+      ]
+    }
+  ]
+}

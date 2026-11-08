@@ -14,6 +14,21 @@ spec.loader.exec_module(b)
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_keyless_smart_ignores_config_and_environment_keys(self):
+        corpus = {'cases': [{'id': 'one', 'query': 'Python'}]}
+        response = {'jsonrpc': '2.0', 'id': 1, 'result': {'structuredContent': {'results': [
+            {'title': 'Python', 'url': 'https://python.org', 'text': 'Python'}]}}}
+        with patch.object(b.search, 'read_config', side_effect=AssertionError('must not read config')), \
+                patch.dict(b.search.os.environ, {'DEEPSEEK_API_KEY': 'synthetic-only'}), \
+                patch.object(b.search.urllib.request, 'build_opener', return_value=QueueTransport(response)), \
+                patch('search_routing.browser_available', return_value=False):
+            report = b.execute(corpus, live=True, modes=('smart',), keyless=True, max_requests=3)
+        self.assertTrue(report['cells'][0]['sources'])
+        self.assertEqual(report['cells'][0]['receipts'][0]['source'], 'exa-free')
+        self.assertNotIn('synthetic-only', str(report))
+        with self.assertRaises(ValueError):
+            b.execute(corpus, modes=('deepseek',), keyless=True)
+
     def test_default_plan_never_reads_credentials_or_connects(self):
         for name, cells in [('smart-cases.json', 18), ('smart-holdout.json', 6)]:
             corpus = b.load_cases(ROOT / 'evaluations' / name)

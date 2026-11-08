@@ -43,6 +43,8 @@
 
 ## P0：当前效果与稳定性
 
+- [x] 新增 8 道公开 Agent 搜索题与免 Key 基线；持续扩题，并补充付费模式和独立人工复核。[评测报告](evaluations/reports/2026-11-08-agent-search.md)。
+
 - [x] 165 条免费/公开来源候选与排除项盘点，6 个新 MCP 协议与真实查询、10 个公开 API 检查；[结果](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)不等于已接入。
 - [ ] 优先接入并评估 Parallel 匿名搜索/读取，关注 legacy 入口迁移、限额与初始化开销。
 - [ ] 优先补 Microsoft Learn、MDN、searchcode 的按任务接口；Cloudflare Docs 和 grep.app 先补尾延迟/命中验收。

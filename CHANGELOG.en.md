@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Add a bilingual Agent search benchmark and live report, keyless benchmark isolation, and query guidance for repositories and disclosures.
 - Add per-source, per-action support status and live-check records, with pending candidates listed separately.
 - Add 11 recent official China listings, DATA.GOV.HK update RSS, and 14 public-index scopes; scoped indexes are not native APIs.
 - Add recent public NDRC, National Bureau of Statistics and National Energy Administration listings; document additional Chinese public sources.

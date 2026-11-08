@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-08",
+  "notice": "Public retrieval benchmark; queries are preserved for reproducibility. Review relevance and dates manually.",
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "category": "Chinese policy",
+      "question": "Find official information about offshore wind from the National Energy Administration.",
+      "query": "国家能源局 海上风电 政策",
+      "intent": "reference",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "Relevant official page; inspect publication date."
+      ]
+    },
+    {
+      "id": "cn-statistics",
+      "category": "Chinese statistics",
+      "question": "Find the latest economic statistics released by the National Bureau of Statistics.",
+      "query": "国家统计局 国民经济 统计 数据 最新",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Official release; distinguish publication and reporting periods."
+      ]
+    },
+    {
+      "id": "cn-news",
+      "category": "Chinese news",
+      "question": "Find recent Chinese reports about artificial intelligence.",
+      "query": "人工智能 最新 新闻",
+      "intent": "current",
+      "criteria": [
+        "Relevant news with a verifiable date."
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "category": "Technical documentation",
+      "question": "Find official Python TaskGroup exception handling documentation.",
+      "query": "Python asyncio TaskGroup exception cancellation official documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Official documentation on exceptions and cancellation."
+      ]
+    },
+    {
+      "id": "github-markitdown",
+      "category": "Open source",
+      "question": "Find the official microsoft/markitdown GitHub repository.",
+      "query": "microsoft/markitdown",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Find github.com/microsoft/markitdown."
+      ]
+    },
+    {
+      "id": "research-rag",
+      "category": "Research",
+      "question": "Find public research papers on retrieval-augmented generation.",
+      "query": "retrieval augmented generation",
+      "platform": "arxiv",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Find relevant papers and their dates."
+      ]
+    },
+    {
+      "id": "financial-disclosure",
+      "category": "Financial disclosures",
+      "question": "Find public annual reports on CNINFO.",
+      "query": "上市公司 年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "Find a relevant CNINFO disclosure and check its reporting period."
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "community-hn",
+      "category": "Community",
+      "question": "Find Hacker News discussions about SQLite.",
+      "query": "SQLite",
+      "platform": "hackernews",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Find discussion links and dates."
+      ]
+    }
+  ]
+}

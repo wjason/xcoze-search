@@ -1,0 +1,1902 @@
+{
+  "schema_version": 1,
+  "note": "Retrieval results only; no page content, account details or credentials. Changed query conditions are identified in the report.",
+  "runs": {
+    "baseline": {
+      "started_at": "2026-11-08T08:42:21.522762+00:00",
+      "completed_at": "2026-11-08T08:42:35.875577+00:00",
+      "keyless": "isolated configuration; no keyed requests observed",
+      "budget": {
+        "limit": 48,
+        "attempts": 16,
+        "remaining": 32,
+        "by_provider": {
+          "exa-free": 10,
+          "github": 2,
+          "arxiv": 2,
+          "hackernews": 2
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "cells": [
+        {
+          "id": "cn-energy-policy",
+          "mode": "free",
+          "query_sent": "国家能源局 海上风电 政策",
+          "elapsed_ms": 786.1,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 785.66,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "海上风电项目管理有了新规范---国家能源局",
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "published_at": "2025-01-10T01:11:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "海上风电转向“深蓝”---国家能源局",
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "published_at": "2026-07-10T23:53:43.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "国家发展改革委 国家能源局关于促进新能源消纳和调控的指导意见_国务院部门文件_中国政府网",
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "published_at": "2025-10-29T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家能源局 国家海洋局关于印发《海上风电开发建设管理暂行办法》的通知---国家能源局",
+              "url": "http://www.nea.gov.cn/2013-10/11/c_132789848.htm",
+              "published_at": "2013-10-11T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "“一带一路”能源合作",
+              "url": "https://obor.nea.gov.cn/detail2/22706.html",
+              "published_at": "2026-04-07T00:00:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-energy-policy",
+          "mode": "smart",
+          "query_sent": "国家能源局 海上风电 政策",
+          "elapsed_ms": 954.49,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 954.03,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "海上风电项目管理有了新规范---国家能源局",
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "published_at": "2025-01-10T01:11:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "海上风电转向“深蓝”---国家能源局",
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "published_at": "2026-07-10T23:53:43.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "国家发展改革委 国家能源局关于促进新能源消纳和调控的指导意见_国务院部门文件_中国政府网",
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "published_at": "2025-10-29T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家能源局 国家海洋局关于印发《海上风电开发建设管理暂行办法》的通知---国家能源局",
+              "url": "http://www.nea.gov.cn/2013-10/11/c_132789848.htm",
+              "published_at": "2013-10-11T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "“一带一路”能源合作",
+              "url": "https://obor.nea.gov.cn/detail2/22706.html",
+              "published_at": "2026-04-07T00:00:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-statistics",
+          "mode": "smart",
+          "query_sent": "国家统计局 国民经济 统计 数据 最新",
+          "elapsed_ms": 1115.56,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 1112.38,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "数据发布 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "2026年三季度国内生产总值初步核算结果 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "published_at": "2026-10-20T09:30:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "前三季度经济运行总体平稳　高质量发展取得新成效 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "published_at": "2026-10-19T10:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家数据",
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "《中国经济景气月报》2026年第9期 - 国家统计局",
+              "url": "https://www.stats.gov.cn/zs/tjwh/tjkw/tjqk/zgjjjq/202611/t20261103_1965736.html",
+              "published_at": "2026-11-03T14:06:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-statistics",
+          "mode": "free",
+          "query_sent": "国家统计局 国民经济 统计 数据 最新",
+          "elapsed_ms": 864.74,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 864.38,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "数据发布 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "2026年三季度国内生产总值初步核算结果 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "published_at": "2026-10-20T09:30:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "前三季度经济运行总体平稳　高质量发展取得新成效 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "published_at": "2026-10-19T10:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家数据",
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "《中国经济景气月报》2026年第9期 - 国家统计局",
+              "url": "https://www.stats.gov.cn/zs/tjwh/tjkw/tjqk/zgjjjq/202611/t20261103_1965736.html",
+              "published_at": "2026-11-03T14:06:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-news",
+          "mode": "free",
+          "query_sent": "人工智能 最新 新闻",
+          "elapsed_ms": 1076.47,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 1076.09,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Edge AI Daily 早报（11月8日）-钛媒体官方网站",
+              "url": "https://www.tmtpost.com/8197405.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "AI周报|Anthropic第三季度由盈转亏；AMD预计明年营收增长超80%",
+              "url": "https://www.yicai.com/news/103431043.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "每日 AI 资讯 - 猫目",
+              "url": "https://maomu.com/news",
+              "published_at": "2026-11-08T04:40:52.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "AI 快讯｜实时更新的人工智能新闻 - HotAI.news",
+              "url": "https://hotai.news/news/",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "AI 要闻 · 2026-11-08",
+              "url": "https://www.wangwu.ai/daily/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-news",
+          "mode": "smart",
+          "query_sent": "人工智能 最新 新闻",
+          "elapsed_ms": 916.1,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 915.73,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Edge AI Daily 早报（11月8日）-钛媒体官方网站",
+              "url": "https://www.tmtpost.com/8197405.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "AI周报|Anthropic第三季度由盈转亏；AMD预计明年营收增长超80%",
+              "url": "https://www.yicai.com/news/103431043.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "每日 AI 资讯 - 猫目",
+              "url": "https://maomu.com/news",
+              "published_at": "2026-11-08T04:40:52.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "AI 快讯｜实时更新的人工智能新闻 - HotAI.news",
+              "url": "https://hotai.news/news/",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "AI 要闻 · 2026-11-08",
+              "url": "https://www.wangwu.ai/daily/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "python-taskgroup",
+          "mode": "smart",
+          "query_sent": "Python asyncio TaskGroup exception cancellation official documentation",
+          "elapsed_ms": 877.61,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 877.27,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Coroutines and tasks — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "Lib/asyncio/taskgroups.py",
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "Exceptions — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Introduce task groups to asyncio and change task cancellation semantics",
+              "url": "https://github.com/python/cpython/issues/90908",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "High-level API Index — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-api-index.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "python-taskgroup",
+          "mode": "free",
+          "query_sent": "Python asyncio TaskGroup exception cancellation official documentation",
+          "elapsed_ms": 947.75,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 947.19,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Coroutines and tasks — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "Lib/asyncio/taskgroups.py",
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "Exceptions — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Introduce task groups to asyncio and change task cancellation semantics",
+              "url": "https://github.com/python/cpython/issues/90908",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "High-level API Index — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-api-index.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "github-markitdown",
+          "mode": "free",
+          "query_sent": "microsoft markitdown",
+          "elapsed_ms": 648.85,
+          "requests": [
+            {
+              "provider": "github",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 648.1,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "github",
+              "rank": 1,
+              "title": "lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 2,
+              "title": "ethanolivertroy/obsidian-markitdown",
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 3,
+              "title": "kigner/markitdown_ui",
+              "url": "https://github.com/kigner/markitdown_ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 4,
+              "title": "pig-mesh/office2md",
+              "url": "https://github.com/pig-mesh/office2md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 5,
+              "title": "robonuggets/markitdown-guide",
+              "url": "https://github.com/robonuggets/markitdown-guide",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "github-markitdown",
+          "mode": "smart",
+          "query_sent": "microsoft markitdown",
+          "elapsed_ms": 216.07,
+          "requests": [
+            {
+              "provider": "github",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 215.46,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "github",
+              "rank": 1,
+              "title": "lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 2,
+              "title": "ethanolivertroy/obsidian-markitdown",
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 3,
+              "title": "kigner/markitdown_ui",
+              "url": "https://github.com/kigner/markitdown_ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 4,
+              "title": "pig-mesh/office2md",
+              "url": "https://github.com/pig-mesh/office2md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 5,
+              "title": "robonuggets/markitdown-guide",
+              "url": "https://github.com/robonuggets/markitdown-guide",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "research-rag",
+          "mode": "smart",
+          "query_sent": "retrieval augmented generation",
+          "elapsed_ms": 792.16,
+          "requests": [
+            {
+              "provider": "arxiv",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 791.79,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "arxiv",
+              "rank": 1,
+              "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "published_at": "2025-06-08T01:33:05Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 2,
+              "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "published_at": "2025-04-18T13:35:21Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 3,
+              "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "published_at": "2025-04-24T02:29:50Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 4,
+              "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "published_at": "2025-04-20T17:40:28Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 5,
+              "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "published_at": "2024-11-27T18:27:07Z",
+              "content_kind": "abstract"
+            }
+          ]
+        },
+        {
+          "id": "research-rag",
+          "mode": "free",
+          "query_sent": "retrieval augmented generation",
+          "elapsed_ms": 2352.19,
+          "requests": [
+            {
+              "provider": "arxiv",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 2351.81,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "arxiv",
+              "rank": 1,
+              "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "published_at": "2025-06-08T01:33:05Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 2,
+              "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "published_at": "2025-04-18T13:35:21Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 3,
+              "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "published_at": "2025-04-24T02:29:50Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 4,
+              "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "published_at": "2025-04-20T17:40:28Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 5,
+              "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "published_at": "2024-11-27T18:27:07Z",
+              "content_kind": "abstract"
+            }
+          ]
+        },
+        {
+          "id": "financial-disclosure",
+          "mode": "free",
+          "query_sent": "巨潮资讯 上市公司 年度报告",
+          "elapsed_ms": 808.41,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 807.89,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "巨潮资讯网怎么查财务报表？查上市公司财务报表步骤_私募排排网",
+              "url": "https://www.simuwang.com/news/279979.html",
+              "published_at": "2025-06-29T11:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "skills/sn-search-year-report/SKILL.md",
+              "url": "https://github.com/OpenSenseNova/SenseNova-Skills/blob/99fdf94b0d5ae68bf62fc686229ed8801fcb39a5/skills/sn-search-year-report/SKILL.md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "youhaozhao/cninfo-mcp",
+              "url": "https://github.com/youhaozhao/cninfo_mcp",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Python高速下载分析巨潮资讯网年度报告PDF版（一）",
+              "url": "https://blog.csdn.net/Chet_Xu/article/details/139345766",
+              "published_at": "2024-05-31T04:03:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "深圳证券信息有限公司",
+              "url": "http://www.szsi.cn/cpfw_976/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "financial-disclosure",
+          "mode": "smart",
+          "query_sent": "巨潮资讯 上市公司 年度报告",
+          "elapsed_ms": 959.93,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 959.53,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "巨潮资讯网怎么查财务报表？查上市公司财务报表步骤_私募排排网",
+              "url": "https://www.simuwang.com/news/279979.html",
+              "published_at": "2025-06-29T11:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "skills/sn-search-year-report/SKILL.md",
+              "url": "https://github.com/OpenSenseNova/SenseNova-Skills/blob/99fdf94b0d5ae68bf62fc686229ed8801fcb39a5/skills/sn-search-year-report/SKILL.md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "youhaozhao/cninfo-mcp",
+              "url": "https://github.com/youhaozhao/cninfo_mcp",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Python高速下载分析巨潮资讯网年度报告PDF版（一）",
+              "url": "https://blog.csdn.net/Chet_Xu/article/details/139345766",
+              "published_at": "2024-05-31T04:03:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "深圳证券信息有限公司",
+              "url": "http://www.szsi.cn/cpfw_976/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "community-hn",
+          "mode": "smart",
+          "query_sent": "SQLite",
+          "elapsed_ms": 572.3,
+          "requests": [
+            {
+              "provider": "hackernews",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 571.87,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "hackernews",
+              "rank": 1,
+              "title": "Hosting SQLite databases on GitHub Pages or any static file hoster",
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "published_at": "2021-05-02T16:43:15Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 2,
+              "title": "I'm all-in on server-side SQLite",
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "published_at": "2022-05-09T19:35:41Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 3,
+              "title": "Tracking down the 16-year-old WAL-reset SQLite bug",
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "published_at": "2026-08-12T14:22:30Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 4,
+              "title": "SQLite is not a toy database",
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "published_at": "2021-03-25T14:20:25Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 5,
+              "title": "How SQL Database Engines Work, by the Creator of SQLite (2008) [video]",
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "published_at": "2018-06-24T19:03:48Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "community-hn",
+          "mode": "free",
+          "query_sent": "SQLite",
+          "elapsed_ms": 418.11,
+          "requests": [
+            {
+              "provider": "hackernews",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 417.44,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "hackernews",
+              "rank": 1,
+              "title": "Hosting SQLite databases on GitHub Pages or any static file hoster",
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "published_at": "2021-05-02T16:43:15Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 2,
+              "title": "I'm all-in on server-side SQLite",
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "published_at": "2022-05-09T19:35:41Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 3,
+              "title": "Tracking down the 16-year-old WAL-reset SQLite bug",
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "published_at": "2026-08-12T14:22:30Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 4,
+              "title": "SQLite is not a toy database",
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "published_at": "2021-03-25T14:20:25Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 5,
+              "title": "How SQL Database Engines Work, by the Creator of SQLite (2008) [video]",
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "published_at": "2018-06-24T19:03:48Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        }
+      ]
+    },
+    "final": {
+      "started_at": "2026-11-08T08:43:53.629435+00:00",
+      "completed_at": "2026-11-08T08:44:08.052317+00:00",
+      "keyless": true,
+      "budget": {
+        "limit": 48,
+        "attempts": 16,
+        "remaining": 32,
+        "by_provider": {
+          "exa-free": 10,
+          "github": 2,
+          "arxiv": 2,
+          "hackernews": 2
+        },
+        "scope": "current_invocation",
+        "unit": "provider_api_http_attempts"
+      },
+      "cells": [
+        {
+          "id": "cn-energy-policy",
+          "mode": "free",
+          "query_sent": "国家能源局 海上风电 政策",
+          "elapsed_ms": 668.95,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 667.47,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "海上风电项目管理有了新规范---国家能源局",
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "published_at": "2025-01-10T01:11:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "海上风电转向“深蓝”---国家能源局",
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "published_at": "2026-07-10T23:53:43.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "国家发展改革委 国家能源局关于促进新能源消纳和调控的指导意见_国务院部门文件_中国政府网",
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "published_at": "2025-10-29T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家能源局 国家海洋局关于印发《海上风电开发建设管理暂行办法》的通知---国家能源局",
+              "url": "http://www.nea.gov.cn/2013-10/11/c_132789848.htm",
+              "published_at": "2013-10-11T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "“一带一路”能源合作",
+              "url": "https://obor.nea.gov.cn/detail2/22706.html",
+              "published_at": "2026-04-07T00:00:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-energy-policy",
+          "mode": "smart",
+          "query_sent": "国家能源局 海上风电 政策",
+          "elapsed_ms": 1006.46,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 1005.73,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "海上风电项目管理有了新规范---国家能源局",
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "published_at": "2025-01-10T01:11:39.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "海上风电转向“深蓝”---国家能源局",
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "published_at": "2026-07-10T23:53:43.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "国家发展改革委 国家能源局关于促进新能源消纳和调控的指导意见_国务院部门文件_中国政府网",
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "published_at": "2025-10-29T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家能源局 国家海洋局关于印发《海上风电开发建设管理暂行办法》的通知---国家能源局",
+              "url": "http://www.nea.gov.cn/2013-10/11/c_132789848.htm",
+              "published_at": "2013-10-11T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "“一带一路”能源合作",
+              "url": "https://obor.nea.gov.cn/detail2/22706.html",
+              "published_at": "2026-04-07T00:00:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-statistics",
+          "mode": "smart",
+          "query_sent": "国家统计局 国民经济 统计 数据 最新",
+          "elapsed_ms": 1082.37,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 1081.69,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "数据发布 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "2026年三季度国内生产总值初步核算结果 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "published_at": "2026-10-20T09:30:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "前三季度经济运行总体平稳　高质量发展取得新成效 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "published_at": "2026-10-19T10:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家数据",
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "《中国经济景气月报》2026年第9期 - 国家统计局",
+              "url": "https://www.stats.gov.cn/zs/tjwh/tjkw/tjqk/zgjjjq/202611/t20261103_1965736.html",
+              "published_at": "2026-11-03T14:06:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-statistics",
+          "mode": "free",
+          "query_sent": "国家统计局 国民经济 统计 数据 最新",
+          "elapsed_ms": 986.41,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 985.8,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "数据发布 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "2026年三季度国内生产总值初步核算结果 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "published_at": "2026-10-20T09:30:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "前三季度经济运行总体平稳　高质量发展取得新成效 - 国家统计局",
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "published_at": "2026-10-19T10:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "国家数据",
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "《中国经济景气月报》2026年第9期 - 国家统计局",
+              "url": "https://www.stats.gov.cn/zs/tjwh/tjkw/tjqk/zgjjjq/202611/t20261103_1965736.html",
+              "published_at": "2026-11-03T14:06:00.000Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-news",
+          "mode": "free",
+          "query_sent": "人工智能 最新 新闻",
+          "elapsed_ms": 912.4,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 911.71,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Edge AI Daily 早报（11月8日）-钛媒体官方网站",
+              "url": "https://www.tmtpost.com/8197405.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "AI周报|Anthropic第三季度由盈转亏；AMD预计明年营收增长超80%",
+              "url": "https://www.yicai.com/news/103431043.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "每日 AI 资讯 - 猫目",
+              "url": "https://maomu.com/news",
+              "published_at": "2026-11-08T04:40:52.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "AI 快讯｜实时更新的人工智能新闻 - HotAI.news",
+              "url": "https://hotai.news/news/",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "AI 要闻 · 2026-11-08",
+              "url": "https://www.wangwu.ai/daily/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "cn-news",
+          "mode": "smart",
+          "query_sent": "人工智能 最新 新闻",
+          "elapsed_ms": 1032.84,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 1032.2,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Edge AI Daily 早报（11月8日）-钛媒体官方网站",
+              "url": "https://www.tmtpost.com/8197405.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "AI周报|Anthropic第三季度由盈转亏；AMD预计明年营收增长超80%",
+              "url": "https://www.yicai.com/news/103431043.html",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "每日 AI 资讯 - 猫目",
+              "url": "https://maomu.com/news",
+              "published_at": "2026-11-08T04:40:52.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "AI 快讯｜实时更新的人工智能新闻 - HotAI.news",
+              "url": "https://hotai.news/news/",
+              "published_at": "2026-11-08T00:00:00.000Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "AI 要闻 · 2026-11-08",
+              "url": "https://www.wangwu.ai/daily/",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "python-taskgroup",
+          "mode": "smart",
+          "query_sent": "Python asyncio TaskGroup exception cancellation official documentation",
+          "elapsed_ms": 882.97,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 882.21,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Coroutines and tasks — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "Lib/asyncio/taskgroups.py",
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "Exceptions — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Introduce task groups to asyncio and change task cancellation semantics",
+              "url": "https://github.com/python/cpython/issues/90908",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "High-level API Index — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-api-index.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "python-taskgroup",
+          "mode": "free",
+          "query_sent": "Python asyncio TaskGroup exception cancellation official documentation",
+          "elapsed_ms": 979.01,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 978.17,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "Coroutines and tasks — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "Lib/asyncio/taskgroups.py",
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "Exceptions — Python 3.15.2 documentation",
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "Introduce task groups to asyncio and change task cancellation semantics",
+              "url": "https://github.com/python/cpython/issues/90908",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "gh-116720: Fix corner cases of taskgroups",
+              "url": "https://github.com/python/cpython/pull/117407",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "github-markitdown",
+          "mode": "free",
+          "query_sent": "microsoft/markitdown",
+          "elapsed_ms": 637.84,
+          "requests": [
+            {
+              "provider": "github",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 636.55,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "github",
+              "rank": 1,
+              "title": "microsoft/markitdown",
+              "url": "https://github.com/microsoft/markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 2,
+              "title": "lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 3,
+              "title": "kigner/markitdown_ui",
+              "url": "https://github.com/kigner/markitdown_ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 4,
+              "title": "ethanolivertroy/obsidian-markitdown",
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 5,
+              "title": "pig-mesh/office2md",
+              "url": "https://github.com/pig-mesh/office2md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "github-markitdown",
+          "mode": "smart",
+          "query_sent": "microsoft/markitdown",
+          "elapsed_ms": 284.17,
+          "requests": [
+            {
+              "provider": "github",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 283.44,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "github",
+              "rank": 1,
+              "title": "microsoft/markitdown",
+              "url": "https://github.com/microsoft/markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 2,
+              "title": "lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 3,
+              "title": "kigner/markitdown_ui",
+              "url": "https://github.com/kigner/markitdown_ui",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 4,
+              "title": "ethanolivertroy/obsidian-markitdown",
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "github",
+              "rank": 5,
+              "title": "pig-mesh/office2md",
+              "url": "https://github.com/pig-mesh/office2md",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "research-rag",
+          "mode": "smart",
+          "query_sent": "retrieval augmented generation",
+          "elapsed_ms": 116.26,
+          "requests": [
+            {
+              "provider": "arxiv",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 115.48,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "arxiv",
+              "rank": 1,
+              "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "published_at": "2025-06-08T01:33:05Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 2,
+              "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "published_at": "2025-04-18T13:35:21Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 3,
+              "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "published_at": "2025-04-24T02:29:50Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 4,
+              "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "published_at": "2025-04-20T17:40:28Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 5,
+              "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "published_at": "2024-11-27T18:27:07Z",
+              "content_kind": "abstract"
+            }
+          ]
+        },
+        {
+          "id": "research-rag",
+          "mode": "free",
+          "query_sent": "retrieval augmented generation",
+          "elapsed_ms": 3005.16,
+          "requests": [
+            {
+              "provider": "arxiv",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 3004.45,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "arxiv",
+              "rank": 1,
+              "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "published_at": "2025-06-08T01:33:05Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 2,
+              "title": "Intelligent Interaction Strategies for Context-Aware Cognitive Augmentation",
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "published_at": "2025-04-18T13:35:21Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 3,
+              "title": "Factually: Exploring Wearable Fact-Checking for Augmented Truth Discernment",
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "published_at": "2025-04-24T02:29:50Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 4,
+              "title": "Designing AI Systems that Augment Human Performed vs. Demonstrated Critical Thinking",
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "published_at": "2025-04-20T17:40:28Z",
+              "content_kind": "abstract"
+            },
+            {
+              "provider": "arxiv",
+              "rank": 5,
+              "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "published_at": "2024-11-27T18:27:07Z",
+              "content_kind": "abstract"
+            }
+          ]
+        },
+        {
+          "id": "financial-disclosure",
+          "mode": "free",
+          "query_sent": "上市公司 年度报告",
+          "elapsed_ms": 946.4,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 945.67,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "美的集團股份有限公司",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-24/1225177551.PDF",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "同方股份有限公司2025年年度报告",
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244797.PDF",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "巨潮资讯网",
+              "url": "https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Fipo%2Freport",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "巨潮资讯网",
+              "url": "https://www.cninfo.com.cn/new/index?lang=zh",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "年年度报告",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225243361.pdf",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "financial-disclosure",
+          "mode": "smart",
+          "query_sent": "上市公司 年度报告",
+          "elapsed_ms": 861.9,
+          "requests": [
+            {
+              "provider": "exa-free",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 861.25,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "exa-free",
+              "rank": 1,
+              "title": "美的集團股份有限公司",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-24/1225177551.PDF",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 2,
+              "title": "同方股份有限公司2025年年度报告",
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244797.PDF",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 3,
+              "title": "巨潮资讯网",
+              "url": "https://www.cninfo.com.cn/new/commonUrl?url=disclosure%2Fipo%2Freport",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 4,
+              "title": "巨潮资讯网",
+              "url": "https://www.cninfo.com.cn/new/index?lang=zh",
+              "published_at": null,
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "exa-free",
+              "rank": 5,
+              "title": "年年度报告",
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225243361.pdf",
+              "published_at": null,
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "community-hn",
+          "mode": "smart",
+          "query_sent": "SQLite",
+          "elapsed_ms": 519.77,
+          "requests": [
+            {
+              "provider": "hackernews",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 518.6,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "hackernews",
+              "rank": 1,
+              "title": "Hosting SQLite databases on GitHub Pages or any static file hoster",
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "published_at": "2021-05-02T16:43:15Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 2,
+              "title": "I'm all-in on server-side SQLite",
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "published_at": "2022-05-09T19:35:41Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 3,
+              "title": "Tracking down the 16-year-old WAL-reset SQLite bug",
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "published_at": "2026-08-12T14:22:30Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 4,
+              "title": "SQLite is not a toy database",
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "published_at": "2021-03-25T14:20:25Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 5,
+              "title": "How SQL Database Engines Work, by the Creator of SQLite (2008) [video]",
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "published_at": "2018-06-24T19:03:48Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        },
+        {
+          "id": "community-hn",
+          "mode": "free",
+          "query_sent": "SQLite",
+          "elapsed_ms": 456.23,
+          "requests": [
+            {
+              "provider": "hackernews",
+              "ok": true,
+              "attempts": 1,
+              "elapsed_ms": 455.55,
+              "shown_count": 5,
+              "returned_count": 5
+            }
+          ],
+          "sources": [
+            {
+              "provider": "hackernews",
+              "rank": 1,
+              "title": "Hosting SQLite databases on GitHub Pages or any static file hoster",
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "published_at": "2021-05-02T16:43:15Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 2,
+              "title": "I'm all-in on server-side SQLite",
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "published_at": "2022-05-09T19:35:41Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 3,
+              "title": "Tracking down the 16-year-old WAL-reset SQLite bug",
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "published_at": "2026-08-12T14:22:30Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 4,
+              "title": "SQLite is not a toy database",
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "published_at": "2021-03-25T14:20:25Z",
+              "content_kind": "search_summary"
+            },
+            {
+              "provider": "hackernews",
+              "rank": 5,
+              "title": "How SQL Database Engines Work, by the Creator of SQLite (2008) [video]",
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "published_at": "2018-06-24T19:03:48Z",
+              "content_kind": "search_summary"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

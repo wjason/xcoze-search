@@ -22,7 +22,10 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "research/china-public-sources.md", "research/china-public-sources.en.md",
                  "research/china-public-sources-2026-11-05.json", "research/china-public-index-probes-2026-11-05.json",
                  "references/source-status.md", "references/source-status.en.md",
-                 "evaluations/reports/2026-11-05-source-status.json"]
+                 "evaluations/reports/2026-11-05-source-status.json",
+                 "scripts/benchmark.py", "evaluations/agent-search-cases.json", "evaluations/agent-search-cases.en.json",
+                 "evaluations/reports/2026-11-08-agent-search.md", "evaluations/reports/2026-11-08-agent-search.en.md",
+                 "evaluations/reports/2026-11-08-agent-search.data.json"]
 SOURCE_EXTRA = ["evaluations/build_source_status.py", "tests/test_source_status.py", ".gitignore",
                 ".github/workflows/test.yml", ".github/workflows/release.yml",
                 "scripts/build_release.py", "scripts/prepare_release.py",
@@ -36,7 +39,7 @@ RUNTIME_FILES += ["README.en.md", "SKILL.en.md", "INSTALL.en.md", "TODO.en.md",
                   "PUBLISHING.en.md", "MARKETPLACE.en.md", "references/setup.en.md",
                   "references/providers.en.md", "references/output.en.md",
                   "references/search-services.en.md"]
-SOURCE_EXTRA += ["evaluations/README.en.md", "scripts/benchmark.py", "tests/test_benchmark.py",
+SOURCE_EXTRA += ["evaluations/README.en.md", "tests/test_benchmark.py",
                  "evaluations/smart-cases.json", "evaluations/smart-holdout.json",
                  "evaluations/reports/2026-11-03.md", "evaluations/reports/2026-11-03.en.md",
                  "evaluations/reports/2026-11-03.data.json", "tests/test_open_sources.py",

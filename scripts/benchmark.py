@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 import time
+from unittest.mock import patch
 
 import xcoze_search as search
 
@@ -44,7 +45,7 @@ def query_args(case, mode, *, count=5, timeout=15):
     return search.parser().parse_args(argv)
 
 
-def run_cell(case, mode, config, budget, *, count=5, timeout=15):
+def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False):
     args = query_args(case, mode, count=count, timeout=timeout)
     original = search.request_api
     receipts = []
@@ -52,7 +53,7 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
     def trace(operation, payload, key, **kwargs):
         # Never retain or print the key, payload or raw provider response.
         name = "deepseek" if operation == "fetch" else operation.removesuffix("_fetch")
-        if mode in ("free", "browser") and (search.get_provider(name).requires_key or key):
+        if (keyless or mode in ("free", "browser")) and (search.get_provider(name).requires_key or key):
             raise AssertionError("Free benchmark rejected a keyed API before transmission.")
         started = time.perf_counter()
         try:
@@ -71,8 +72,17 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
 
     started = time.perf_counter()
     search.request_api = trace
+    def no_key_credential(provider, unused_config):
+        if search.get_provider(provider).requires_key:
+            raise search.SearchError("missing_api_key", "Keyed providers disabled for this benchmark.")
+        return "", "not_required"
+
     try:
-        result = search.run_search(args, config, budget=budget)
+        if keyless:
+            with patch.object(search, "credential", side_effect=no_key_credential):
+                result = search.run_search(args, config, budget=budget)
+        else:
+            result = search.run_search(args, config, budget=budget)
     except search.SearchError as exc:
         result = {"ok": False, "results": [], "errors": [exc.data()], "requests": []}
     finally:
@@ -99,9 +109,11 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15):
 
 
 def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count=5,
-            max_requests=36, timeout=15, progress=None):
+            max_requests=36, timeout=15, progress=None, keyless=False):
     if not modes or len(set(modes)) != len(modes) or any(m not in MODES for m in modes):
         raise ValueError("Choose distinct free, deepseek, smart and/or explicit browser diagnostic modes.")
+    if keyless and "deepseek" in modes:
+        raise ValueError("Keyless benchmark cannot include DeepSeek mode.")
     if not 1 <= rounds <= 3 or not 1 <= limit <= 100 or not 1 <= count <= 10 or not 1 <= timeout <= 60:
         raise ValueError("Invalid benchmark limits.")
     cases = corpus["cases"][:limit]
@@ -110,7 +122,7 @@ def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count
     budget = search.RequestBudget(max_requests)
     report = {"operation": "benchmark", "version": search.VERSION, "live": live,
               "started_at": datetime.now(timezone.utc).isoformat(), "corpus_as_of": corpus.get("as_of"),
-              "modes": list(modes), "rounds": rounds, "count": count, "timeout_seconds": timeout,
+              "modes": list(modes), "keyless": keyless, "rounds": rounds, "count": count, "timeout_seconds": timeout,
               "cases": cases, "cells": [], "semantic_quality_assessed": False,
               "scope": "retrieval only; process startup, final-answer generation and validation reads excluded",
               "price_reference": corpus.get("price_reference"), "model_cost_usd": None,
@@ -118,7 +130,7 @@ def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count
                        "max_requests": max_requests, "max_sources_per_auto_call": 3}}
     if not live:
         return {**report, "ok": True, "budget": budget.data(), "network_requests": 0}
-    config = search.read_config()
+    config = {"schema_version": 2, "providers": {}} if keyless else search.read_config()
     # Benchmark default Smart without altering saved user preferences or credentials.
     config = {**config, "search_preferences": {"strategy": "smart", "max_sources": 3, "disabled_providers": []}}
     for iteration in range(rounds):
@@ -127,7 +139,7 @@ def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count
             order = modes[rotation:] + modes[:rotation]
             for mode in order:
                 if not budget.data()["remaining"]: break
-                cell = run_cell(case, mode, config, budget, count=count, timeout=timeout)
+                cell = run_cell(case, mode, config, budget, count=count, timeout=timeout, keyless=keyless)
                 cell["round"] = iteration + 1
                 report["cells"].append(cell)
                 if progress: progress({k: cell[k] for k in ("id", "mode", "ok", "elapsed_ms")})
@@ -146,6 +158,7 @@ def main(argv=None):
     p.add_argument("--corpus", type=Path, default=ROOT / "evaluations/smart-cases.json")
     p.add_argument("--modes", default="free,deepseek,smart")
     p.add_argument("--live", action="store_true", help="Send public queries; DeepSeek/Smart may incur charges")
+    p.add_argument("--keyless", action="store_true", help="Do not read config or environment keys; reject keyed API dispatch")
     p.add_argument("--rounds", type=int, default=1)
     p.add_argument("--limit", type=int, default=6)
     p.add_argument("--max-requests", type=int, default=36)
@@ -156,7 +169,7 @@ def main(argv=None):
     try:
         report = execute(load_cases(args.corpus), modes=tuple(args.modes.split(",")), live=args.live,
                          rounds=args.rounds, limit=args.limit, count=args.count, max_requests=args.max_requests, timeout=args.timeout,
-                         progress=lambda item: print(json.dumps(item, ensure_ascii=False), flush=True))
+                         keyless=args.keyless, progress=lambda item: print(json.dumps(item, ensure_ascii=False), flush=True))
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     except (ValueError, OSError, search.SearchError):

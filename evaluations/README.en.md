@@ -4,6 +4,10 @@
 
 Corpus date: 2026-11-02. `queries.json` contains 12 Chinese/English search queries and three extraction URLs, covering technical docs, original standards, content types, dated news, versions, and conflicting information. It supports reproduction, result comparison, and manual reading; it is not a universal accuracy benchmark.
 
+## Agent search question set
+
+The [November 8, 2026 retrieval evaluation](reports/2026-11-08-agent-search.en.md) includes eight questions, review notes and a keyless reproduction command. Published data retains sanitized links and metrics; answers, dates and original pages require human review.
+
 ## Plan without networking
 
 ```bash

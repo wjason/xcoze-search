@@ -21,6 +21,8 @@ python3 "<skill_dir>/scripts/xcoze_search.py" search 'AI coding' --platform hack
 python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article'
 ```
 
+When the full GitHub repository name is known, keep the `owner/repository` form in the GitHub query. For a specifically requested disclosure source with a verified domain, use `--site` or its matching `--platform`; report no matches instead of substituting unrelated sites.
+
 ## Native platform search and existing local tools
 
 For current news/policy tasks, see [publisher feeds, policy and community originals](references/feeds.en.md). `feed --source cns-scroll|cns-finance|bbc-world` reads one current window. --query uses short literal terms (all whitespace-separated terms in title/excerpt), not semantic search. Dates are inclusive UTC+08:00 calendar days; unknown dates are excluded when filtering. Never replace missing publication dates with retrieval time. For historical requests, stale windows or no matches, continue normal search under existing preferences rather than asserting no event exists.
