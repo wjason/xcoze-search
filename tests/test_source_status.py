@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class SourceStatusSnapshotTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.audit = json.loads((ROOT / 'evaluations/reports/2026-11-05-source-status.json').read_text())
+        cls.audit = json.loads((ROOT / 'evaluations/reports/2026-11-05-source-status.json').read_text(encoding='utf-8'))
         cls.by_kind = {}
         for row in cls.audit['results']:
             cls.by_kind.setdefault(row['kind'], set()).add(row['id'])
@@ -39,7 +39,7 @@ class SourceStatusSnapshotTests(unittest.TestCase):
     def test_bilingual_status_pages_include_search_and_pending(self):
         for filename, phrases in [('source-status.md', ('支持 · 适配通过','待支持','支持 · 本次受限')),
                                   ('source-status.en.md', ('Supported · Passed','Candidates','Supported · Limited'))]:
-            text = (ROOT / 'references' / filename).read_text()
+            text = (ROOT / 'references' / filename).read_text(encoding='utf-8')
             for phrase in phrases: self.assertIn(phrase, text)
 
 if __name__ == '__main__': unittest.main()
