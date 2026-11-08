@@ -5,9 +5,11 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-xcoze search 是一个为 Agent 准备的联网搜索 Skill。它把公开搜索源、专业资料库和可选的搜索 API 放到一起，帮助 Agent 搜索信息、查找原始来源和阅读网页。
+**xcoze search 是为 AI Agent 打造的智能聚合搜索，让 Agent 搜得更广、找得更准。**
 
-安装后可以直接提问。没有 API Key 也能使用；配置自己的 Key 后，Agent 可以在搜索时使用对应服务。你也可以指定来源，或设置长期使用的搜索方式。
+它汇集多种公开信息源和搜索服务，覆盖网页、新闻、政策、论文、开源项目和公共数据。Agent 可以根据问题选择合适的渠道，查找信息、阅读原文并提供来源链接。
+
+安装后即可使用免费搜索，也可以接入自己选择的搜索服务，按需要切换搜索方式。
 
 [安装](#安装) · [使用](#使用) · [支持的来源](#支持的来源) · [配置-api-key](#配置-api-key) · [参与贡献](#参与贡献)
 
@@ -29,13 +31,15 @@ xcoze search 是一个为 Agent 准备的联网搜索 Skill。它把公开搜索
 
 需要支持 Skill 并能执行本地脚本的 Agent，以及 Python 3.10 或更高版本。基础功能只使用 Python 标准库。安装和使用公开搜索源不需要 API Key。
 
-### 其他安装方式
+### 使用 Skills CLI 安装
 
 如果已安装 Node.js，也可以使用 Skills CLI：
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
+
+运行后按照提示选择要安装到的 Agent。
 
 也可以从 [GitHub Releases](https://github.com/wjason/xcoze-search/releases) 下载 Skill 安装包。更多方式见[安装教程](INSTALL.zh-CN.md)。
 

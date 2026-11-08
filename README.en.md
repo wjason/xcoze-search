@@ -5,9 +5,11 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-xcoze search is a web search Skill for Agents. It brings together public search sources, specialist databases, and optional search APIs to help Agents find information, locate original sources, and read web pages.
+**xcoze search is intelligent aggregated search for AI agents, helping them search more broadly and find more relevant results.**
 
-Ask a question after installation to get started. No API key is required for public sources. You can add your own keys to use other services, choose a source for a request, or save a search preference.
+It brings together public information sources and search services across the web, news, policy, research papers, open-source projects, and public data. Agents can choose suitable sources for a question, find information, read original pages, and provide source links.
+
+Free search is available after installation. You can also connect search services of your choice and change how searches are performed.
 
 [Install](#install) · [Usage](#usage) · [Supported sources](#supported-sources) · [Configure API keys](#configure-api-keys) · [Contributing](#contributing)
 
@@ -29,13 +31,15 @@ Use xcoze search to find microsoft/markitdown on GitHub. Tell me what it does an
 
 You need an Agent that supports Skills and can run local scripts, plus Python 3.10 or newer. The base features use only the Python standard library. Installation and public-source searches do not require an API key.
 
-### Other installation methods
+### Install with the Skills CLI
 
 If Node.js is installed, you can also use the Skills CLI:
 
 ```bash
 npx skills add wjason/xcoze-search --skill xcoze-search
 ```
+
+Follow the prompts to choose which Agent to install it for.
 
 Alternatively, download the Skill package from [GitHub Releases](https://github.com/wjason/xcoze-search/releases). See the [installation guide](INSTALL.en.md) for details.
 
