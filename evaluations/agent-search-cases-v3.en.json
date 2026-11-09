@@ -1,0 +1,1373 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-09",
+  "notice": "100 retrieval cases. The first 20 retain the previous benchmark. The remaining cases specify review criteria for a future run.",
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "category": "Chinese policy",
+      "question": "Find official information about offshore wind from the National Energy Administration.",
+      "query": "国家能源局 海上风电 政策",
+      "intent": "reference",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "Relevant official page; inspect publication date."
+      ]
+    },
+    {
+      "id": "cn-statistics",
+      "category": "Chinese statistics",
+      "question": "Find the latest economic statistics released by the National Bureau of Statistics.",
+      "query": "国家统计局 国民经济 统计 数据 最新",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Official release; distinguish publication and reporting periods."
+      ]
+    },
+    {
+      "id": "cn-news",
+      "category": "Chinese news",
+      "question": "Find recent Chinese reports about artificial intelligence.",
+      "query": "人工智能 最新 新闻",
+      "intent": "current",
+      "criteria": [
+        "Relevant news with a verifiable date."
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "category": "Technical documentation",
+      "question": "Find official Python TaskGroup exception handling documentation.",
+      "query": "Python asyncio TaskGroup exception cancellation official documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Official documentation on exceptions and cancellation."
+      ]
+    },
+    {
+      "id": "github-markitdown",
+      "category": "Open source",
+      "question": "Find the official microsoft/markitdown GitHub repository.",
+      "query": "microsoft/markitdown",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Find github.com/microsoft/markitdown."
+      ]
+    },
+    {
+      "id": "research-rag",
+      "category": "Research",
+      "question": "Find public research papers on retrieval-augmented generation.",
+      "query": "retrieval augmented generation",
+      "platform": "arxiv",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Find relevant papers and their dates."
+      ]
+    },
+    {
+      "id": "financial-disclosure",
+      "category": "Financial disclosures",
+      "question": "Find public annual reports on CNINFO.",
+      "query": "上市公司 年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "Find a relevant CNINFO disclosure and check its reporting period."
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "community-hn",
+      "category": "Community",
+      "question": "Find Hacker News discussions about SQLite.",
+      "query": "SQLite",
+      "platform": "hackernews",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Find discussion links and dates."
+      ]
+    },
+    {
+      "id": "nbs-cpi-oct",
+      "category": "Chinese statistics",
+      "question": "As of 2026-11-09, which month does the latest NBS CPI release cover?",
+      "query": "2026年10月份 居民消费价格 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Match the reference period and publication date of the latest release."
+      ]
+    },
+    {
+      "id": "python-release",
+      "category": "Software release",
+      "question": "When was Python 3.14.0 released?",
+      "query": "Python 3.14.0 release date Python.org",
+      "intent": "reference",
+      "expected_domains": [
+        "python.org"
+      ],
+      "criteria": [
+        "Find the final 3.14.0 release page, distinguishing prereleases and patches."
+      ]
+    },
+    {
+      "id": "pep703",
+      "category": "English specification",
+      "question": "Which PEP proposed making the GIL optional in CPython?",
+      "query": "PEP making global interpreter lock optional CPython 703",
+      "intent": "reference",
+      "expected_domains": [
+        "peps.python.org"
+      ],
+      "criteria": [
+        "Find PEP 703 and confirm its title and status."
+      ]
+    },
+    {
+      "id": "sqlite-release",
+      "category": "Software release",
+      "question": "On what date was SQLite 3.45.0 released?",
+      "query": "SQLite 3.45.0 release log date",
+      "intent": "reference",
+      "expected_domains": [
+        "sqlite.org"
+      ],
+      "criteria": [
+        "Find the official release log for the exact version."
+      ]
+    },
+    {
+      "id": "crossref-deep-learning",
+      "category": "Research",
+      "question": "What are the DOI and publication date of the Nature review Deep learning by LeCun et al.?",
+      "query": "10.1038/nature14539",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Match the DOI and verify the online publication date on the journal page."
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "arxiv-rag-version",
+      "category": "Research",
+      "question": "When was the RAG paper by Lewis et al. first submitted?",
+      "query": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Find arXiv:2005.11401 and distinguish v1 from the last revision."
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "npm-typescript",
+      "category": "Package registry",
+      "question": "Find the npm package for Microsoft TypeScript.",
+      "query": "typescript",
+      "intent": "reference",
+      "expected_domains": [
+        "npmjs.com"
+      ],
+      "criteria": [
+        "Verify the package name and upstream repository."
+      ],
+      "platform": "npm"
+    },
+    {
+      "id": "us-ai-rfi",
+      "category": "US government",
+      "question": "Find the US 2025 AI Action Plan request for information and confirm its publication date.",
+      "query": "Request for Information on the Development of an Artificial Intelligence AI Action Plan",
+      "intent": "reference",
+      "expected_domains": [
+        "federalregister.gov"
+      ],
+      "criteria": [
+        "Distinguish the publication date from the response deadline."
+      ],
+      "platform": "federalregister"
+    },
+    {
+      "id": "worldbank-pop",
+      "category": "Data indicator",
+      "question": "Find the World Bank total-population indicator for China and verify the observation year returned.",
+      "query": "CN,SP.POP.TOTL",
+      "intent": "reference",
+      "expected_domains": [
+        "data.worldbank.org"
+      ],
+      "criteria": [
+        "Confirm the indicator and observation year against World Bank data."
+      ],
+      "platform": "worldbank"
+    },
+    {
+      "id": "mdn-abort",
+      "category": "English documentation",
+      "question": "Find the MDN documentation for AbortSignal.timeout.",
+      "query": "AbortSignal.timeout static method MDN",
+      "intent": "reference",
+      "expected_domains": [
+        "developer.mozilla.org"
+      ],
+      "criteria": [
+        "Confirm the exact API page and timeout unit."
+      ]
+    },
+    {
+      "id": "nasa-artemis",
+      "category": "Official media library",
+      "question": "Find an Artemis I launch image in the NASA media library.",
+      "query": "Artemis I launch",
+      "intent": "reference",
+      "expected_domains": [
+        "images.nasa.gov"
+      ],
+      "criteria": [
+        "Find imagery of the Artemis I launch."
+      ],
+      "platform": "nasa"
+    },
+    {
+      "id": "wikipedia-utc",
+      "category": "Chinese encyclopedia",
+      "question": "Find the Chinese Wikipedia article for Coordinated Universal Time.",
+      "query": "协调世界时",
+      "intent": "reference",
+      "expected_domains": [
+        "zh.wikipedia.org"
+      ],
+      "criteria": [
+        "Match the topic and language."
+      ],
+      "platform": "wikipedia"
+    },
+    {
+      "id": "cn-civil-code",
+      "category": "Public policy",
+      "question": "Find the Civil Code in the national laws database and locate the contracts book.",
+      "query": "民法典 合同编 中国人大网",
+      "intent": "reference",
+      "expected_domains": [
+        "flk.npc.gov.cn"
+      ],
+      "criteria": [
+        "Locate the contracts book in the code and record the effective date."
+      ],
+      "platform": "china-laws"
+    },
+    {
+      "id": "cn-personal-info-law",
+      "category": "Public policy",
+      "question": "Find the official text of Article 38 of the Personal Information Protection Law.",
+      "query": "个人信息保护法 第三十八条 全国人大",
+      "intent": "reference",
+      "expected_domains": [
+        "npc.gov.cn"
+      ],
+      "criteria": [
+        "Verify the article number and that it concerns cross-border provision of personal information."
+      ]
+    },
+    {
+      "id": "cn-data-law",
+      "category": "Public policy",
+      "question": "Which article of the Data Security Law addresses data classification and graded protection?",
+      "query": "数据安全法 全国人大 数据分类分级",
+      "intent": "reference",
+      "expected_domains": [
+        "npc.gov.cn"
+      ],
+      "criteria": [
+        "Identify the exact article in the official text and distinguish supplementary rules."
+      ]
+    },
+    {
+      "id": "cn-energy-law",
+      "category": "Public policy",
+      "question": "Find an official publication of China's Energy Law and verify adoption and effective dates.",
+      "query": "中华人民共和国能源法 国务院 能源法 全文",
+      "intent": "reference",
+      "expected_domains": [
+        "gov.cn"
+      ],
+      "criteria": [
+        "Record adoption and effective dates separately and link the official text."
+      ]
+    },
+    {
+      "id": "cn-building-efficiency",
+      "category": "Public policy",
+      "question": "Find the housing ministry announcement for GB 55015 and verify the standard number.",
+      "query": "建筑节能与可再生能源利用通用规范 GB 55015 住建部 公告",
+      "intent": "reference",
+      "expected_domains": [
+        "mohurd.gov.cn"
+      ],
+      "criteria": [
+        "Match the building energy standard, edition and effective date."
+      ]
+    },
+    {
+      "id": "cn-food-label",
+      "category": "Public policy",
+      "question": "Search the national standards system for GB 7718 and distinguish editions.",
+      "query": "GB 7718 预包装食品标签通则 国家标准",
+      "intent": "reference",
+      "expected_domains": [
+        "openstd.samr.gov.cn"
+      ],
+      "criteria": [
+        "Verify number, edition and status where available."
+      ],
+      "platform": "china-standards"
+    },
+    {
+      "id": "cn-ndrc-demand",
+      "category": "Public policy",
+      "question": "Find the NDRC's formal 2023 measures for electricity demand-side management.",
+      "query": "电力需求侧管理办法 2023 国家发展改革委",
+      "intent": "reference",
+      "expected_domains": [
+        "ndrc.gov.cn"
+      ],
+      "criteria": [
+        "Match the 2023 edition and document number and distinguish drafts."
+      ]
+    },
+    {
+      "id": "cn-mee-carbon",
+      "category": "Public policy",
+      "question": "Find the environment ministry's work plan covering steel, cement and aluminium smelting in the carbon market.",
+      "query": "全国碳排放权交易市场 覆盖钢铁 水泥 铝冶炼 生态环境部 工作方案",
+      "intent": "reference",
+      "expected_domains": [
+        "mee.gov.cn"
+      ],
+      "criteria": [
+        "Verify the plan title, all three industries and official publication."
+      ]
+    },
+    {
+      "id": "cn-pbc-statistics",
+      "category": "Public policy",
+      "question": "Find the People's Bank of China's full-year 2025 aggregate financing flow release.",
+      "query": "社会融资规模增量 2025年 全年 中国人民银行 统计数据",
+      "intent": "reference",
+      "expected_domains": [
+        "pbc.gov.cn"
+      ],
+      "criteria": [
+        "Match the full-year flow and distinguish stock and monthly figures."
+      ]
+    },
+    {
+      "id": "cn-miit-green",
+      "category": "Public policy",
+      "question": "Find MIIT's administrative measures for the development of green factories.",
+      "query": "绿色工厂 梯度培育及管理暂行办法 工业和信息化部",
+      "intent": "reference",
+      "expected_domains": [
+        "miit.gov.cn"
+      ],
+      "criteria": [
+        "Verify the full document title and issuing agency."
+      ]
+    },
+    {
+      "id": "fresh-cpi-window",
+      "category": "Freshness and historical windows",
+      "question": "Find the NBS release of October 2026 PPI published on November 9, 2026.",
+      "query": "2026年10月 PPI 工业生产者出厂价格 2026年11月9日 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Match both the publication date and reference month and distinguish CPI."
+      ]
+    },
+    {
+      "id": "fresh-gdp-window",
+      "category": "Freshness and historical windows",
+      "question": "Find the NBS preliminary GDP release for Q3 2026.",
+      "query": "2026年 三季度 国内生产总值 初步核算 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Distinguish the quarter, year-to-date total and preliminary status."
+      ]
+    },
+    {
+      "id": "fresh-ai-news-window",
+      "category": "Freshness and historical windows",
+      "question": "Find an AI report published by Xinhuanet from November 1 through 9, 2026.",
+      "query": "人工智能 2026年11月 新华网",
+      "intent": "current",
+      "expected_domains": [
+        "news.cn"
+      ],
+      "criteria": [
+        "Check the publisher page and Beijing-time window and distinguish page updates."
+      ],
+      "site": "news.cn"
+    },
+    {
+      "id": "fresh-hn-sqlite-window",
+      "category": "Freshness and historical windows",
+      "question": "Find a Hacker News SQLite discussion posted in January 2024.",
+      "query": "SQLite",
+      "intent": "current",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Return the discussion link and verify the UTC posting date is in range."
+      ],
+      "platform": "hackernews",
+      "start_date": "2024-01-01",
+      "end_date": "2024-01-31"
+    },
+    {
+      "id": "fresh-hn-python-window",
+      "category": "Freshness and historical windows",
+      "question": "Find a Hacker News discussion of free-threaded Python in Q4 2024.",
+      "query": "Python free threading",
+      "intent": "current",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Match the topic and verify the UTC posting date in Q4."
+      ],
+      "platform": "hackernews",
+      "start_date": "2024-10-01",
+      "end_date": "2024-12-31"
+    },
+    {
+      "id": "fresh-arxiv-rag-window",
+      "category": "Freshness and historical windows",
+      "question": "Find an arXiv RAG preprint first submitted in 2024.",
+      "query": "all:\"retrieval augmented generation\"",
+      "intent": "current",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Verify the v1 submission date and distinguish revisions."
+      ],
+      "platform": "arxiv",
+      "start_date": "2024-01-01",
+      "end_date": "2024-12-31"
+    },
+    {
+      "id": "fresh-arxiv-diffusion-window",
+      "category": "Freshness and historical windows",
+      "question": "Find an arXiv diffusion-model paper first submitted in 2020 or 2021.",
+      "query": "ti:\"diffusion models\"",
+      "intent": "current",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Match the title topic and verify first submission in the window."
+      ],
+      "platform": "arxiv",
+      "start_date": "2020-01-01",
+      "end_date": "2021-12-31"
+    },
+    {
+      "id": "fresh-rust-release",
+      "category": "Freshness and historical windows",
+      "question": "Find the official Rust 1.85.0 announcement and verify its release date.",
+      "query": "Rust 1.85.0 release Rust 2024 edition blog",
+      "intent": "current",
+      "expected_domains": [
+        "blog.rust-lang.org"
+      ],
+      "criteria": [
+        "Match the exact release and distinguish the edition name from the date."
+      ]
+    },
+    {
+      "id": "fresh-pg-release",
+      "category": "Freshness and historical windows",
+      "question": "Find the announcement for the initial PostgreSQL 17 general release.",
+      "query": "PostgreSQL 17 released PostgreSQL official 2024",
+      "intent": "current",
+      "expected_domains": [
+        "postgresql.org"
+      ],
+      "criteria": [
+        "Verify the initial stable release and exclude later patches and prereleases."
+      ]
+    },
+    {
+      "id": "fresh-fed-window",
+      "category": "Freshness and historical windows",
+      "question": "Find the Federal Reserve FOMC policy statement dated December 18, 2024.",
+      "query": "FOMC statement December 18 2024 Federal Reserve",
+      "intent": "current",
+      "expected_domains": [
+        "federalreserve.gov"
+      ],
+      "criteria": [
+        "Match the statement date and distinguish minutes and press conference material."
+      ]
+    },
+    {
+      "id": "docs-mdn-structured-clone",
+      "category": "Technical documentation",
+      "question": "Find MDN documentation on transferring an ArrayBuffer with structuredClone.",
+      "query": "MDN structuredClone transfer ArrayBuffer",
+      "intent": "reference",
+      "expected_domains": [
+        "developer.mozilla.org"
+      ],
+      "criteria": [
+        "Verify the transfer option and detachment of the original."
+      ]
+    },
+    {
+      "id": "docs-python-tomllib",
+      "category": "Technical documentation",
+      "question": "Find official Python docs for tomllib.load and verify the expected file mode.",
+      "query": "Python tomllib load binary file documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Match load and verify the binary file object requirement."
+      ]
+    },
+    {
+      "id": "docs-python-exceptiongroup",
+      "category": "Technical documentation",
+      "question": "Find the Python language reference definition of except*.",
+      "query": "Python except star ExceptionGroup language reference",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Locate the section on except* and exception-group matching."
+      ]
+    },
+    {
+      "id": "docs-go-context",
+      "category": "Technical documentation",
+      "question": "Find the Go package documentation for context.WithCancelCause.",
+      "query": "Go context WithCancelCause Cause pkg.go.dev",
+      "intent": "reference",
+      "expected_domains": [
+        "pkg.go.dev"
+      ],
+      "criteria": [
+        "Distinguish WithCancel from WithCancelCause and locate Cause behavior."
+      ]
+    },
+    {
+      "id": "docs-postgres-jsonb",
+      "category": "Technical documentation",
+      "question": "Find the PostgreSQL 17 documentation for jsonb containment.",
+      "query": "PostgreSQL 17 jsonb containment @> indexing docs",
+      "intent": "reference",
+      "expected_domains": [
+        "postgresql.org"
+      ],
+      "criteria": [
+        "Match version 17 and the jsonb containment operator."
+      ]
+    },
+    {
+      "id": "docs-kube-requests",
+      "category": "Technical documentation",
+      "question": "Find Kubernetes documentation on container CPU requests and limits.",
+      "query": "Kubernetes resource requests limits CPU memory documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "kubernetes.io"
+      ],
+      "criteria": [
+        "Locate source text describing scheduling and CPU limiting separately."
+      ]
+    },
+    {
+      "id": "docs-git-reset",
+      "category": "Technical documentation",
+      "question": "Find Git's manual for reset --soft, --mixed and --hard.",
+      "query": "git reset soft mixed hard git-scm documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "git-scm.com"
+      ],
+      "criteria": [
+        "Verify how each mode affects the index and working tree."
+      ]
+    },
+    {
+      "id": "docs-rust-once",
+      "category": "Technical documentation",
+      "question": "Find Rust standard-library docs for OnceLock::get_or_init.",
+      "query": "Rust std OnceLock get_or_init documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "doc.rust-lang.org"
+      ],
+      "criteria": [
+        "Match the exact type and method and distinguish OnceCell."
+      ]
+    },
+    {
+      "id": "docs-pandas-merge",
+      "category": "Technical documentation",
+      "question": "Find the pandas.merge documentation for the validate parameter.",
+      "query": "pandas merge validate one_to_one documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "pandas.pydata.org"
+      ],
+      "criteria": [
+        "Verify the one-to-one validation value and its purpose."
+      ]
+    },
+    {
+      "id": "docs-sqlite-wal",
+      "category": "Technical documentation",
+      "question": "Find SQLite's documentation on read/write concurrency in WAL mode.",
+      "query": "SQLite write ahead logging concurrent reader writer",
+      "intent": "reference",
+      "expected_domains": [
+        "sqlite.org"
+      ],
+      "criteria": [
+        "Locate the WAL document and its concurrency limits."
+      ]
+    },
+    {
+      "id": "pkg-github-torch",
+      "category": "Open source and packages",
+      "question": "Find the official PyTorch GitHub repository.",
+      "query": "pytorch/pytorch",
+      "intent": "reference",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Match pytorch/pytorch and exclude forks and samples."
+      ],
+      "platform": "github"
+    },
+    {
+      "id": "pkg-github-pyright",
+      "category": "Open source and packages",
+      "question": "Find Microsoft's official Pyright GitHub repository.",
+      "query": "microsoft/pyright",
+      "intent": "reference",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Verify owner/repo and that the project is a Python type checker."
+      ],
+      "platform": "github"
+    },
+    {
+      "id": "pkg-github-k8s",
+      "category": "Open source and packages",
+      "question": "Find the upstream Kubernetes GitHub repository.",
+      "query": "kubernetes/kubernetes",
+      "intent": "reference",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Match the main repository rather than the organization page or a client repository."
+      ],
+      "platform": "github"
+    },
+    {
+      "id": "pkg-npm-eslint",
+      "category": "Open source and packages",
+      "question": "Find the main ESLint package on npm.",
+      "query": "eslint",
+      "intent": "reference",
+      "expected_domains": [
+        "npmjs.com"
+      ],
+      "criteria": [
+        "Match the package name eslint and check its upstream."
+      ],
+      "platform": "npm"
+    },
+    {
+      "id": "pkg-npm-vue-router",
+      "category": "Open source and packages",
+      "question": "Find Vue Router's npm package page.",
+      "query": "vue-router",
+      "intent": "reference",
+      "expected_domains": [
+        "npmjs.com"
+      ],
+      "criteria": [
+        "Match vue-router and exclude related plugins."
+      ],
+      "platform": "npm"
+    },
+    {
+      "id": "pkg-crates-serde",
+      "category": "Open source and packages",
+      "question": "Find Rust serde in the crates.io registry.",
+      "query": "serde",
+      "intent": "reference",
+      "expected_domains": [
+        "crates.io"
+      ],
+      "criteria": [
+        "Match serde and distinguish serde_json."
+      ],
+      "platform": "crates"
+    },
+    {
+      "id": "pkg-crates-tokio",
+      "category": "Open source and packages",
+      "question": "Find the main Tokio package in crates.io.",
+      "query": "tokio",
+      "intent": "reference",
+      "expected_domains": [
+        "crates.io"
+      ],
+      "criteria": [
+        "Verify the crate ID tokio and exclude related crates such as tokio-util."
+      ],
+      "platform": "crates"
+    },
+    {
+      "id": "pkg-gitlab-inkscape",
+      "category": "Open source and packages",
+      "question": "Find the primary Inkscape repository on GitLab.",
+      "query": "inkscape",
+      "intent": "reference",
+      "expected_domains": [
+        "gitlab.com"
+      ],
+      "criteria": [
+        "Identify the upstream project and maintainers and distinguish mirrors."
+      ],
+      "platform": "gitlab"
+    },
+    {
+      "id": "pkg-hf-bert",
+      "category": "Open source and packages",
+      "question": "Find the original BERT Base Uncased model card on Hugging Face.",
+      "query": "google-bert/bert-base-uncased",
+      "intent": "reference",
+      "expected_domains": [
+        "huggingface.co"
+      ],
+      "criteria": [
+        "Match the model ID and exclude downstream fine-tunes."
+      ],
+      "platform": "huggingface"
+    },
+    {
+      "id": "pkg-hf-qwen",
+      "category": "Open source and packages",
+      "question": "Find the Hugging Face model card for Qwen2.5-7B-Instruct.",
+      "query": "Qwen/Qwen2.5-7B-Instruct",
+      "intent": "reference",
+      "expected_domains": [
+        "huggingface.co"
+      ],
+      "criteria": [
+        "Distinguish the base, instruction-tuned and quantized variants."
+      ],
+      "platform": "huggingface"
+    },
+    {
+      "id": "research-arxiv-transformer",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the arXiv record for Attention Is All You Need.",
+      "query": "ti:\"Attention Is All You Need\"",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Verify 1706.03762 and its first-submission date."
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "research-arxiv-vit",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the arXiv record of the original Vision Transformer paper.",
+      "query": "ti:\"An Image is Worth 16x16 Words\"",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Match the original title and authors and distinguish later work."
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "research-arxiv-resnet",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the original arXiv record for the ResNet paper.",
+      "query": "ti:\"Deep Residual Learning for Image Recognition\"",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Verify the preprint identifier and distinguish the conference version."
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "research-crossref-alphafold",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the AlphaFold paper through Crossref and verify its DOI.",
+      "query": "Highly accurate protein structure prediction with AlphaFold Jumper Nature",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Match the Nature paper by Jumper et al. and its DOI."
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "research-crossref-prisma",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the DOI for the PRISMA 2020 statement.",
+      "query": "PRISMA 2020 statement updated guideline systematic reviews BMJ Page",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Distinguish the statement, explanation and subsequent extensions."
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "research-epmc-cas9",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the Cas9 paper by Jinek et al. in Europe PMC.",
+      "query": "A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity",
+      "intent": "reference",
+      "expected_domains": [
+        "europepmc.org"
+      ],
+      "criteria": [
+        "Verify the title, authors and PMID or DOI."
+      ],
+      "platform": "europepmc"
+    },
+    {
+      "id": "research-epmc-hgp",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find the Human Genome Project's initial sequencing paper in Europe PMC.",
+      "query": "Initial sequencing and analysis of the human genome",
+      "intent": "reference",
+      "expected_domains": [
+        "europepmc.org"
+      ],
+      "criteria": [
+        "Distinguish the consortium paper from other contemporary sequencing papers."
+      ],
+      "platform": "europepmc"
+    },
+    {
+      "id": "research-datacite-climate",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find a CMIP6 simulation data record in DataCite.",
+      "query": "CMIP6 climate model dataset",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Record the dataset DOI, version or model name and verify resource type."
+      ],
+      "platform": "datacite"
+    },
+    {
+      "id": "research-zenodo-citation",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find a Citation File Format software or specification record on Zenodo.",
+      "query": "citation file format CFF software",
+      "intent": "reference",
+      "expected_domains": [
+        "zenodo.org"
+      ],
+      "criteria": [
+        "Verify the record directly concerns CFF and identify its resource type."
+      ],
+      "platform": "zenodo"
+    },
+    {
+      "id": "research-openlibrary-frankenstein",
+      "category": "Research and bibliographic identifiers",
+      "question": "Find Mary Shelley's Frankenstein in Open Library.",
+      "query": "Frankenstein Mary Shelley",
+      "intent": "reference",
+      "expected_domains": [
+        "openlibrary.org"
+      ],
+      "criteria": [
+        "Verify the author and distinguish the work record from an edition."
+      ],
+      "platform": "openlibrary"
+    },
+    {
+      "id": "community-stack-overflow-python",
+      "category": "Communities and platform scope",
+      "question": "Find a Stack Overflow Q&A about mutable default arguments in Python.",
+      "query": "Python mutable default arguments",
+      "intent": "general",
+      "expected_domains": [
+        "stackoverflow.com"
+      ],
+      "criteria": [
+        "Find a question page that discusses reuse of the default object."
+      ],
+      "platform": "stackexchange"
+    },
+    {
+      "id": "community-stack-overflow-git",
+      "category": "Communities and platform scope",
+      "question": "Find a Stack Overflow discussion on undoing a local commit while keeping changes.",
+      "query": "git undo last local commit keep changes",
+      "intent": "general",
+      "expected_domains": [
+        "stackoverflow.com"
+      ],
+      "criteria": [
+        "Distinguish operations that preserve changes from those that discard them."
+      ],
+      "platform": "stackexchange"
+    },
+    {
+      "id": "community-hn-postgres",
+      "category": "Communities and platform scope",
+      "question": "Find a Hacker News discussion comparing PostgreSQL and SQLite.",
+      "query": "PostgreSQL SQLite",
+      "intent": "general",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Verify that both databases are compared and return the discussion page."
+      ],
+      "platform": "hackernews"
+    },
+    {
+      "id": "community-v2ex-nas",
+      "category": "Communities and platform scope",
+      "question": "Find a V2EX discussion about home NAS backups.",
+      "query": "NAS 家庭备份",
+      "intent": "general",
+      "expected_domains": [
+        "v2ex.com"
+      ],
+      "criteria": [
+        "Match a topic thread and distinguish tags and off-site articles."
+      ],
+      "platform": "v2ex"
+    },
+    {
+      "id": "community-zhihu-pm25",
+      "category": "Communities and platform scope",
+      "question": "Find a Zhihu Q&A about PM2.5 and air purifiers.",
+      "query": "PM2.5 空气净化器 选购",
+      "intent": "general",
+      "expected_domains": [
+        "zhihu.com"
+      ],
+      "criteria": [
+        "Find a relevant question page and note the evidence type."
+      ],
+      "platform": "zhihu"
+    },
+    {
+      "id": "community-xhs-museum",
+      "category": "Communities and platform scope",
+      "question": "Find a Xiaohongshu visit guide for the Shanghai Museum East branch.",
+      "query": "上海博物馆 东馆 参观攻略",
+      "intent": "general",
+      "expected_domains": [
+        "xiaohongshu.com"
+      ],
+      "criteria": [
+        "Verify the East branch and a post page rather than a search landing page."
+      ],
+      "platform": "xiaohongshu"
+    },
+    {
+      "id": "community-reddit-sqlite",
+      "category": "Communities and platform scope",
+      "question": "Find a Reddit discussion of SQLite WAL and concurrent writes.",
+      "query": "SQLite WAL concurrent writes",
+      "intent": "general",
+      "expected_domains": [
+        "reddit.com"
+      ],
+      "criteria": [
+        "Match a specific post about concurrent writes."
+      ],
+      "platform": "reddit"
+    },
+    {
+      "id": "community-douban-book",
+      "category": "Communities and platform scope",
+      "question": "Find the Douban book record for the first volume of Liu Cixin's Three-Body series.",
+      "query": "三体 刘慈欣 图书",
+      "intent": "general",
+      "expected_domains": [
+        "douban.com"
+      ],
+      "criteria": [
+        "Distinguish the first book from sequels and adaptations."
+      ],
+      "platform": "douban"
+    },
+    {
+      "id": "community-bilibili-git",
+      "category": "Communities and platform scope",
+      "question": "Find a public Bilibili video explaining Git rebase.",
+      "query": "Git rebase 教程",
+      "intent": "general",
+      "expected_domains": [
+        "bilibili.com"
+      ],
+      "criteria": [
+        "Match a video page about rebase."
+      ],
+      "platform": "bilibili"
+    },
+    {
+      "id": "community-youtube-pycon",
+      "category": "Communities and platform scope",
+      "question": "Find a PyCon talk on asyncio or TaskGroup on YouTube.",
+      "query": "PyCon Python asyncio TaskGroup talk",
+      "intent": "general",
+      "expected_domains": [
+        "youtube.com"
+      ],
+      "criteria": [
+        "Check the video topic and publisher identity."
+      ],
+      "platform": "youtube"
+    },
+    {
+      "id": "data-wb-life",
+      "category": "Public data and media",
+      "question": "Find the World Bank China life-expectancy indicator and state a valid observation year.",
+      "query": "CN,SP.DYN.LE00.IN",
+      "intent": "reference",
+      "expected_domains": [
+        "data.worldbank.org"
+      ],
+      "criteria": [
+        "Verify the country, indicator code and observation year."
+      ],
+      "platform": "worldbank"
+    },
+    {
+      "id": "data-wb-japan-gdp",
+      "category": "Public data and media",
+      "question": "Find the World Bank Japan GDP indicator in current US dollars.",
+      "query": "JP,NY.GDP.MKTP.CD",
+      "intent": "reference",
+      "expected_domains": [
+        "data.worldbank.org"
+      ],
+      "criteria": [
+        "Match JP and the specified indicator and distinguish real GDP or other currencies."
+      ],
+      "platform": "worldbank"
+    },
+    {
+      "id": "data-usgs-week",
+      "category": "Public data and media",
+      "question": "Find a USGS M4.5+ earthquake from the past week and report the event time.",
+      "query": "4.5,week",
+      "intent": "reference",
+      "expected_domains": [
+        "earthquake.usgs.gov"
+      ],
+      "criteria": [
+        "Anchor to run time and verify the rolling window, magnitude and event time."
+      ],
+      "platform": "usgs"
+    },
+    {
+      "id": "data-nasa-apollo",
+      "category": "Public data and media",
+      "question": "Find a NASA media library photo from Apollo 11 on the lunar surface.",
+      "query": "Apollo 11 Buzz Aldrin lunar surface",
+      "intent": "reference",
+      "expected_domains": [
+        "images.nasa.gov"
+      ],
+      "criteria": [
+        "Verify the mission and image media type and record the NASA asset ID."
+      ],
+      "platform": "nasa"
+    },
+    {
+      "id": "data-nasa-jwst",
+      "category": "Public data and media",
+      "question": "Find JWST's first deep-field image in the NASA media library.",
+      "query": "James Webb Space Telescope first deep field SMACS 0723",
+      "intent": "reference",
+      "expected_domains": [
+        "images.nasa.gov"
+      ],
+      "criteria": [
+        "Verify SMACS 0723, image type and asset description."
+      ],
+      "platform": "nasa"
+    },
+    {
+      "id": "data-hko-warning",
+      "category": "Public data and media",
+      "question": "Find the Hong Kong Observatory's explanation of tropical cyclone warning signals.",
+      "query": "香港天文台 熱帶氣旋 警告信號 分類",
+      "intent": "reference",
+      "expected_domains": [
+        "hko.gov.hk"
+      ],
+      "criteria": [
+        "Match the signal reference and distinguish historical and live warnings."
+      ],
+      "platform": "hko"
+    },
+    {
+      "id": "data-cn-cma",
+      "category": "Public data and media",
+      "question": "Find China Meteorological Data Service documentation for daily surface climate data.",
+      "query": "中国地面气候资料 日值 数据集 国家气象信息中心",
+      "intent": "reference",
+      "expected_domains": [
+        "data.cma.cn"
+      ],
+      "criteria": [
+        "Verify it describes a data product and record coverage or access conditions."
+      ],
+      "platform": "cma-data"
+    },
+    {
+      "id": "data-cn-stats",
+      "category": "Public data and media",
+      "question": "Find the National Data portal entry for annual provincial gross regional product.",
+      "query": "国家数据 分省 年度 地区生产总值",
+      "intent": "reference",
+      "expected_domains": [
+        "data.stats.gov.cn"
+      ],
+      "criteria": [
+        "Distinguish the data portal from static articles and confirm region and annual dimensions."
+      ],
+      "platform": "china-data"
+    },
+    {
+      "id": "data-ceic",
+      "category": "Public data and media",
+      "question": "Find the China Earthquake Networks Center record for the 2023 Jishishan earthquake.",
+      "query": "中国地震台网 2023 积石山 6.2 地震",
+      "intent": "reference",
+      "expected_domains": [
+        "ceic.ac.cn"
+      ],
+      "criteria": [
+        "Verify location, date and magnitude and retain the issuing source."
+      ],
+      "platform": "ceic"
+    },
+    {
+      "id": "data-wikidata-city",
+      "category": "Public data and media",
+      "question": "Find the Wikidata entity for New York City.",
+      "query": "New York City",
+      "intent": "reference",
+      "expected_domains": [
+        "wikidata.org"
+      ],
+      "criteria": [
+        "Match the city entity and distinguish New York State and other namesakes."
+      ],
+      "platform": "wikidata"
+    },
+    {
+      "id": "edge-java-records",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find the final JEP for Java Records, excluding previews.",
+      "query": "JEP 395 Records JDK 16 final preview",
+      "intent": "reference",
+      "expected_domains": [
+        "openjdk.org"
+      ],
+      "criteria": [
+        "Match the final JEP number and release."
+      ]
+    },
+    {
+      "id": "edge-http-rfc",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find the current HTTP Semantics RFC and the document it replaced.",
+      "query": "RFC HTTP semantics RFC 9110 obsoletes 7231 RFC Editor",
+      "intent": "reference",
+      "expected_domains": [
+        "rfc-editor.org"
+      ],
+      "criteria": [
+        "Check RFC status and the replacement relationship between 9110 and 7231."
+      ]
+    },
+    {
+      "id": "edge-python-release-candidate",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find the official Python 3.13.0rc1 page and confirm the release stage.",
+      "query": "Python 3.13.0rc1 release candidate Python.org",
+      "intent": "reference",
+      "expected_domains": [
+        "python.org"
+      ],
+      "criteria": [
+        "Verify rc1 and exclude the final release and other release candidates."
+      ]
+    },
+    {
+      "id": "edge-github-redis-name",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find Redis itself on GitHub and exclude the Python client.",
+      "query": "redis/redis",
+      "intent": "reference",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Match redis/redis and exclude redis-py."
+      ],
+      "platform": "github"
+    },
+    {
+      "id": "edge-disclosure-annual",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find Kweichow Moutai's 2024 annual report on CNINFO.",
+      "query": "贵州茅台 2024 年年度报告 600519",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "Verify issuer ticker, reporting year and document type."
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "edge-disclosure-exchange",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find CATL's 2024 annual report disclosure on the Shenzhen Stock Exchange.",
+      "query": "宁德时代 300750 2024 年年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "szse.cn"
+      ],
+      "criteria": [
+        "Verify 300750 and annual report and record if only an index is found."
+      ],
+      "platform": "szse"
+    },
+    {
+      "id": "edge-federal-document-id",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find Federal Register document 2025-02305 by number.",
+      "query": "2025-02305",
+      "intent": "reference",
+      "expected_domains": [
+        "federalregister.gov"
+      ],
+      "criteria": [
+        "Require the exact document number and distinguish publication and comment deadline."
+      ],
+      "platform": "federalregister"
+    },
+    {
+      "id": "edge-crossref-doi",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find Highly accurate protein structure prediction with AlphaFold by DOI.",
+      "query": "10.1038/s41586-021-03819-2",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Require an exact DOI match."
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "edge-wiki-mercury",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find the English Wikipedia article about the planet Mercury.",
+      "query": "Mercury planet",
+      "intent": "reference",
+      "expected_domains": [
+        "en.wikipedia.org"
+      ],
+      "criteria": [
+        "Distinguish the planet, chemical element and disambiguation page."
+      ],
+      "platform": "wikipedia"
+    },
+    {
+      "id": "edge-doc-pg-version",
+      "category": "Disambiguation and evidence boundaries",
+      "question": "Find the PostgreSQL 16 documentation for the MERGE command.",
+      "query": "PostgreSQL 16 MERGE SQL command documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "postgresql.org"
+      ],
+      "criteria": [
+        "Require a version-16 path and page and distinguish current or other versions."
+      ]
+    }
+  ]
+}

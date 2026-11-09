@@ -109,9 +109,11 @@ Counts describe the sources or platforms listed in each category. A source can a
 
 ## Search evaluation
 
+The benchmark now includes 100 questions with criteria for checking relevance, source identity and dates.
+
 On November 9, 2026, Free and Smart without keys each ran 20 questions. For each mode, original sources supported 17 results, one was partial and two expected results were missing from the top five.
 
-[Question set, source verification and results](evaluations/reports/2026-11-09-agent-search.en.md)
+[100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
 
 ## Configure API keys
 

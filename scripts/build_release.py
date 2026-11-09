@@ -27,6 +27,7 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "evaluations/reports/2026-11-08-agent-search.md", "evaluations/reports/2026-11-08-agent-search.en.md",
                  "evaluations/reports/2026-11-08-agent-search.data.json",
                  "evaluations/agent-search-cases-v2.json", "evaluations/agent-search-cases-v2.en.json",
+                 "evaluations/agent-search-cases-v3.json", "evaluations/agent-search-cases-v3.en.json",
                  "evaluations/reports/2026-11-09-agent-search.md", "evaluations/reports/2026-11-09-agent-search.en.md",
                  "evaluations/reports/2026-11-09-agent-search.data.json",
                  "evaluations/reports/2026-11-09-public-source-check.json"]
