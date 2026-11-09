@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Expand the Agent benchmark to 20 questions, verify against original sources and add a weekly public-source audit.
 - Add a bilingual Agent search benchmark and live report, keyless benchmark isolation, and query guidance for repositories and disclosures.
 - Add per-source, per-action support status and live-check records, with pending candidates listed separately.
 - Add 11 recent official China listings, DATA.GOV.HK update RSS, and 14 public-index scopes; scoped indexes are not native APIs.

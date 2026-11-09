@@ -109,9 +109,9 @@ Counts describe the sources or platforms listed in each category. A source can a
 
 ## Search evaluation
 
-We use a public question set to inspect retrieval across different tasks and record timings and limitations. On November 8, 2026, Free and Smart without keys each returned results for all eight questions. Relevance, freshness and original sources still require review.
+On November 9, 2026, Free and Smart without keys each ran 20 questions. For each mode, original sources supported 17 results, one was partial and two expected results were missing from the top five.
 
-[Evaluation method, questions and results](evaluations/reports/2026-11-08-agent-search.en.md)
+[Question set, source verification and results](evaluations/reports/2026-11-09-agent-search.en.md)
 
 ## Configure API keys
 

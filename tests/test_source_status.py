@@ -1,7 +1,9 @@
 """Coverage and privacy checks for the published source-status snapshot."""
 import json
 from pathlib import Path
+import sys
 import unittest
+from unittest.mock import patch
 from public_providers import PUBLIC_REGISTRY
 from search_providers import REGISTRY
 from content_sources import FEEDS
@@ -9,6 +11,8 @@ from public_trends import TRENDING
 from search_routing import PLATFORMS, NATIVE_PLATFORMS
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'evaluations'))
+import check_sources
 
 class SourceStatusSnapshotTests(unittest.TestCase):
     @classmethod
@@ -35,6 +39,24 @@ class SourceStatusSnapshotTests(unittest.TestCase):
         self.assertNotIn('api_key', text)
         self.assertNotIn('authorization', text)
         self.assertTrue(all((r.get('keyed_attempts') or 0) == 0 for r in rows if r['kind'] != 'keyed'))
+
+    def test_live_probes_cover_public_actions_once(self):
+        pairs = [(kind, source) for kind, source, _ in check_sources.probes()]
+        expected = {(kind, source) for kind in ('search', 'scope', 'feed', 'trending', 'fetch')
+                    for source in self.by_kind[kind]}
+        self.assertEqual(set(pairs), expected)
+        self.assertEqual(len(pairs), len(expected))
+        self.assertEqual(set(check_sources.FETCH),
+                         {n for n, p in PUBLIC_REGISTRY.items() if p.fetch_endpoint and n != 'community'}
+                         | {'community-python', 'community-rust', 'community-v2ex'})
+
+    def test_hn_link_post_passes_without_body_text(self):
+        with patch.object(check_sources.search, 'run_fetch', return_value={
+            'content': '', 'content_kind': 'discussion_item', 'attempts': 1,
+        }):
+            row = check_sources.check('fetch', 'hackernews', ['fetch',
+                check_sources.FETCH['hackernews'], '--provider', 'hackernews'], 8)
+        self.assertEqual((row['status'], row['count'], row['attempts']), ('passed', 1, 1))
 
     def test_bilingual_status_pages_include_search_and_pending(self):
         for filename, phrases in [('source-status.md', ('支持 · 适配通过','待支持','支持 · 本次受限')),

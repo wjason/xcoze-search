@@ -8,6 +8,8 @@ Each row describes a specific action. **Supported · Passed** means the live sam
 
 Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
 
+[Latest scheduled checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [November 9 local check](../evaluations/reports/2026-11-09-public-source-check.json). The tables below retain the full support snapshot, including browser and keyed actions.
+
 ## Search sources
 
 | Source or action | Status |

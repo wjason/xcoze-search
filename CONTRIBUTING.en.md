@@ -59,3 +59,5 @@ Check documentation links, examples, and facts. Runtime changes need relevant te
 Releases use immutable tags/source commits. Never replace published assets in place; use a new version. CHANGELOG's Unreleased section records unpublished changes.
 
 Contributions are distributed under the project's [MIT License](LICENSE).
+
+Update the public probe samples in `evaluations/check_sources.py` when adding an adapter or site scope. Run the probe locally or review the latest job summary before updating a status snapshot. [Public source checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml).

@@ -1,0 +1,1609 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-09T08:49:55.937471+00:00",
+  "completed_at": "2026-11-09T08:50:41.347666+00:00",
+  "keyless": true,
+  "http_attempts": 40,
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "assessment": "verified",
+      "reference_url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+      "verified_date_or_period": "2026-07-10",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1011.84,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-07-10T00:14:48.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.nea.gov.cn/20251121/e3643b0d5442484e932ad29b65fa3833/c.html",
+              "provider": "exa-free",
+              "published_at": "2025-11-21T05:37:44.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "provider": "exa-free",
+              "published_at": "2025-01-10T01:28:17.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "provider": "exa-free",
+              "published_at": "2025-10-29T00:00:00.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "http://windpower.cpem.org.cn/contents/31/2412.html",
+              "provider": "exa-free",
+              "published_at": "2025-11-06T00:00:00.000Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 777.13,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.nea.gov.cn/20260710/2706be51a7f1446a90658328d1c245d4/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-07-10T00:14:48.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.nea.gov.cn/20251121/e3643b0d5442484e932ad29b65fa3833/c.html",
+              "provider": "exa-free",
+              "published_at": "2025-11-21T05:37:44.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.nea.gov.cn/20250110/a2fd9e4847524810885f16ebdbea32e0/c.html",
+              "provider": "exa-free",
+              "published_at": "2025-01-10T01:28:17.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.gov.cn/zhengce/zhengceku/202511/content_7047707.htm",
+              "provider": "exa-free",
+              "published_at": "2025-10-29T00:00:00.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "http://windpower.cpem.org.cn/contents/31/2412.html",
+              "provider": "exa-free",
+              "published_at": "2025-11-06T00:00:00.000Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cn-statistics",
+      "assessment": "partial",
+      "reference_url": "https://www.stats.gov.cn/sj/zxfbhjd/202611/t20261109_1965795.html",
+      "verified_date_or_period": "2026-11-09",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 917.87,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.stats.gov.cn/sj/?qt=2026",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "provider": "exa-free",
+              "published_at": "2026-10-19T10:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "provider": "exa-free",
+              "published_at": "2026-10-20T09:30:00.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1025.97,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.stats.gov.cn/sj/zxfb/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.stats.gov.cn/sj/?qt=2026",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261019_1965618.html",
+              "provider": "exa-free",
+              "published_at": "2026-10-19T10:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202610/t20261020_1965658.html",
+              "provider": "exa-free",
+              "published_at": "2026-10-20T09:30:00.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://data.stats.gov.cn/easyquery.htm",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cn-news",
+      "assessment": "verified",
+      "reference_url": "https://www.jiemian.com/article/15308219.html",
+      "verified_date_or_period": "2026-11-09",
+      "modes": {
+        "free": {
+          "evidence_rank": 3,
+          "elapsed_ms": 1430.48,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://maomu.com/news",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T05:15:24.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.tmtpost.com/8197806.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.jiemian.com/article/15308219.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.readaitime.com/digests/2026-11-09",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:00:53.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.ncsti.gov.cn/kjdt/kjrd/rgzn_kjrd/",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 3,
+          "elapsed_ms": 1192.65,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://maomu.com/news",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T05:15:24.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.tmtpost.com/8197806.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.jiemian.com/article/15308219.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.readaitime.com/digests/2026-11-09",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:00:53.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.ncsti.gov.cn/kjdt/kjrd/rgzn_kjrd/",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "python-taskgroup",
+      "assessment": "verified",
+      "reference_url": "https://docs.python.org/3/library/asyncio-task.html#task-groups",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1068.1,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://docs.python.org/3/library/asyncio-api-index.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/python/cpython/issues/90908",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1169.54,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://docs.python.org/3/library/asyncio-task.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/python/cpython/blob/main/Lib/asyncio/taskgroups.py",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://docs.python.org/3/library/asyncio-exceptions.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://docs.python.org/3/library/asyncio-api-index.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/python/cpython/issues/90908",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "github-markitdown",
+      "assessment": "verified",
+      "reference_url": "https://raw.githubusercontent.com/microsoft/markitdown/main/README.md",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1180.95,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://github.com/microsoft/markitdown",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://github.com/kigner/markitdown_ui",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/pig-mesh/office2md",
+              "provider": "github",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 288.29,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://github.com/microsoft/markitdown",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://github.com/kigner/markitdown_ui",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+              "provider": "github",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/pig-mesh/office2md",
+              "provider": "github",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "research-rag",
+      "assessment": "verified",
+      "reference_url": "https://arxiv.org/abs/2506.06962v3",
+      "verified_date_or_period": "2025-06-08",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 2267.5,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "provider": "arxiv",
+              "published_at": "2025-06-08T01:33:05Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-18T13:35:21Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-24T02:29:50Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-20T17:40:28Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "provider": "arxiv",
+              "published_at": "2024-11-27T18:27:07Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 863.74,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "provider": "arxiv",
+              "published_at": "2025-06-08T01:33:05Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://arxiv.org/abs/2504.13684v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-18T13:35:21Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://arxiv.org/abs/2504.17204v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-24T02:29:50Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://arxiv.org/abs/2504.14689v1",
+              "provider": "arxiv",
+              "published_at": "2025-04-20T17:40:28Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "provider": "arxiv",
+              "published_at": "2024-11-27T18:27:07Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "financial-disclosure",
+      "assessment": "verified",
+      "reference_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244797.PDF",
+      "verified_date_or_period": "2025",
+      "modes": {
+        "free": {
+          "evidence_rank": 3,
+          "elapsed_ms": 955.31,
+          "results": [
+            {
+              "rank": 1,
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-24/1225177551.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.cninfo.com.cn/new/index?lang=zh",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244797.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225265197.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225243361.pdf",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 3,
+          "elapsed_ms": 1161.8,
+          "results": [
+            {
+              "rank": 1,
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-24/1225177551.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.cninfo.com.cn/new/index?lang=zh",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244797.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225265197.PDF",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "http://static.cninfo.com.cn/finalpage/2026-04-29/1225243361.pdf",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "community-hn",
+      "assessment": "verified",
+      "reference_url": "https://news.ycombinator.com/item?id=27016630",
+      "verified_date_or_period": "2021-05-02",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 448.03,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "provider": "hackernews",
+              "published_at": "2021-05-02T16:43:15Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "provider": "hackernews",
+              "published_at": "2022-05-09T19:35:41Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "provider": "hackernews",
+              "published_at": "2026-08-12T14:22:30Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "provider": "hackernews",
+              "published_at": "2021-03-25T14:20:25Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "provider": "hackernews",
+              "published_at": "2018-06-24T19:03:48Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 540.53,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://news.ycombinator.com/item?id=27016630",
+              "provider": "hackernews",
+              "published_at": "2021-05-02T16:43:15Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://news.ycombinator.com/item?id=31318708",
+              "provider": "hackernews",
+              "published_at": "2022-05-09T19:35:41Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://news.ycombinator.com/item?id=49272832",
+              "provider": "hackernews",
+              "published_at": "2026-08-12T14:22:30Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://news.ycombinator.com/item?id=26580614",
+              "provider": "hackernews",
+              "published_at": "2021-03-25T14:20:25Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://news.ycombinator.com/item?id=17387851",
+              "provider": "hackernews",
+              "published_at": "2018-06-24T19:03:48Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "nbs-cpi-oct",
+      "assessment": "verified",
+      "reference_url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html",
+      "verified_date_or_period": "2026-11-09",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1061.67,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T09:30:00.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "http://www.xinhuanet.com/fortune/20261109/f917ce11e9744cfc844a40008bb62e26/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:10:24.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://jingji.cctv.cn/2026/11/09/ARTItDMLkIIAxSKzgxSjRfzQ261109.shtml",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "http://www.news.cn/20261109/9e6e8510df724a538967976b10776dd4/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:40:25.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.nbd.com.cn/articles/2026-11-09/4641957.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1343.66,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T09:30:00.000Z"
+            },
+            {
+              "rank": 2,
+              "url": "http://www.xinhuanet.com/fortune/20261109/f917ce11e9744cfc844a40008bb62e26/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:10:24.000Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://jingji.cctv.cn/2026/11/09/ARTItDMLkIIAxSKzgxSjRfzQ261109.shtml",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            },
+            {
+              "rank": 4,
+              "url": "http://www.news.cn/20261109/9e6e8510df724a538967976b10776dd4/c.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T08:40:25.000Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.nbd.com.cn/articles/2026-11-09/4641957.html",
+              "provider": "exa-free",
+              "published_at": "2026-11-09T00:00:00.000Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "python-release",
+      "assessment": "verified",
+      "reference_url": "https://www.python.org/downloads/release/python-3140/",
+      "verified_date_or_period": "2025-10-07",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1135.95,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.python.org/downloads/release/python-3140/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://docs.python.org/3/whatsnew/3.14.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://discuss.python.org/t/python-3-14-0-final-is-here/104210",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://www.python.org/ftp/python/3.14.0/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://devguide.python.org/versions/",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 931.3,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.python.org/downloads/release/python-3140/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://docs.python.org/3/whatsnew/3.14.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://discuss.python.org/t/python-3-14-0-final-is-here/104210",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://www.python.org/ftp/python/3.14.0/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://www.python.org/search/?q=python+3.14&submit=",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pep703",
+      "assessment": "verified",
+      "reference_url": "https://peps.python.org/pep-0703/",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 888.83,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://peps.python.org/pep-0703/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/python/peps/pull/2955",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://pydevtools.com/handbook/explanation/what-is-pep-703/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-in-cpython-acceptance/37075/1",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/python/cpython/issues/108219",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1009.36,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://peps.python.org/pep-0703/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/python/peps/pull/2955",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://pydevtools.com/handbook/explanation/what-is-pep-703/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://discuss.python.org/t/pep-703-making-the-global-interpreter-lock-optional-in-cpython-acceptance/37075/1",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://github.com/python/cpython/issues/108219",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "sqlite-release",
+      "assessment": "verified",
+      "reference_url": "https://www.sqlite.org/releaselog/3_45_0.html",
+      "verified_date_or_period": "2024-01-15",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 752.67,
+          "results": [
+            {
+              "rank": 1,
+              "url": "http://www.sqlite.org/releaselog/3_45_0.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/sqlite/sqlite/tags?after=vesion-3.45.1",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://sqlite.p2hp.com/news.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://wiki.tcl-lang.org/page/SQLite",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://www.sqlite.org/chronology.html",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1037.29,
+          "results": [
+            {
+              "rank": 1,
+              "url": "http://www.sqlite.org/releaselog/3_45_0.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://github.com/sqlite/sqlite/tags?after=vesion-3.45.1",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://sqlite.p2hp.com/news.html",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://wiki.tcl-lang.org/page/SQLite",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://www.sqlite.org/chronology.html",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "crossref-deep-learning",
+      "assessment": "miss",
+      "reference_url": "https://doi.org/10.1038/nature14539",
+      "verified_date_or_period": "2015-05-27",
+      "modes": {
+        "free": {
+          "evidence_rank": null,
+          "elapsed_ms": 3166.41,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://doi.org/10.1190/tle12101038.1",
+              "provider": "crossref",
+              "published_at": "1993-10-01"
+            },
+            {
+              "rank": 2,
+              "url": "https://doi.org/10.1515/zna-1955-1223",
+              "provider": "crossref",
+              "published_at": "1955-12-01"
+            },
+            {
+              "rank": 3,
+              "url": "https://doi.org/10.1515/zna-1955-1222",
+              "provider": "crossref",
+              "published_at": "1955-12-01"
+            },
+            {
+              "rank": 4,
+              "url": "https://doi.org/10.1055/s-0034-1379129",
+              "provider": "crossref",
+              "published_at": "2014-09-17"
+            },
+            {
+              "rank": 5,
+              "url": "https://doi.org/10.1055/s-0036-1589277",
+              "provider": "crossref",
+              "published_at": "2016-09-19"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": null,
+          "elapsed_ms": 3964.43,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://doi.org/10.1190/tle12101038.1",
+              "provider": "crossref",
+              "published_at": "1993-10-01"
+            },
+            {
+              "rank": 2,
+              "url": "https://doi.org/10.1515/zna-1955-1223",
+              "provider": "crossref",
+              "published_at": "1955-12-01"
+            },
+            {
+              "rank": 3,
+              "url": "https://doi.org/10.1515/zna-1955-1222",
+              "provider": "crossref",
+              "published_at": "1955-12-01"
+            },
+            {
+              "rank": 4,
+              "url": "https://doi.org/10.1055/s-0034-1379129",
+              "provider": "crossref",
+              "published_at": "2014-09-17"
+            },
+            {
+              "rank": 5,
+              "url": "https://doi.org/10.1055/s-0036-1589277",
+              "provider": "crossref",
+              "published_at": "2016-09-19"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "arxiv-rag-version",
+      "assessment": "verified",
+      "reference_url": "https://arxiv.org/abs/2005.11401v4",
+      "verified_date_or_period": "2020-05-22",
+      "modes": {
+        "free": {
+          "evidence_rank": 3,
+          "elapsed_ms": 2331.51,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "provider": "arxiv",
+              "published_at": "2024-11-27T18:27:07Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "provider": "arxiv",
+              "published_at": "2025-06-08T01:33:05Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://arxiv.org/abs/2005.11401v4",
+              "provider": "arxiv",
+              "published_at": "2020-05-22T21:34:34Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://arxiv.org/abs/2207.03030v1",
+              "provider": "arxiv",
+              "published_at": "2022-07-07T00:57:02Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://arxiv.org/abs/2402.12317v2",
+              "provider": "arxiv",
+              "published_at": "2024-02-19T17:37:28Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 3,
+          "elapsed_ms": 800.25,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://arxiv.org/abs/2411.18583v1",
+              "provider": "arxiv",
+              "published_at": "2024-11-27T18:27:07Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://arxiv.org/abs/2506.06962v3",
+              "provider": "arxiv",
+              "published_at": "2025-06-08T01:33:05Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://arxiv.org/abs/2005.11401v4",
+              "provider": "arxiv",
+              "published_at": "2020-05-22T21:34:34Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://arxiv.org/abs/2207.03030v1",
+              "provider": "arxiv",
+              "published_at": "2022-07-07T00:57:02Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://arxiv.org/abs/2402.12317v2",
+              "provider": "arxiv",
+              "published_at": "2024-02-19T17:37:28Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "npm-typescript",
+      "assessment": "verified",
+      "reference_url": "https://registry.npmjs.org/typescript/latest",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 447.95,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.npmjs.com/package/typescript",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/eslint-plugin",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/types",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://www.npmjs.com/package/@babel/preset-typescript",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/scope-manager",
+              "provider": "npm",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 674.02,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.npmjs.com/package/typescript",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/eslint-plugin",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/types",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://www.npmjs.com/package/@babel/preset-typescript",
+              "provider": "npm",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://www.npmjs.com/package/@typescript-eslint/scope-manager",
+              "provider": "npm",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "us-ai-rfi",
+      "assessment": "miss",
+      "reference_url": "https://www.govinfo.gov/content/pkg/FR-2025-02-06/html/2025-02305.htm",
+      "verified_date_or_period": "2025-02-06",
+      "modes": {
+        "free": {
+          "evidence_rank": null,
+          "elapsed_ms": 1085.68,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22743/medicare-and-medicaid-programs-cy-2027-payment-policies-under-the-physician-fee-schedule-and-other",
+              "provider": "federalregister",
+              "published_at": "2026-11-09"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.federalregister.gov/documents/2026/11/06/2026-22739/medicare-program-hospital-outpatient-prospective-payment-and-ambulatory-surgical-center-payment",
+              "provider": "federalregister",
+              "published_at": "2026-11-06"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.federalregister.gov/documents/2026/11/05/2026-22615/proposed-priorities-and-definitions-secretarys-supplemental-priorities-and-definitions",
+              "provider": "federalregister",
+              "published_at": "2026-11-05"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22174/accreditation-innovation-and-modernization-the-secretarys-recognition-of-accrediting-agencies",
+              "provider": "federalregister",
+              "published_at": "2026-10-30"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.federalregister.gov/documents/2026/10/28/2026-21948/ncua-draft-2027-2028-budget",
+              "provider": "federalregister",
+              "published_at": "2026-10-28"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": null,
+          "elapsed_ms": 890.59,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22743/medicare-and-medicaid-programs-cy-2027-payment-policies-under-the-physician-fee-schedule-and-other",
+              "provider": "federalregister",
+              "published_at": "2026-11-09"
+            },
+            {
+              "rank": 2,
+              "url": "https://www.federalregister.gov/documents/2026/11/06/2026-22739/medicare-program-hospital-outpatient-prospective-payment-and-ambulatory-surgical-center-payment",
+              "provider": "federalregister",
+              "published_at": "2026-11-06"
+            },
+            {
+              "rank": 3,
+              "url": "https://www.federalregister.gov/documents/2026/11/05/2026-22615/proposed-priorities-and-definitions-secretarys-supplemental-priorities-and-definitions",
+              "provider": "federalregister",
+              "published_at": "2026-11-05"
+            },
+            {
+              "rank": 4,
+              "url": "https://www.federalregister.gov/documents/2026/10/30/2026-22174/accreditation-innovation-and-modernization-the-secretarys-recognition-of-accrediting-agencies",
+              "provider": "federalregister",
+              "published_at": "2026-10-30"
+            },
+            {
+              "rank": 5,
+              "url": "https://www.federalregister.gov/documents/2026/10/28/2026-21948/ncua-draft-2027-2028-budget",
+              "provider": "federalregister",
+              "published_at": "2026-10-28"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "worldbank-pop",
+      "assessment": "verified",
+      "reference_url": "https://api.worldbank.org/v2/country/CN/indicator/SP.POP.TOTL?format=json&per_page=5",
+      "verified_date_or_period": "2025",
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 776.87,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 369.11,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://data.worldbank.org/indicator/SP.POP.TOTL?locations=CN",
+              "provider": "worldbank",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mdn-abort",
+      "assessment": "verified",
+      "reference_url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 957.57,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://web-platform-dx.github.io/web-features-explorer/features/abortsignal-timeout/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://caniuse.com/mdn-api_abortsignal_timeout_static",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://api.flutter.dev/flutter/package-web_web/AbortSignal/timeout.html",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 578.58,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal/timeout_static",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://web-platform-dx.github.io/web-features-explorer/features/abortsignal-timeout/",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://caniuse.com/mdn-api_abortsignal_timeout_static",
+              "provider": "exa-free",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://api.flutter.dev/flutter/package-web_web/AbortSignal/timeout.html",
+              "provider": "exa-free",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "nasa-artemis",
+      "assessment": "verified",
+      "reference_url": "https://images-api.nasa.gov/search?nasa_id=NHQ202211160030",
+      "verified_date_or_period": "2022-11-16",
+      "modes": {
+        "free": {
+          "evidence_rank": 3,
+          "elapsed_ms": 1040.91,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://images.nasa.gov/details-Artemis%20I%20Launch%202022%20CU%20tracking%20from%20Press%20Site_compressed",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://images.nasa.gov/details-Artemis%20I%20Launches%20to%20the%20Moon%20%28Official%20NASA%20Recap%29",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://images.nasa.gov/details-NHQ202211160030",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://images.nasa.gov/details-NHQ202211160200",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://images.nasa.gov/details-NHQ202211160019",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 3,
+          "elapsed_ms": 869.79,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://images.nasa.gov/details-Artemis%20I%20Launch%202022%20CU%20tracking%20from%20Press%20Site_compressed",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 2,
+              "url": "https://images.nasa.gov/details-Artemis%20I%20Launches%20to%20the%20Moon%20%28Official%20NASA%20Recap%29",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 3,
+              "url": "https://images.nasa.gov/details-NHQ202211160030",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 4,
+              "url": "https://images.nasa.gov/details-NHQ202211160200",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            },
+            {
+              "rank": 5,
+              "url": "https://images.nasa.gov/details-NHQ202211160019",
+              "provider": "nasa",
+              "published_at": "2022-11-16T00:00:00Z"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "wikipedia-utc",
+      "assessment": "verified",
+      "reference_url": "https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6",
+      "verified_date_or_period": null,
+      "modes": {
+        "free": {
+          "evidence_rank": 1,
+          "elapsed_ms": 1747.72,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://zh.wikipedia.org/wiki/%E4%B8%96%E7%95%8C%E6%97%B6",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://zh.wikipedia.org/wiki/%E5%8C%97%E7%BE%8E%E4%B8%9C%E9%83%A8%E6%97%B6%E5%8C%BA",
+              "provider": "wikipedia",
+              "published_at": null
+            }
+          ]
+        },
+        "smart": {
+          "evidence_rank": 1,
+          "elapsed_ms": 947.39,
+          "results": [
+            {
+              "rank": 1,
+              "url": "https://zh.wikipedia.org/wiki/%E5%8D%8F%E8%B0%83%E4%B8%96%E7%95%8C%E6%97%B6",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 2,
+              "url": "https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 3,
+              "url": "https://zh.wikipedia.org/wiki/%E6%97%B6%E5%8C%BA%E5%88%97%E8%A1%A8",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 4,
+              "url": "https://zh.wikipedia.org/wiki/%E4%B8%96%E7%95%8C%E6%97%B6",
+              "provider": "wikipedia",
+              "published_at": null
+            },
+            {
+              "rank": 5,
+              "url": "https://zh.wikipedia.org/wiki/%E5%8C%97%E7%BE%8E%E4%B8%9C%E9%83%A8%E6%97%B6%E5%8C%BA",
+              "provider": "wikipedia",
+              "published_at": null
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

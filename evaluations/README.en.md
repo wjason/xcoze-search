@@ -6,7 +6,17 @@ Corpus date: 2026-11-02. `queries.json` contains 12 Chinese/English search queri
 
 ## Agent search question set
 
-The [November 8, 2026 retrieval evaluation](reports/2026-11-08-agent-search.en.md) includes eight questions, review notes and a keyless reproduction command. Published data retains sanitized links and metrics; answers, dates and original pages require human review.
+The [November 9 benchmark](reports/2026-11-09-agent-search.en.md) expands the set from 8 to 20 questions and records source and date checks. See the [previous run](reports/2026-11-08-agent-search.en.md) for the original baseline.
+
+## Public source checks
+
+The [GitHub Actions workflow](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) runs weekly on Mondays at 11:23 Beijing time and can be started manually. Its run summary lists each action and differences from the November 5 snapshot. The JSON artifact is retained for 90 days. On November 9, [a local check](reports/2026-11-09-public-source-check.json) covered 75 actions. It recorded 67 passes, 5 limited and 3 with no hits. The workflow checks search, reading, feeds, trends and site scopes. API-key services and local browser engines remain separate checks.
+
+```bash
+python3 evaluations/check_sources.py --live --output /tmp/xcoze-source-check.json --summary /tmp/xcoze-source-summary.md
+```
+
+Omit `--live` for a local plan with no requests. Each action gets up to one attempt and follows source cooldowns.
 
 ## Plan without networking
 

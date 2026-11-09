@@ -1,0 +1,39 @@
+name: Public source checks
+
+on:
+  schedule:
+    - cron: '23 3 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/source-check.yml'
+      - 'evaluations/check_sources.py'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-source-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check public sources
+        run: |
+          XDG_CACHE_HOME="$RUNNER_TEMP" python evaluations/check_sources.py --live --environment github-actions --output source-check.json --summary "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-source-check
+          path: source-check.json
+          if-no-files-found: error
+          retention-days: 90

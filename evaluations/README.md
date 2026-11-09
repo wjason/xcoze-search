@@ -6,7 +6,17 @@
 
 ## Agent 搜索题集
 
-[2026-11-08 检索评测](reports/2026-11-08-agent-search.md)包含 8 道分领域问题、逐项观察和免 Key 的复现命令。公开结果只保留脱敏链接及指标；实际答案、日期和原文需要人工核实。
+[2026-11-09 评测](reports/2026-11-09-agent-search.md)把题集从 8 道扩到 20 道，并记录逐题原文和日期核验。[上一轮评测](reports/2026-11-08-agent-search.md)保留原始基线。
+
+## 公开来源巡检
+
+[GitHub Actions 巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml)每周一北京时间 11:23 运行，也可手动触发。每次运行的摘要列出逐项状态以及与 11 月 5 日快照的差异，JSON 产物保留 90 天。11 月 9 日的[本地巡检](reports/2026-11-09-public-source-check.json)覆盖 75 项，67 项通过、5 项受限、3 项无命中。巡检覆盖公开检索、网页读取、订阅、热点及网站定向搜索。带 Key 服务和本地浏览器分别验证。
+
+```bash
+python3 evaluations/check_sources.py --live --output /tmp/xcoze-source-check.json --summary /tmp/xcoze-source-summary.md
+```
+
+省略 `--live` 可在离线状态查看计划。每项最多发起一次请求，并遵守来源冷却限制。
 
 ## 默认只看计划
 

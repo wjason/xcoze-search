@@ -70,6 +70,12 @@ def main():
             text='# 来源支持状态\n\n**简体中文** | [English](source-status.en.md)\n\n[返回来源列表](sources.md)\n\n'
             text+='每行对应一项具体能力。**支持 · 适配通过**表示本次环境中的实际样例返回了内容；它不是持续可用或准确率保证。受限、无命中和待配置仍表示已支持，但本次未验证成功。搜索与阅读分别记录。\n\n'
             text+='检查时间：'+checked+'，北京时间。公开记录不包含凭据和账号专属错误详情。[查看脱敏测试结果](../'+str(audit_rel)+')。\n'
+        workflow = 'https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml'
+        local_check = '../evaluations/reports/2026-11-09-public-source-check.json'
+        if english:
+            text += f'\n[Latest scheduled checks]({workflow}) · [November 9 local check]({local_check}). The tables below retain the full support snapshot, including browser and keyed actions.\n'
+        else:
+            text += f'\n[查看持续巡检]({workflow}) · [11 月 9 日本地巡检]({local_check})。下表保留完整支持快照，包括浏览器与带 Key 的能力。\n'
         def table(title, items):
             nonlocal text
             text+='\n## '+title+'\n\n'+('| Source or action | Status |\n|---|---|\n' if english else '| 来源或能力 | 状态 |\n|---|---|\n')

@@ -1,0 +1,278 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-09",
+  "notice": "Public retrieval benchmark. Review result relevance and dates manually; this is not an automatic accuracy oracle.",
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "category": "中文政策",
+      "question": "查找国家能源局关于海上风电的政策或新闻，给出官方链接和日期。",
+      "query": "国家能源局 海上风电 政策",
+      "intent": "reference",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "官方页面与海上风电直接相关",
+        "核对发布日期"
+      ]
+    },
+    {
+      "id": "cn-statistics",
+      "category": "中文统计",
+      "question": "查找国家统计局最新经济数据发布及其日期。",
+      "query": "国家统计局 国民经济 统计 数据 最新",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "统计局原始发布",
+        "核对发布时间和统计期"
+      ]
+    },
+    {
+      "id": "cn-news",
+      "category": "中文新闻",
+      "question": "查找中文媒体关于人工智能的近期报道。",
+      "query": "人工智能 最新 新闻",
+      "intent": "current",
+      "criteria": [
+        "与人工智能直接相关的新闻",
+        "核对报道时间"
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "category": "英文技术文档",
+      "question": "找到 Python TaskGroup 的异常处理官方文档。",
+      "query": "Python asyncio TaskGroup exception cancellation official documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "官方 TaskGroup 文档涉及异常与取消"
+      ]
+    },
+    {
+      "id": "github-markitdown",
+      "category": "开源项目",
+      "question": "找到 microsoft/markitdown 的 GitHub 官方仓库。",
+      "query": "microsoft/markitdown",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "仓库为 github.com/microsoft/markitdown"
+      ]
+    },
+    {
+      "id": "research-rag",
+      "category": "科研",
+      "question": "搜索关于检索增强生成的公开论文。",
+      "query": "retrieval augmented generation",
+      "platform": "arxiv",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "结果为相关论文",
+        "标明论文日期"
+      ]
+    },
+    {
+      "id": "financial-disclosure",
+      "category": "金融",
+      "question": "查找巨潮资讯关于上市公司年度报告的公开信息。",
+      "query": "上市公司 年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "链接指向巨潮资讯且内容相关",
+        "核对报告期"
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "community-hn",
+      "category": "社区",
+      "question": "找到 Hacker News 上关于 SQLite 的讨论。",
+      "query": "SQLite",
+      "platform": "hackernews",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "链接为实际讨论页面",
+        "核对发布日期"
+      ]
+    },
+    {
+      "id": "nbs-cpi-oct",
+      "category": "中文统计",
+      "question": "截至 2026-11-09，国家统计局最近一次发布的 CPI 对应哪个统计月？",
+      "query": "2026年10月份 居民消费价格 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "匹配最新发布的统计期和发布日期。"
+      ]
+    },
+    {
+      "id": "python-release",
+      "category": "软件发布",
+      "question": "Python 3.14.0 的正式发布日期是哪天？",
+      "query": "Python 3.14.0 release date Python.org",
+      "intent": "reference",
+      "expected_domains": [
+        "python.org"
+      ],
+      "criteria": [
+        "找到 3.14.0 正式发布页，区分预发布和后续补丁。"
+      ]
+    },
+    {
+      "id": "pep703",
+      "category": "英文规范",
+      "question": "哪份 PEP 提议让 CPython 的 GIL 可选？",
+      "query": "PEP making global interpreter lock optional CPython 703",
+      "intent": "reference",
+      "expected_domains": [
+        "peps.python.org"
+      ],
+      "criteria": [
+        "找到 PEP 703，核对标题与状态。"
+      ]
+    },
+    {
+      "id": "sqlite-release",
+      "category": "软件发布",
+      "question": "SQLite 3.45.0 在哪天发布？",
+      "query": "SQLite 3.45.0 release log date",
+      "intent": "reference",
+      "expected_domains": [
+        "sqlite.org"
+      ],
+      "criteria": [
+        "找到精确版本的官方发布记录。"
+      ]
+    },
+    {
+      "id": "crossref-deep-learning",
+      "category": "科研",
+      "question": "Nature 综述 Deep learning（LeCun 等）的 DOI 和发表日期是什么？",
+      "query": "10.1038/nature14539",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "比对 DOI 与期刊网页的在线发表日期。"
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "arxiv-rag-version",
+      "category": "科研",
+      "question": "Lewis 等人的 RAG 论文首次提交日期是什么？",
+      "query": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "找到 arXiv:2005.11401，区分 v1 和最后修订日期。"
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "npm-typescript",
+      "category": "软件包",
+      "question": "找到 Microsoft TypeScript 的 npm 包。",
+      "query": "typescript",
+      "intent": "reference",
+      "expected_domains": [
+        "npmjs.com"
+      ],
+      "criteria": [
+        "确认官方包名与仓库。"
+      ],
+      "platform": "npm"
+    },
+    {
+      "id": "us-ai-rfi",
+      "category": "美国公告",
+      "question": "找到 2025 年美国 AI Action Plan 征求意见公告并核对发布日。",
+      "query": "Request for Information on the Development of an Artificial Intelligence AI Action Plan",
+      "intent": "reference",
+      "expected_domains": [
+        "federalregister.gov"
+      ],
+      "criteria": [
+        "区分公告发布日期和意见截止日。"
+      ],
+      "platform": "federalregister"
+    },
+    {
+      "id": "worldbank-pop",
+      "category": "数据指标",
+      "question": "找到世界银行中国总人口指标，并核对结果对应的数据年份。",
+      "query": "CN,SP.POP.TOTL",
+      "intent": "reference",
+      "expected_domains": [
+        "data.worldbank.org"
+      ],
+      "criteria": [
+        "从世界银行核对指标和数据观察年。"
+      ],
+      "platform": "worldbank"
+    },
+    {
+      "id": "mdn-abort",
+      "category": "英文技术文档",
+      "question": "找到 MDN 对 AbortSignal.timeout 的说明。",
+      "query": "AbortSignal.timeout static method MDN",
+      "intent": "reference",
+      "expected_domains": [
+        "developer.mozilla.org"
+      ],
+      "criteria": [
+        "确认精确 API 页面及超时单位。"
+      ]
+    },
+    {
+      "id": "nasa-artemis",
+      "category": "官方媒体库",
+      "question": "在 NASA 素材库中找 Artemis I 发射图片。",
+      "query": "Artemis I launch",
+      "intent": "reference",
+      "expected_domains": [
+        "images.nasa.gov"
+      ],
+      "criteria": [
+        "找到与 Artemis I 发射直接相关的图像。"
+      ],
+      "platform": "nasa"
+    },
+    {
+      "id": "wikipedia-utc",
+      "category": "中文百科",
+      "question": "找到中文维基百科的协调世界时条目。",
+      "query": "协调世界时",
+      "intent": "reference",
+      "expected_domains": [
+        "zh.wikipedia.org"
+      ],
+      "criteria": [
+        "精确匹配主题与语言。"
+      ],
+      "platform": "wikipedia"
+    }
+  ]
+}

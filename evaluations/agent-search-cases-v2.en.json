@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-09",
+  "notice": "Public retrieval benchmark; queries are preserved for reproducibility. Review relevance and dates manually.",
+  "cases": [
+    {
+      "id": "cn-energy-policy",
+      "category": "Chinese policy",
+      "question": "Find official information about offshore wind from the National Energy Administration.",
+      "query": "国家能源局 海上风电 政策",
+      "intent": "reference",
+      "expected_domains": [
+        "nea.gov.cn"
+      ],
+      "criteria": [
+        "Relevant official page; inspect publication date."
+      ]
+    },
+    {
+      "id": "cn-statistics",
+      "category": "Chinese statistics",
+      "question": "Find the latest economic statistics released by the National Bureau of Statistics.",
+      "query": "国家统计局 国民经济 统计 数据 最新",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Official release; distinguish publication and reporting periods."
+      ]
+    },
+    {
+      "id": "cn-news",
+      "category": "Chinese news",
+      "question": "Find recent Chinese reports about artificial intelligence.",
+      "query": "人工智能 最新 新闻",
+      "intent": "current",
+      "criteria": [
+        "Relevant news with a verifiable date."
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "category": "Technical documentation",
+      "question": "Find official Python TaskGroup exception handling documentation.",
+      "query": "Python asyncio TaskGroup exception cancellation official documentation",
+      "intent": "reference",
+      "expected_domains": [
+        "docs.python.org"
+      ],
+      "criteria": [
+        "Official documentation on exceptions and cancellation."
+      ]
+    },
+    {
+      "id": "github-markitdown",
+      "category": "Open source",
+      "question": "Find the official microsoft/markitdown GitHub repository.",
+      "query": "microsoft/markitdown",
+      "platform": "github",
+      "expected_domains": [
+        "github.com"
+      ],
+      "criteria": [
+        "Find github.com/microsoft/markitdown."
+      ]
+    },
+    {
+      "id": "research-rag",
+      "category": "Research",
+      "question": "Find public research papers on retrieval-augmented generation.",
+      "query": "retrieval augmented generation",
+      "platform": "arxiv",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Find relevant papers and their dates."
+      ]
+    },
+    {
+      "id": "financial-disclosure",
+      "category": "Financial disclosures",
+      "question": "Find public annual reports on CNINFO.",
+      "query": "上市公司 年度报告",
+      "intent": "reference",
+      "expected_domains": [
+        "cninfo.com.cn"
+      ],
+      "criteria": [
+        "Find a relevant CNINFO disclosure and check its reporting period."
+      ],
+      "platform": "cninfo"
+    },
+    {
+      "id": "community-hn",
+      "category": "Community",
+      "question": "Find Hacker News discussions about SQLite.",
+      "query": "SQLite",
+      "platform": "hackernews",
+      "expected_domains": [
+        "news.ycombinator.com"
+      ],
+      "criteria": [
+        "Find discussion links and dates."
+      ]
+    },
+    {
+      "id": "nbs-cpi-oct",
+      "category": "Chinese statistics",
+      "question": "As of 2026-11-09, which month does the latest NBS CPI release cover?",
+      "query": "2026年10月份 居民消费价格 国家统计局",
+      "intent": "current",
+      "expected_domains": [
+        "stats.gov.cn"
+      ],
+      "criteria": [
+        "Match the reference period and publication date of the latest release."
+      ]
+    },
+    {
+      "id": "python-release",
+      "category": "Software release",
+      "question": "When was Python 3.14.0 released?",
+      "query": "Python 3.14.0 release date Python.org",
+      "intent": "reference",
+      "expected_domains": [
+        "python.org"
+      ],
+      "criteria": [
+        "Find the final 3.14.0 release page, distinguishing prereleases and patches."
+      ]
+    },
+    {
+      "id": "pep703",
+      "category": "English specification",
+      "question": "Which PEP proposed making the GIL optional in CPython?",
+      "query": "PEP making global interpreter lock optional CPython 703",
+      "intent": "reference",
+      "expected_domains": [
+        "peps.python.org"
+      ],
+      "criteria": [
+        "Find PEP 703 and confirm its title and status."
+      ]
+    },
+    {
+      "id": "sqlite-release",
+      "category": "Software release",
+      "question": "On what date was SQLite 3.45.0 released?",
+      "query": "SQLite 3.45.0 release log date",
+      "intent": "reference",
+      "expected_domains": [
+        "sqlite.org"
+      ],
+      "criteria": [
+        "Find the official release log for the exact version."
+      ]
+    },
+    {
+      "id": "crossref-deep-learning",
+      "category": "Research",
+      "question": "What are the DOI and publication date of the Nature review Deep learning by LeCun et al.?",
+      "query": "10.1038/nature14539",
+      "intent": "reference",
+      "expected_domains": [
+        "doi.org"
+      ],
+      "criteria": [
+        "Match the DOI and verify the online publication date on the journal page."
+      ],
+      "platform": "crossref"
+    },
+    {
+      "id": "arxiv-rag-version",
+      "category": "Research",
+      "question": "When was the RAG paper by Lewis et al. first submitted?",
+      "query": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+      "intent": "reference",
+      "expected_domains": [
+        "arxiv.org"
+      ],
+      "criteria": [
+        "Find arXiv:2005.11401 and distinguish v1 from the last revision."
+      ],
+      "platform": "arxiv"
+    },
+    {
+      "id": "npm-typescript",
+      "category": "Package registry",
+      "question": "Find the npm package for Microsoft TypeScript.",
+      "query": "typescript",
+      "intent": "reference",
+      "expected_domains": [
+        "npmjs.com"
+      ],
+      "criteria": [
+        "Verify the package name and upstream repository."
+      ],
+      "platform": "npm"
+    },
+    {
+      "id": "us-ai-rfi",
+      "category": "US government",
+      "question": "Find the US 2025 AI Action Plan request for information and confirm its publication date.",
+      "query": "Request for Information on the Development of an Artificial Intelligence AI Action Plan",
+      "intent": "reference",
+      "expected_domains": [
+        "federalregister.gov"
+      ],
+      "criteria": [
+        "Distinguish the publication date from the response deadline."
+      ],
+      "platform": "federalregister"
+    },
+    {
+      "id": "worldbank-pop",
+      "category": "Data indicator",
+      "question": "Find the World Bank total-population indicator for China and verify the observation year returned.",
+      "query": "CN,SP.POP.TOTL",
+      "intent": "reference",
+      "expected_domains": [
+        "data.worldbank.org"
+      ],
+      "criteria": [
+        "Confirm the indicator and observation year against World Bank data."
+      ],
+      "platform": "worldbank"
+    },
+    {
+      "id": "mdn-abort",
+      "category": "English documentation",
+      "question": "Find the MDN documentation for AbortSignal.timeout.",
+      "query": "AbortSignal.timeout static method MDN",
+      "intent": "reference",
+      "expected_domains": [
+        "developer.mozilla.org"
+      ],
+      "criteria": [
+        "Confirm the exact API page and timeout unit."
+      ]
+    },
+    {
+      "id": "nasa-artemis",
+      "category": "Official media library",
+      "question": "Find an Artemis I launch image in the NASA media library.",
+      "query": "Artemis I launch",
+      "intent": "reference",
+      "expected_domains": [
+        "images.nasa.gov"
+      ],
+      "criteria": [
+        "Find imagery of the Artemis I launch."
+      ],
+      "platform": "nasa"
+    },
+    {
+      "id": "wikipedia-utc",
+      "category": "Chinese encyclopedia",
+      "question": "Find the Chinese Wikipedia article for Coordinated Universal Time.",
+      "query": "协调世界时",
+      "intent": "reference",
+      "expected_domains": [
+        "zh.wikipedia.org"
+      ],
+      "criteria": [
+        "Match the topic and language."
+      ],
+      "platform": "wikipedia"
+    }
+  ]
+}

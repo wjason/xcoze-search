@@ -1,0 +1,711 @@
+{
+  "schema_version": 1,
+  "live": true,
+  "environment": "local",
+  "started_at": "2026-11-09T16:53:20+08:00",
+  "checked_at": "2026-11-09T16:54:15+08:00",
+  "planned_actions": 75,
+  "http_attempts": 74,
+  "results": [
+    {
+      "kind": "search",
+      "id": "bing",
+      "status": "limited",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 948,
+      "errors": [
+        {
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "kind": "search",
+      "id": "duckduckgo",
+      "status": "limited",
+      "count": 0,
+      "attempts": 0,
+      "elapsed_ms": 3,
+      "errors": [
+        {
+          "code": "source_cooldown",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "kind": "search",
+      "id": "exa-free",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 603,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "github",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 581,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "hackernews",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 405,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "wikipedia",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 610,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "stackexchange",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 337,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "arxiv",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 84,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "crossref",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 2552,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "npm",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 116,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "crates",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1002,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "gitlab",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 602,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "europepmc",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 982,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "huggingface",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 316,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "openlibrary",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 821,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "datacite",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1016,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "zenodo",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 950,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "wikidata",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 566,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "nasa",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 839,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "federalregister",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 688,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "worldbank",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 141,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "usgs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 642,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "govcn",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 308,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "ndrc",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 383,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "nbs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 7244,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "nea",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 216,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "miit",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 228,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "mee",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 334,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "mem",
+      "status": "empty",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 166,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "pbc",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 86,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "ggzy",
+      "status": "empty",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 319,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "mofcom",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 58,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "csrc",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 211,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "ccgp",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 176,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "cas",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 706,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "cgs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 301,
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "xinhua",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 291,
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "cns-scroll",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 115,
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "cns-finance",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 69,
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "hk-data",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 170,
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "bbc-world",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 993,
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "govcn",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 269,
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "bilibili",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 82,
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "zhihu",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 205,
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "v2ex",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 385,
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "github",
+      "status": "limited",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 174,
+      "errors": [
+        {
+          "code": "http_error",
+          "http_status": 403
+        }
+      ]
+    },
+    {
+      "kind": "fetch",
+      "id": "hackernews",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 489,
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "jina",
+      "status": "limited",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 289,
+      "errors": [
+        {
+          "code": "http_error",
+          "http_status": 401
+        }
+      ]
+    },
+    {
+      "kind": "fetch",
+      "id": "exa-free",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 464,
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "community-python",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 838,
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "community-rust",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1013,
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "community-v2ex",
+      "status": "limited",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 367,
+      "errors": [
+        {
+          "code": "extraction_failed",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "kind": "scope",
+      "id": "zhihu",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 544,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "xiaohongshu",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 984,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "weibo",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1036,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "youtube",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 940,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "bilibili",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1124,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "reddit",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 961,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "twitter",
+      "status": "empty",
+      "count": 0,
+      "attempts": 1,
+      "elapsed_ms": 1226,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "v2ex",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1196,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "douban",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 756,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "china-data",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 790,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "cma-data",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1028,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "china-weather",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1065,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "cninfo",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1081,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "sse",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 890,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "szse",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1005,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "bse",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 899,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "china-standards",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1224,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "china-laws",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1291,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "cnsa",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 652,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "scidb",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1019,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "ceic",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 887,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "nmefc",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 932,
+      "errors": []
+    },
+    {
+      "kind": "scope",
+      "id": "hko",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1180,
+      "errors": []
+    }
+  ]
+}

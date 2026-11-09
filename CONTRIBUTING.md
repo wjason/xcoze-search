@@ -59,3 +59,5 @@ README 面向使用者介绍项目和操作；规划写入 TODO，研究依据�
 Release 对应不可变标签与源码提交。已发布附件不原地替换；需要更新发行内容时使用新版本。`CHANGELOG.md` 的 Unreleased 部分描述尚未发布的变更。
 
 提交贡献表示同意以本项目 [MIT License](LICENSE) 分发该贡献。
+
+新增公开适配器或定向搜索范围时，在 `evaluations/check_sources.py` 添加样例。更新状态快照前，先本地巡检或查看最近一次运行摘要。[公开来源巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml)。
