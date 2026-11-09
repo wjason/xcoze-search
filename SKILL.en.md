@@ -57,6 +57,8 @@ Use an existing agent-browser in an isolated anonymous headless session, with fi
 
 --browser off disables this call; preferences --browser off saves it; auto restores lazy fallback. execution_summary separates API HTTP attempts, keyed attempts, browser navigation and commands. Browser subrequest counts are unknown/null, never one fictional HTTP or zero network. Auto primary APIs cap at 8 seconds, a complement after usable primary evidence at 3 seconds; browser work at 15 seconds, further clipped by --timeout/remaining schedule, plus up to 6 seconds close grace. Failed close stays flagged and uses a 20-second idle shutdown. Reuse sufficient host-tool evidence without restarting fallback.
 
+When an Exa outage leaves weak results, use an appropriate native source with short terms, read an already known official URL, or use host web search if the user’s scope and cost limits allow it. Keep the original site and time constraints and cite the actual source.
+
 ## Optional preferences and source overrides
 
 Save preferences when users ask for a persistent change; they never need to find configuration files:

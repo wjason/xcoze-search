@@ -93,6 +93,28 @@ class FallbackTests(unittest.TestCase):
             clock[0] = 1001
             self.assertIn('exa-free', x.plan(args(strategy='free'), self.config, x.credential)['candidates'])
 
+    def test_exa_outage_skips_next_search_and_fetch_until_pause_expires(self):
+        clock = [100.0]
+        for error, code, wait in (
+            (urllib.error.URLError('unreachable'), 'network_error', 60),
+            (urllib.error.HTTPError('', 502, '', {}, io.BytesIO()), 'http_error', 60),
+            (urllib.error.HTTPError('', 403, '', {}, io.BytesIO()), 'http_error', 900),
+            (urllib.error.HTTPError('', 410, '', {}, io.BytesIO()), 'http_error', 900),
+        ):
+            with self.subTest(code=code, wait=wait), patch.object(public_access.time, 'time', side_effect=lambda: clock[0]):
+                transport = QueueTransport(error)
+                with self.assertRaises(x.SearchError) as caught:
+                    x.request_api('exa-free', {'tool': 'web_search_exa', 'arguments': {}}, '', retries=2, opener=transport)
+                self.assertEqual(caught.exception.code, code)
+                self.assertEqual(len(transport.requests), 1)
+                search_plan = x.plan(args(strategy='free'), self.config, x.credential)
+                fetch_plan = x.plan(args(strategy='free', url='https://example.com/page'), self.config, x.credential, fetch=True)
+                self.assertNotIn('exa-free', search_plan['candidates'])
+                self.assertNotIn('exa-free', fetch_plan['candidates'])
+                self.assertEqual(search_plan['skipped_unavailable'][0]['retry_after_seconds'], wait)
+                clock[0] += wait + 1
+                self.assertIn('exa-free', x.plan(args(strategy='free'), self.config, x.credential)['candidates'])
+
     def test_http_429_honors_retry_after_without_retry_or_raw_error_body(self):
         error = urllib.error.HTTPError('', 429, 'private', {'Retry-After': '120'}, io.BytesIO(b'private'))
         transport = QueueTransport(error); budget = x.RequestBudget(3)

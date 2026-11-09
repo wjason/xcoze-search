@@ -82,6 +82,10 @@ Explicit sources never fall back outside their selection. Both and comma-list se
 - Browser only supports general query/site; explicit unsupported dates/languages are not dropped. API budget unit is provider_api_http_attempts. Browser navigation/commands are separate and actual subrequest counts remain unknown.
 
 
+- Exa transport failures and other HTTP 5xx responses pause the anonymous route for 60 seconds. Anonymous 401/403/404/410 pauses it for 15 minutes. Search and Fetch share the cooldown. Try a native source, an already known official URL, or permitted host web search for gaps in general coverage.
+
+[Exa outage test and fallback paths](../evaluations/reports/2026-11-09-exa-outage.en.md)
+
 ## Browser search results
 
 360 is the default browser engine; --browser-engine explicitly selects Bing/Google. One selected engine, without probes/rotation. An anonymous session launches a blank page, schedules one navigation through a fixed script and waits for visible organic rows with nonempty titles, rather than page load. 360 destination URLs come from organic data-mdurl attributes; ads, AI answer cards and internal engine links are excluded.

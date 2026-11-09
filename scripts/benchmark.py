@@ -45,7 +45,7 @@ def query_args(case, mode, *, count=5, timeout=15):
     return search.parser().parse_args(argv)
 
 
-def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False):
+def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False, without_exa=False):
     args = query_args(case, mode, count=count, timeout=timeout)
     original = search.request_api
     receipts = []
@@ -53,6 +53,8 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False):
     def trace(operation, payload, key, **kwargs):
         # Never retain or print the key, payload or raw provider response.
         name = "deepseek" if operation == "fetch" else operation.removesuffix("_fetch")
+        if without_exa and name in ("exa", "exa-free"):
+            raise AssertionError("Outage benchmark rejected Exa dispatch before transmission.")
         if (keyless or mode in ("free", "browser")) and (search.get_provider(name).requires_key or key):
             raise AssertionError("Free benchmark rejected a keyed API before transmission.")
         started = time.perf_counter()
@@ -109,7 +111,7 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False):
 
 
 def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count=5,
-            max_requests=36, timeout=15, progress=None, keyless=False):
+            max_requests=36, timeout=15, progress=None, keyless=False, without_exa=False):
     if not modes or len(set(modes)) != len(modes) or any(m not in MODES for m in modes):
         raise ValueError("Choose distinct free, deepseek, smart and/or explicit browser diagnostic modes.")
     if keyless and "deepseek" in modes:
@@ -122,7 +124,8 @@ def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count
     budget = search.RequestBudget(max_requests)
     report = {"operation": "benchmark", "version": search.VERSION, "live": live,
               "started_at": datetime.now(timezone.utc).isoformat(), "corpus_as_of": corpus.get("as_of"),
-              "modes": list(modes), "keyless": keyless, "rounds": rounds, "count": count, "timeout_seconds": timeout,
+              "modes": list(modes), "keyless": keyless, "without_exa": without_exa,
+              "rounds": rounds, "count": count, "timeout_seconds": timeout,
               "cases": cases, "cells": [], "semantic_quality_assessed": False,
               "scope": "retrieval only; process startup, final-answer generation and validation reads excluded",
               "price_reference": corpus.get("price_reference"), "model_cost_usd": None,
@@ -132,14 +135,16 @@ def execute(corpus, *, live=False, modes=DEFAULT_MODES, rounds=1, limit=6, count
         return {**report, "ok": True, "budget": budget.data(), "network_requests": 0}
     config = {"schema_version": 2, "providers": {}} if keyless else search.read_config()
     # Benchmark default Smart without altering saved user preferences or credentials.
-    config = {**config, "search_preferences": {"strategy": "smart", "max_sources": 3, "disabled_providers": []}}
+    disabled = ["exa-free", "exa"] if without_exa else []
+    config = {**config, "search_preferences": {"strategy": "smart", "max_sources": 3, "disabled_providers": disabled}}
     for iteration in range(rounds):
         for index, case in enumerate(cases):
             rotation = (index + iteration) % len(modes)
             order = modes[rotation:] + modes[:rotation]
             for mode in order:
                 if not budget.data()["remaining"]: break
-                cell = run_cell(case, mode, config, budget, count=count, timeout=timeout, keyless=keyless)
+                cell = run_cell(case, mode, config, budget, count=count, timeout=timeout,
+                                keyless=keyless, without_exa=without_exa)
                 cell["round"] = iteration + 1
                 report["cells"].append(cell)
                 if progress: progress({k: cell[k] for k in ("id", "mode", "ok", "elapsed_ms")})
@@ -159,6 +164,7 @@ def main(argv=None):
     p.add_argument("--modes", default="free,deepseek,smart")
     p.add_argument("--live", action="store_true", help="Send public queries; DeepSeek/Smart may incur charges")
     p.add_argument("--keyless", action="store_true", help="Do not read config or environment keys; reject keyed API dispatch")
+    p.add_argument("--without-exa", action="store_true", help="Simulate both Exa routes being unavailable for this benchmark")
     p.add_argument("--rounds", type=int, default=1)
     p.add_argument("--limit", type=int, default=6)
     p.add_argument("--max-requests", type=int, default=36)
@@ -169,7 +175,8 @@ def main(argv=None):
     try:
         report = execute(load_cases(args.corpus), modes=tuple(args.modes.split(",")), live=args.live,
                          rounds=args.rounds, limit=args.limit, count=args.count, max_requests=args.max_requests, timeout=args.timeout,
-                         keyless=args.keyless, progress=lambda item: print(json.dumps(item, ensure_ascii=False), flush=True))
+                         keyless=args.keyless, without_exa=args.without_exa,
+                         progress=lambda item: print(json.dumps(item, ensure_ascii=False), flush=True))
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     except (ValueError, OSError, search.SearchError):

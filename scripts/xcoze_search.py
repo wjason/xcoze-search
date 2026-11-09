@@ -284,7 +284,10 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
                         if name == "duckduckgo" and response.status == 202:
                             raise SearchError("access_challenge", "DuckDuckGo returned an incomplete or verification response.",
                                               status=202, category="access")
-                        raise http_error(response.status)
+                        error = http_error(response.status)
+                        if name == "exa-free" and (response.status == 429 or 500 <= response.status <= 599):
+                            error.retryable = False
+                        raise error
                     raw = response.read(MAX_RESPONSE + 1)
                 if len(raw) > MAX_RESPONSE:
                     raise SearchError("response_too_large", "Provider response exceeds 16 MiB.")
@@ -302,7 +305,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
                 return data, budget.used - initial_used
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
-            if name == "exa-free" and exc.code in (429, 503): error.retryable = False
+            if name == "exa-free" and (exc.code == 429 or 500 <= exc.code <= 599): error.retryable = False
             if not provider.requires_key and exc.code in (401, 403):
                 error.category = "access"
                 error.args = ("Public source denied anonymous access; no user API key was sent.",)
@@ -313,7 +316,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
             except ValueError:
                 pass
         except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException):
-            error = SearchError("network_error", "Network/TLS failure or timeout.", retryable=True)
+            error = SearchError("network_error", "Network/TLS failure or timeout.", retryable=name != "exa-free")
         except SearchError as exc:
             error = exc
         error.attempts = budget.used - initial_used

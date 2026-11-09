@@ -82,6 +82,10 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 - 原生约束不为 browser 放宽：browser 目前仅通用 query/site，日期、语言等显式条件不兼容时跳过。浏览器真实子请求数未知；API budget 的单位为 provider_api_http_attempts，浏览器另计一次导航和本地命令，不能混为实际 HTTP。
 
 
+- Exa 匿名入口的网络故障和其余 HTTP 5xx 暂停 60 秒，401/403/404/410 暂停 15 分钟。搜索与读取共享冷却。遇到通用检索缺口时，可改用明确目标的原生来源、已知官方 URL 或符合用户限制的宿主网页搜索。
+
+[Exa 断路实测与备用路径](../evaluations/reports/2026-11-09-exa-outage.md)
+
 ## 浏览器搜索结果
 
 默认浏览器引擎为 360，Bing/Google 仍可用 --browser-engine 显式指定；每次只使用所选引擎，不探测/轮换。匿名会话先启动空白页，固定脚本发起一次导航，再等可见、标题非空的自然结果，不等待整页 load 作为结果可用条件。360 从自然结果的 data-mdurl 取目标网址，排除广告、AI 答案卡片及搜索引擎内部链接。

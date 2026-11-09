@@ -115,6 +115,8 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 [100 道题集](evaluations/agent-search-cases-v3.json) · [运行说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md#agent-搜索题集) · [100 道题基线与复测](evaluations/reports/2026-11-09-100-question-baseline.md) · [20 道题原文核验报告](evaluations/reports/2026-11-09-agent-search.md)
 
+[Exa 断路实测](evaluations/reports/2026-11-09-exa-outage.md)
+
 ## 配置 API Key
 
 不配置 Key 即可开始搜索。如果需要使用某家服务，可以对 Agent 说：

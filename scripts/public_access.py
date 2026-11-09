@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 import hashlib
+import http.client
 import json
 import math
 import os
@@ -139,15 +140,25 @@ def request_slot(name, url, *, max_wait=0):
         if error.code in (429, 503):
             default = 900 if name == "exa-free" else 60
             slot.defer(error.headers.get("Retry-After", str(default)) if error.headers else default)
+        elif name == "exa-free" and error.code in (401, 403, 404, 410):
+            slot.defer(900)
+        elif name == "exa-free" and 500 <= error.code <= 599:
+            slot.defer(60)
         raise
     except SearchError as error:
         if (name.endswith("-trending") or name.startswith("community-")) and error.status in (401, 403, 412): slot.defer(900)
         if error.status in (429, 503): slot.defer(900 if name == "exa-free" else 60)
         if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
+        if name == "exa-free" and error.status in (401, 403, 404, 410): slot.defer(900)
+        if name == "exa-free" and error.status and 500 <= error.status <= 599 and error.status != 503:
+            slot.defer(60)
         if name == "duckduckgo" and error.code == "access_challenge": slot.defer(900)
         if name == "browser":
             if error.code in ("access_challenge", "browser_navigation_blocked"): slot.defer(900)
             elif error.code in ("browser_timeout", "browser_no_results", "browser_results_hidden", "browser_navigation_failed", "browser_failed", "browser_unavailable"): slot.defer(60)
+        raise
+    except (urllib.error.URLError, TimeoutError, http.client.HTTPException):
+        if name == "exa-free": slot.defer(60)
         raise
     finally:
         # OS locks are released on close, including process exit; no stale lock deletion needed.

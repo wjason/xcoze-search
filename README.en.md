@@ -115,6 +115,8 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 
 [100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [100-question baseline and retest](evaluations/reports/2026-11-09-100-question-baseline.en.md) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
 
+[Exa outage test](evaluations/reports/2026-11-09-exa-outage.en.md)
+
 ## Configure API keys
 
 You can search without a key. To add a service, tell your Agent:

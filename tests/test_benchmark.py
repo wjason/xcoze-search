@@ -14,6 +14,18 @@ spec.loader.exec_module(b)
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_outage_benchmark_blocks_exa_and_preserves_native_search(self):
+        from test_open_sources import NPM
+        corpus = {'cases': [{'id': 'one', 'query': '@example/tool', 'platform': 'npm'}]}
+        transport = QueueTransport(NPM)
+        with patch.object(b.search, 'read_config', side_effect=AssertionError('must not read config')), \
+                patch.object(b.search.urllib.request, 'build_opener', return_value=transport):
+            report = b.execute(corpus, live=True, modes=('free',), keyless=True, without_exa=True)
+        self.assertTrue(report['without_exa'])
+        self.assertEqual(report['cells'][0]['routing']['attempted_providers'], ['npm'])
+        self.assertNotIn('exa-free', report['cells'][0]['routing']['candidates'])
+        self.assertNotIn('exa', report['cells'][0]['routing']['candidates'])
+
     def test_keyless_smart_ignores_config_and_environment_keys(self):
         corpus = {'cases': [{'id': 'one', 'query': 'Python'}]}
         response = {'jsonrpc': '2.0', 'id': 1, 'result': {'structuredContent': {'results': [

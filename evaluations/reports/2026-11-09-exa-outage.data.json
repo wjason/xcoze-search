@@ -1,0 +1,634 @@
+{
+  "schema_version": 1,
+  "date_beijing": "2026-11-09",
+  "baseline_commit": "0abcd1d",
+  "disabled_providers": [
+    "exa-free",
+    "exa"
+  ],
+  "keyed_attempts": 0,
+  "baseline_cases": [
+    {
+      "id": "cn-statistics",
+      "elapsed_ms": 4515,
+      "routes": [
+        "bing",
+        "duckduckgo",
+        "browser"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "国家数据",
+          "url": "https://data.stats.gov.cn/",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "国家统计局最新收入数据:超半数人月入三千|人均可支配收入|国内生产总值|失业率|城镇新增就业|国民经济_新浪新闻",
+          "url": "https://k.sina.com.cn/article_7879922977_1d5ae152106801gwho.html",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "国家统计局发布最新数据图表 截至2026年07月09日完整汇总|居民收入|国民经济|CPI|官方|物价_新浪新闻",
+          "url": "https://k.sina.com.cn/article_7879922977_1d5ae152106801gwb4.html",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "国家统计局",
+          "url": "http://www.stats.gov.cn/",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "browser",
+          "title": "[中国新闻]中国发布 国家统计局发布7月国民经济主要数据",
+          "url": "https://tv.cctv.com/2026/08/17/VIDE5pls4cbqSklfBTd5zOD5260817.shtml",
+          "published_at": null
+        }
+      ],
+      "errors": [
+        {
+          "provider": "bing",
+          "code": "irrelevant_results",
+          "http_status": null
+        },
+        {
+          "provider": "duckduckgo",
+          "code": "access_challenge",
+          "http_status": 202
+        }
+      ]
+    },
+    {
+      "id": "cn-news",
+      "elapsed_ms": 3749,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": null,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "人工智能最新资讯-快科技--科技改变未来",
+          "url": "https://news.mydrivers.com/tag/rengongzhineng.htm",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "人工智能_人工智能最新动态_IT之家",
+          "url": "https://www.ithome.com/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "人工智能最新报道--科技行者",
+          "url": "https://www.techwalker.com/list-0-0-327861-1-1.htm",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "人工智能新闻 - 今日头条",
+          "url": "https://www.toutiao.com/article/7661425396071662086/",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "browser",
+          "title": "人工智能新闻 - 今日头条",
+          "url": "https://www.toutiao.com/article/7659365961577562660/",
+          "published_at": null
+        }
+      ],
+      "errors": [
+        {
+          "provider": "bing",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "id": "python-taskgroup",
+      "elapsed_ms": 3475,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": false,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "Python如何动态管理异步任务列表_使用asyncio.TaskGroup管理组任务-Python教程-PHP中文网",
+          "url": "https://www.php.cn/faq/2246261.html",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "如何在Python 3.11中使用asyncio.TaskGroup管理并发任务-Python教程-PHP中文网",
+          "url": "http://www.php.cn/faq/3228082.html",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "Python Asyncio Task Group的结构化并发:异常传播与取消机制的底层实现 - 智猿学院",
+          "url": "https://www.zyxy.net/archives/25556",
+          "published_at": null
+        }
+      ],
+      "errors": [
+        {
+          "provider": "bing",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "id": "docs-kube-requests",
+      "elapsed_ms": 3668,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": false,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "Kubernetes中的Resource Limits和Requests_resources limit-CSDN博客",
+          "url": "https://blog.csdn.net/qq_33240556/article/details/142847266",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "Kubernetes容器资源管理:Requests与Limits配置详解-CSDN博客",
+          "url": "https://blog.csdn.net/weixin_34050519/article/details/93406253",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "你真的理解 Kubernetes 中的 requests 和 limits 吗?_deployment 没有配置 resources.limits request-CSDN博客",
+          "url": "https://blog.csdn.net/zpf17671624050/article/details/115523227",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "Kubernetes Resource Requests and Limits_K8SOQ-K8S/Kubernetes",
+          "url": "https://devpress.csdn.net/k8s/62f4ea2f7e66823466189369.html",
+          "published_at": null
+        }
+      ],
+      "errors": [
+        {
+          "provider": "bing",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "id": "community-xhs-museum",
+      "elapsed_ms": 3240,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "终于有人把上海说清楚了!超实用3日游攻略 - 小红书",
+          "url": "https://www.xiaohongshu.com/explore/6a70050d0000000025011b72?xsec_source&xsec_token=AB0owCkWaBwaafpjIUKzeELrDKeh5jvvFUZ-A21MXQM5g=",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "上海2元轮渡巴士公交攻略✅出行看这篇 - 小红书",
+          "url": "https://www.xiaohongshu.com/explore/6900440600000000070215e2",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "博物馆|缪斯星球编辑部 - 小红书",
+          "url": "https://www.xiaohongshu.com/user/profile/627a900f0000000021024d25?xsec_source=pc_feed&xsec_token=ABZUlWtnfcbvDtRTcZOgZoFSvuSQRwHYAAt2j1cITfH-o=",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "߇�߇�|铁佛寺朝圣之旅➕非自驾版详细攻略 - 小红书",
+          "url": "https://www.xiaohongshu.com/explore/68e9f8d60000000004012626",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "browser",
+          "title": "自然博物馆夜宿|一夜没睡!!! - 小红书",
+          "url": "https://www.xiaohongshu.com/explore/6a77a817000000003202300d?xsec_source&xsec_token=ABz6eqgPea4GipiUrQ9FA4zQgddLLjjNpaXFCTBhWaESo=",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "community-bilibili-git",
+      "elapsed_ms": 3264,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "变基(Rebase) | 可视化轻松学Git教程_哔哩哔哩_bilibili",
+          "url": "https://www.bilibili.com/video/av113440387567823/",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "【B站最全Git进阶课程】git rebase: 人生无法重来,但代码可以!_哔哩哔哩_bilibili",
+          "url": "https://www.bilibili.com/video/av635978409/",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "Git版本控制工具教程- 哔哩哔哩",
+          "url": "https://www.bilibili.com/read/cv22696708",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "五分钟学会git rebase和 git merge的区别_哔哩哔哩_bilibili",
+          "url": "https://www.bilibili.com/video/BV1VG411F7rB/",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "browser",
+          "title": "全网最详细git教程教学,学起来吧_哔哩哔哩_bilibili",
+          "url": "https://www.bilibili.com/video/av468522353/",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "edge-disclosure-annual",
+      "elapsed_ms": 3305,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": false,
+      "results": [],
+      "errors": [
+        {
+          "provider": "browser",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "id": "fresh-ai-news-window",
+      "elapsed_ms": 3924,
+      "routes": [
+        "xinhua",
+        "bing",
+        "browser"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "《 人工智能+媒体 全球发展年度蓝皮书(2026)》智库报告发布-新华网",
+          "url": "http://www.news.cn/tech/20261107/003332654a5f45839ffe1b53d19f6a24/c.html",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "人工智能热潮2026年面临考验-新华网",
+          "url": "https://www.news.cn/liangzi/20251201/916b26b88ecd4ce99860413a72bded5f/c.html",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "财经聚焦·地方两会经济 拼 图丨拼抢新赛道!2026年各地拓展 人工智能+ 有何新动向?-新华网",
+          "url": "https://www.news.cn/fortune/20260130/110ba1ca46e94b829244d1fa42c3a38a/c.html",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "browser",
+          "title": "人工智能乌镇对话 :共话开源开放发展(组图)-新华网",
+          "url": "http://www.news.cn/tech/20261104/e464eb9f079542e09020fe366d7df491/c.html",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "browser",
+          "title": "财经聚焦·地方两会经济 拼 图丨拼抢新赛道!2026年各地拓展 人工智能+ 有何新动向?-新华网",
+          "url": "http://www.news.cn/tech/20260130/2e945e190e924c8fb9faa457d4594cba/c.html",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "github-markitdown",
+      "elapsed_ms": 667,
+      "routes": [
+        "github"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "github",
+          "title": "microsoft/markitdown",
+          "url": "https://github.com/microsoft/markitdown",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "github",
+          "title": "lesteroliver911/microsoft-markitdown-streamlit-ui",
+          "url": "https://github.com/lesteroliver911/microsoft-markitdown-streamlit-ui",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "github",
+          "title": "kigner/markitdown_ui",
+          "url": "https://github.com/kigner/markitdown_ui",
+          "published_at": null
+        },
+        {
+          "rank": 4,
+          "provider": "github",
+          "title": "ethanolivertroy/obsidian-markitdown",
+          "url": "https://github.com/ethanolivertroy/obsidian-markitdown",
+          "published_at": null
+        },
+        {
+          "rank": 5,
+          "provider": "github",
+          "title": "pig-mesh/office2md",
+          "url": "https://github.com/pig-mesh/office2md",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "arxiv-rag-version",
+      "elapsed_ms": 150,
+      "routes": [
+        "arxiv"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "arxiv",
+          "title": "Automated Literature Review Using NLP Techniques and LLM-Based Retrieval-Augmented Generation",
+          "url": "https://arxiv.org/abs/2411.18583v1",
+          "published_at": "2024-11-27T18:27:07Z"
+        },
+        {
+          "rank": 2,
+          "provider": "arxiv",
+          "title": "AR-RAG: Autoregressive Retrieval Augmentation for Image Generation",
+          "url": "https://arxiv.org/abs/2506.06962v3",
+          "published_at": "2025-06-08T01:33:05Z"
+        },
+        {
+          "rank": 3,
+          "provider": "arxiv",
+          "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+          "url": "https://arxiv.org/abs/2005.11401v4",
+          "published_at": "2020-05-22T21:34:34Z"
+        },
+        {
+          "rank": 4,
+          "provider": "arxiv",
+          "title": "Multi-Task Retrieval-Augmented Text Generation with Relevance Sampling",
+          "url": "https://arxiv.org/abs/2207.03030v1",
+          "published_at": "2022-07-07T00:57:02Z"
+        },
+        {
+          "rank": 5,
+          "provider": "arxiv",
+          "title": "EVOR: Evolving Retrieval for Code Generation",
+          "url": "https://arxiv.org/abs/2402.12317v2",
+          "published_at": "2024-02-19T17:37:28Z"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "community-hn",
+      "elapsed_ms": 817,
+      "routes": [
+        "hackernews"
+      ],
+      "expected_domain": true,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "hackernews",
+          "title": "Hosting SQLite databases on GitHub Pages or any static file hoster",
+          "url": "https://news.ycombinator.com/item?id=27016630",
+          "published_at": "2021-05-02T16:43:15Z"
+        },
+        {
+          "rank": 2,
+          "provider": "hackernews",
+          "title": "I'm all-in on server-side SQLite",
+          "url": "https://news.ycombinator.com/item?id=31318708",
+          "published_at": "2022-05-09T19:35:41Z"
+        },
+        {
+          "rank": 3,
+          "provider": "hackernews",
+          "title": "Tracking down the 16-year-old WAL-reset SQLite bug",
+          "url": "https://news.ycombinator.com/item?id=49272832",
+          "published_at": "2026-08-12T14:22:30Z"
+        },
+        {
+          "rank": 4,
+          "provider": "hackernews",
+          "title": "SQLite is not a toy database",
+          "url": "https://news.ycombinator.com/item?id=26580614",
+          "published_at": "2021-03-25T14:20:25Z"
+        },
+        {
+          "rank": 5,
+          "provider": "hackernews",
+          "title": "How SQL Database Engines Work, by the Creator of SQLite (2008) [video]",
+          "url": "https://news.ycombinator.com/item?id=17387851",
+          "published_at": "2018-06-24T19:03:48Z"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "nbs-cpi-oct",
+      "elapsed_ms": 3538,
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "expected_domain": false,
+      "results": [
+        {
+          "rank": 1,
+          "provider": "browser",
+          "title": "国家统计局:2026年10月份居民消费价格同比上涨0.7%",
+          "url": "https://www.cls.cn/detail/2528534",
+          "published_at": null
+        },
+        {
+          "rank": 2,
+          "provider": "browser",
+          "title": "统计局:2026年10月份居民消费价格同比上涨0.7%_新浪财经_新浪网",
+          "url": "https://finance.sina.com.cn/china/gncj/2026-11-09/doc-iniyazee6580476.shtml",
+          "published_at": null
+        },
+        {
+          "rank": 3,
+          "provider": "browser",
+          "title": "国家统计局:2026年10月份居民消费价格同比上涨0.7%",
+          "url": "http://stock.10jqka.com.cn/20261109/c681592137.shtml",
+          "published_at": null
+        }
+      ],
+      "errors": [
+        {
+          "provider": "bing",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    }
+  ],
+  "rewritten_queries": [
+    {
+      "id": "cpi-index",
+      "query": "居民消费价格",
+      "scope": "nbs",
+      "routes": [
+        "nbs"
+      ],
+      "results": [
+        {
+          "title": "2026年10月份居民消费价格同比上涨0.7%",
+          "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html",
+          "published_at": "2026-11-09"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "python-site",
+      "query": "asyncio TaskGroup exception cancellation",
+      "scope": "docs.python.org",
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "results": [],
+      "errors": [
+        {
+          "provider": "browser",
+          "code": "irrelevant_results",
+          "http_status": null
+        }
+      ]
+    },
+    {
+      "id": "kubernetes-site",
+      "query": "resource requests limits CPU memory",
+      "scope": "kubernetes.io",
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "results": [
+        {
+          "title": "Kubernetes",
+          "url": "https://kubernetes.io/index.html",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    },
+    {
+      "id": "cninfo-simple",
+      "query": "600519 2024 年年度报告",
+      "scope": "cninfo",
+      "routes": [
+        "bing",
+        "browser"
+      ],
+      "results": [
+        {
+          "title": "巨潮资讯网",
+          "url": "http://www.cninfo.com.cn/new/disclosure/stock?f002v=001001&stockCode=002629#latestAnnouncement",
+          "published_at": null
+        },
+        {
+          "title": "巨潮资讯网",
+          "url": "http://www.cninfo.com.cn/new/disclosure/stock?f002v=001001&stockCode=601177#latestAnnouncement",
+          "published_at": null
+        },
+        {
+          "title": "巨潮资讯网",
+          "url": "http://www.cninfo.com.cn/new/disclosure/stock?f002v=001001&stockCode=600623#latestAnnouncement",
+          "published_at": null
+        },
+        {
+          "title": "巨潮资讯网",
+          "url": "http://www.cninfo.com.cn/new/disclosure/stock?orgId=9900021172&stockCode=002606#latestAnnouncement",
+          "published_at": null
+        },
+        {
+          "title": "巨潮资讯网",
+          "url": "http://www.cninfo.com.cn/new/disclosure/stock?orgId=9900035304&plate=szse&stockCode=300760&tabName=data#latestAnnouncement",
+          "published_at": null
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

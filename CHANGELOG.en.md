@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Add a reproducible Exa outage test, share a short cooldown across anonymous search and reading after transport errors, and document independent fallbacks.
 - Run the 100-question free baseline and improve exact DOI and Federal Register searches.
 - Publish a bilingual 100-question benchmark with eight new groups and per-question review criteria.
 - Expand the Agent benchmark to 20 questions, verify against original sources and add a weekly public-source audit.
