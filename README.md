@@ -111,9 +111,9 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 公开题集已扩至 100 道，每道题附有来源、相关性或日期的核验条件。
 
-2026-11-09，免费模式和无 Key 的 Smart 各跑了 20 道题。两种模式均有 17 题通过原文核验，1 题部分通过，2 题未在前五条找到目标结果。
+2026-11-09 免费模式基线中，100 道题均返回候选。99 道预设域名的题中，有 97 道在前五条命中，检索耗时中位数为 966 毫秒。
 
-[100 道题集](evaluations/agent-search-cases-v3.json) · [运行说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md#agent-搜索题集) · [20 道题原文核验报告](evaluations/reports/2026-11-09-agent-search.md)
+[100 道题集](evaluations/agent-search-cases-v3.json) · [运行说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md#agent-搜索题集) · [100 道题基线与复测](evaluations/reports/2026-11-09-100-question-baseline.md) · [20 道题原文核验报告](evaluations/reports/2026-11-09-agent-search.md)
 
 ## 配置 API Key
 

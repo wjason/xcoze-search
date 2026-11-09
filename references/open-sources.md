@@ -25,7 +25,7 @@ B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开�
 | wikipedia | 中英文百科条目 | --language en/zh；中文查询默认中文。编辑时间不作为发布日期 | 条目摘录；[MediaWiki](https://www.mediawiki.org/wiki/API:Search) |
 | stackexchange | 技术问题与报错案例 | --site 支持 Stack Overflow、Super User、Server Fault、Ask Ubuntu、Math/Stats/DataScience；start/end 为问题创建日期 UTC | 问题摘录，不读答案；保留作者/许可；[API](https://api.stackexchange.com/docs/advanced-search) |
 | arxiv | 预印本 | start/end 为 submittedDate 日期区间，不是最近修订时间 | 摘要与元数据，不读取 PDF；[API](https://info.arxiv.org/help/api/user-manual.html) |
-| crossref | DOI 和出版信息 | start/end 映射 from/until-pub-date；年/月/日按原精度保留 | 注册书目不等于论文鉴定，同名需核对作者、年份；[API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) |
+| crossref | DOI 和出版信息 | 常见裸 DOI 精确过滤，支持 from/until-pub-date，年/月/日按原精度保留 | 注册书目不等于论文鉴定，同名需核对作者、年份；[API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) |
 | npm | JavaScript 包 | 版本和注册表日期保留为元数据，不充当文章发布日期 | 不审计依赖与安全；[API](https://api-docs.npmjs.com/) |
 | crates | Rust 包 | 保留 max_version / max_stable_version 区别，创建/更新时间不当发布日期 | 不把预发行版叫稳定版；[数据访问](https://crates.io/data-access) |
 | gitlab | GitLab.com 公开项目 | 名称/路径/描述搜索，按星标排序；不提供出版日期过滤 | 不是代码搜索/官方身份验证；[Projects API](https://docs.gitlab.com/api/projects/) |
@@ -36,7 +36,7 @@ B 站与知乎使用实验性的公开网页端点，不是有稳定 SLA 的开�
 | zenodo | 公开研究成果 | 无日期筛选 | 摘要及元数据，不下载文件；[API](https://developers.zenodo.org/) |
 | wikidata | 知识实体 | --language 支持 en/zh | 实体标签与描述，不等于完整知识图谱；[API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
 | nasa | 航天图片、视频、音频 | 无日期筛选 | 素材元数据与描述，不下载媒体；[API](https://api.nasa.gov/) |
-| federalregister | 美国联邦公告和法规 | 无日期筛选 | 发布日期不等于生效日期；[API](https://www.federalregister.gov/developers/documentation/api/v1) |
+| federalregister | 美国联邦公告和法规 | 按公告编号直接查询。关键词默认按相关性排序，明确指定 `--intent current` 时按发布日期排序。 | 发布日期不等于生效日期；[API](https://www.federalregister.gov/developers/documentation/api/v1) |
 | worldbank | 经济和社会指标 | 查询为国家代码,指标代码 | 返回观察年份和数值，并非实时行情；[API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) |
 | usgs | 近期地震 | 查询为震级门槛,时间窗口 | 事件时间为 UTC，结果可修订；[API](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) |
 

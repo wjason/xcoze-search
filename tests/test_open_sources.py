@@ -151,6 +151,14 @@ class OpenSourceTests(unittest.TestCase):
         payload = p.search_payload(args(start_date='2026-01-01'))
         self.assertEqual(payload['filter'], 'from-pub-date:2026-01-01')
 
+    def test_crossref_bare_doi_uses_exact_filter_and_keeps_dates(self):
+        provider = PUBLIC['crossref']
+        exact = provider.search_payload(args(query='10.1234/Example', start_date='2026-01-01'))
+        self.assertEqual(exact['filter'], 'doi:10.1234/example,from-pub-date:2026-01-01')
+        self.assertNotIn('query.bibliographic', exact)
+        title = provider.search_payload(args(query='Example paper about 10.1234/example'))
+        self.assertIn('query.bibliographic', title)
+
     def test_project_and_package_update_dates_are_not_article_dates(self):
         for name in ('npm', 'crates', 'gitlab', 'huggingface'):
             p = PUBLIC[name]; raw = FIXTURES[name]
@@ -314,6 +322,19 @@ class AdditionalPublicSourceTests(unittest.TestCase):
                     self.assertNotIn(field, meta['provider_metadata'])
 
 class OfficialGlobalSourcesTests(unittest.TestCase):
+    def test_federal_register_document_number_and_keyword_order(self):
+        provider = PUBLIC['federalregister']
+        exact = provider.search_payload(args(query='2025-02305'))
+        request = provider.build_request(exact, '', 'test')
+        self.assertEqual(request.full_url, 'https://www.federalregister.gov/api/v1/documents/2025-02305.json')
+        item = {**FIXTURES['federalregister']['results'][0], 'document_number': '2025-02305'}
+        rows, _ = provider.normalize(item, 5)
+        self.assertEqual(rows[0]['provider_fields']['document_number'], '2025-02305')
+        for intent, expected in (('reference', 'relevance'), ('current', 'newest')):
+            payload = provider.search_payload(args(query='AI Action Plan', intent=intent))
+            self.assertEqual(payload['order'], expected)
+            self.assertEqual(payload['conditions[term]'], 'AI Action Plan')
+
     def test_world_bank_uses_exact_country_indicator_and_preserves_observation(self):
         provider = PUBLIC['worldbank']
         request = provider.build_request(provider.search_payload(args(query='CN,SP.POP.TOTL')), '', 'test')

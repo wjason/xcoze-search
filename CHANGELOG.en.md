@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Run the 100-question free baseline and improve exact DOI and Federal Register searches.
 - Publish a bilingual 100-question benchmark with eight new groups and per-question review criteria.
 - Expand the Agent benchmark to 20 questions, verify against original sources and add a weekly public-source audit.
 - Add a bilingual Agent search benchmark and live report, keyless benchmark isolation, and query guidance for repositories and disclosures.

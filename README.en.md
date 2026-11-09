@@ -111,9 +111,9 @@ Counts describe the sources or platforms listed in each category. A source can a
 
 The benchmark now includes 100 questions with criteria for checking relevance, source identity and dates.
 
-On November 9, 2026, Free and Smart without keys each ran 20 questions. For each mode, original sources supported 17 results, one was partial and two expected results were missing from the top five.
+In the November 9, 2026 free baseline, all 100 questions returned candidates. Among 99 questions with expected domains, 97 found one in the top five. The median retrieval time was 966 ms.
 
-[100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
+[100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [100-question baseline and retest](evaluations/reports/2026-11-09-100-question-baseline.en.md) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
 
 ## Configure API keys
 

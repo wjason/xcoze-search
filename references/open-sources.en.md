@@ -25,7 +25,7 @@ Weibo and Xiaohongshu are searched through public web indexes. Native Weibo tren
 | wikipedia | English/Chinese articles | --language en/zh; Chinese queries default to zh; edit timestamps are not publication dates | Article excerpts; [MediaWiki](https://www.mediawiki.org/wiki/API:Search) |
 | stackexchange | Technical questions/error cases | Stack Overflow, Super User, Server Fault, Ask Ubuntu, Math/Stats/DataScience via --site; start/end filter UTC creation dates | Questions, not answers; retain owner/license; [API](https://api.stackexchange.com/docs/advanced-search) |
 | arxiv | Preprints | start/end constrain submittedDate, not revision time | Abstracts/metadata, no PDF reading; [API](https://info.arxiv.org/help/api/user-manual.html) |
-| crossref | DOI/publication metadata | from/until-pub-date; preserve original year/month/day precision | Check author/year, not title alone; [API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) |
+| crossref | DOI/publication metadata | Exact filter for common bare DOIs. from/until-pub-date keeps original year/month/day precision | Check author/year, not title alone; [API](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) |
 | npm | JavaScript packages | Versions and registry dates stay metadata | No dependency/security audit; [API](https://api-docs.npmjs.com/) |
 | crates | Rust packages | Keep max_version/max_stable_version separate; no article date from updates | Do not label prereleases stable; [policy](https://crates.io/data-access) |
 | gitlab | GitLab.com public projects | Name/path/description matching, star-count sorting; no publication-date filter | No code/private search or official-identity proof; [Projects API](https://docs.gitlab.com/api/projects/) |
@@ -36,7 +36,7 @@ Weibo and Xiaohongshu are searched through public web indexes. Native Weibo tren
 | zenodo | Public research records | No date filter | Abstract and metadata, no file download; [API](https://developers.zenodo.org/) |
 | wikidata | Knowledge entities | --language en/zh | Entity labels and descriptions, not the full knowledge graph; [API](https://www.wikidata.org/wiki/Wikidata:Data_access) |
 | nasa | Space images, video and audio | No date filter | Media metadata; files are not downloaded; [API](https://api.nasa.gov/) |
-| federalregister | U.S. federal notices and rules | No date filter | Publication date is not effective date; [API](https://www.federalregister.gov/developers/documentation/api/v1) |
+| federalregister | U.S. federal notices and rules | Direct lookup by document number. Keyword ranking uses relevance, or newest with explicit `--intent current`. | Publication date is not effective date; [API](https://www.federalregister.gov/developers/documentation/api/v1) |
 | worldbank | Economic and social indicators | Query is country code,indicator code | Observation year and value, not live market prices; [API](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392) |
 | usgs | Recent earthquakes | Query is magnitude,period | UTC event time; data may be revised; [API](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) |
 

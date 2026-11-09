@@ -8,13 +8,13 @@
 
 [100 道题集](agent-search-cases-v3.json)保留前 20 道，并新增 8 组，每组 10 道，覆盖公共政策、时效、技术文档、软件包、科研、社区、公共数据和消歧。中英文版本使用相同的题号、查询和检索约束。
 
-最近一次原文核验记录见 [20 道题评测报告](reports/2026-11-09-agent-search.md)。新增的 80 道题已写好判定条件，等待在线基线实测。
+[100 道题基线](reports/2026-11-09-100-question-baseline.md)记录了免费模式整轮、6 道针对性复测和 6 道 Smart 抽查。原文核验见 [20 道题评测报告](reports/2026-11-09-agent-search.md)。
 
 ```bash
-python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --modes free,smart --keyless --limit 100 --max-requests 600 --output /tmp/xcoze-100-plan.json
+python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --modes free --keyless --limit 100 --max-requests 300 --output /tmp/xcoze-100-plan.json
 ```
 
-这条命令生成 200 个检索任务的离线计划。跑基线时加上 `--live`，另存结果文件。保留题目指定的日期范围，滚动窗口以实际运行时间为准。复核前五条时按每道题的判定条件标记通过、部分通过或漏检。预期域名用于定位候选，事实和日期以原文为准。
+这条命令生成 100 道免费模式检索任务的离线计划。无 Key Smart 切换行为用少量样例抽查即可。跑基线时加上 `--live`，另存结果文件。保留题目指定的日期范围，滚动窗口以实际运行时间为准。复核前五条时按每道题的判定条件标记通过、部分通过或漏检。预期域名用于定位候选，事实和日期以原文为准。
 
 ## 公开来源巡检
 

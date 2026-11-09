@@ -8,13 +8,13 @@ Corpus date: 2026-11-02. `queries.json` contains 12 Chinese/English search queri
 
 The [100-question set](agent-search-cases-v3.en.json) preserves the first 20 questions and adds 10 questions in each of eight groups. The groups cover public policy, freshness, technical docs, packages, research, communities, public data, and disambiguation. Chinese and English versions share case IDs, queries and search constraints.
 
-The [20-question report](reports/2026-11-09-agent-search.en.md) contains the latest source verification results. The 80 new questions have review criteria and are awaiting a live baseline.
+The [100-question baseline](reports/2026-11-09-100-question-baseline.en.md) records the free run, six targeted retests and six Smart spot checks. The [20-question report](reports/2026-11-09-agent-search.en.md) contains the original-source review.
 
 ```bash
-python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.en.json --modes free,smart --keyless --limit 100 --max-requests 600 --output /tmp/xcoze-100-plan.json
+python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.en.json --modes free --keyless --limit 100 --max-requests 300 --output /tmp/xcoze-100-plan.json
 ```
 
-This plans 200 runs without sending requests. To measure a baseline, add `--live` and use a separate output file. Preserve the date constraints and record the run time for rolling windows. Use the per-case criteria to review the top five results, then label each case verified, partial or missed. Use expected domains to locate evidence and open the original pages to check the actual claim or date.
+This plans 100 free-mode searches without sending requests. Use a small Smart sample to check fallback without keys. To measure a baseline, add `--live` and use a separate output file. Preserve the date constraints and record the run time for rolling windows. Use the per-case criteria to review the top five results, then label each case verified, partial or missed. Use expected domains to locate evidence and open the original pages to check the actual claim or date.
 
 ## Public source checks
 

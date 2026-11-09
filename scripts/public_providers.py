@@ -591,9 +591,13 @@ class Crossref(OpenSource):
 
     def build_search(self, args):
         self.check_site(args); start, end = dates(args)
-        payload = {"query.bibliographic": args.query, "rows": args.count,
+        payload = {"rows": args.count,
                    "select": "DOI,title,abstract,published,published-online,published-print,type,URL,author,container-title,score,license"}
         filters = [k + ":" + v for k, v in (("from-pub-date", start), ("until-pub-date", end)) if v]
+        if re.fullmatch(r"10\.[0-9]{4,9}/[-A-Za-z0-9._;()/+]+", args.query):
+            filters.insert(0, "doi:" + args.query.lower())
+        else:
+            payload["query.bibliographic"] = args.query
         if filters: payload["filter"] = ",".join(filters)
         return payload
 
@@ -884,9 +888,23 @@ class FederalRegister(OpenSource):
 
     def build_search(self, args):
         self.check_site(args)
-        return {"conditions[term]": args.query, "per_page": args.count, "order": "newest"}
+        if re.fullmatch(r"(?:[0-9]{4}|E[0-9])-[0-9]{4,5}", args.query):
+            return {"document_number": args.query}
+        order = "newest" if option(args, "intent") == "current" else "relevance"
+        return {"conditions[term]": args.query, "per_page": args.count, "order": order}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        if not fetch and "document_number" in payload:
+            number = payload["document_number"]
+            url = self.endpoint.removesuffix(".json") + "/" + urllib.parse.quote(number, safe="") + ".json"
+            return urllib.request.Request(url, headers={"Accept": "application/json",
+                                                       "User-Agent": "xcoze-search/" + version,
+                                                       "Accept-Encoding": "gzip"})
+        return super().build_request(payload, key, version, fetch=fetch)
 
     def normalize(self, raw, count):
+        if "results" not in raw and isinstance(raw.get("document_number"), str):
+            raw = {"results": [raw]}
         items = []
         for item in record_array(raw, "results"):
             url = item.get("html_url")
