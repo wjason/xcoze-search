@@ -1,11 +1,12 @@
 """Keyless public backends. No browser, SDK, account or implicit credentials."""
 import base64
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from html.parser import HTMLParser
 import json
 import re
 import urllib.parse
 import urllib.request
+import uuid
 import xml.etree.ElementTree as ET
 
 from search_common import SearchError, invalid, public_url
@@ -250,6 +251,73 @@ class ExaFree(PublicProvider):
         if not content.strip(): raise SearchError("extraction_failed", "Exa returned empty page text.")
         return {"title": title, "content": content, "content_kind": "page_content",
                 "truncated": False, "completeness_verified": False}
+
+
+class ParallelFree(PublicProvider):
+    name, label = "parallel-free", "Parallel Search MCP (anonymous)"
+    endpoint = "https://search.parallel.ai/mcp"
+    method = "POST"
+    options = frozenset(("site",))
+    max_count = 10  # Anonymous MCP controls upstream count; this limits shown rows.
+    availability = "official_rate_limited_anonymous_legacy"
+    search_scope = "public_web"
+
+    def __init__(self):
+        self.session_id = uuid.uuid4().hex  # One stable session for the CLI invocation or benchmark.
+
+    def build_search(self, args):
+        if '"' in args.query:
+            raise SearchError("unsupported_option", "Parallel anonymous search does not support quoted query phrases.")
+        domain = option(args, "site")
+        query = args.query + (" site:" + domain if domain else "")
+        self.validate_query(query)
+        objective = args.query + ("\nFind results on " + domain + "." if domain else "")
+        return {"objective": objective, "search_queries": [query]}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        if fetch:
+            invalid("Parallel anonymous adapter only supports search.")
+        data = {"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {
+            "name": "web_search", "arguments": {**payload, "session_id": self.session_id}}}
+        return urllib.request.Request(self.endpoint, data=json.dumps(data).encode(), headers={
+            "Content-Type": "application/json", "Accept": "application/json, text/event-stream",
+            "User-Agent": "xcoze-search/" + version})
+
+    def decode_response(self, raw):
+        try:
+            text = raw.decode("utf-8")
+            events = [line[5:].strip() for line in text.splitlines() if line.startswith("data:")]
+            messages = [json.loads(line) for line in events if line and line != "[DONE]"] if events else [json.loads(text)]
+            msg = next(m for m in reversed(messages) if isinstance(m, dict) and m.get("id") == 1)
+        except (ValueError, UnicodeError, StopIteration):
+            raise SearchError("invalid_response", "Invalid Parallel MCP response.") from None
+        body = msg.get("result")
+        if "error" in msg or not isinstance(body, dict) or body.get("isError"):
+            error = msg.get("error") or {}
+            detail = json.dumps(error)[:2000] + json.dumps(body)[:4000]
+            if re.search(r"\b429\b|rate[ _-]*limit|too many requests|quota", detail, re.I):
+                raise SearchError("source_rate_limited", "Parallel anonymous search is rate limited.", category="rate_limit")
+            raise SearchError("provider_error", "Parallel anonymous MCP rejected the search.")
+        return {"results": array(body.get("structuredContent"), "results")}
+
+    def normalize(self, raw, count):
+        rows = []
+        for item in array(raw, "results"):
+            if not isinstance(item, dict):
+                raise SearchError("invalid_response", "Invalid Parallel search result.")
+            published = item.get("publish_date")
+            try:
+                published = date.fromisoformat(published).isoformat() if isinstance(published, str) else None
+            except ValueError:
+                published = None
+            url = item.get("url")
+            if not isinstance(url, str) or not public_url(url):
+                continue
+            mapped = {"title": item.get("title") or url, "url": url,
+                      "publish_date": published, "excerpts": item.get("excerpts", [])}
+            rows.append(result(self.name, len(rows) + 1, mapped, snippet=None,
+                               highlights="excerpts", published="publish_date"))
+        return rows[:count], self.metadata({}, rows, count)
 
 
 class GitHub(PublicProvider):
@@ -1003,4 +1071,4 @@ OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates
 from browser_search import Browser
 from content_sources import GovCN, CommunityReader, NDRCIndex, NationalStatisticsIndex, NationalEnergyIndex, MIITIndex, MEEIndex, MEMIndex, PBCIndex, GGZYIndex, MOFCOMIndex, CSRCIndex, CCGPIndex, CASIndex, CGSIndex, XinhuaIndex
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), ParallelFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}

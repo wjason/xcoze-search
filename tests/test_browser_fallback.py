@@ -59,6 +59,7 @@ class FallbackTests(unittest.TestCase):
             with self.assertRaises(x.SearchError) as caught:
                 x.get_provider('exa-free').decode_response(json.dumps({'jsonrpc':'2.0','id':1,'result':{'isError':True,'content':[{'type':'text','text':message}]}}).encode())
             self.assertEqual(caught.exception.code, 'source_rate_limited')
+        self.config['search_preferences'] = {'disabled_providers': ['parallel-free']}
         transport = QueueTransport(QUOTA, BAD_RSS)
         with patch.object(x.urllib.request, 'build_opener', return_value=transport), patch.object(x, 'run_browser_search', side_effect=browser_result) as local:
             out = x.run_search(args(query='Python asyncio TaskGroup', strategy='free'), self.config)
@@ -78,6 +79,7 @@ class FallbackTests(unittest.TestCase):
         self.assertIsNotNone(public_access.pause_status('exa-free'))
 
     def test_quota_pause_skips_next_exa_request_and_expiry_allows_probe(self):
+        self.config['search_preferences'] = {'disabled_providers': ['parallel-free']}
         clock = [100.0]
         with patch.object(public_access.time, 'time', side_effect=lambda: clock[0]):
             transport = QueueTransport(QUOTA, BAD_RSS)
@@ -333,7 +335,7 @@ class LocalBrowserTests(unittest.TestCase):
                 patch('sys.stderr',io.StringIO()), self.assertRaises(SystemExit) as caught:
             module.main()
         self.assertEqual(caught.exception.code,2)
-        config = {'providers':{}, 'search_preferences':{'strategy':'free','disabled_providers':['exa-free','bing']}}
+        config = {'providers':{}, 'search_preferences':{'strategy':'free','disabled_providers':['exa-free','parallel-free','bing']}}
         with patch('search_routing.browser_available',return_value=True):
             route = x.plan(args(strategy='free'),config,x.credential)
         self.assertEqual(route['execution_candidates'],['duckduckgo','browser'])

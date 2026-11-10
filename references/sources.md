@@ -17,6 +17,7 @@
 | Bing RSS | 搜索公开网页 | 支持 · 本次受限 |
 | DuckDuckGo HTML | 搜索公开网页 | 支持 · 本次受限 |
 | Exa 托管 MCP | 搜索公开网页、读取网页内容 | 支持 · 适配通过 |
+| Parallel Search MCP | 匿名通用网页搜索与站点定向 | [支持 · 11 月 10 日实测通过](../evaluations/reports/2026-11-10-parallel-no-exa.md) |
 | Jina Reader | 读取网页内容 | 支持 · 本次受限 |
 | GitHub | 搜索公开仓库、读取仓库 README | 搜索通过；README 受限 |
 | GitLab.com | 搜索公开项目 | 支持 · 适配通过 |

@@ -10,9 +10,9 @@ Smart selects quality when a syntactically valid, enabled key exists, otherwise 
 
 | Strategy | General search candidate order |
 |---|---|
-| quality | First configured source, keyless Exa, other configured sources, then Bing/DDG |
-| balanced | Keyless Exa, configured sources, then Bing/DDG |
-| free | Keyless Exa, Bing, DuckDuckGo; excludes keyed adapters |
+| quality | First configured source, keyless Exa, other configured sources, then Parallel/Bing/DDG |
+| balanced | Keyless Exa, configured sources, then Parallel/Bing/DDG |
+| free | Keyless Exa, anonymous Parallel, Bing, DuckDuckGo; excludes keyed adapters |
 
 GitHub repository/HN story targets prefer their platform adapters. A saved default may take priority; disabled sources stay excluded. Bootstrap order is transparent configuration policy, not a benchmark ranking. No persistent learned success history is implemented.
 
@@ -54,7 +54,7 @@ Returned URL hosts are checked for site scope; a domain in a URL path is not a m
 
 Fetch auto tries GitHub README for repository-root links and the official interface for HN items. General URLs start with Jina Reader; configured Fetch-capable services take fallback priority when allowed, followed by Exa keyless MCP. The same source-count cap applies; unattempted candidates have no live verification status. Skip the script when the host already reads the page successfully.
 
-Keyless is not entirely local: Bing, DuckDuckGo, Exa, GitHub, Algolia/HN and Jina receive corresponding requests. Exa keyless and Jina Reader are limited-access commercial services. Free strategy guarantees no user-keyed service requests from this tool, not zero model/subscription/compute costs.
+Keyless is not entirely local: Bing, DuckDuckGo, Exa, Parallel, GitHub, Algolia/HN and Jina receive corresponding requests. Exa keyless and Jina Reader are limited-access commercial services. Free strategy guarantees no user-keyed service requests from this tool, not zero model/subscription/compute costs.
 
 ## Management examples
 
@@ -84,7 +84,7 @@ Explicit sources never fall back outside their selection. Both and comma-list se
 
 - Exa transport failures and other HTTP 5xx responses pause the anonymous route for 60 seconds. Anonymous 401/403/404/410 pauses it for 15 minutes. Search and Fetch share the cooldown. Try a native source, an already known official URL, or permitted host web search for gaps in general coverage.
 
-[Exa outage test and fallback paths](../evaluations/reports/2026-11-09-exa-outage.en.md)
+Parallel uses the documented legacy anonymous endpoint. Site-scoped results are checked locally, and returned text is labeled as excerpts. Limits enter the same cooldown policy as Exa. [100-question comparison](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) · [Parallel documentation](https://docs.parallel.ai/integrations/mcp/search-mcp).
 
 ## Browser search results
 
@@ -97,7 +97,7 @@ Explicit no-match pages return an empty list and browser_explicit_no_matches:tru
 
 - 360 is a browser fallback; it does not start automatically when an API has returned usable results. Index coverage varies by search engine.
 - GitHub does not reserve a browser slot: fill the existing three-source cap with native/general APIs in their original order. Lower caps, disabled sources and explicit browser selection remain. Browser may occupy a leftover slot when fewer APIs qualify; browser_slot_policy explains the plan.
-- Quality reference/current complements only when the next candidate is configured/keyed or keyless Exa. If only Bing/DDG/browser remains, stop on usable primary evidence, while keeping failure fallback. A complement after usable evidence receives at most a 3-second request timeout; primary APIs retain 8 seconds. Explicit multi-source calls keep their own limits. This is not a hard DNS/network deadline or SLA.
+- Quality reference/current complements only when the next candidate is configured/keyed or keyless Exa. If only Parallel/Bing/DDG/browser remains, stop on usable primary evidence, while keeping failure fallback. A complement after usable evidence receives at most a 3-second request timeout; primary APIs retain 8 seconds. Explicit multi-source calls keep their own limits. This is not a hard DNS/network deadline or SLA.
 - RSS/HTML/browser rows reject obvious Chinese mismatch, missing queried code identifiers, conflicting explicit years and some month/half-year periods. Compact /YYYYMM/ release paths participate in year checks; missing dates stay unknown. dropped_irrelevant_count records removal and retained ranks stay original. Semantic APIs/native repository data are unaffected. This is not factual/version/full-date/semantic verification; false rejection and missed conflicts remain possible.
 - DDG verification pauses for 900 seconds and automatic plans skip it locally, avoiding repeated HTTP. Browser topic rejection is query-specific and no longer pauses the source; shells/network timeouts/challenges keep their recovery rules.
 - For requested primary sources with known official domains, the Agent should use --site and short queries. When an official page is not indexed, read an already located URL or follow verified official navigation rather than retrying the browser repeatedly.

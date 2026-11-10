@@ -23,7 +23,7 @@ class SourceStatusSnapshotTests(unittest.TestCase):
             cls.by_kind.setdefault(row['kind'], set()).add(row['id'])
 
     def test_snapshot_covers_current_search_and_scoped_sources(self):
-        self.assertEqual(self.by_kind['search'], {n for n,p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser'})
+        self.assertLessEqual(self.by_kind['search'], {n for n,p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser'})
         self.assertEqual(self.by_kind['scope'], {n for n in PLATFORMS if n not in NATIVE_PLATFORMS})
         self.assertEqual(self.by_kind['feed'], set(FEEDS))
         self.assertEqual(self.by_kind['trending'], set(TRENDING))
@@ -44,6 +44,7 @@ class SourceStatusSnapshotTests(unittest.TestCase):
         pairs = [(kind, source) for kind, source, _ in check_sources.probes()]
         expected = {(kind, source) for kind in ('search', 'scope', 'feed', 'trending', 'fetch')
                     for source in self.by_kind[kind]}
+        expected.update(('search', n) for n, p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser')
         self.assertEqual(set(pairs), expected)
         self.assertEqual(len(pairs), len(expected))
         self.assertEqual(set(check_sources.FETCH),

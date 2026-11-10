@@ -76,7 +76,9 @@ def run_case(label, responses, config, *, live_browser=False, cache=None):
 
 
 def execute(*, live_api=False, live_browser=False):
-    config = {'schema_version': 2, 'providers': {p: {'api_key': 'synthetic-only'} for p in search.PROVIDERS}}
+    # Keep the older simulated Exa → RSS/HTML → browser sequence reproducible.
+    config = {'schema_version': 2, 'providers': {p: {'api_key': 'synthetic-only'} for p in search.PROVIDERS},
+              'search_preferences': {'disabled_providers': ['parallel-free']}}
     report = {'version': search.VERSION, 'tested_at': datetime.now(timezone.utc).isoformat(),
               'live_api_requested': live_api, 'live_browser_requested': live_browser,
               'scope': 'Fault injection and routing safety; synthetic results are not live retrieval evidence. Browser subrequest counts are unknown.',

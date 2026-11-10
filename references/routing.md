@@ -10,9 +10,9 @@ Smart 在有格式有效且未禁用的 Key 时选择 quality，否则选择 fre
 
 | 策略 | 通用搜索候选顺序 |
 |---|---|
-| quality | 首个已配置源、Exa 免 Key、其余已配置源，再到 Bing/DDG |
-| balanced | Exa 免 Key、已配置来源，再到 Bing/DDG |
-| free | Exa 免 Key、Bing、DuckDuckGo；排除带 Key 适配器 |
+| quality | 首个已配置源、Exa 免 Key、其余已配置源，再到 Parallel/Bing/DDG |
+| balanced | Exa 免 Key、已配置来源，再到 Parallel/Bing/DDG |
+| free | Exa 免 Key、匿名 Parallel、Bing、DuckDuckGo；排除带 Key 适配器 |
 
 GitHub 仓库、HN 帖子定向任务优先平台适配器。已保存的默认来源可优先；已禁用来源不会自动启用。初始排序是可解释的启动规则，不是查询质量实测排名。暂不持久学习历史成功率。
 
@@ -54,7 +54,7 @@ Wikipedia、Stack Exchange、arXiv、Crossref、npm、crates、GitLab、Europe P
 
 `fetch auto` 对仓库根链接尝试 GitHub README，对 HN item 尝试官方读取；通用 URL 优先 Jina Reader；允许商用时优先以已配置 Fetch 服务备用，再考虑 Exa 免 Key MCP。默认来源数上限仍生效，未尝试到的候选不代表可用或不可用。宿主已经能读取时不必再调用脚本。
 
-免 Key 不等于本地执行所有服务：Bing、DuckDuckGo、Exa、GitHub、Algolia/HN、Jina 都会收到相应请求。Exa 免 Key 与 Jina Reader 是商业服务提供的限额入口。免费策略只保证本工具不发送带用户 Key 的服务请求，不承诺模型/宿主订阅和本机计算零成本。
+免 Key 不等于本地执行所有服务：Bing、DuckDuckGo、Exa、Parallel、GitHub、Algolia/HN、Jina 都会收到相应请求。Exa 免 Key 与 Jina Reader 是商业服务提供的限额入口。免费策略只保证本工具不发送带用户 Key 的服务请求，不承诺模型/宿主订阅和本机计算零成本。
 
 ## 管理示例
 
@@ -84,7 +84,7 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 
 - Exa 匿名入口的网络故障和其余 HTTP 5xx 暂停 60 秒，401/403/404/410 暂停 15 分钟。搜索与读取共享冷却。遇到通用检索缺口时，可改用明确目标的原生来源、已知官方 URL 或符合用户限制的宿主网页搜索。
 
-[Exa 断路实测与备用路径](../evaluations/reports/2026-11-09-exa-outage.md)
+Parallel 使用文档标记为 legacy 的匿名入口。定向结果再做本地域名校验，附带内容按摘录标记。限流时遵循与 Exa 同样的冷却策略。[100 道题对照](../evaluations/reports/2026-11-10-parallel-no-exa.md) · [Parallel 文档](https://docs.parallel.ai/integrations/mcp/search-mcp)。
 
 ## 浏览器搜索结果
 
@@ -97,7 +97,7 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 
 - 360 用于搜索兜底；API 已返回可用结果时不会自动启动浏览器。浏览器索引覆盖范围因搜索引擎而异。
 - GitHub 任务不强制预留 browser 位置，按已有顺序用原生/通用 API 填满最多三源预算。更低上限、禁用和显式 browser 选择仍有效；若 API 数量不足，browser 仍可能使用剩余位置。browser_slot_policy 解释本次策略。
-- quality 的 reference/current 仅在下一候选为已配置服务或 Exa 免 Key 时自动互补。下一项只有 Bing/DDG/browser 时，主源有结果就停止；主源失败仍按现有预算备用。互补在已有证据后最多给 3 秒请求超时，主 API 仍为 8 秒；显式多源不受这条自动互补上限影响。网络/DNS 不因此成为硬截止或服务等级保证。
+- quality 的 reference/current 仅在下一候选为已配置服务或 Exa 免 Key 时自动互补。下一项是 Parallel/Bing/DDG/browser 时，主源有结果就停止；主源失败仍按现有预算备用。互补在已有证据后最多给 3 秒请求超时，主 API 仍为 8 秒；显式多源不受这条自动互补上限影响。网络/DNS 不因此成为硬截止或服务等级保证。
 - RSS/HTML/browser 逐条拒绝明显中文跑题、缺失查询中函数/代码标识、显式冲突年份及部分月份/半年期间；紧凑 /YYYYMM/ 路径也参与年份检查。缺日期保持未知。dropped_irrelevant_count 记录丢弃数量，保留其余原始 rank，不用跨源分数重排。不影响语义 API 或原生仓库结果，也不等于事实、版本、完整时间筛选或语义质量验证；有漏判/误拒可能，Agent 继续核验。
 - DDG 验证响应暂停 900 秒，自动 plan 在本机冷却内跳过，减少重复 HTTP。浏览器的相关性拒绝属于本次查询质量，不再触发全源冷却；空壳/网络超时/验证码仍按其恢复规则处理。
 - 要求原始来源且已知官方域名时，Agent 应使用 --site 和短查询；官网无索引时读取已经定位的官方 URL/相关页导航，不能把增加浏览器重试当作补齐证据。

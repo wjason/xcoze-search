@@ -35,7 +35,9 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "evaluations/reports/2026-11-09-100-question-baseline.en.md",
                  "evaluations/reports/2026-11-09-100-question-baseline.data.json",
                  "evaluations/reports/2026-11-09-exa-outage.md", "evaluations/reports/2026-11-09-exa-outage.en.md",
-                 "evaluations/reports/2026-11-09-exa-outage.data.json"]
+                 "evaluations/reports/2026-11-09-exa-outage.data.json",
+                 "evaluations/reports/2026-11-10-parallel-no-exa.md", "evaluations/reports/2026-11-10-parallel-no-exa.en.md",
+                 "evaluations/reports/2026-11-10-parallel-no-exa.data.json"]
 SOURCE_EXTRA = ["evaluations/build_source_status.py", "evaluations/check_sources.py", "tests/test_source_status.py", ".gitignore",
                 ".github/workflows/source-check.yml",
                 ".github/workflows/test.yml", ".github/workflows/release.yml",

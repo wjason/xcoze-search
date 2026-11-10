@@ -46,7 +46,8 @@ Updated 2026-11-05. Focus: Agent web search and source reading. Default automati
 - [x] Add eight public Agent search tasks and a keyless baseline; expand the set and add keyed comparisons and independent review. [Evaluation](evaluations/reports/2026-11-08-agent-search.en.md).
 
 - [x] Survey 165 free/public candidates/exclusions, six MCP protocol/query paths and ten public APIs. [Evidence](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md) is not integration.
-- [ ] Prioritize Parallel anonymous search/fetch; check legacy migration, quotas and initialization overhead.
+- [x] Add anonymous Parallel search and test it without Exa. [100-question comparison](evaluations/reports/2026-11-10-parallel-no-exa.en.md).
+- [ ] Track the anonymous MCP migration and quotas. Evaluate Parallel fetch separately.
 - [ ] Prioritize task-specific Microsoft Learn, MDN and searchcode. Validate Cloudflare Docs tails and grep.app hits before enabling.
 - [ ] Extend NDRC/NEA/NBS public originals/date parsing without claiming complete notice coverage.
 

@@ -20,6 +20,7 @@ SEARCH = {
     'bing': 'Python asyncio TaskGroup documentation',
     'duckduckgo': 'Python asyncio TaskGroup documentation',
     'exa-free': 'Python asyncio TaskGroup documentation',
+    'parallel-free': 'Python asyncio TaskGroup documentation',
     'github': 'microsoft/markitdown', 'hackernews': 'SQLite',
     'wikipedia': '协调世界时', 'stackexchange': 'asyncio TaskGroup',
     'arxiv': 'retrieval augmented generation', 'crossref': 'deep learning Lecun',

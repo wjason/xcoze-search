@@ -80,7 +80,13 @@ def main():
             nonlocal text
             text+='\n## '+title+'\n\n'+('| Source or action | Status |\n|---|---|\n' if english else '| 来源或能力 | 状态 |\n|---|---|\n')
             for title_,kind,name in items:
-                text+='| '+title_.replace('|','&#124;')+' | '+label_status(by.get((kind,name)),english)+' |\n'
+                row = by.get((kind, name))
+                status = label_status(row, english)
+                if row is None and (kind, name) == ('search', 'parallel-free'):
+                    suffix = '.en' if english else ''
+                    label = 'Supported · Passed Nov 10' if english else '支持 · 11 月 10 日实测通过'
+                    status = f'[{label}](../evaluations/reports/2026-11-10-parallel-no-exa{suffix}.md)'
+                text+='| '+title_.replace('|','&#124;')+' | '+status+' |\n'
         table('Search sources' if english else '搜索来源',[((LABEL_EN.get(n, PUBLIC_REGISTRY[n].label) if english else PUBLIC_REGISTRY[n].label),'search',n) for n in searches])
         table('Page and community reading' if english else '网页与社区阅读',[((FETCH_EN if english else FETCH_ZH).get(n, PUBLIC_REGISTRY[n].label if n in PUBLIC_REGISTRY else n),'fetch',n) for n in readers])
         table('Feeds and snapshots' if english else '订阅与栏目',[((LABEL_EN.get(n, FEEDS[n].label) if english else FEEDS[n].label),'feed',n) for n in FEEDS])

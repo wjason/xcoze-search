@@ -17,6 +17,7 @@
 | Bing public RSS | 支持 · 本次受限 (结果不相关) |
 | DuckDuckGo public HTML | 支持 · 本次受限 (出现验证, HTTP 202) |
 | Exa hosted MCP (keyless) | 支持 · 适配通过 |
+| Parallel Search MCP (anonymous) | [支持 · 11 月 10 日实测通过](../evaluations/reports/2026-11-10-parallel-no-exa.md) |
 | GitHub public repositories | 支持 · 适配通过 |
 | Hacker News / Algolia | 支持 · 适配通过 |
 | Wikipedia (English / 中文) | 支持 · 适配通过 |

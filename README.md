@@ -79,7 +79,7 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 | 分类 | 数量 | 来源 |
 |---|---:|---|
-| 通用网页搜索 | 3 | Bing RSS、DuckDuckGo HTML、Exa MCP |
+| 通用网页搜索 | 4 | Exa MCP、Parallel Search MCP、Bing RSS、DuckDuckGo HTML |
 | 网页阅读 | 2 | Jina Reader、Exa MCP |
 | 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
 | 论文与科研 | 5 | arXiv、Crossref、Europe PMC、DataCite、Zenodo |
@@ -115,7 +115,7 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 [100 道题集](evaluations/agent-search-cases-v3.json) · [运行说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md#agent-搜索题集) · [100 道题基线与复测](evaluations/reports/2026-11-09-100-question-baseline.md) · [20 道题原文核验报告](evaluations/reports/2026-11-09-agent-search.md)
 
-[Exa 断路实测](evaluations/reports/2026-11-09-exa-outage.md)
+[100 道题无 Exa 对照](evaluations/reports/2026-11-10-parallel-no-exa.md) · [早期 Exa 断路实测](evaluations/reports/2026-11-09-exa-outage.md)
 
 ## 配置 API Key
 

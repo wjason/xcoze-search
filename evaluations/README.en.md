@@ -16,6 +16,8 @@ python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.en.json 
 
 This plans 100 free-mode searches without sending requests. Use a small Smart sample to check fallback without keys. To measure a baseline, add `--live` and use a separate output file. Preserve the date constraints and record the run time for rolling windows. Use the per-case criteria to review the top five results, then label each case verified, partial or missed. Use expected domains to locate evidence and open the original pages to check the actual claim or date.
 
+[100-question comparison with Exa disabled](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) records the new Parallel path, source coverage and browser usage.
+
 ## Public source checks
 
 The [GitHub Actions workflow](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) runs weekly on Mondays at 11:23 Beijing time and can be started manually. Its run summary lists each action and differences from the November 5 snapshot. The JSON artifact is retained for 90 days. On November 9, [a local check](reports/2026-11-09-public-source-check.json) covered 75 actions. It recorded 67 passes, 5 limited and 3 with no hits. The workflow checks search, reading, feeds, trends and site scopes. API-key services and local browser engines remain separate checks.
@@ -87,7 +89,7 @@ Default HTTP/browser execution is simulated, with synthetic keys for six provide
 python3 scripts/evaluate_browser.py --live --output ../browser-live.json
 ```
 
-Explicit --live is required. All search pages/HTTP responses are real. Synthetic in-memory keys and temporary cache avoid user credential files/saved preference changes; a pre-transmission guard rejects keyed APIs. Three docs/statistical-release/filing-reproduction tasks plus a GitHub coverage probe run, followed by a real DDG-to-browser route with Exa/Bing temporarily disabled in test preferences. Successful DDG evidence without browser execution does not pass the browser-fallback check.
+Explicit --live is required. All search pages/HTTP responses are real. Synthetic in-memory keys and temporary cache avoid user credential files/saved preference changes; a pre-transmission guard rejects keyed APIs. Three docs/statistical-release/filing-reproduction tasks plus a GitHub coverage probe run, followed by a real DDG-to-browser route with Exa/Parallel/Bing temporarily disabled in test preferences. Successful DDG evidence without browser execution does not pass the browser-fallback check.
 
 accepted indicates an expected source/topic and acknowledged close, not factual accuracy. The GitHub coverage probe is required:false and remains a failed coverage check when empty; overall ok must not hide it. Overall ok requires the three core tasks, real automatic recovery and zero keyed attempts. Every failure remains reported. Public indexes/network conditions may change. Keep the historical [quota report](reports/2026-11-03-fallback.en.md) separate from [real browser evidence](reports/2026-11-03-browser.en.md).
 

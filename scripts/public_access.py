@@ -17,6 +17,7 @@ from search_common import SearchError
 INTERVALS = {"wikipedia": 1, "stackexchange": 1, "arxiv": 3, "crossref": 1,
              "npm": 1, "crates": 1, "gitlab": 2, "europepmc": 1, "huggingface": 1, "openlibrary": 1, "datacite": 1, "zenodo": 1, "wikidata": 1, "nasa": 1, "federalregister": 1, "worldbank": 1, "usgs": 60, "exa-free": 1, "duckduckgo": 1, "browser": 0}
 INTERVALS.update({"bilibili-trending": 2, "zhihu-trending": 2, "v2ex-trending": 2})
+INTERVALS["parallel-free"] = 1
 INTERVALS.update({"cns-scroll": 2, "cns-finance": 2, "bbc-world": 2, "govcn": 2, "ndrc": 2, "nbs": 2, "nea": 2, "miit": 2, "mee": 2, "mem": 2, "pbc": 2, "ggzy": 2, "mofcom": 2, "csrc": 2, "ccgp": 2, "cas": 2, "cgs": 2, "xinhua": 2, "hk-data": 2,
                   "community-v2ex": 2, "community-python": 2, "community-rust": 2})
 
@@ -138,19 +139,19 @@ def request_slot(name, url, *, max_wait=0):
     except urllib.error.HTTPError as error:
         if (name.endswith("-trending") or name.startswith("community-")) and error.code in (401, 403, 412): slot.defer(900)
         if error.code in (429, 503):
-            default = 900 if name == "exa-free" else 60
+            default = 900 if name in ("exa-free", "parallel-free") else 60
             slot.defer(error.headers.get("Retry-After", str(default)) if error.headers else default)
-        elif name == "exa-free" and error.code in (401, 403, 404, 410):
+        elif name in ("exa-free", "parallel-free") and error.code in (401, 403, 404, 410):
             slot.defer(900)
-        elif name == "exa-free" and 500 <= error.code <= 599:
+        elif name in ("exa-free", "parallel-free") and 500 <= error.code <= 599:
             slot.defer(60)
         raise
     except SearchError as error:
         if (name.endswith("-trending") or name.startswith("community-")) and error.status in (401, 403, 412): slot.defer(900)
-        if error.status in (429, 503): slot.defer(900 if name == "exa-free" else 60)
-        if name == "exa-free" and error.code == "source_rate_limited": slot.defer(900)
-        if name == "exa-free" and error.status in (401, 403, 404, 410): slot.defer(900)
-        if name == "exa-free" and error.status and 500 <= error.status <= 599 and error.status != 503:
+        if error.status in (429, 503): slot.defer(900 if name in ("exa-free", "parallel-free") else 60)
+        if name in ("exa-free", "parallel-free") and error.code == "source_rate_limited": slot.defer(900)
+        if name in ("exa-free", "parallel-free") and error.status in (401, 403, 404, 410): slot.defer(900)
+        if name in ("exa-free", "parallel-free") and error.status and 500 <= error.status <= 599 and error.status != 503:
             slot.defer(60)
         if name == "duckduckgo" and error.code == "access_challenge": slot.defer(900)
         if name == "browser":
@@ -158,7 +159,7 @@ def request_slot(name, url, *, max_wait=0):
             elif error.code in ("browser_timeout", "browser_no_results", "browser_results_hidden", "browser_navigation_failed", "browser_failed", "browser_unavailable"): slot.defer(60)
         raise
     except (urllib.error.URLError, TimeoutError, http.client.HTTPException):
-        if name == "exa-free": slot.defer(60)
+        if name in ("exa-free", "parallel-free"): slot.defer(60)
         raise
     finally:
         # OS locks are released on close, including process exit; no stale lock deletion needed.

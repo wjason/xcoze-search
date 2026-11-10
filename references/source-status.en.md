@@ -17,6 +17,7 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 | Bing public RSS | Supported · Limited (irrelevant results) |
 | DuckDuckGo public HTML | Supported · Limited (access challenge, HTTP 202) |
 | Exa hosted MCP (keyless) | Supported · Passed |
+| Parallel Search MCP (anonymous) | [Supported · Passed Nov 10](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) |
 | GitHub public repositories | Supported · Passed |
 | Hacker News / Algolia | Supported · Passed |
 | Wikipedia (English / Chinese) | Supported · Passed |

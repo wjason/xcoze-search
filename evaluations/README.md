@@ -16,6 +16,8 @@ python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --m
 
 这条命令生成 100 道免费模式检索任务的离线计划。无 Key Smart 切换行为用少量样例抽查即可。跑基线时加上 `--live`，另存结果文件。保留题目指定的日期范围，滚动窗口以实际运行时间为准。复核前五条时按每道题的判定条件标记通过、部分通过或漏检。预期域名用于定位候选，事实和日期以原文为准。
 
+[100 道题无 Exa 对照](../evaluations/reports/2026-11-10-parallel-no-exa.md)记录 Parallel 接入前后的来源覆盖、耗时与浏览器使用情况。
+
 ## 公开来源巡检
 
 [GitHub Actions 巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml)每周一北京时间 11:23 运行，也可手动触发。每次运行的摘要列出逐项状态以及与 11 月 5 日快照的差异，JSON 产物保留 90 天。11 月 9 日的[本地巡检](reports/2026-11-09-public-source-check.json)覆盖 75 项，67 项通过、5 项受限、3 项无命中。巡检覆盖公开检索、网页读取、订阅、热点及网站定向搜索。带 Key 服务和本地浏览器分别验证。
@@ -87,7 +89,7 @@ python3 scripts/evaluate_fallback.py --live-api --live-browser --output ../fallb
 python3 scripts/evaluate_browser.py --live --output ../browser-live.json
 ```
 
-仅显式 --live 才执行；全部搜索页面/HTTP 响应均真实，不模拟。使用内存合成 Key、临时缓存，不读取用户凭据或保存偏好，传输前守卫拒绝带 Key API。测试三道文档/统计发布/公告转载检索、一道 GitHub 覆盖探测，再以临时禁用 Exa/Bing 的偏好运行真实 DDG 到浏览器的自动链路。若 DDG 自身取得足够证据而未启动浏览器，也不算浏览器兜底通过。
+仅显式 --live 才执行；全部搜索页面/HTTP 响应均真实，不模拟。使用内存合成 Key、临时缓存，不读取用户凭据或保存偏好，传输前守卫拒绝带 Key API。测试三道文档/统计发布/公告转载检索、一道 GitHub 覆盖探测，再以临时禁用 Exa/Parallel/Bing 的偏好运行真实 DDG 到浏览器的自动链路。若 DDG 自身取得足够证据而未启动浏览器，也不算浏览器兜底通过。
 
 accepted 只表示取得预期来源/主题且关闭确认；不是事实正确性评分。GitHub 探测 required:false，明确记录为未通过覆盖检查，不能用总体 ok 隐藏该缺口。总体 ok 仅要求核心三题、真实自动兜底和零带 Key 调用；每项失败仍保留。运行结果受公开索引更新和网络影响。历史[限额报告](reports/2026-11-03-fallback.md)与[真实浏览器报告](reports/2026-11-03-browser.md)分别维护，不把模拟当在线成功。
 

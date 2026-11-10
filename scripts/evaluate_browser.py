@@ -77,7 +77,7 @@ def execute():
         # A documented source preference, not injected network failure: DDG HTML
         # is really requested, and only a real failure/empty result permits Chrome.
         fallback_config = {**config, 'search_preferences': {'strategy': 'free',
-                           'disabled_providers': ['exa-free', 'bing']}}
+                           'disabled_providers': ['exa-free', 'parallel-free', 'bing']}}
         report['cases'].append(run_case({**CASES[0], 'id': 'real_api_to_browser'}, fallback_config, automatic=True))
     report['keyed_api_attempts'] = sum(c['execution_summary']['keyed_api_attempts'] for c in report['cases'])
     report['ok'] = all(c['accepted'] for c in report['cases'] if c['required']) and report['keyed_api_attempts'] == 0

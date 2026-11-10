@@ -79,7 +79,7 @@ A preference for future searches is saved; a request for “this search” appli
 
 | Category | Count | Sources |
 |---|---:|---|
-| General web search | 3 | Bing RSS, DuckDuckGo HTML, Exa MCP |
+| General web search | 4 | Exa MCP, Parallel Search MCP, Bing RSS, DuckDuckGo HTML |
 | Page reading | 2 | Jina Reader, Exa MCP |
 | Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
 | Research | 5 | arXiv, Crossref, Europe PMC, DataCite, Zenodo |
@@ -115,7 +115,7 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 
 [100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [100-question baseline and retest](evaluations/reports/2026-11-09-100-question-baseline.en.md) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
 
-[Exa outage test](evaluations/reports/2026-11-09-exa-outage.en.md)
+[100-question comparison with Exa disabled](evaluations/reports/2026-11-10-parallel-no-exa.en.md) · [Earlier Exa outage test](evaluations/reports/2026-11-09-exa-outage.en.md)
 
 ## Configure API keys
 

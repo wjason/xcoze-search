@@ -145,7 +145,7 @@ def plan(args, config, credential, *, fetch=False):
         if getattr(args, "strategy", None) == "free" and any(ALL[p].requires_key for p in candidates):
             invalid("--strategy free conflicts with a keyed provider. Remove the keyed provider or change this invocation's strategy.")
     else:
-        public = ["jina", "exa-free"] if fetch else ["exa-free", "bing", "duckduckgo"]
+        public = ["jina", "exa-free"] if fetch else ["exa-free", "parallel-free", "bing", "duckduckgo"]
         specialized = None
         if fetch:
             from urllib.parse import urlsplit
@@ -177,7 +177,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "duckduckgo", "browser"):
+        if not explicit and name in ("exa-free", "parallel-free", "duckduckgo", "browser"):
             pause = pause_status(name)
             if pause:
                 unavailable.append({"provider": name, **pause})

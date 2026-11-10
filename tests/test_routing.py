@@ -75,7 +75,7 @@ class RoutingTests(unittest.TestCase):
             self.assertEqual(route['execution_candidates'],['github','deepseek','exa-free'])
             self.assertEqual(route['browser_slot_policy'],'api_priority_for_github')
             free = x.plan(args(query='markitdown',platform='github',strategy='free'),self.config,x.credential)
-            self.assertEqual(free['execution_candidates'],['github','exa-free','bing'])
+            self.assertEqual(free['execution_candidates'],['github','exa-free','parallel-free'])
             generic = x.plan(args(query='example'),self.config,x.credential)
             self.assertEqual(generic['execution_candidates'],['deepseek','exa-free','browser'])
             explicit = x.plan(args(query='markitdown',platform='github',provider='browser'),self.config,x.credential)
@@ -97,7 +97,7 @@ class RoutingTests(unittest.TestCase):
         self.keyed(); self.config["providers"]["deepseek"]["api_key"] = "bad key"
         route = x.plan(args(), self.config, x.credential)
         self.assertNotIn("deepseek", route["candidates"])
-        self.config["search_preferences"] = {"disabled_providers": ["bing", "exa-free"]}
+        self.config["search_preferences"] = {"disabled_providers": ["bing", "exa-free", "parallel-free"]}
         self.assertEqual(x.plan(args(), self.config, x.credential)["candidates"], ["duckduckgo"])
 
     def test_preferences_save_reset_private_and_preserve_credentials(self):
@@ -183,7 +183,7 @@ class RoutingTests(unittest.TestCase):
             out=x.run_search(args(query='Rust Mutex documentation'),self.config)
         self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek'])
         self.assertEqual(len(transport.requests),1)
-        self.config['search_preferences']={'disabled_providers':['exa-free','bing']}
+        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing']}
         body=b'<a class="result__a" href="https://example.com/rust">Rust Mutex reference</a>'
         transport=QueueTransport({'results':[]},body)
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
@@ -229,7 +229,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_scraped_topic_mismatch_falls_back_and_explicit_source_does_not_expand(self):
         bad = RSS.replace(b'Python', b'Windows help').replace(b'python.org', b'microsoft.com')
-        self.config["search_preferences"] = {"disabled_providers": ["exa-free"]}
+        self.config["search_preferences"] = {"disabled_providers": ["exa-free", "parallel-free"]}
         good = b'<a class="result__a" href="https://docs.python.org/3/">Python TaskGroup</a>'
         transport = QueueTransport(bad, good)
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
@@ -282,7 +282,7 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(out['requests'][0]['shown_count'],1)
 
     def test_ddg_real_challenge_protocol_pauses_later_routes_without_http(self):
-        self.config['search_preferences']={'disabled_providers':['exa-free','bing']}
+        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing']}
         transport=QueueTransport(b'<form id="challenge-form">verify you are human</form>')
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
             out=x.run_search(args(strategy='free'),self.config)
@@ -301,6 +301,48 @@ class RoutingTests(unittest.TestCase):
         with patch.object(x, "request_api", return_value=(ds(url="https://evil.example/zhihu.com"), 1)):
             output = x.run_search(args(provider="deepseek", platform="zhihu"), self.config)
         self.assertEqual(output["results"], [])
+
+    def test_parallel_fallback_retrieves_scoped_excerpts_without_keys_or_browser(self):
+        self.keyed()
+        self.config['search_preferences'] = {'disabled_providers': ['exa-free', 'exa']}
+        result = {'jsonrpc': '2.0', 'id': 1, 'result': {'structuredContent': {'results': [
+            {'url': 'https://evil.example/docs.python.org', 'title': 'Impostor', 'excerpts': []},
+            {'url': 'https://docs.python.org/3/library/asyncio-task.html', 'title': None,
+             'excerpts': ['TaskGroup'], 'publish_date': 'invalid'},
+        ], 'session_id': 'private-test-session'}}}
+        transport = QueueTransport(('data: ' + json.dumps(result) + '\n\n').encode())
+        query = args(query='Python TaskGroup', site='docs.python.org', strategy='free')
+        with patch.object(x.urllib.request, 'build_opener', return_value=transport), \
+                patch('search_routing.browser_available', return_value=True), \
+                patch.object(x, 'run_browser_search') as browser:
+            output = x.run_search(query, self.config)
+        browser.assert_not_called()
+        self.assertEqual(output['providers'], ['parallel-free'])
+        request = transport.requests[0]
+        self.assertIsNone(request.get_header('Authorization'))
+        self.assertEqual(json.loads(request.data)['params']['arguments']['search_queries'],
+                         ['Python TaskGroup site:docs.python.org'])
+        self.assertEqual(len(output['results']), 1)
+        self.assertEqual(output['results'][0]['content_kind'], 'excerpts')
+        self.assertIsNone(output['results'][0]['published_at'])
+        self.assertNotIn('private-test-session', str(output))
+
+    def test_parallel_rate_limit_preserves_bing_and_pauses_next_plan(self):
+        self.config['search_preferences'] = {'disabled_providers': ['exa-free']}
+        quota = {'jsonrpc': '2.0', 'id': 1, 'result': {'isError': True, 'content': [
+            {'type': 'text', 'text': 'Rate limit exceeded, raw private diagnostic'},
+        ]}}
+        transport = QueueTransport(quota, RSS)
+        query = args(query='Python', strategy='free')
+        with patch.object(x.urllib.request, 'build_opener', return_value=transport):
+            output = x.run_search(query, self.config)
+        self.assertEqual(output['providers'], ['parallel-free', 'bing'])
+        self.assertTrue(output['ok'])
+        self.assertEqual(output['errors'][0]['code'], 'source_rate_limited')
+        self.assertNotIn('raw private diagnostic', str(output))
+        route = x.plan(query, self.config, x.credential)
+        self.assertEqual(route['candidates'][0], 'bing')
+        self.assertEqual(route['skipped_unavailable'][0]['provider'], 'parallel-free')
 
     def test_auto_fetch_is_keyless_and_has_no_paid_auth(self):
         self.keyed(); transport = QueueTransport(JINA)
