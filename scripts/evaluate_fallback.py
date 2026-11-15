@@ -78,7 +78,7 @@ def run_case(label, responses, config, *, live_browser=False, cache=None):
 def execute(*, live_api=False, live_browser=False):
     # Keep the older simulated Exa → RSS/HTML → browser sequence reproducible.
     config = {'schema_version': 2, 'providers': {p: {'api_key': 'synthetic-only'} for p in search.PROVIDERS},
-              'search_preferences': {'disabled_providers': ['parallel-free']}}
+              'search_preferences': {'disabled_providers': ['parallel-free', 'so360', 'duckduckgo', 'docs']}}
     report = {'version': search.VERSION, 'tested_at': datetime.now(timezone.utc).isoformat(),
               'live_api_requested': live_api, 'live_browser_requested': live_browser,
               'scope': 'Fault injection and routing safety; synthetic results are not live retrieval evidence. Browser subrequest counts are unknown.',
@@ -91,6 +91,7 @@ def execute(*, live_api=False, live_browser=False):
         path = Path(root)/'xcoze-search/public-access/exa-free.json'
         if path.exists(): path.unlink()
         report['cases'].append(run_case('quota_exhausted_browser_recovers', [QUOTA, BAD_RSS], config))
+        config['search_preferences']['disabled_providers'].remove('duckduckgo')
         report['cases'].append(run_case('paused_exa_skipped_next_query', [BAD_RSS, CHALLENGE], config))
         if live_browser:
             report['cases'].append(run_case('live_browser_after_injected_quota', [BAD_RSS, CHALLENGE], config, live_browser=True))

@@ -144,6 +144,9 @@ class Provider:
     def fetch_payload(self, args):
         raise SearchError("unsupported_operation", self.label + " does not support fetch.")
 
+    def normalize_search(self, raw, args):
+        return self.normalize(raw, args.count)
+
 
 class DeepSeek(Provider):
     name, label = "deepseek", "DeepSeek"

@@ -117,6 +117,77 @@ class BingRSS(PublicProvider):
         return rows[:count], self.metadata(raw, rows, count)
 
 
+class So360(PublicProvider):
+    name, label = 'so360', '360 public HTML search'
+    endpoint = 'https://www.so.com/s'
+    options = frozenset(('site',))
+    max_count = 10
+    availability = 'experimental_public_html'
+
+    def build_search(self, args):
+        query = args.query + (' site:' + args.site if option(args, 'site') else '')
+        self.validate_query(query)
+        return {'q': query}
+
+    def build_request(self, payload, key, version, *, fetch=False):
+        if fetch: invalid('360 HTML only supports search.')
+        return urllib.request.Request(self.endpoint + '?' + urllib.parse.urlencode(payload), headers={
+            'User-Agent': 'xcoze-search/' + version, 'Accept': 'text/html'})
+
+    def decode_response(self, raw):
+        text = raw.decode('utf-8', 'replace')
+
+        class Cards(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.stack = []; self.card = None; self.rows = []
+
+            def handle_starttag(self, tag, attrs):
+                attrs = dict(attrs)
+                classes = set(attrs.get('class', '').split())
+                parent_blocked = self.stack[-1][2] if self.stack else False
+                blocked = (parent_blocked or tag in ('script', 'style') or 'hidden' in attrs
+                           or bool(re.search(r'display\s*:\s*none|visibility\s*:\s*hidden', attrs.get('style', ''), re.I))
+                           or bool(classes & {'e_result', 'e-buss', 'b_ad'})
+                           or attrs.get('id') == 'm-spread-left' or 'data-text-ad' in attrs)
+                if tag in ('br', 'img', 'input', 'meta', 'link', 'hr', 'source', 'wbr'): return
+                self.stack.append((tag, attrs, blocked))
+                if tag == 'li' and 'res-list' in classes and self.card is None:
+                    self.card = {'depth': len(self.stack), 'blocked': blocked, 'title': '', 'url': '', 'snippet': ''}
+                if self.card and tag == 'a' and not blocked and any(t == 'h3' and 'res-title' in a.get('class', '').split() for t, a, _ in self.stack):
+                    url = attrs.get('data-mdurl', '')
+                    if public_url(url) and not domain_matches(url, 'so.com'):
+                        self.card['url'] = url
+
+            def handle_endtag(self, tag):
+                index = next((i for i in range(len(self.stack) - 1, -1, -1) if self.stack[i][0] == tag), None)
+                if index is None: return
+                if self.card and index < self.card['depth']:
+                    card = self.card
+                    if not card['blocked'] and card['url'] and card['title'].strip():
+                        self.rows.append({k: ' '.join(card[k].split()) for k in ('title', 'url', 'snippet')})
+                    self.card = None
+                del self.stack[index:]
+
+            def handle_data(self, value):
+                if not self.card or not self.stack or self.stack[-1][2]: return
+                if any(t == 'h3' and 'res-title' in a.get('class', '').split() for t, a, _ in self.stack):
+                    self.card['title'] += value
+                elif any('data-result-summary' in a for _, a, _ in self.stack):
+                    self.card['snippet'] += value
+
+        parser = Cards(); parser.feed(text)
+        if not parser.rows:
+            if re.search(r'人机验证|安全验证|请输入验证码|verify you are human|id=[\'"]captcha', text, re.I):
+                raise SearchError('access_challenge', '360 requires verification; no search results accepted.', category='access')
+            if '抱歉，未找到相关搜索结果' not in text:
+                raise SearchError('invalid_response', '360 did not return recognizable organic search results.')
+        return {'results': parser.rows}
+
+    def normalize(self, raw, count):
+        rows = [result(self.name, i, item) for i, item in enumerate(array(raw, 'results'), 1)]
+        return rows[:count], self.metadata({}, rows, count)
+
+
 class DuckDuckGo(PublicProvider):
     name, label = "duckduckgo", "DuckDuckGo public HTML"
     endpoint = "https://html.duckduckgo.com/html/"
@@ -1071,4 +1142,6 @@ OPEN_SOURCES = (Wikipedia(), StackExchange(), Arxiv(), Crossref(), Npm(), Crates
 from browser_search import Browser
 from content_sources import GovCN, CommunityReader, NDRCIndex, NationalStatisticsIndex, NationalEnergyIndex, MIITIndex, MEEIndex, MEMIndex, PBCIndex, GGZYIndex, MOFCOMIndex, CSRCIndex, CCGPIndex, CASIndex, CGSIndex, XinhuaIndex
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), DuckDuckGo(), ExaFree(), ParallelFree(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}
+from documentation_search import OfficialDocs, MDN
+
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), So360(), DuckDuckGo(), ExaFree(), ParallelFree(), OfficialDocs(), MDN(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}

@@ -17,6 +17,9 @@ from public_trends import TRENDING
 
 BEIJING = timezone(timedelta(hours=8))
 SEARCH = {
+    'so360': '新能源汽车 购置税',
+    'docs': 'asyncio TaskGroup',
+    'mdn': 'AbortController',
     'bing': 'Python asyncio TaskGroup documentation',
     'duckduckgo': 'Python asyncio TaskGroup documentation',
     'exa-free': 'Python asyncio TaskGroup documentation',
@@ -57,7 +60,9 @@ FETCH = {
 
 def probes():
     for source, query in SEARCH.items():
-        yield 'search', source, ['search', query, '--provider', source, '--count', '1']
+        yield 'search', source, ['search', query, '--provider', source, '--count', '1'] + (['--site', 'docs.python.org'] if source == 'docs' else [])
+    for platform, query in (('pandas-docs', 'merge validate one_to_one'), ('sqlalchemy-docs', 'select join')):
+        yield 'documentation', platform, ['search', query, '--platform', platform, '--provider', 'docs', '--count', '1']
     for source in FEEDS:
         yield 'feed', source, ['feed', '--source', source, '--count', '1']
     for platform in TRENDING:
@@ -72,7 +77,7 @@ def probes():
 
 def check(kind, source, argv, timeout):
     started = time.monotonic()
-    if kind in {'search', 'scope', 'fetch'}:
+    if kind in {'search', 'scope', 'fetch', 'documentation'}:
         argv = argv + ['--strategy', 'free', '--max-requests', '1', '--retries', '0']
     args = search.parser().parse_args(argv + ['--timeout', str(timeout)])
     original = search.request_api

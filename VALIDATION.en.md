@@ -2,6 +2,10 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## Keyless documentation search — 2026-11-16 (unreleased)
+
+211 offline tests pass. New official Sphinx and MDN adapters passed 7 focused documentation cases. 360 HTML returned locally accepted candidates on 6 of 8 Chinese scoped cases; batching later reached CAPTCHA, now classified and paused. Five original pages contained expected topic markers. A complete 100-question run with Exa, keys, host search and browser disabled returned candidates on 67 questions; this is not an answer-accuracy score. See the [report and raw data](evaluations/reports/2026-11-16-keyless-search.en.md).
+
 ## v0.9.0 — 2026-11-05
 
 170 offline tests pass. Live CNS/BBC feeds, gov.cn index and Python/Rust originals succeeded. V2EX original reading returned 403 and stopped reader fan-out. News/policy links were read through keyless readers (Jina 401, Exa recovered). Nine operations used 11 API HTTP attempts, no keyed calls/browser. The gov.cn window's newest entry was 2026-11-01, not real-time complete government coverage. See [live evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md).

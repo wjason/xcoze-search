@@ -75,9 +75,9 @@ class RoutingTests(unittest.TestCase):
             self.assertEqual(route['execution_candidates'],['github','deepseek','exa-free'])
             self.assertEqual(route['browser_slot_policy'],'api_priority_for_github')
             free = x.plan(args(query='markitdown',platform='github',strategy='free'),self.config,x.credential)
-            self.assertEqual(free['execution_candidates'],['github','exa-free','parallel-free'])
+            self.assertEqual(free['execution_candidates'],['github','parallel-free','exa-free'])
             generic = x.plan(args(query='example'),self.config,x.credential)
-            self.assertEqual(generic['execution_candidates'],['deepseek','exa-free','browser'])
+            self.assertEqual(generic['execution_candidates'],['deepseek','exa-free','parallel-free'])
             explicit = x.plan(args(query='markitdown',platform='github',provider='browser'),self.config,x.credential)
             self.assertEqual(explicit['execution_candidates'],['browser'])
         transport = QueueTransport(urllib.error.HTTPError('',503,'',{},io.BytesIO()),ds(url='https://github.com/microsoft/markitdown'))
@@ -97,7 +97,7 @@ class RoutingTests(unittest.TestCase):
         self.keyed(); self.config["providers"]["deepseek"]["api_key"] = "bad key"
         route = x.plan(args(), self.config, x.credential)
         self.assertNotIn("deepseek", route["candidates"])
-        self.config["search_preferences"] = {"disabled_providers": ["bing", "exa-free", "parallel-free"]}
+        self.config["search_preferences"] = {"disabled_providers": ["bing", "exa-free", "parallel-free", "so360"]}
         self.assertEqual(x.plan(args(), self.config, x.credential)["candidates"], ["duckduckgo"])
 
     def test_preferences_save_reset_private_and_preserve_credentials(self):
@@ -129,7 +129,7 @@ class RoutingTests(unittest.TestCase):
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
             output = x.run_search(args(strategy="free"), self.config)
         self.assertTrue(output["ok"])
-        self.assertEqual(output["providers"], ["exa-free"])
+        self.assertEqual(output["providers"], ["parallel-free"])
         self.assertEqual(output["budget"]["attempts"], 1)
         self.assertIsNone(transport.requests[0].get_header("Authorization"))
 
@@ -183,7 +183,7 @@ class RoutingTests(unittest.TestCase):
             out=x.run_search(args(query='Rust Mutex documentation'),self.config)
         self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek'])
         self.assertEqual(len(transport.requests),1)
-        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing']}
+        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing','so360']}
         body=b'<a class="result__a" href="https://example.com/rust">Rust Mutex reference</a>'
         transport=QueueTransport({'results':[]},body)
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
@@ -229,7 +229,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_scraped_topic_mismatch_falls_back_and_explicit_source_does_not_expand(self):
         bad = RSS.replace(b'Python', b'Windows help').replace(b'python.org', b'microsoft.com')
-        self.config["search_preferences"] = {"disabled_providers": ["exa-free", "parallel-free"]}
+        self.config["search_preferences"] = {"disabled_providers": ["exa-free", "parallel-free", "so360"]}
         good = b'<a class="result__a" href="https://docs.python.org/3/">Python TaskGroup</a>'
         transport = QueueTransport(bad, good)
         with patch.object(x.urllib.request, "build_opener", return_value=transport):
@@ -282,7 +282,7 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(out['requests'][0]['shown_count'],1)
 
     def test_ddg_real_challenge_protocol_pauses_later_routes_without_http(self):
-        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing']}
+        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing','so360']}
         transport=QueueTransport(b'<form id="challenge-form">verify you are human</form>')
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
             out=x.run_search(args(strategy='free'),self.config)
@@ -304,7 +304,7 @@ class RoutingTests(unittest.TestCase):
 
     def test_parallel_fallback_retrieves_scoped_excerpts_without_keys_or_browser(self):
         self.keyed()
-        self.config['search_preferences'] = {'disabled_providers': ['exa-free', 'exa']}
+        self.config['search_preferences'] = {'disabled_providers': ['exa-free', 'exa', 'docs', 'so360']}
         result = {'jsonrpc': '2.0', 'id': 1, 'result': {'structuredContent': {'results': [
             {'url': 'https://evil.example/docs.python.org', 'title': 'Impostor', 'excerpts': []},
             {'url': 'https://docs.python.org/3/library/asyncio-task.html', 'title': None,
@@ -328,7 +328,7 @@ class RoutingTests(unittest.TestCase):
         self.assertNotIn('private-test-session', str(output))
 
     def test_parallel_rate_limit_preserves_bing_and_pauses_next_plan(self):
-        self.config['search_preferences'] = {'disabled_providers': ['exa-free']}
+        self.config['search_preferences'] = {'disabled_providers': ['exa-free', 'so360']}
         quota = {'jsonrpc': '2.0', 'id': 1, 'result': {'isError': True, 'content': [
             {'type': 'text', 'text': 'Rate limit exceeded, raw private diagnostic'},
         ]}}
@@ -429,7 +429,7 @@ class PublicProtocolTests(unittest.TestCase):
         for name, p in FREE.items():
             if not p.supports_search: continue
             if p.method == "LOCAL_BROWSER": continue
-            payload = p.search_payload(args(query="CN,SP.POP.TOTL" if name == "worldbank" else "2.5,day" if name == "usgs" else "wind"))
+            payload = p.search_payload(args(query="CN,SP.POP.TOTL" if name == "worldbank" else "2.5,day" if name == "usgs" else "wind", site="docs.python.org" if name == "docs" else None))
             request = p.build_request(payload, "synthetic-do-not-send", "0.4.0")
             self.assertIsNone(request.get_header("Authorization"))
             self.assertNotIn("synthetic-do-not-send", request.full_url + str(request.data))

@@ -45,6 +45,7 @@ class SourceStatusSnapshotTests(unittest.TestCase):
         expected = {(kind, source) for kind in ('search', 'scope', 'feed', 'trending', 'fetch')
                     for source in self.by_kind[kind]}
         expected.update(('search', n) for n, p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser')
+        expected.update(('documentation', n) for n in ('pandas-docs', 'sqlalchemy-docs'))
         self.assertEqual(set(pairs), expected)
         self.assertEqual(len(pairs), len(expected))
         self.assertEqual(set(check_sources.FETCH),

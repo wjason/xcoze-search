@@ -2,6 +2,10 @@
 
 **简体中文** | [English](VALIDATION.en.md)
 
+## 免 Key 文档搜索 — 2026-11-16（尚未发布）
+
+211 项离线测试通过。官方 Sphinx 索引和 MDN 接入通过 7 道专项文档题。360 HTML 的 8 道中文站点题中 6 道有通过本地检查的候选，批量后出现验证，已分类并冷却。另核对 5 个原始页面的主题标记。完整 100 题无 Exa、无 Key、无宿主搜索、无浏览器实测中，67 题返回候选；不是答案准确率。详见[报告及逐题数据](evaluations/reports/2026-11-16-keyless-search.md)。
+
 ## v0.9.0 — 2026-11-05
 
 170 项离线测试通过。本机实际路径：中新网两个 RSS、BBC RSS、中国政府网索引、Python/Rust 主帖成功；V2EX 主帖 403，停止阅读服务扩散。两个已检索新闻/政策链接通过免 Key 阅读得到原文（Jina 401、Exa 备用成功），9 项操作共 11 次 API HTTP，零带 Key 请求/浏览器。中国政府网当时返回的最新条目为 2026-11-01，不称实时全量公告。完整[实测记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)。

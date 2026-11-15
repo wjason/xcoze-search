@@ -8,6 +8,7 @@ from public_providers import PUBLIC_REGISTRY
 from public_trends import TRENDING
 from public_access import pause_status
 from browser_search import available as browser_available
+from search_quality import topic_terms
 
 ALL = {**REGISTRY, **PUBLIC_REGISTRY}
 STRATEGIES = ("smart", "quality", "balanced", "free")
@@ -30,6 +31,9 @@ PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhih
              "cnsa": "cnsa.gov.cn", "scidb": "scidb.cn", "ceic": "ceic.ac.cn", "nmefc": "nmefc.cn",
              "hko": "hko.gov.hk"}
 NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
+PLATFORMS.update({'python-docs': 'docs.python.org', 'pandas-docs': 'pandas.pydata.org',
+                  'sqlalchemy-docs': 'docs.sqlalchemy.org', 'mdn': 'developer.mozilla.org'})
+NATIVE_PLATFORMS.update({'python-docs': 'docs', 'pandas-docs': 'docs', 'sqlalchemy-docs': 'docs', 'mdn': 'mdn'})
 
 
 def platform_catalog(platform=None):
@@ -41,7 +45,7 @@ def platform_catalog(platform=None):
         source = NATIVE_PLATFORMS.get(name)
         adapter = PUBLIC_REGISTRY.get(source)
         rows.append({"platform": name, "default_domain": domain, "native_provider": source,
-                     "coverage": "native_public_api" if source else "public_index_only",
+                     "coverage": "native_official_index" if source == 'docs' else "native_public_api" if source else "public_index_only",
                      "search_scope": adapter.capabilities()["search_scope"] if adapter else "public_web_index_not_site_search",
                      "native_fetch": bool(adapter and adapter.fetch_endpoint),
                      "generic_fetch_may_help": True, "comment_threads_integrated": False, "transcripts_integrated": False,
@@ -98,6 +102,17 @@ def scoped_args(args):
         if getattr(args, "site", None) and args.site != domain:
             invalid("--site conflicts with --platform; use one target scope.")
         scoped.site = domain
+    elif getattr(args, 'query', None) and not getattr(args, 'site', None) and getattr(args, 'provider', 'auto') == 'auto':
+        # Recognize a named documentation project plus a concrete topic; broad
+        # queries such as "Python documentation" retain the normal web route.
+        intent = query_intent(args.query, getattr(args, 'intent', 'auto'))
+        release_query = re.search(r'\b(?:releases?|versions?|downloads?|latest|current|pricing|billing)\b|最新|发布|版本|下载|收费|计费', args.query, re.I)
+        for topic, domain in (('python', 'docs.python.org'), ('pandas', 'pandas.pydata.org'),
+                              ('sqlalchemy', 'docs.sqlalchemy.org'), ('mdn', 'developer.mozilla.org')):
+            terms = topic_terms(args.query) - {topic, 'api', 'language', 'reference'}
+            if not release_query and terms and (intent == 'reference' or topic == 'mdn') and re.search(r'\b' + topic + r'\b', args.query, re.I):
+                scoped.site = domain
+                break
     return scoped
 
 
@@ -146,6 +161,8 @@ def plan(args, config, credential, *, fetch=False):
             invalid("--strategy free conflicts with a keyed provider. Remove the keyed provider or change this invocation's strategy.")
     else:
         public = ["jina", "exa-free"] if fetch else ["exa-free", "parallel-free", "bing", "duckduckgo"]
+        if not fetch:
+            public = ['parallel-free', 'exa-free', 'so360', 'bing', 'duckduckgo'] if strategy == 'free' else ['exa-free', 'parallel-free', 'so360', 'bing', 'duckduckgo']
         specialized = None
         if fetch:
             from urllib.parse import urlsplit
@@ -177,7 +194,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "parallel-free", "duckduckgo", "browser"):
+        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser"):
             pause = pause_status(name)
             if pause:
                 unavailable.append({"provider": name, **pause})
@@ -205,8 +222,6 @@ def plan(args, config, credential, *, fetch=False):
     if type(limit) is not int or not 1 <= limit <= 3: invalid("--max-sources must be 1..3.")
     names = [x["provider"] for x in eligible]
     execution = names if explicit else names[:limit]
-    if not explicit and "browser" in names and limit > 1 and preferred != "browser" and specialized != "github":
-        execution = [p for p in names if p != "browser"][:limit - 1] + ["browser"]
     return {"requested_strategy": requested_strategy, "strategy": strategy, "automatic": not explicit,
             "selection_basis": "capabilities, target scope, configured default, access policy and bounded task-intent complement; no universal quality ranking",
             "candidates": names, "execution_candidates": execution, "skipped_incompatible": skipped,

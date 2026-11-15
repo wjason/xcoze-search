@@ -10,11 +10,13 @@ Smart 在有格式有效且未禁用的 Key 时选择 quality，否则选择 fre
 
 | 策略 | 通用搜索候选顺序 |
 |---|---|
-| quality | 首个已配置源、Exa 免 Key、其余已配置源，再到 Parallel/Bing/DDG |
-| balanced | Exa 免 Key、已配置来源，再到 Parallel/Bing/DDG |
-| free | Exa 免 Key、匿名 Parallel、Bing、DuckDuckGo；排除带 Key 适配器 |
+| quality | 首个已配置源、Exa 免 Key、其余已配置源，再到 Parallel/360 HTML/Bing/DDG |
+| balanced | Exa 免 Key、已配置来源，再到 Parallel/360 HTML/Bing/DDG |
+| free | 匿名 Parallel、Exa 免 Key、360 HTML、Bing、DuckDuckGo；排除带 Key 适配器 |
 
 GitHub 仓库、HN 帖子定向任务优先平台适配器。已保存的默认来源可优先；已禁用来源不会自动启用。初始排序是可解释的启动规则，不是查询质量实测排名。暂不持久学习历史成功率。
+
+Python、pandas、SQLAlchemy 官方站点优先检索其静态索引，MDN 优先站内搜索。查询明确包含项目名和具体文档主题时，也可自动选择已知官方范围；用户显式范围始终优先。360 HTML 用作搜索服务不可用时的轻量备用。浏览器位于兼容 HTTP 来源之后，不再预留来源位置。
 
 ## 脚本与 Agent 分工
 
@@ -74,7 +76,7 @@ python3 scripts/xcoze_search.py search '工业视觉' --provider yuanbao
 
 ## 浏览器兜底与限额恢复
 
-- 默认先 API。有 browser 可用时，execution_candidates 默认是前两条兼容 API + browser；无 browser 时最多三个 API。来源上限 2 时是一条 API + browser，上限 1 时不加兜底。浏览器不是质量互补来源：只要已有 API 结果就不启动。用户显式选择 browser（本次或默认源）可覆盖默认优先级。
+- 默认先兼容的原生、API 和轻量 HTTP 来源，浏览器排在其后，不预留位置。来源预算不足时不会为调用浏览器跳过 HTTP 备用；只要已有可用结果就不启动浏览器。用户显式选择 browser 可覆盖默认优先级。
 - 自动 API 每源超时最多 8 秒，浏览器最多 15 秒且裁剪到剩余时间/--timeout；总调度 45 秒，关闭另有最多 6 秒宽限。原生 API 成功一源结束，quality reference/current 最多保留两家 API 结果，第二家失败也不丢首家。
 - Exa HTTP 429/503 遵守 Retry-After；JSON-RPC/tool 限额错误识别为 source_rate_limited，未伪造 wire HTTP 状态。无恢复说明时暂停 900 秒，之后可试探，不保证额度重置。Search 与 Fetch 共用暂停，自动 plan 跳过并记录 skipped_unavailable；显式来源不会改查其他来源。
 - 浏览器验证码/异常导航暂停 900 秒，空壳/超时/执行失败暂停 60 秒；占用锁时不启动第二个浏览器。状态仅时间戳/哈希，不含结果/Key。普通查询只读本地状态，不联网健康检查。

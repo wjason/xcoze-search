@@ -14,6 +14,18 @@ spec.loader.exec_module(b)
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_keyless_browser_off_propagates_without_loading_credentials(self):
+        corpus = {'cases': [{'id': 'one', 'query': 'test'}]}
+        seen = []
+        def cell(case, mode, config, budget, **kwargs):
+            seen.append(config['search_preferences']['browser'])
+            return {'id': case['id'], 'mode': mode, 'ok': True, 'receipts': []}
+        with patch.object(b.search, 'read_config', side_effect=AssertionError('credentials')), \
+                patch.object(b, 'run_cell', side_effect=cell):
+            report = b.execute(corpus, live=True, modes=('free',), keyless=True, browser='off')
+        self.assertEqual(seen, ['off'])
+        self.assertEqual(report['browser'], 'off')
+
     def test_outage_benchmark_blocks_exa_and_preserves_native_search(self):
         from test_open_sources import NPM
         corpus = {'cases': [{'id': 'one', 'query': '@example/tool', 'platform': 'npm'}]}
@@ -36,7 +48,7 @@ class BenchmarkTests(unittest.TestCase):
                 patch('search_routing.browser_available', return_value=False):
             report = b.execute(corpus, live=True, modes=('smart',), keyless=True, max_requests=3)
         self.assertTrue(report['cells'][0]['sources'])
-        self.assertEqual(report['cells'][0]['receipts'][0]['source'], 'exa-free')
+        self.assertEqual(report['cells'][0]['receipts'][0]['source'], 'parallel-free')
         self.assertNotIn('synthetic-only', str(report))
         with self.assertRaises(ValueError):
             b.execute(corpus, modes=('deepseek',), keyless=True)

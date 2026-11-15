@@ -64,3 +64,19 @@ def obvious_mismatch(query, rows, *, include_cjk=False, require_focus=False):
 def filter_experimental(query, rows):
     kept = [row for row in rows if not obvious_mismatch(query, [row], include_cjk=True, require_focus=True)]
     return kept, len(rows) - len(kept)
+
+
+def filter_site_html(query, rows):
+    """A conservative lexical gate for the lightweight 360 fallback, not fact verification."""
+    clean = re.sub(r'(?:-?site|after|before|lang):\S+', ' ', query, flags=re.I)
+    clean = re.sub(r'最新|最近|近期|官方|搜索|查找|查询|帮我|请问', ' ', clean)
+    required = {s for s in re.findall(r'[\u3400-\u9fff]{2,}', clean)
+                if 2 <= len(s) <= 4 and not re.fullmatch(r'[年月日第前一二三四五六七八九十上下季度半年]+', s)}
+    latin = topic_terms(clean)
+    kept, _ = filter_experimental(query, rows)
+    selected = []
+    for row in kept:
+        text = ' '.join(str(row.get(k) or '') for k in ('title', 'url', 'snippet')).casefold()
+        if all(s in text for s in required) and all(s in text for s in latin):
+            selected.append(row)
+    return selected, len(rows) - len(selected)

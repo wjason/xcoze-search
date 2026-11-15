@@ -2,6 +2,10 @@
 
 **简体中文** | [English](output.en.md)
 
+## 官方文档结果
+
+`documentation_index` 通过固定官方索引定位页面和符号，返回标题、链接及命中词，不包含正文或发布日期。请求元数据有 `query_sent_to_source:false`、`page_body_read:false` 和 `index_documents`。MDN 返回的站点摘要仍标为 `search_summary`。用法见[官方文档搜索](documentation.md)。
+
 `config_permission_denied`、`config_io_error` 分别表示配置权限与配置读取故障，`local_permission_denied` 表示其他本地权限拒绝；均不包含系统错误原文或密钥。
 
 ## 新闻与社区新增字段

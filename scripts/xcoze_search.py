@@ -33,7 +33,7 @@ from public_providers import PUBLIC_REGISTRY, domain_matches, platform_item_type
 from public_trends import TRENDING, TREND_PROVIDERS, run_trending
 from content_sources import FEEDS, run_feed
 import http.client
-from search_quality import filter_experimental
+from search_quality import filter_experimental, filter_site_html
 from public_access import request_slot
 from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
@@ -305,6 +305,10 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
                 return data, budget.used - initial_used
         except urllib.error.HTTPError as exc:
             error = http_error(exc.code)
+            if name == 'so360' and exc.code in (301, 302, 303, 307, 308):
+                location = urllib.parse.urlsplit(exc.headers.get('Location', '') if exc.headers else '')
+                if location.hostname == 'qcaptcha.so.com':
+                    error = SearchError('access_challenge', '360 requires verification; the source is paused without following the challenge.', category='access')
             if name in ("exa-free", "parallel-free") and (exc.code == 429 or 500 <= exc.code <= 599): error.retryable = False
             if not provider.requires_key and exc.code in (401, 403):
                 error.category = "access"
@@ -359,8 +363,7 @@ def run_search(args, config, *, budget=None):
             else:
                 raw, attempts = request_api(p, payloads[p], key, timeout=args.timeout, retries=args.retries, budget=budget)
             try:
-                rows, meta = (get_provider(p).normalize_search(raw, args) if p in ("govcn", "ndrc", "nbs", "nea", "miit", "mee", "mem", "pbc", "ggzy", "mofcom", "csrc", "ccgp", "cas", "cgs", "xinhua")
-                              else normalize(p, raw, args.count))
+                rows, meta = get_provider(p).normalize_search(raw, args)
                 if getattr(args, "site", None):
                     rows = [r for r in rows if domain_matches(r["url"], args.site)]
                     meta["shown_count"] = len(rows)
@@ -368,9 +371,9 @@ def run_search(args, config, *, budget=None):
                     item_type = platform_item_type(getattr(args, "platform", None), row["url"])
                     if item_type:
                         row["platform_item_type"] = item_type
-                if p in ("bing", "duckduckgo", "browser"):
+                if p in ("bing", "so360", "duckduckgo", "browser"):
                     had_rows = bool(rows)
-                    rows, dropped = filter_experimental(args.query, rows)
+                    rows, dropped = (filter_site_html if p == 'so360' else filter_experimental)(args.query, rows)
                     meta["dropped_irrelevant_count"] = dropped + (raw.get("dropped_irrelevant_count", 0) if p == "browser" else 0)
                     meta["shown_count"] = len(rows)
                     if had_rows and not rows:

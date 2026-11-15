@@ -4,6 +4,17 @@
 
 [Back to sources](sources.en.md)
 
+## Additions checked on 2026-11-16
+
+| Action | Status |
+|---|---|
+| Python / pandas / SQLAlchemy documentation indexes | Supported · Passed focused samples |
+| MDN English site search | Supported · Passed focused samples |
+| 360 HTML web search | Supported · Samples passed; CAPTCHA restricted the later batch |
+
+[Live results and remaining gaps](../evaluations/reports/2026-11-16-keyless-search.en.md). The full snapshot below retains its original check date.
+
+
 Each row describes a specific action. **Supported · Passed** means the live sample returned content in this environment; it is not an uptime or accuracy guarantee. Limited, no hits and key needed retain supported status but were not verified successfully. Searches and page reading are checked separately.
 
 Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).

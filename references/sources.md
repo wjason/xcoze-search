@@ -18,6 +18,9 @@
 | DuckDuckGo HTML | 搜索公开网页 | 支持 · 本次受限 |
 | Exa 托管 MCP | 搜索公开网页、读取网页内容 | 支持 · 适配通过 |
 | Parallel Search MCP | 匿名通用网页搜索与站点定向 | [支持 · 11 月 10 日实测通过](../evaluations/reports/2026-11-10-parallel-no-exa.md) |
+| 360 HTML | 无需浏览器的公开网页搜索，结果校验域名范围 | 样例通过；100 题批量检索中遇到验证，见[实测报告](../evaluations/reports/2026-11-16-keyless-search.md) |
+| Python / pandas / SQLAlchemy | 在本机检索官方文档发布的搜索索引 | [支持 · 适配通过](documentation.md) |
+| MDN Web Docs | MDN 英文文档站内搜索 | [支持 · 适配通过](documentation.md) |
 | Jina Reader | 读取网页内容 | 支持 · 本次受限 |
 | GitHub | 搜索公开仓库、读取仓库 README | 搜索通过；README 受限 |
 | GitLab.com | 搜索公开项目 | 支持 · 适配通过 |

@@ -2,6 +2,10 @@
 
 [简体中文](output.md) | **English**
 
+## Official documentation results
+
+`documentation_index` rows locate pages and symbols from fixed official search indexes. They contain titles, URLs and matched terms, not page bodies or publication dates. Request metadata includes `query_sent_to_source:false`, `page_body_read:false` and `index_documents`. MDN returns site-provided summaries as `search_summary`. See [documentation search](documentation.en.md).
+
 `config_permission_denied` and `config_io_error` distinguish config access denial from other config read failures; `local_permission_denied` identifies other local access denials. Errors omit OS details and credentials.
 
 ## Feed and community fields

@@ -10,11 +10,13 @@ Smart selects quality when a syntactically valid, enabled key exists, otherwise 
 
 | Strategy | General search candidate order |
 |---|---|
-| quality | First configured source, keyless Exa, other configured sources, then Parallel/Bing/DDG |
-| balanced | Keyless Exa, configured sources, then Parallel/Bing/DDG |
-| free | Keyless Exa, anonymous Parallel, Bing, DuckDuckGo; excludes keyed adapters |
+| quality | First configured source, keyless Exa, other configured sources, then Parallel/360 HTML/Bing/DDG |
+| balanced | Keyless Exa, configured sources, then Parallel/360 HTML/Bing/DDG |
+| free | Anonymous Parallel, keyless Exa, 360 HTML, Bing, DuckDuckGo; excludes keyed adapters |
 
 GitHub repository/HN story targets prefer their platform adapters. A saved default may take priority; disabled sources stay excluded. Bootstrap order is transparent configuration policy, not a benchmark ranking. No persistent learned success history is implemented.
+
+Official Python, pandas and SQLAlchemy scopes start with their static indexes; MDN scopes start with MDN search. A named project plus a concrete documentation topic can select its known official scope automatically. Explicit scopes always take precedence. 360 HTML is a lightweight fallback when search services are unavailable. Browser search follows compatible HTTP sources without reserving a slot.
 
 ## Script and Agent responsibilities
 
@@ -74,7 +76,7 @@ Explicit sources never fall back outside their selection. Both and comma-list se
 
 ## Browser fallback and quota recovery
 
-- APIs first by default. With a compatible browser, execution_candidates defaults to two API routes plus browser; without it, up to three APIs. Cap 2 means one API plus browser, cap 1 no fallback. A browser never complements existing API evidence. Explicit current/saved browser-source preference may override order.
+- Compatible native, API and lightweight HTTP sources come before browsers. No browser slot is reserved, and earlier HTTP routes are not skipped to fit a browser into the source cap. Usable results stop browser startup; explicit current/saved browser selection can override this order.
 - Auto API timeout caps at 8 seconds per source, browser work at 15 seconds clipped to remaining time/--timeout. The schedule is 45 seconds plus up to 6 seconds browser-close grace. Successful native APIs stop immediately. Quality reference/current retains up to two API result sets and keeps the first when a complement fails.
 - Exa HTTP 429/503 honors Retry-After. JSON-RPC/tool quota errors become source_rate_limited without inventing wire HTTP status. Absent recovery guidance, pause 900 seconds then permit probing, not guaranteed reset. Search/Fetch share pause state. Auto skips and reports skipped_unavailable; explicit sources never expand.
 - Browser challenges/abnormal navigation pause 900 seconds; shells/timeouts/execution failures 60. A held lock prevents concurrent fallback browsers. State contains timestamps/hashes, no results/keys. Normal queries read local state without online health checks.

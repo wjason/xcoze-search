@@ -18,6 +18,9 @@ This page lists the sources and features already integrated into xcoze search. P
 | DuckDuckGo HTML | Search public web pages | Supported · Limited |
 | Exa hosted MCP | Search and read web pages | Supported · Passed |
 | Parallel Search MCP | Anonymous web search and site scopes | [Supported · Passed Nov 10](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) |
+| 360 HTML | Public web search without a browser; checked site scopes | Samples passed; verification encountered during the 100-question run, see [report](../evaluations/reports/2026-11-16-keyless-search.en.md) |
+| Python / pandas / SQLAlchemy | Search official documentation indexes locally | [Supported · Passed](documentation.en.md) |
+| MDN Web Docs | English MDN site search | [Supported · Passed](documentation.en.md) |
 | Jina Reader | Read web pages | Supported · Limited |
 | GitHub | Search public repositories and read their READMEs | Search passed; README limited |
 | GitLab.com | Search public projects | Supported · Passed |

@@ -77,9 +77,12 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 ## 支持的来源
 
+查官方文档时，Agent 可以直接检索 Python、pandas、SQLAlchemy 的文档索引，或调用 MDN 站内搜索。免 Key 通用搜索优先使用 Parallel，Exa 和公开 HTML 搜索作为备用；360 HTML 无需启动浏览器。更多用法见[官方文档搜索](references/documentation.md)。
+
 | 分类 | 数量 | 来源 |
 |---|---:|---|
-| 通用网页搜索 | 4 | Exa MCP、Parallel Search MCP、Bing RSS、DuckDuckGo HTML |
+| 通用网页搜索 | 5 | Parallel Search MCP、Exa MCP、360 HTML、Bing RSS、DuckDuckGo HTML |
+| 官方文档 | 4 | Python、pandas、SQLAlchemy、MDN Web Docs |
 | 网页阅读 | 2 | Jina Reader、Exa MCP |
 | 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
 | 论文与科研 | 5 | arXiv、Crossref、Europe PMC、DataCite、Zenodo |
@@ -116,6 +119,8 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 [100 道题集](evaluations/agent-search-cases-v3.json) · [运行说明](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.md#agent-搜索题集) · [100 道题基线与复测](evaluations/reports/2026-11-09-100-question-baseline.md) · [20 道题原文核验报告](evaluations/reports/2026-11-09-agent-search.md)
 
 [100 道题无 Exa 对照](evaluations/reports/2026-11-10-parallel-no-exa.md) · [早期 Exa 断路实测](evaluations/reports/2026-11-09-exa-outage.md)
+
+[最新免 Key 文档搜索与 100 题无 Exa 实测](evaluations/reports/2026-11-16-keyless-search.md)，保留本次限额、验证码和未命中记录。
 
 ## 配置 API Key
 
@@ -159,6 +164,7 @@ python3 -m unittest discover -s tests -v
 - [DDGS](https://github.com/deedy5/ddgs) 和 [open-webSearch](https://github.com/Aas-ee/open-webSearch)：参考了公开搜索入口与多来源搜索的设计。
 - [LiteLLM](https://github.com/BerriAI/litellm)、[OpenRouter](https://openrouter.ai/) 和 [Tavily Skills](https://github.com/tavily-ai/skills)：参考了统一接口和 Agent 搜索工作流。
 - [agent-browser](https://github.com/vercel-labs/agent-browser)：为可选的本地浏览器搜索提供支持。
+- [Sphinx](https://www.sphinx-doc.org/) 与 [MDN](https://hacks.mozilla.org/2021/03/how-mdns-site-search-works/)：官方文档搜索使用其公开索引和站内搜索入口，适配器独立实现。
 - 感谢各搜索服务、公开数据源及其维护者提供接口和文档，也感谢所有贡献者与用户的反馈。
 
 上述项目各自遵循其许可证；第三方内容和接口遵循各自的使用条款。具体参考资料见[搜索服务调研](references/search-services.md)及[接口说明](references/providers.md)。

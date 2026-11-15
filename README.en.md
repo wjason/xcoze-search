@@ -77,9 +77,12 @@ A preference for future searches is saved; a request for “this search” appli
 
 ## Supported sources
 
+For official documentation, the Agent can search Python, pandas and SQLAlchemy indexes directly, or use MDN’s own search. Keyless web search starts with Parallel, with Exa and public HTML fallbacks. 360 HTML runs without a browser. See [documentation search](references/documentation.en.md).
+
 | Category | Count | Sources |
 |---|---:|---|
-| General web search | 4 | Exa MCP, Parallel Search MCP, Bing RSS, DuckDuckGo HTML |
+| General web search | 5 | Parallel Search MCP, Exa MCP, 360 HTML, Bing RSS, DuckDuckGo HTML |
+| Official documentation | 4 | Python, pandas, SQLAlchemy, MDN Web Docs |
 | Page reading | 2 | Jina Reader, Exa MCP |
 | Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
 | Research | 5 | arXiv, Crossref, Europe PMC, DataCite, Zenodo |
@@ -116,6 +119,8 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 [100-question set](evaluations/agent-search-cases-v3.en.json) · [How to run](https://github.com/wjason/xcoze-search/blob/main/evaluations/README.en.md#agent-search-question-set) · [100-question baseline and retest](evaluations/reports/2026-11-09-100-question-baseline.en.md) · [Verified 20-question report](evaluations/reports/2026-11-09-agent-search.en.md)
 
 [100-question comparison with Exa disabled](evaluations/reports/2026-11-10-parallel-no-exa.en.md) · [Earlier Exa outage test](evaluations/reports/2026-11-09-exa-outage.en.md)
+
+[Latest keyless documentation and 100-question no-Exa checks](evaluations/reports/2026-11-16-keyless-search.en.md): includes observed quota limits, CAPTCHA restrictions and unresolved queries.
 
 ## Configure API keys
 
@@ -159,6 +164,7 @@ Thank you to the projects and services that helped shape xcoze search:
 - [DDGS](https://github.com/deedy5/ddgs) and [open-webSearch](https://github.com/Aas-ee/open-webSearch), for reference designs around public search endpoints and multiple sources.
 - [LiteLLM](https://github.com/BerriAI/litellm), [OpenRouter](https://openrouter.ai/), and [Tavily Skills](https://github.com/tavily-ai/skills), for ideas on unified interfaces and Agent search workflows.
 - [agent-browser](https://github.com/vercel-labs/agent-browser), which supports the optional local browser search.
+- [Sphinx](https://www.sphinx-doc.org/) and [MDN](https://hacks.mozilla.org/2021/03/how-mdns-site-search-works/), for their public documentation indexes and site-search design. The adapters are independently implemented.
 - The maintainers of the search services and public data sources for their interfaces and documentation, and everyone who has contributed or shared feedback.
 
 These projects have their own licenses; third-party content and APIs are subject to their respective terms. See the [search service research](references/search-services.en.md) and [provider reference](references/providers.en.md) for details.
