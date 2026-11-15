@@ -4,6 +4,7 @@
 
 ## Unreleased
 
+- Add optional saved search results and offline re-export as JSON, Chinese or English Markdown and CSV link tables; document the reference project.
 - Add anonymous Parallel Search as an independent fallback and publish a 100-question no-Exa comparison.
 - Add a reproducible Exa outage test, share a short cooldown across anonymous search and reading after transport errors, and document independent fallbacks.
 - Run the 100-question free baseline and improve exact DOI and Federal Register searches.

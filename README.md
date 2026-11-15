@@ -75,6 +75,18 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 “以后”的设置会保存；“这次”的要求只对当前请求生效。免费模式不会调用需要用户 Key 的搜索服务。指定带 Key 的服务前，需要先完成配置。
 
+### 保存与复用结果
+
+需要整理资料或分享链接时，可以告诉 Agent：
+
+```text
+把这次搜索结果保存到本地，给我 Markdown 报告和 CSV 链接表。
+```
+
+保存后会得到 `results.json`、`report.md` 和 `links.csv`。JSON 保留完整搜索输出，Markdown 便于阅读，CSV 可导入表格。每条结果保留来源、链接和已有发布日期。
+
+需要换成英文报告时，可以说“用刚才保存的结果导出英文版”。重新导出在本地完成，不再次搜索。普通问答仍直接返回答案，文件只在需要时生成。命令示例见[结果导出说明](references/output.md#保存和导出搜索结果)。
+
 ## 支持的来源
 
 | 分类 | 数量 | 来源 |
@@ -156,6 +168,7 @@ python3 -m unittest discover -s tests -v
 感谢以下项目和服务为 xcoze search 的设计与实现提供帮助：
 
 - [Agent Reach](https://github.com/Panniantong/Agent-Reach)：参考了其平台能力组织和搜索、阅读工作流。
+- [招聘通 AI · 全网搜索](https://skillhub.cn/skills/zhaopintong/multi-search-engine)：参考了搜索成果保存、链接清单和原结果复用的设计；本项目的本地导出功能独立实现，见[调研记录](research/multi-search-engine.md)。
 - [DDGS](https://github.com/deedy5/ddgs) 和 [open-webSearch](https://github.com/Aas-ee/open-webSearch)：参考了公开搜索入口与多来源搜索的设计。
 - [LiteLLM](https://github.com/BerriAI/litellm)、[OpenRouter](https://openrouter.ai/) 和 [Tavily Skills](https://github.com/tavily-ai/skills)：参考了统一接口和 Agent 搜索工作流。
 - [agent-browser](https://github.com/vercel-labs/agent-browser)：为可选的本地浏览器搜索提供支持。

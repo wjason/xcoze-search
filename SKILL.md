@@ -29,6 +29,12 @@ python3 "<skill_dir>/scripts/xcoze_search.py" search 'AI coding' --platform hack
 python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article'
 ```
 
+## 保存与复用结果
+
+用户需要报告、链接清单或留存结果时，在本次搜索加 `--output-dir <新目录>`；`--export-language en` 生成英文报告，默认中文。若已经有搜索 JSON，先保存该结果，再用 `export --input <results.json> --output-dir <目录> --language zh|en`，不为导出重复搜索。普通问答不默认生成文件。具体命令和字段见[输出契约](references/output.md#保存和导出搜索结果)。
+
+保存成功后交付实际文件链接；摘要不代表已读原文或完成核验。搜索完成但保存失败时，保留 stdout JSON，仅重试本地导出。已有不同内容的目录不会覆盖，选择新目录。重复导出相同结果和语言可复用原目录。导出不读取 Key、不联网；保存文件可能含查询和网页摘录，分享前按用户需要检查内容。
+
 ## 平台原生搜索和本机工具
 
 当前新闻/政策任务可先使用固定公开源，详见[新闻订阅、政府政策与社区原文](references/feeds.md)。`feed --source cns-scroll|cns-finance|bbc-world` 读取一个当前窗口，可用 --query 短关键词和 --start-date/--end-date 筛选；--query 是标题/摘录中全部空白分词的字面匹配，不是语义搜索。日期按 UTC+08:00 日历日包含首尾，未知日期不进入有日期条件的结果；不要改用检索时间填日期。历史问题、窗口过旧或没有命中时，按原有模式继续正常搜索，不宣称事件不存在。

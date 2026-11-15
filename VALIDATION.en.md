@@ -2,6 +2,12 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## Saved results and reuse — 2026-11-15 (unreleased)
+
+205 offline tests pass, including 9 new export tests covering repeat exports, directory protection, CSV formula escaping, input validation, cleanup after write failures and preservation of completed search output when saving fails. Skill format validation passes, and the package includes the exporter and its documentation.
+
+A live check used isolated configuration, free mode, explicit `parallel-free` and no browser for `site:docs.python.org asyncio TaskGroup`. One request returned 3 official-domain links and saved JSON, Markdown and CSV. With networking and configuration reads then blocked, the same JSON produced an English report with an unchanged search snapshot. This checked returned URLs, file contents and export behavior; it did not read official pages to verify versions or claims in excerpts, or establish broader search-quality conclusions.
+
 ## v0.9.0 — 2026-11-05
 
 170 offline tests pass. Live CNS/BBC feeds, gov.cn index and Python/Rust originals succeeded. V2EX original reading returned 403 and stopped reader fan-out. News/policy links were read through keyless readers (Jina 401, Exa recovered). Nine operations used 11 API HTTP attempts, no keyed calls/browser. The gov.cn window's newest entry was 2026-11-01, not real-time complete government coverage. See [live evidence](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.en.md).

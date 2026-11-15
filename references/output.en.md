@@ -4,6 +4,38 @@
 
 `config_permission_denied` and `config_io_error` distinguish config access denial from other config read failures; `local_permission_denied` identifies other local access denials. Errors omit OS details and credentials.
 
+## Save and export search results
+
+Search still returns JSON on stdout by default. To save a copy, specify a new directory with `--output-dir`:
+
+```bash
+python3 scripts/xcoze_search.py search 'Python TaskGroup official documentation' --output-dir ./search-results/taskgroup --export-language en
+```
+
+The directory contains three files:
+
+| File | Contents |
+|---|---|
+| `results.json` | Full search output, including providers, request records, errors and partial-success status |
+| `report.md` | Query overview, link table, excerpts and review notes; excerpts over 600 characters are shortened and marked |
+| `links.csv` | Position, provider, original rank, title, URL, publication date and content kind; UTF-8 with BOM |
+
+Reports preserve result order. Repeated URLs retain each provider's attribution and rank. Missing publication dates remain unknown rather than taking the retrieval time. CSV cells that could be interpreted as spreadsheet formulas receive a leading apostrophe; JSON preserves the original values.
+
+Use `--export-language en` when searching to save an English report; the default is Chinese. With an existing `results.json`, change the report language or output location using the local export command:
+
+```bash
+python3 scripts/xcoze_search.py export --input ./search-results/taskgroup/results.json --output-dir ./search-results/taskgroup-en --language en
+```
+
+`export` reads no search configuration or keys and makes no network requests. It returns `operation:export`, `network_requests:0`, `result_count`, `original_ok` and `files`. A successful export means the files were generated; consult `original_ok` and the saved errors for search success. Chinese reports use `--language zh`, the default. Only search results are supported, with a 32 MiB input limit.
+
+Search with `--output-dir` rejects an existing destination before sending a request, avoiding accidental repeat searches. Choose a new directory or run `export` on the saved JSON. Offline export can reuse a directory with identical files; different contents, symlinks and unrelated files are never overwritten.
+
+Successful saving adds `saved_files` to the search response. If saving fails after search completes, stdout still contains the search JSON with an additional `export_error`, and the command exits with code 1. Its `cause` distinguishes access denial (`local_permission_denied`), other local I/O failures and input errors. Save that JSON and retry with `export` instead of searching again. Ordinary write failures clean up unfinished export directories; after a forced process termination, inspect any remaining directory and choose a new destination.
+
+Files stay on the local machine and may contain queries, excerpts and source metadata. Newly created files on Unix-like systems are readable and writable only by the current user; Windows permissions inherit local directory settings. Reports organize search results and do not imply full-page reading or independent fact verification.
+
 ## Feed and community fields
 
 Feeds is offline. Feed reads one fixed source and returns results, metadata, requests, budget and execution_summary. Content kinds are feed_excerpt/official_policy_index. Filtering is limited to the returned window; metadata retains row/match counts, date coverage and duplicate/unknown-date exclusions, with window_complete:false. Valid unmatched windows may succeed empty; source errors are not empty windows. Dates use UTC+08:00 calendar days. GovCN search requests retain the same coverage metadata under normal bounded fallback rules.

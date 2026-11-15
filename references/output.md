@@ -4,6 +4,38 @@
 
 `config_permission_denied`、`config_io_error` 分别表示配置权限与配置读取故障，`local_permission_denied` 表示其他本地权限拒绝；均不包含系统错误原文或密钥。
 
+## 保存和导出搜索结果
+
+默认搜索仍向标准输出返回 JSON。需要留存时，用 `--output-dir` 指定新目录：
+
+```bash
+python3 scripts/xcoze_search.py search 'Python TaskGroup 官方文档' --output-dir ./search-results/taskgroup
+```
+
+目录内有三个文件：
+
+| 文件 | 内容 |
+|---|---|
+| `results.json` | 完整搜索输出，保留来源、请求记录、错误和部分成功状态 |
+| `report.md` | 查询概览、链接清单、结果摘录和核验提示；摘录超过 600 字符时节选并标注 |
+| `links.csv` | 顺序编号、来源、原排名、标题、链接、发布日期和内容类型；UTF-8 BOM 编码 |
+
+报告保留结果顺序。同一 URL 来自多个服务时分别记录来源，不合并排名；发布日期缺失时保持未知，不用检索时间替代。CSV 对可能被表格软件识别为公式的单元格添加前导单引号；JSON 保留原始值。
+
+添加 `--export-language en` 可在搜索时保存英文报告。已有 `results.json` 时，使用本地导出命令更换报告语言或保存位置：
+
+```bash
+python3 scripts/xcoze_search.py export --input ./search-results/taskgroup/results.json --output-dir ./search-results/taskgroup-en --language en
+```
+
+`export` 不读取搜索配置或 Key，不发起任何网络请求，返回 `operation:export`、`network_requests:0`、`result_count`、`original_ok` 和 `files`。导出成功只代表文件已生成，原检索是否成功看 `original_ok` 及 JSON 中的错误；中文报告使用 `--language zh`，也是默认值。当前支持搜索结果导出，输入文件最大 32 MiB。
+
+带 `--output-dir` 的搜索在请求前拒绝已存在的目标，避免因重复保存而再次检索；使用新目录，或对原 JSON 运行 `export`。离线导出可复用内容完全一致的原目录；不同内容、符号链接和无关文件均不会覆盖。
+
+保存成功时搜索输出增加 `saved_files`。若搜索已完成但保存失败，仍输出搜索 JSON，增加 `export_error` 并以退出码 1 结束；其中 `cause` 区分权限拒绝 `local_permission_denied`、其他本地读写错误或输入错误。将这份 JSON 保存后使用 `export` 重试，无需再次搜索。尚未写完的导出目录会在一般写入失败时清理；进程被强制终止留下的目录请检查后另选新目录。
+
+文件保存在本机，可能包含查询、网页摘录及来源元数据。类 Unix 系统创建的文件仅当前用户可读写；Windows 权限继承本机目录设置。报告是搜索结果整理，不代表全文阅读或独立事实核验。
+
 ## 新闻与社区新增字段
 
 feeds 完全离线。feed 每次一个固定源，返回 results、metadata、requests、budget、execution_summary；content_kind 为 feed_excerpt 或 official_policy_index。filter 只作用于当前返回窗口，metadata 保留窗口行数、匹配数、日期范围和去重/未知日期计数，window_complete:false。合法窗口无匹配可成功空结果，源错误不是空窗口；日期过滤为 UTC+08:00 日历日。govcn 搜索 requests 也带相同窗口元数据，正常 Smart 备用规则仍适用。

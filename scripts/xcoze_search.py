@@ -34,6 +34,7 @@ from public_trends import TRENDING, TREND_PROVIDERS, run_trending
 from content_sources import FEEDS, run_feed
 import http.client
 from search_quality import filter_experimental
+from result_exports import destination, export_result, load_result
 from public_access import request_slot
 from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
@@ -756,6 +757,8 @@ def parser():
     diagnose.add_argument("--provider", default="auto", help="Name, comma-separated names, auto, both (DeepSeek/Yuanbao), or all configured")
     search = sub.add_parser("search", help="Search; count is per provider, maximum 50")
     search.add_argument("query")
+    search.add_argument("--output-dir", type=Path, help="Save JSON, Markdown and CSV to a new local directory")
+    search.add_argument("--export-language", choices=("zh", "en"), default="zh", help="Language of the saved Markdown report")
     search.add_argument("--provider", default="auto", help="Name, comma-separated names, auto, both (DeepSeek/Yuanbao), or all configured")
     search.add_argument("--count", type=int, default=10)
     search.add_argument("--site", help="One public domain; see each provider's supported semantics")
@@ -796,12 +799,22 @@ def parser():
     for command in (search, fetch):
         command.add_argument("--retries", type=int, choices=(0, 1, 2), default=1)
     sub.add_parser("plan", parents=[search], add_help=False, help="Preview a search route offline; uses local credential presence only")
+    export = sub.add_parser("export", help="Export a saved search JSON locally, without searching again")
+    export.add_argument("--input", type=Path, required=True, help="Saved results.json")
+    export.add_argument("--output-dir", type=Path, required=True)
+    export.add_argument("--language", choices=("zh", "en"), default="zh")
     return root
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command == "export":
+            result = export_result(load_result(args.input), args.output_dir, args.language)
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            return 0
+        if args.command == "search" and args.output_dir:
+            destination(args.output_dir)  # Reject existing output before sending a search request.
         if args.command == "feeds":
             print(json.dumps({"ok": True, "operation": "feeds", "network_requests": 0,
                               "sources": [{"source": p.name, "label": p.label, "endpoint": p.endpoint,
@@ -842,7 +855,20 @@ def main(argv=None):
             result = run_fetch(args, config)
         else:
             result = run_search(args, config)
+        export_failed = False
+        if args.command == "search" and args.output_dir:
+            try:
+                result["saved_files"] = export_result(result, args.output_dir, args.export_language)["files"]
+            except (SearchError, OSError, UnicodeError) as exc:
+                # The search has already completed. Keep its result available to the caller.
+                cause = (exc.code if isinstance(exc, SearchError) else
+                         "local_permission_denied" if isinstance(exc, PermissionError) else "local_io_error")
+                result["export_error"] = {"code": "export_failed", "cause": cause,
+                                          "message": "Search completed; local export failed. Preserve this JSON and retry export."}
+                export_failed = True
         print(json.dumps(result, ensure_ascii=False, indent=2))
+        if export_failed:
+            return 1
         return 0 if result["ok"] else 4
     except SearchError as exc:
         print(json.dumps({"ok": False, "error": exc.data()}, ensure_ascii=False), file=sys.stderr)

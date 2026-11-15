@@ -2,6 +2,12 @@
 
 **简体中文** | [English](VALIDATION.en.md)
 
+## 结果保存与复用 — 2026-11-15（尚未发布）
+
+205 项离线测试通过，含新增 9 项导出测试，覆盖同一结果重复导出、目录保护、CSV 公式转义、输入校验、写入失败清理，以及搜索完成后保存失败时的结果保留。Skill 格式校验通过，安装包包含导出模块和对应说明。
+
+本机以隔离配置、免费模式、指定 `parallel-free`、关闭浏览器执行 `site:docs.python.org asyncio TaskGroup`，一次请求返回 3 条官方域名链接并生成 JSON、Markdown 和 CSV。随后阻断网络与配置读取，从该 JSON 成功导出英文报告，搜索快照保持一致。本次核对了返回链接、文件内容及导出行为，没有读取官方页面核验摘要中的版本或论断，也不据此扩大搜索质量结论。
+
 ## v0.9.0 — 2026-11-05
 
 170 项离线测试通过。本机实际路径：中新网两个 RSS、BBC RSS、中国政府网索引、Python/Rust 主帖成功；V2EX 主帖 403，停止阅读服务扩散。两个已检索新闻/政策链接通过免 Key 阅读得到原文（Jina 401、Exa 备用成功），9 项操作共 11 次 API HTTP，零带 Key 请求/浏览器。中国政府网当时返回的最新条目为 2026-11-01，不称实时全量公告。完整[实测记录](https://github.com/wjason/xcoze-search/blob/main/evaluations/reports/2026-11-05-feeds-community.md)。
