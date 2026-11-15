@@ -2,7 +2,14 @@
 
 [简体中文](TODO.md) | **English**
 
-Updated 2026-11-05. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
+Updated 2026-11-16. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
+
+## Latest keyless retrieval work
+
+- [x] Direct Python, pandas, SQLAlchemy, MDN, Kubernetes, Go and Rust documentation routes.
+- [x] CNINFO disclosure search and NBS site search, with reporting periods and market metadata retained.
+- [x] Public 100-question comparison with Exa and Parallel both disabled.
+- [ ] Improve the remaining misses across other official documentation, community indexes, laws, standards and public data.
 
 ## v0.4.0: implemented
 

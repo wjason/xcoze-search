@@ -175,19 +175,19 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual([r["rank"] for r in output["results"]], [1, 1])
 
     def test_reference_skips_weak_complement_but_retains_failure_fallback(self):
-        self.keyed();self.config['search_preferences']={'disabled_providers':['exa-free']}
-        route=x.plan(args(query='Rust Mutex documentation'),self.config,x.credential)
+        self.keyed();self.config['search_preferences']={'disabled_providers':['exa-free','site-docs']}
+        route=x.plan(args(query='SQLite WAL documentation'),self.config,x.credential)
         self.assertFalse(route['complementary_search'])
         transport=QueueTransport(ds())
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
-            out=x.run_search(args(query='Rust Mutex documentation'),self.config)
+            out=x.run_search(args(query='SQLite WAL documentation'),self.config)
         self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek'])
         self.assertEqual(len(transport.requests),1)
-        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing','so360']}
-        body=b'<a class="result__a" href="https://example.com/rust">Rust Mutex reference</a>'
+        self.config['search_preferences']={'disabled_providers':['exa-free','parallel-free','bing','so360','site-docs']}
+        body=b'<a class="result__a" href="https://example.com/sqlite">SQLite WAL reference</a>'
         transport=QueueTransport({'results':[]},body)
         with patch.object(x.urllib.request,'build_opener',return_value=transport):
-            out=x.run_search(args(query='Rust Mutex documentation'),self.config)
+            out=x.run_search(args(query='SQLite WAL documentation'),self.config)
         self.assertTrue(out['ok']);self.assertEqual(out['providers'],['deepseek','duckduckgo'])
 
     def test_healthy_primary_caps_only_automatic_complement_at_three_seconds(self):
@@ -429,7 +429,7 @@ class PublicProtocolTests(unittest.TestCase):
         for name, p in FREE.items():
             if not p.supports_search: continue
             if p.method == "LOCAL_BROWSER": continue
-            payload = p.search_payload(args(query="CN,SP.POP.TOTL" if name == "worldbank" else "2.5,day" if name == "usgs" else "wind", site="docs.python.org" if name == "docs" else None))
+            payload = p.search_payload(args(query="CN,SP.POP.TOTL" if name == "worldbank" else "2.5,day" if name == "usgs" else "wind", site="docs.python.org" if name == "docs" else "kubernetes.io" if name == "site-docs" else None))
             request = p.build_request(payload, "synthetic-do-not-send", "0.4.0")
             self.assertIsNone(request.get_header("Authorization"))
             self.assertNotIn("synthetic-do-not-send", request.full_url + str(request.data))

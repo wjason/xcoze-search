@@ -4,6 +4,7 @@
 
 ## 尚未发布
 
+- 接入免 Key 的 Kubernetes/Rust 索引、Go 标准库符号、巨潮公告和统计局站内搜索；保留方法所属类型、市场与统计期，增加 Exa/Parallel 同时不可用的对照。
 - 接入 Python、pandas、SQLAlchemy 和 MDN 官方文档搜索，以及 360 轻量 HTML 备用；免 Key 通用搜索优先 Parallel，遇到验证重定向后停止重复请求。
 - 接入 Parallel 匿名搜索作为独立备用，发布 100 道题无 Exa 对照。
 - 增加 Exa 断路评测，匿名搜索与读取共享故障冷却，并记录独立备用路径。

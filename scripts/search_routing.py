@@ -32,8 +32,10 @@ PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhih
              "hko": "hko.gov.hk"}
 NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
 PLATFORMS.update({'python-docs': 'docs.python.org', 'pandas-docs': 'pandas.pydata.org',
-                  'sqlalchemy-docs': 'docs.sqlalchemy.org', 'mdn': 'developer.mozilla.org'})
+                  'sqlalchemy-docs': 'docs.sqlalchemy.org', 'mdn': 'developer.mozilla.org',
+                  'kubernetes-docs': 'kubernetes.io', 'rust-docs': 'doc.rust-lang.org', 'go-docs': 'pkg.go.dev'})
 NATIVE_PLATFORMS.update({'python-docs': 'docs', 'pandas-docs': 'docs', 'sqlalchemy-docs': 'docs', 'mdn': 'mdn'})
+NATIVE_PLATFORMS.update({'kubernetes-docs': 'site-docs', 'rust-docs': 'site-docs', 'go-docs': 'go-docs', 'nbs': 'nbs-search'})
 
 
 def platform_catalog(platform=None):
@@ -45,7 +47,7 @@ def platform_catalog(platform=None):
         source = NATIVE_PLATFORMS.get(name)
         adapter = PUBLIC_REGISTRY.get(source)
         rows.append({"platform": name, "default_domain": domain, "native_provider": source,
-                     "coverage": "native_official_index" if source == 'docs' else "native_public_api" if source else "public_index_only",
+                     "coverage": "native_official_index" if source in ('docs', 'site-docs') else "native_site_search" if source in ('go-docs', 'cninfo', 'nbs-search') else "native_public_api" if source else "public_index_only",
                      "search_scope": adapter.capabilities()["search_scope"] if adapter else "public_web_index_not_site_search",
                      "native_fetch": bool(adapter and adapter.fetch_endpoint),
                      "generic_fetch_may_help": True, "comment_threads_integrated": False, "transcripts_integrated": False,
@@ -108,11 +110,17 @@ def scoped_args(args):
         intent = query_intent(args.query, getattr(args, 'intent', 'auto'))
         release_query = re.search(r'\b(?:releases?|versions?|downloads?|latest|current|pricing|billing)\b|最新|发布|版本|下载|收费|计费', args.query, re.I)
         for topic, domain in (('python', 'docs.python.org'), ('pandas', 'pandas.pydata.org'),
-                              ('sqlalchemy', 'docs.sqlalchemy.org'), ('mdn', 'developer.mozilla.org')):
+                              ('sqlalchemy', 'docs.sqlalchemy.org'), ('mdn', 'developer.mozilla.org'),
+                              ('kubernetes', 'kubernetes.io'), ('k8s', 'kubernetes.io'),
+                              ('rust', 'doc.rust-lang.org'), ('go', 'pkg.go.dev'), ('golang', 'pkg.go.dev')):
             terms = topic_terms(args.query) - {topic, 'api', 'language', 'reference'}
+            if topic == 'go' and not re.search(r'\bGo\b|pkg\.go\.dev', args.query): continue
             if not release_query and terms and (intent == 'reference' or topic == 'mdn') and re.search(r'\b' + topic + r'\b', args.query, re.I):
                 scoped.site = domain
                 break
+        if not getattr(scoped, 'site', None):
+            if '国家统计局' in args.query: scoped.site = 'stats.gov.cn'
+            elif '巨潮' in args.query and re.search(r'公告|年报|年度报告', args.query): scoped.site = 'cninfo.com.cn'
     return scoped
 
 
@@ -194,7 +202,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser"):
+        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search'):
             pause = pause_status(name)
             if pause:
                 unavailable.append({"provider": name, **pause})

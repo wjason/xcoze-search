@@ -31,7 +31,9 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article
 
 ## 官方文档搜索
 
-Python、pandas、SQLAlchemy 和 MDN 文档可用 `--platform python-docs|pandas-docs|sqlalchemy-docs|mdn`，或用其官方 `--site`。静态索引返回 `documentation_index`，只定位页面和符号，不是正文摘要；解释具体行为仍需读原文。查询明确包含项目与具体文档主题时会尝试已知官方范围，普通发布/版本查询保持网页搜索；固定索引不能保证指定版本时跳过，不放宽版本条件。见[官方文档搜索](references/documentation.md)。
+Python、pandas、SQLAlchemy、Kubernetes、Go、Rust 和 MDN 文档可用 `--platform python-docs|pandas-docs|sqlalchemy-docs|kubernetes-docs|go-docs|rust-docs|mdn`，或用其官方 `--site`。静态索引返回 `documentation_index`，只定位页面和符号，不是正文摘要；解释具体行为仍需读原文。查询明确包含项目与具体文档主题时会尝试已知官方范围，普通发布/版本查询保持网页搜索；固定索引不能保证指定版本时跳过，不放宽版本条件。见[官方文档搜索](references/documentation.md)。
+
+巨潮公告和统计局发布优先使用 `--platform cninfo|nbs`，见[国内站内检索](references/china-site-search.md)。巨潮检索公告全文索引，返回元数据和 PDF 链接，不代表已读报告或取得实时行情；保留证券代码、市场和报告年度。统计局通过其网站选用的搜索后端查询，区分标题中的统计期与发布日期。
 
 ## 平台原生搜索和本机工具
 

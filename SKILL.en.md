@@ -25,7 +25,9 @@ When the full GitHub repository name is known, keep the `owner/repository` form 
 
 ## Official documentation search
 
-For Python, pandas, SQLAlchemy and MDN documentation, use `--platform python-docs|pandas-docs|sqlalchemy-docs|mdn` or their official `--site`. Static index rows use `documentation_index`: they locate pages and symbols, not body summaries. Read originals before explaining behavior. Named projects with concrete documentation topics can select a known official scope; release/version queries retain web search. Fixed indexes skip unsupported requested versions rather than relaxing that constraint. See [documentation search](references/documentation.en.md).
+For Python, pandas, SQLAlchemy, Kubernetes, Go, Rust and MDN documentation, use `--platform python-docs|pandas-docs|sqlalchemy-docs|kubernetes-docs|go-docs|rust-docs|mdn` or their official `--site`. Static index rows use `documentation_index`: they locate pages and symbols, not body summaries. Read originals before explaining behavior. Named projects with concrete documentation topics can select a known official scope; release/version queries retain web search. Fixed indexes skip unsupported requested versions rather than relaxing that constraint. See [documentation search](references/documentation.en.md).
+
+For CNINFO announcements and NBS publications, prefer `--platform cninfo|nbs`; see [Chinese site search](references/china-site-search.en.md). CNINFO searches disclosure text but returns metadata and PDF links, not a read report or live prices. Preserve security code, market and reporting year. NBS searches through the backend selected by its website; distinguish title statistical periods from publication dates.
 
 ## Native platform search and existing local tools
 

@@ -18,6 +18,8 @@ GitHub repository/HN story targets prefer their platform adapters. A saved defau
 
 Official Python, pandas and SQLAlchemy scopes start with their static indexes; MDN scopes start with MDN search. A named project plus a concrete documentation topic can select its known official scope automatically. Explicit scopes always take precedence. 360 HTML is a lightweight fallback when search services are unavailable. Browser search follows compatible HTTP sources without reserving a slot.
 
+Kubernetes and Rust scopes start with published navigation/item indexes; Go starts with standard-library symbol search. CNINFO scopes start with disclosure search, and NBS scopes use its website-selected search backend. Explicitly named NBS or CNINFO disclosure topics can select these scopes automatically. Source disables and per-request constraints still apply.
+
 ## Script and Agent responsibilities
 
 The script preflights constraints. Incompatible auto candidates appear in skipped_incompatible without dropping time/site conditions. Explicit multi-source calls fail preflight if any selected source is incompatible. Native freshness expressions are not translated to another provider's different semantics; use supported start/end dates or separate Agent queries when appropriate.

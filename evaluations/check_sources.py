@@ -20,6 +20,8 @@ SEARCH = {
     'so360': '新能源汽车 购置税',
     'docs': 'asyncio TaskGroup',
     'mdn': 'AbortController',
+    'site-docs': 'NetworkPolicy ingress egress', 'go-docs': 'context.WithCancelCause',
+    'cninfo': '贵州茅台 2024 年度报告', 'nbs-search': '国内生产总值',
     'bing': 'Python asyncio TaskGroup documentation',
     'duckduckgo': 'Python asyncio TaskGroup documentation',
     'exa-free': 'Python asyncio TaskGroup documentation',
@@ -42,7 +44,7 @@ SCOPES = {
     'youtube': 'SQLite tutorial', 'bilibili': 'Python 教程', 'reddit': 'SQLite',
     'twitter': 'Python release', 'v2ex': 'Python', 'douban': '三体',
     'china-data': '国内生产总值', 'cma-data': '地面气象数据', 'china-weather': '北京 天气',
-    'cninfo': '年度报告', 'sse': '上市公司 公告', 'szse': '上市公司 公告',
+    'sse': '上市公司 公告', 'szse': '上市公司 公告',
     'bse': '上市公司 公告', 'china-standards': '信息安全 标准',
     'china-laws': '中华人民共和国 民法典', 'cnsa': '嫦娥六号',
     'scidb': '气候 数据集', 'ceic': '地震 速报', 'nmefc': '海洋 预报', 'hko': '天文台 天气',
@@ -60,9 +62,9 @@ FETCH = {
 
 def probes():
     for source, query in SEARCH.items():
-        yield 'search', source, ['search', query, '--provider', source, '--count', '1'] + (['--site', 'docs.python.org'] if source == 'docs' else [])
-    for platform, query in (('pandas-docs', 'merge validate one_to_one'), ('sqlalchemy-docs', 'select join')):
-        yield 'documentation', platform, ['search', query, '--platform', platform, '--provider', 'docs', '--count', '1']
+        yield 'search', source, ['search', query, '--provider', source, '--count', '1'] + (['--site', 'docs.python.org'] if source == 'docs' else ['--site', 'kubernetes.io'] if source == 'site-docs' else [])
+    for platform, query in (('pandas-docs', 'merge validate one_to_one'), ('sqlalchemy-docs', 'select join'), ('rust-docs', 'OnceLock get_or_init')):
+        yield 'documentation', platform, ['search', query, '--platform', platform, '--provider', 'site-docs' if platform == 'rust-docs' else 'docs', '--count', '1']
     for source in FEEDS:
         yield 'feed', source, ['feed', '--source', source, '--count', '1']
     for platform in TRENDING:

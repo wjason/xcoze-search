@@ -229,7 +229,7 @@ class ChinaIndexScopedRoutingTests(unittest.TestCase):
     def test_public_index_scopes_are_declared_without_claiming_native_access(self):
         from search_routing import PLATFORMS, platform_catalog
         expected = {'china-data':'data.stats.gov.cn', 'cma-data':'data.cma.cn', 'china-weather':'weather.com.cn',
-                    'cninfo':'cninfo.com.cn', 'sse':'sse.com.cn', 'szse':'szse.cn', 'bse':'bse.cn',
+                    'sse':'sse.com.cn', 'szse':'szse.cn', 'bse':'bse.cn',
                     'china-standards':'openstd.samr.gov.cn', 'china-laws':'flk.npc.gov.cn', 'cnsa':'cnsa.gov.cn',
                     'scidb':'scidb.cn', 'ceic':'ceic.ac.cn', 'nmefc':'nmefc.cn', 'hko':'hko.gov.hk'}
         for name, domain in expected.items():

@@ -20,6 +20,10 @@ This page lists the sources and features already integrated into xcoze search. P
 | Parallel Search MCP | Anonymous web search and site scopes | [Supported · Passed Nov 10](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) |
 | 360 HTML | Public web search without a browser; checked site scopes | Samples passed; verification encountered during the 100-question run, see [report](../evaluations/reports/2026-11-16-keyless-search.en.md) |
 | Python / pandas / SQLAlchemy | Search official documentation indexes locally | [Supported · Passed](documentation.en.md) |
+| Kubernetes / Rust | Search official navigation or standard-library item indexes | [Supported · Passed focused cases](../evaluations/reports/2026-11-16-native-search.en.md) |
+| Go standard library | Official package and symbol search | [Supported · Passed focused cases](../evaluations/reports/2026-11-16-native-search.en.md) |
+| CNINFO | Public disclosure search and PDF links | [Supported · Passed](china-site-search.en.md) |
+| NBS site search | Search published NBS pages through its website-selected backend | [Supported · Passed](china-site-search.en.md) |
 | MDN Web Docs | English MDN site search | [Supported · Passed](documentation.en.md) |
 | Jina Reader | Read web pages | Supported · Limited |
 | GitHub | Search public repositories and read their READMEs | Search passed; README limited |
@@ -77,7 +81,7 @@ News feeds cover each publisher's current feed window. Trend lists contain what 
 
 Public web searches can be scoped to **Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, and Douban**. Results depend on the coverage and freshness of the web index.
 
-China public sources can also be scoped: National Data, National Meteorological Information Center, China Weather, CNInfo, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, and Hong Kong Observatory. The Hong Kong Observatory scoped search returned links in this check.
+China public sources can also be scoped: National Data, National Meteorological Information Center, China Weather, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, and Hong Kong Observatory. The Hong Kong Observatory scoped search returned links in this check.
 
 ### Bring your own API key
 

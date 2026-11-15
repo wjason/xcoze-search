@@ -9,6 +9,9 @@
 | Python | `python-docs` | 下载官方 Sphinx 索引，在本机匹配关键词和 API 符号 | `/3/` 英文文档 |
 | pandas | `pandas-docs` | 同上 | 当前 `/docs/` 英文文档 |
 | SQLAlchemy | `sqlalchemy-docs` | 同上 | `/en/20/` 英文文档 |
+| Kubernetes | `kubernetes-docs` | 检索官方文档导航中的标题与链接 | 当前英文文档，不是全文索引 |
+| Go 标准库 | `go-docs` | 官方包与符号搜索，保留包名和方法所属类型 | 仅标准库结果 |
+| Rust 标准库 | `rust-docs` | 检索官方条目清单 | 当前 `std`；方法详情需读对应类型页 |
 | MDN Web Docs | `mdn` | 使用 MDN 公开站内搜索 | 英文文档 |
 
 这些入口不依赖 Exa、Parallel、宿主搜索或用户 Key。普通提问由 Agent 选择；查询明确包含项目名和具体文档主题时，脚本也可识别上述已知官方范围。用户提供的站点或平台要求优先。
@@ -21,6 +24,14 @@ python3 scripts/xcoze_search.py search 'AbortSignal.timeout' --platform mdn
 ```
 
 也可以使用 `--site docs.python.org`、`--site pandas.pydata.org`、`--site docs.sqlalchemy.org` 或 `--site developer.mozilla.org`，自动搜索时优先使用对应文档入口。指定 `--provider docs` 时须同时指定支持的 `--site`。
+
+```bash
+python3 scripts/xcoze_search.py search 'resource requests limits CPU memory' --platform kubernetes-docs
+python3 scripts/xcoze_search.py search 'Go net/http Server Shutdown documentation' --platform go-docs
+python3 scripts/xcoze_search.py search 'OnceLock get_or_init' --platform rust-docs
+```
+
+Kubernetes 按官方导航定位相关页面，不下载全站正文。Rust 返回已公布的类型或条目链接，不拼造方法锚点。Go 保留 `http.Server.Shutdown` 这样的完整名称，并只接受带有网站“标准库”标记的结果。这些入口不依赖 Exa 或 Parallel，详见[专项实测](../evaluations/reports/2026-11-16-native-search.md)。
 
 ## 搜索结果与正文
 

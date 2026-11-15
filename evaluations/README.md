@@ -105,3 +105,11 @@ python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-scop
 默认三模式不变；browser 只是显式免费诊断，绝不自动加入对比。free/browser 在传输前拒绝带 Key API。在线使用正常配置和缓存状态，不清除真实限额；模式顺序轮换，串行执行。scoped/short 是不同查询条件，不能混作原样同题的算法提升。结果 ok 只表示计划单元执行完，单元仍可能失败/无匹配/不支持答案。每次报告最多保存 1800 字符证据供本地复核，截断后未见某词不证明完整响应没有它；对外发布前移除证据正文并补充来源/时间/答案支持的人工说明。带 Key 调用可能计费，浏览器只需已有工具；模型成本未知。
 
 [本轮双语报告](reports/2026-11-03-comparison.md)保留多个阶段、Exa 自然恢复和未解决的英文覆盖缺口；不是盲评或稳定延迟排名。
+
+## 独立免 Key 路径
+
+[官方文档与国内站内检索实测](reports/2026-11-16-native-search.md)。同时禁用两家通用 MCP 来源：
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --modes free --keyless --without-exa --without-parallel --browser off --live --limit 100 --max-requests 300 --timeout 8 --count 5 --output /tmp/xcoze-native-100.json
+```

@@ -1143,5 +1143,6 @@ from browser_search import Browser
 from content_sources import GovCN, CommunityReader, NDRCIndex, NationalStatisticsIndex, NationalEnergyIndex, MIITIndex, MEEIndex, MEMIndex, PBCIndex, GGZYIndex, MOFCOMIndex, CSRCIndex, CCGPIndex, CASIndex, CGSIndex, XinhuaIndex
 
 from documentation_search import OfficialDocs, MDN
+from native_search import NavigationDocs, GoDocs, CninfoSearch, StatisticsSearch
 
-PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), So360(), DuckDuckGo(), ExaFree(), ParallelFree(), OfficialDocs(), MDN(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}
+PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), So360(), DuckDuckGo(), ExaFree(), ParallelFree(), OfficialDocs(), MDN(), NavigationDocs(), GoDocs(), CninfoSearch(), StatisticsSearch(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}

@@ -4,31 +4,29 @@
 
 [返回来源列表](sources.md)
 
-## 2026-11-16 新增能力检查
-
-| 能力 | 支持状态 |
-|---|---|
-| Python / pandas / SQLAlchemy 文档索引 | 支持 · 专项样例通过 |
-| MDN 英文站内搜索 | 支持 · 专项样例通过 |
-| 360 HTML 网页搜索 | 支持 · 样例通过，后续批量检索遇到验证 |
-
-[实测结果与剩余缺口](../evaluations/reports/2026-11-16-keyless-search.md)。下面的完整快照保留其原检查日期。
-
-
 每行对应一项具体能力。**支持 · 适配通过**表示本次环境中的实际样例返回了内容；它不是持续可用或准确率保证。受限、无命中和待配置仍表示已支持，但本次未验证成功。搜索与阅读分别记录。
 
 检查时间：2026-11-05 19:22，北京时间。公开记录不包含凭据和账号专属错误详情。[查看脱敏测试结果](../evaluations/reports/2026-11-05-source-status.json)。
 
 [查看持续巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [11 月 9 日本地巡检](../evaluations/reports/2026-11-09-public-source-check.json)。下表保留完整支持快照，包括浏览器与带 Key 的能力。
 
+[11 月 16 日专项检查](../evaluations/reports/2026-11-16-native-search.md)补充历史快照，更新行单独标明检查日期。
+
 ## 搜索来源
 
 | 来源或能力 | 状态 |
 |---|---|
 | Bing public RSS | 支持 · 本次受限 (结果不相关) |
+| 360 public HTML search | 支持 · 本次受限 (结果不相关) · 2026-11-16 |
 | DuckDuckGo public HTML | 支持 · 本次受限 (出现验证, HTTP 202) |
 | Exa hosted MCP (keyless) | 支持 · 适配通过 |
 | Parallel Search MCP (anonymous) | [支持 · 11 月 10 日实测通过](../evaluations/reports/2026-11-10-parallel-no-exa.md) |
+| Python / pandas / SQLAlchemy 文档索引 | 支持 · 适配通过 · 2026-11-16 |
+| MDN 英文文档 | 支持 · 适配通过 · 2026-11-16 |
+| Kubernetes / Rust 官方文档索引 | 支持 · 适配通过 · 2026-11-16 |
+| Go 标准库包与符号 | 支持 · 适配通过 · 2026-11-16 |
+| 巨潮资讯公告 | 支持 · 适配通过 · 2026-11-16 |
+| 国家统计局站内搜索 | 支持 · 适配通过 · 2026-11-16 |
 | GitHub public repositories | 支持 · 适配通过 |
 | Hacker News / Algolia | 支持 · 适配通过 |
 | Wikipedia (English / 中文) | 支持 · 适配通过 |
@@ -110,7 +108,6 @@
 | 国家数据 (`data.stats.gov.cn`) | 支持 · 适配通过 |
 | 中国气象数据中心 (`data.cma.cn`) | 支持 · 适配通过 |
 | 中国天气网 (`weather.com.cn`) | 支持 · 适配通过 |
-| 巨潮资讯 (`cninfo.com.cn`) | 支持 · 适配通过 |
 | 上海证券交易所 (`sse.com.cn`) | 支持 · 适配通过 |
 | 深圳证券交易所 (`szse.cn`) | 支持 · 适配通过 |
 | 北京证券交易所 (`bse.cn`) | 支持 · 适配通过 |
@@ -168,7 +165,7 @@
 </details>
 
 <details>
-<summary>技术文档 (8)</summary>
+<summary>技术文档 (7)</summary>
 
 | 候选来源 | 状态 |
 |---|---|
@@ -177,8 +174,7 @@
 | [Cloudflare Docs MCP](https://developers.cloudflare.com/workers/get-started/prompting/) | 待支持 |
 | [OpenAI Docs MCP](https://developers.openai.com/resources/docs-mcp) | 待支持 |
 | [Context7](https://github.com/upstash/context7) | 待支持 |
-| [Python official docs / Sphinx inventories](https://docs.python.org/3/) | 待支持 |
-| [Rust std / docs.rs](https://docs.rs/) | 待支持 |
+| [docs.rs crate documentation](https://docs.rs/) | 待支持 |
 | [Read the Docs / llms.txt publisher docs](https://docs.readthedocs.com/platform/stable/reference/sitemaps.html) | 待支持 |
 
 </details>

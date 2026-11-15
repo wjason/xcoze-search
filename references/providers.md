@@ -12,6 +12,10 @@
 | so360 | https://www.so.com/s | 公开 HTML 自然结果，最多 10 条；校验站点域名与字面主题，遇到验证后冷却 |
 | docs | Python、pandas、SQLAlchemy 固定 searchindex.js | 本机索引匹配，最多 20 条；不发送查询词，不代表已读正文 |
 | mdn | https://developer.mozilla.org/api/v1/search | MDN 英文站内搜索，最多 10 条；返回摘要和原文链接 |
+| site-docs | Kubernetes 固定导航 / Rust std/all.html | 本机匹配标题或条目，最多 10 条；英文，不生成方法锚点 |
+| go-docs | https://pkg.go.dev/search | Go 标准库包/符号搜索，最多 10 条 |
+| cninfo | https://www.cninfo.com.cn/new/fulltextSearch/full | 公告全文索引，返回元数据与 PDF 链接，最多 10 条 |
+| nbs-search | https://api.so-gov.cn/query/s | 统计局网站选用的搜索后端；读取一页 10 条，按请求条数返回 |
 | github | https://api.github.com/search/repositories | [公开仓库接口](https://docs.github.com/en/rest/search/search)，最多 20 条；不含代码搜索，默认 README 读取走固定 repos 接口 |
 | hackernews | https://hn.algolia.com/api/v1/search | 帖子检索，支持起止日期；[官方单条接口](https://github.com/HackerNews/API)读帖子/评论，保留子评论 ID 而不自动遍历 |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/)固定服务转取公开 URL；仅阅读、不搜索；最多返回 24000 字符并标明截断 |

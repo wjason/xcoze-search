@@ -24,7 +24,7 @@ class SourceStatusSnapshotTests(unittest.TestCase):
 
     def test_snapshot_covers_current_search_and_scoped_sources(self):
         self.assertLessEqual(self.by_kind['search'], {n for n,p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser'})
-        self.assertEqual(self.by_kind['scope'], {n for n in PLATFORMS if n not in NATIVE_PLATFORMS})
+        self.assertLessEqual({n for n in PLATFORMS if n not in NATIVE_PLATFORMS}, self.by_kind['scope'])  # Historical index-only scopes can gain native search.
         self.assertEqual(self.by_kind['feed'], set(FEEDS))
         self.assertEqual(self.by_kind['trending'], set(TRENDING))
         self.assertEqual(self.by_kind['keyed'], set(REGISTRY))
@@ -43,9 +43,9 @@ class SourceStatusSnapshotTests(unittest.TestCase):
     def test_live_probes_cover_public_actions_once(self):
         pairs = [(kind, source) for kind, source, _ in check_sources.probes()]
         expected = {(kind, source) for kind in ('search', 'scope', 'feed', 'trending', 'fetch')
-                    for source in self.by_kind[kind]}
+                    for source in self.by_kind[kind] if kind != 'scope' or source not in NATIVE_PLATFORMS}
         expected.update(('search', n) for n, p in PUBLIC_REGISTRY.items() if p.supports_search and n != 'browser')
-        expected.update(('documentation', n) for n in ('pandas-docs', 'sqlalchemy-docs'))
+        expected.update(('documentation', n) for n in ('pandas-docs', 'sqlalchemy-docs', 'rust-docs'))
         self.assertEqual(set(pairs), expected)
         self.assertEqual(len(pairs), len(expected))
         self.assertEqual(set(check_sources.FETCH),

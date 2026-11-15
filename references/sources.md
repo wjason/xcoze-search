@@ -20,6 +20,10 @@
 | Parallel Search MCP | 匿名通用网页搜索与站点定向 | [支持 · 11 月 10 日实测通过](../evaluations/reports/2026-11-10-parallel-no-exa.md) |
 | 360 HTML | 无需浏览器的公开网页搜索，结果校验域名范围 | 样例通过；100 题批量检索中遇到验证，见[实测报告](../evaluations/reports/2026-11-16-keyless-search.md) |
 | Python / pandas / SQLAlchemy | 在本机检索官方文档发布的搜索索引 | [支持 · 适配通过](documentation.md) |
+| Kubernetes / Rust | 检索官方文档导航或标准库条目 | [支持 · 专项实测通过](../evaluations/reports/2026-11-16-native-search.md) |
+| Go 标准库 | 官方包与符号搜索 | [支持 · 专项实测通过](../evaluations/reports/2026-11-16-native-search.md) |
+| 巨潮资讯 | 公开公告检索及 PDF 原文链接 | [支持 · 适配通过](china-site-search.md) |
+| 统计局站内搜索 | 通过网站选用的搜索后端查询已发布页面 | [支持 · 适配通过](china-site-search.md) |
 | MDN Web Docs | MDN 英文文档站内搜索 | [支持 · 适配通过](documentation.md) |
 | Jina Reader | 读取网页内容 | 支持 · 本次受限 |
 | GitHub | 搜索公开仓库、读取仓库 README | 搜索通过；README 受限 |
@@ -77,7 +81,7 @@ Bing RSS、DuckDuckGo HTML 和部分社区入口的访问结果可能随网站�
 
 可以在公开网页索引中限定**知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣**。搜索覆盖和新鲜度取决于搜索引擎的收录情况。
 
-还可对国家数据、中国气象数据中心、中国天气网、巨潮资讯、上交所、深交所、北交所、国家标准、国家法律法规数据库、国家航天局、科学数据银行、中国地震台网、国家海洋预报台及香港天文台进行定向搜索。香港天文台的定向搜索样例已返回链接。
+还可对国家数据、中国气象数据中心、中国天气网、上交所、深交所、北交所、国家标准、国家法律法规数据库、国家航天局、科学数据银行、中国地震台网、国家海洋预报台及香港天文台进行定向搜索。香港天文台的定向搜索样例已返回链接。
 
 ### 使用自己的 API Key
 

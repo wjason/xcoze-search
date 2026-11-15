@@ -2,6 +2,10 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## Native documentation and Chinese site search — 2026-11-16 (unreleased)
+
+223 offline tests pass. Seventeen focused retrieval cases found expected pages or disclosures; sixteen originals were checked for API/topic markers, including two report covers. In a 100-question run with Exa, Parallel, user keys, host search and browser disabled, 65 questions returned candidates and 63/99 hit an expected domain in the top five. Unresolved questions and intermediate failures remain in the [report](evaluations/reports/2026-11-16-native-search.en.md).
+
 ## Keyless documentation search — 2026-11-16 (unreleased)
 
 211 offline tests pass. New official Sphinx and MDN adapters passed 7 focused documentation cases. 360 HTML returned locally accepted candidates on 6 of 8 Chinese scoped cases; batching later reached CAPTCHA, now classified and paused. Five original pages contained expected topic markers. A complete 100-question run with Exa, keys, host search and browser disabled returned candidates on 67 questions; this is not an answer-accuracy score. See the [report and raw data](evaluations/reports/2026-11-16-keyless-search.en.md).

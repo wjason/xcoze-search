@@ -105,3 +105,11 @@ python3 scripts/benchmark.py --live --corpus evaluations/browser-comparison-scop
 The default three modes remain; browser is an explicit free diagnostic, never automatically added. Free/browser guards reject keyed APIs before transmission. Live runs use normal config/cache state without clearing limits, rotate mode order and run serially. Scoped/short variants change query conditions and cannot be claimed as unchanged-query algorithm gains. Overall ok means planned cells ran, even if individual cells fail/return no matches or insufficient evidence. Local evidence is bounded to 1800 characters; missing text after clipping does not establish absence in the full response. Remove bodies before publication and review source/time/answer support manually. Keyed calls may cost money; browser requires an existing installation. Model cost is unknown.
 
 The [bilingual report](reports/2026-11-03-comparison.en.md) retains stages, natural Exa recovery and unresolved English coverage; it is not blinded accuracy or a stable latency ranking.
+
+## Independent keyless paths
+
+[Native documentation and Chinese site-search checks](reports/2026-11-16-native-search.en.md). To disable both general MCP sources:
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --modes free --keyless --without-exa --without-parallel --browser off --live --limit 100 --max-requests 300 --timeout 8 --count 5 --output /tmp/xcoze-native-100.json
+```

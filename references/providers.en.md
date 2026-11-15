@@ -12,6 +12,10 @@
 | so360 | https://www.so.com/s | Public HTML organic results, max 10; site host and literal topic checks; verification pauses the source |
 | docs | Fixed Python, pandas and SQLAlchemy searchindex.js | Local index matching, max 20; no query sent to the site, no page bodies |
 | mdn | https://developer.mozilla.org/api/v1/search | English MDN search, max 10; summaries and original document URLs |
+| site-docs | Fixed Kubernetes navigation / Rust std/all.html | Local title/item matching, max 10; English only; no invented method anchors |
+| go-docs | https://pkg.go.dev/search | Standard-library package/symbol search, max 10 |
+| cninfo | https://www.cninfo.com.cn/new/fulltextSearch/full | Public disclosure full-text index; metadata and PDF links, max 10 |
+| nbs-search | https://api.so-gov.cn/query/s | NBS website-selected search backend; one page of 10, return up to requested count |
 | github | https://api.github.com/search/repositories | [Public repositories](https://docs.github.com/en/rest/search/search), max 20; no code search; default README through fixed repos endpoint |
 | hackernews | https://hn.algolia.com/api/v1/search | Stories with optional start/end dates; [official single-item API](https://github.com/HackerNews/API) reads story/comment metadata and child IDs without traversal |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/) for public URLs; reading only, max 24000 characters with truncation flag |

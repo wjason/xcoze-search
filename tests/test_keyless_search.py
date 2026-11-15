@@ -126,7 +126,7 @@ class KeylessSearchTests(unittest.TestCase):
 
     def test_both_mcp_sources_disabled_reaches_http_without_paid_or_browser_calls(self):
         config = {'providers': {p: {'api_key': 'synthetic-only'} for p in x.PROVIDERS},
-                  'search_preferences': {'disabled_providers': ['exa-free', 'parallel-free']}}
+                  'search_preferences': {'disabled_providers': ['exa-free', 'parallel-free', 'cninfo']}}
         transport = QueueTransport(html_rows())
         with patch('search_routing.browser_available', return_value=True), \
                 patch.object(x, 'run_browser_search', side_effect=AssertionError('browser started')), \

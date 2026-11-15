@@ -4,31 +4,29 @@
 
 [Back to sources](sources.en.md)
 
-## Additions checked on 2026-11-16
-
-| Action | Status |
-|---|---|
-| Python / pandas / SQLAlchemy documentation indexes | Supported · Passed focused samples |
-| MDN English site search | Supported · Passed focused samples |
-| 360 HTML web search | Supported · Samples passed; CAPTCHA restricted the later batch |
-
-[Live results and remaining gaps](../evaluations/reports/2026-11-16-keyless-search.en.md). The full snapshot below retains its original check date.
-
-
 Each row describes a specific action. **Supported · Passed** means the live sample returned content in this environment; it is not an uptime or accuracy guarantee. Limited, no hits and key needed retain supported status but were not verified successfully. Searches and page reading are checked separately.
 
 Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
 
 [Latest scheduled checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [November 9 local check](../evaluations/reports/2026-11-09-public-source-check.json). The tables below retain the full support snapshot, including browser and keyed actions.
 
+[November 16 focused checks](../evaluations/reports/2026-11-16-native-search.en.md) supplement the historical snapshot. Updated rows show their own check date.
+
 ## Search sources
 
 | Source or action | Status |
 |---|---|
 | Bing public RSS | Supported · Limited (irrelevant results) |
+| 360 public HTML search | Supported · Limited (irrelevant results) · 2026-11-16 |
 | DuckDuckGo public HTML | Supported · Limited (access challenge, HTTP 202) |
 | Exa hosted MCP (keyless) | Supported · Passed |
 | Parallel Search MCP (anonymous) | [Supported · Passed Nov 10](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) |
+| Official Sphinx documentation indexes | Supported · Passed · 2026-11-16 |
+| MDN Web Docs public search | Supported · Passed · 2026-11-16 |
+| Kubernetes and Rust official documentation indexes | Supported · Passed · 2026-11-16 |
+| Go standard library package and symbol search | Supported · Passed · 2026-11-16 |
+| CNINFO public disclosure search | Supported · Passed · 2026-11-16 |
+| National Bureau of Statistics site search | Supported · Passed · 2026-11-16 |
 | GitHub public repositories | Supported · Passed |
 | Hacker News / Algolia | Supported · Passed |
 | Wikipedia (English / Chinese) | Supported · Passed |
@@ -110,7 +108,6 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 | china-data (`data.stats.gov.cn`) | Supported · Passed |
 | cma-data (`data.cma.cn`) | Supported · Passed |
 | china-weather (`weather.com.cn`) | Supported · Passed |
-| cninfo (`cninfo.com.cn`) | Supported · Passed |
 | sse (`sse.com.cn`) | Supported · Passed |
 | szse (`szse.cn`) | Supported · Passed |
 | bse (`bse.cn`) | Supported · Passed |
@@ -168,7 +165,7 @@ The following are research candidates, not a promise of support or availability.
 </details>
 
 <details>
-<summary>Technical docs (8)</summary>
+<summary>Technical docs (7)</summary>
 
 | Candidate | Status |
 |---|---|
@@ -177,8 +174,7 @@ The following are research candidates, not a promise of support or availability.
 | [Cloudflare Docs MCP](https://developers.cloudflare.com/workers/get-started/prompting/) | Planned |
 | [OpenAI Docs MCP](https://developers.openai.com/resources/docs-mcp) | Planned |
 | [Context7](https://github.com/upstash/context7) | Planned |
-| [Python official docs / Sphinx inventories](https://docs.python.org/3/) | Planned |
-| [Rust std / docs.rs](https://docs.rs/) | Planned |
+| [docs.rs crate documentation](https://docs.rs/) | Planned |
 | [Read the Docs / llms.txt publisher docs](https://docs.readthedocs.com/platform/stable/reference/sitemaps.html) | Planned |
 
 </details>

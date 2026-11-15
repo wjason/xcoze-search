@@ -14,6 +14,14 @@ spec.loader.exec_module(b)
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_parallel_outage_guard_rejects_dispatch_before_transport(self):
+        def faulty(args, config, budget):
+            return b.search.request_api('parallel-free', {}, '', budget=budget)
+        with patch.object(b.search, 'run_search', side_effect=faulty), \
+                patch.object(b.search.urllib.request, 'build_opener', side_effect=AssertionError('transport')):
+            with self.assertRaisesRegex(AssertionError, 'rejected Parallel'):
+                b.run_cell({'id': 'one', 'query': 'test'}, 'free', {'providers': {}}, b.search.RequestBudget(1), without_parallel=True)
+
     def test_keyless_browser_off_propagates_without_loading_credentials(self):
         corpus = {'cases': [{'id': 'one', 'query': 'test'}]}
         seen = []

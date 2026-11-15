@@ -9,6 +9,9 @@ For APIs, parameters and usage, search official documentation directly:
 | Python | `python-docs` | Download its official Sphinx index and match keywords and API symbols locally | English `/3/` documentation |
 | pandas | `pandas-docs` | Same | Current English `/docs/` |
 | SQLAlchemy | `sqlalchemy-docs` | Same | English `/en/20/` |
+| Kubernetes | `kubernetes-docs` | Match titles and links from official documentation navigation | Current English documentation; navigation, not full-text search |
+| Go standard library | `go-docs` | Official package and symbol search; preserve package and method receivers | Standard-library results only |
+| Rust standard library | `rust-docs` | Match the official item list | Current `std`; methods require reading the linked type page |
 | MDN Web Docs | `mdn` | MDN public site search | English documentation |
 
 These routes require neither Exa, Parallel, host search nor a user key. The Agent can select them during ordinary questions. A named project with a concrete documentation topic can also select a known official scope automatically. Explicit user sites and platforms take precedence.
@@ -21,6 +24,14 @@ python3 scripts/xcoze_search.py search 'AbortSignal.timeout' --platform mdn
 ```
 
 Alternatively use `--site docs.python.org`, `--site pandas.pydata.org`, `--site docs.sqlalchemy.org` or `--site developer.mozilla.org`; automatic search starts with the matching documentation route. Explicit `--provider docs` requires a supported `--site`.
+
+```bash
+python3 scripts/xcoze_search.py search 'resource requests limits CPU memory' --platform kubernetes-docs
+python3 scripts/xcoze_search.py search 'Go net/http Server Shutdown documentation' --platform go-docs
+python3 scripts/xcoze_search.py search 'OnceLock get_or_init' --platform rust-docs
+```
+
+Kubernetes navigation matching locates pages without downloading a full-text corpus. Rust returns published type/item links and does not invent method anchors. Go keeps names such as `http.Server.Shutdown` intact and accepts only results carrying the site’s standard-library badge. These routes do not require Exa or Parallel. See the [focused checks](../evaluations/reports/2026-11-16-native-search.en.md).
 
 ## Results and page content
 

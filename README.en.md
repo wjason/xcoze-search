@@ -77,12 +77,12 @@ A preference for future searches is saved; a request for “this search” appli
 
 ## Supported sources
 
-For official documentation, the Agent can search Python, pandas and SQLAlchemy indexes directly, or use MDN’s own search. Keyless web search starts with Parallel, with Exa and public HTML fallbacks. 360 HTML runs without a browser. See [documentation search](references/documentation.en.md).
+For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kubernetes and Rust indexes directly, or use Go and MDN site search. Keyless web search starts with Parallel, with Exa and public HTML fallbacks. 360 HTML runs without a browser. See [documentation search](references/documentation.en.md).
 
 | Category | Count | Sources |
 |---|---:|---|
 | General web search | 5 | Parallel Search MCP, Exa MCP, 360 HTML, Bing RSS, DuckDuckGo HTML |
-| Official documentation | 4 | Python, pandas, SQLAlchemy, MDN Web Docs |
+| Official documentation | 7 | Python, pandas, SQLAlchemy, MDN Web Docs, Kubernetes, Go, Rust |
 | Page reading | 2 | Jina Reader, Exa MCP |
 | Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
 | Research | 5 | arXiv, Crossref, Europe PMC, DataCite, Zenodo |
@@ -94,6 +94,7 @@ For official documentation, the Agent can search Python, pandas and SQLAlchemy i
 | China statistics and energy | 3 | National Bureau of Statistics, National Energy Administration, People’s Bank of China |
 | Environment and emergencies | 2 | MEE, Ministry of Emergency Management |
 | Procurement and trading | 2 | China Government Procurement, National Public Resource Trading Platform |
+| Securities disclosures | 1 | CNINFO |
 | Securities regulation | 1 | China Securities Regulatory Commission |
 | China research and geology | 2 | Chinese Academy of Sciences, China Geological Survey |
 | Open-data updates | 1 | DATA.GOV.HK |
@@ -102,7 +103,7 @@ For official documentation, the Agent can search Python, pandas and SQLAlchemy i
 | Earthquakes | 1 | USGS |
 | Community trends | 3 | Zhihu, Bilibili, V2EX |
 | Platform-scoped search | 9 | Zhihu, Xiaohongshu, Weibo, YouTube, Bilibili, Reddit, X, V2EX, Douban |
-| China public indexes | 14 | National Data, National Meteorological Information Center, China Weather, CNInfo, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, Hong Kong Observatory |
+| China public indexes | 13 | National Data, National Meteorological Information Center, China Weather, SSE, SZSE, BSE, National Standards, National Laws, CNSA, Science Data Bank, CENC, NMEFC, Hong Kong Observatory |
 | Configurable APIs | 6 | DeepSeek, Tencent Yuanbao, Tavily, Exa, Brave Search, Bocha |
 | Optional browser search | 3 | 360 Search, Bing, Google |
 
@@ -121,6 +122,8 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 [100-question comparison with Exa disabled](evaluations/reports/2026-11-10-parallel-no-exa.en.md) · [Earlier Exa outage test](evaluations/reports/2026-11-09-exa-outage.en.md)
 
 [Latest keyless documentation and 100-question no-Exa checks](evaluations/reports/2026-11-16-keyless-search.en.md): includes observed quota limits, CAPTCHA restrictions and unresolved queries.
+
+[Kubernetes, Go, Rust and Chinese site-search checks](evaluations/reports/2026-11-16-native-search.en.md) include a 100-question run with both Exa and Parallel disabled.
 
 ## Configure API keys
 

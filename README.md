@@ -77,12 +77,12 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 ## 支持的来源
 
-查官方文档时，Agent 可以直接检索 Python、pandas、SQLAlchemy 的文档索引，或调用 MDN 站内搜索。免 Key 通用搜索优先使用 Parallel，Exa 和公开 HTML 搜索作为备用；360 HTML 无需启动浏览器。更多用法见[官方文档搜索](references/documentation.md)。
+查官方文档时，Agent 可以直接检索 Python、pandas、SQLAlchemy、Kubernetes、Rust 的文档索引，或调用 Go、MDN 站内搜索。免 Key 通用搜索优先使用 Parallel，Exa 和公开 HTML 搜索作为备用；360 HTML 无需启动浏览器。更多用法见[官方文档搜索](references/documentation.md)。
 
 | 分类 | 数量 | 来源 |
 |---|---:|---|
 | 通用网页搜索 | 5 | Parallel Search MCP、Exa MCP、360 HTML、Bing RSS、DuckDuckGo HTML |
-| 官方文档 | 4 | Python、pandas、SQLAlchemy、MDN Web Docs |
+| 官方文档 | 7 | Python、pandas、SQLAlchemy、MDN Web Docs、Kubernetes、Go、Rust |
 | 网页阅读 | 2 | Jina Reader、Exa MCP |
 | 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
 | 论文与科研 | 5 | arXiv、Crossref、Europe PMC、DataCite、Zenodo |
@@ -94,6 +94,7 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 | 中国统计与能源 | 3 | 国家统计局、国家能源局、人民银行 |
 | 生态与应急 | 2 | 生态环境部、应急管理部 |
 | 采购与交易 | 2 | 中国政府采购网、全国公共资源交易平台 |
+| 证券公告 | 1 | 巨潮资讯 |
 | 证券监管 | 1 | 中国证监会 |
 | 国内科研与地质 | 2 | 中国科学院、中国地质调查局 |
 | 开放数据更新 | 1 | 香港政府数据一线通 |
@@ -102,7 +103,7 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 | 地震 | 1 | 美国地质调查局 USGS |
 | 社区热点 | 3 | 知乎、B 站、V2EX |
 | 平台定向搜索 | 9 | 知乎、小红书、微博、YouTube、B 站、Reddit、X、V2EX、豆瓣 |
-| 国内公开索引 | 14 | 国家数据、中国气象数据中心、中国天气网、巨潮资讯、上交所、深交所、北交所、国家标准、国家法律法规数据库、国家航天局、科学数据银行、中国地震台网、国家海洋预报台、香港天文台 |
+| 国内公开索引 | 13 | 国家数据、中国气象数据中心、中国天气网、上交所、深交所、北交所、国家标准、国家法律法规数据库、国家航天局、科学数据银行、中国地震台网、国家海洋预报台、香港天文台 |
 | 可配置 API | 6 | DeepSeek、腾讯元宝、Tavily、Exa、Brave Search、博查 |
 | 可选浏览器搜索 | 3 | 360 搜索、Bing、Google |
 
@@ -121,6 +122,8 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 [100 道题无 Exa 对照](evaluations/reports/2026-11-10-parallel-no-exa.md) · [早期 Exa 断路实测](evaluations/reports/2026-11-09-exa-outage.md)
 
 [最新免 Key 文档搜索与 100 题无 Exa 实测](evaluations/reports/2026-11-16-keyless-search.md)，保留本次限额、验证码和未命中记录。
+
+[Kubernetes、Go、Rust 与国内站内检索实测](evaluations/reports/2026-11-16-native-search.md)，包含同时禁用 Exa 和 Parallel 的 100 题记录。
 
 ## 配置 API Key
 

@@ -20,8 +20,31 @@ SCOPED_ZH = {'zhihu':'知乎','xiaohongshu':'小红书','weibo':'微博','youtub
 FETCH_ZH = {'github':'GitHub README','hackernews':'Hacker News 单条','jina':'Jina Reader','exa-free':'Exa MCP 网页阅读','community-python':'Python 社区主帖','community-rust':'Rust 社区主帖','community-v2ex':'V2EX 社区主帖'}
 LABEL_EN = {'wikipedia':'Wikipedia (English / Chinese)', 'govcn':'China government latest policy', 'ndrc':'NDRC notices', 'nbs':'National Bureau of Statistics releases', 'nea':'National Energy Administration news', 'miit':'Ministry of Industry and Information Technology notices', 'mee':'Ministry of Ecology and Environment news', 'mem':'Ministry of Emergency Management statistics', 'pbc':'People’s Bank of China statistics', 'ggzy':'National Public Resource Trading Platform notices', 'mofcom':'Ministry of Commerce news', 'csrc':'China Securities Regulatory Commission information', 'ccgp':'China Government Procurement notices', 'cas':'Chinese Academy of Sciences research news', 'cgs':'China Geological Survey news', 'xinhua':'Xinhua news', 'cns-scroll':'China News Service latest RSS', 'cns-finance':'China News Service finance RSS', 'hk-data':'DATA.GOV.HK updates RSS', 'bbc-world':'BBC World RSS', 'yuanbao':'Tencent Yuanbao', 'bocha':'Bocha'}
 FETCH_EN = {'github':'GitHub README','hackernews':'Hacker News item','jina':'Jina Reader','exa-free':'Exa MCP page reading','community-python':'Python community post','community-rust':'Rust community post','community-v2ex':'V2EX community post'}
+LABEL_ZH = {'docs':'Python / pandas / SQLAlchemy 文档索引', 'mdn':'MDN 英文文档',
+            'site-docs':'Kubernetes / Rust 官方文档索引', 'go-docs':'Go 标准库包与符号',
+            'cninfo':'巨潮资讯公告', 'nbs-search':'国家统计局站内搜索'}
 # When a candidate becomes supported, update this set along with its adapter.
 EXCLUDE = {'S007','S039','S040','S041','S042','S043','S044','S045','S046','S047','S048','S049','S050','S051','S052','S053','S054','S057','S062','S067','S073','S078','S116','S126','S131','S138','S139','S144','S145','S146','S147'}
+EXCLUDE.add('S021')  # Python documentation now has a tested index adapter.
+
+
+def supplement_recent(by):
+    """Merge dated focused checks without changing the historical audit file."""
+    for filename, section, field in (
+        ('2026-11-16-keyless-search.data.json', 'acceptance', 'records'),
+        ('2026-11-16-native-search.data.json', 'focused', 'cases'),
+    ):
+        path = ROOT / 'evaluations/reports' / filename
+        if not path.exists(): continue
+        report = json.loads(path.read_text(encoding='utf-8'))
+        groups = {}
+        for row in report[section][field]:
+            groups.setdefault(row.get('source') or row.get('provider'), []).append(row)
+        for source, rows in groups.items():
+            passed = all(row.get('ok') and row.get('results') for row in rows)
+            by[('search', source)] = {'status': 'passed' if passed else 'limited',
+                                      'checked_at': report['checked_at'],
+                                      'errors': [e for row in rows for e in row.get('errors', [])]}
 GROUPS = {'web':('通用搜索','Web search'),'docs':('技术文档','Technical docs'),'news':('新闻','News'),'cn-official':('中国政务','China government'),'global-official':('国际政务','International government'),'academic':('科研','Research'),'tech':('软件与代码','Software and code'),'community':('社区','Communities'),'knowledge':('知识与素材','Knowledge and media'),'archive':('档案','Archives'),'data':('环境与能源','Environment and energy'),'restricted':('平台接口','Platform APIs'),'patents':('专利','Patents'),'finance':('金融','Finance'),'podcasts':('音频','Audio')}
 
 def label_status(row, english=False):
@@ -53,6 +76,7 @@ def main():
     audit_path=args.audit.resolve()
     audit_rel=audit_path.relative_to(ROOT)
     audit=json.loads(audit_path.read_text()); by={(r['kind'],r['id']):r for r in audit['results']}
+    supplement_recent(by)
     checked=datetime.fromisoformat(audit['checked_at']).strftime('%Y-%m-%d %H:%M')
     candidates=json.loads(CANDIDATES.read_text())['entries']
     pending=[e for e in candidates if e.get('integration')=='candidate' and e['id'] not in EXCLUDE and e['category'] in GROUPS]
@@ -76,18 +100,22 @@ def main():
             text += f'\n[Latest scheduled checks]({workflow}) · [November 9 local check]({local_check}). The tables below retain the full support snapshot, including browser and keyed actions.\n'
         else:
             text += f'\n[查看持续巡检]({workflow}) · [11 月 9 日本地巡检]({local_check})。下表保留完整支持快照，包括浏览器与带 Key 的能力。\n'
+        suffix = '.en' if english else ''
+        recent = f'../evaluations/reports/2026-11-16-native-search{suffix}.md'
+        text += (f'\n[November 16 focused checks]({recent}) supplement the historical snapshot. Updated rows show their own check date.\n' if english else f'\n[11 月 16 日专项检查]({recent})补充历史快照，更新行单独标明检查日期。\n')
         def table(title, items):
             nonlocal text
             text+='\n## '+title+'\n\n'+('| Source or action | Status |\n|---|---|\n' if english else '| 来源或能力 | 状态 |\n|---|---|\n')
             for title_,kind,name in items:
                 row = by.get((kind, name))
                 status = label_status(row, english)
+                if row and row.get('checked_at'): status += ' · ' + row['checked_at'][:10]
                 if row is None and (kind, name) == ('search', 'parallel-free'):
                     suffix = '.en' if english else ''
                     label = 'Supported · Passed Nov 10' if english else '支持 · 11 月 10 日实测通过'
                     status = f'[{label}](../evaluations/reports/2026-11-10-parallel-no-exa{suffix}.md)'
                 text+='| '+title_.replace('|','&#124;')+' | '+status+' |\n'
-        table('Search sources' if english else '搜索来源',[((LABEL_EN.get(n, PUBLIC_REGISTRY[n].label) if english else PUBLIC_REGISTRY[n].label),'search',n) for n in searches])
+        table('Search sources' if english else '搜索来源',[((LABEL_EN.get(n, PUBLIC_REGISTRY[n].label) if english else LABEL_ZH.get(n, PUBLIC_REGISTRY[n].label)),'search',n) for n in searches])
         table('Page and community reading' if english else '网页与社区阅读',[((FETCH_EN if english else FETCH_ZH).get(n, PUBLIC_REGISTRY[n].label if n in PUBLIC_REGISTRY else n),'fetch',n) for n in readers])
         table('Feeds and snapshots' if english else '订阅与栏目',[((LABEL_EN.get(n, FEEDS[n].label) if english else FEEDS[n].label),'feed',n) for n in FEEDS])
         table('Community trends' if english else '社区热点',[(TRENDING[n].label,'trending',n) for n in TRENDING])
