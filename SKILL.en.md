@@ -23,12 +23,6 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://example.com/article
 
 When the full GitHub repository name is known, keep the `owner/repository` form in the GitHub query. For a specifically requested disclosure source with a verified domain, use `--site` or its matching `--platform`; report no matches instead of substituting unrelated sites.
 
-## Save and reuse results
-
-When the user needs a report, link table or saved results, add `--output-dir <new-directory>` to the search. Use `--export-language en` for an English report; the default is Chinese. If search JSON is already available, save it and run `export --input <results.json> --output-dir <directory> --language zh|en` rather than searching again. Ordinary questions do not generate files by default. See the [output contract](references/output.en.md#save-and-export-search-results) for commands and fields.
-
-Return actual file links after saving. Excerpts do not imply that original pages were read or facts verified. If saving fails after a completed search, preserve stdout JSON and retry only the local export. Choose a new directory when existing content differs; unchanged results in the same language can be re-exported to the original directory. Export reads no keys and makes no network requests. Saved files may contain queries and page excerpts; review their contents as appropriate before sharing.
-
 ## Native platform search and existing local tools
 
 For current news/policy tasks, see [publisher feeds, policy and community originals](references/feeds.en.md). `feed --source cns-scroll|cns-finance|bbc-world` reads one current window. --query uses short literal terms (all whitespace-separated terms in title/excerpt), not semantic search. Dates are inclusive UTC+08:00 calendar days; unknown dates are excluded when filtering. Never replace missing publication dates with retrieval time. For historical requests, stale windows or no matches, continue normal search under existing preferences rather than asserting no event exists.

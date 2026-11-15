@@ -38,8 +38,7 @@ RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents
                  "evaluations/reports/2026-11-09-exa-outage.data.json",
                  "evaluations/reports/2026-11-10-parallel-no-exa.md", "evaluations/reports/2026-11-10-parallel-no-exa.en.md",
                  "evaluations/reports/2026-11-10-parallel-no-exa.data.json"]
-RUNTIME_FILES += ["scripts/result_exports.py", "research/multi-search-engine.md", "research/multi-search-engine.en.md"]
-SOURCE_EXTRA = ["tests/test_exports.py", "evaluations/build_source_status.py", "evaluations/check_sources.py", "tests/test_source_status.py", ".gitignore",
+SOURCE_EXTRA = ["evaluations/build_source_status.py", "evaluations/check_sources.py", "tests/test_source_status.py", ".gitignore",
                 ".github/workflows/source-check.yml",
                 ".github/workflows/test.yml", ".github/workflows/release.yml",
                 "scripts/build_release.py", "scripts/prepare_release.py",

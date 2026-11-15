@@ -75,18 +75,6 @@ The default is **Smart**: use keyless sources when no key is configured; when ke
 
 A preference for future searches is saved; a request for “this search” applies only once. Free mode does not call services that require your API key. Configure a service before selecting it.
 
-### Save and reuse results
-
-When collecting references or sharing links, ask your Agent:
-
-```text
-Save these search results locally, with a Markdown report and a CSV link table.
-```
-
-The export contains `results.json`, `report.md` and `links.csv`. JSON preserves the full search output, Markdown provides a readable report, and CSV can be imported into a spreadsheet. Each result keeps its provider, link and available publication date.
-
-To change the report language, ask “Export an English version from the saved results.” Re-exporting runs locally without another search. Ordinary questions still receive direct answers; files are generated when needed. See [export commands](references/output.en.md#save-and-export-search-results).
-
 ## Supported sources
 
 | Category | Count | Sources |
@@ -168,7 +156,6 @@ Please read the [contribution guide](CONTRIBUTING.en.md) before contributing.
 Thank you to the projects and services that helped shape xcoze search:
 
 - [Agent Reach](https://github.com/Panniantong/Agent-Reach), for ideas on organizing platform capabilities and search and reading workflows.
-- [Zhaopintong AI · Multi Search Engine](https://skillhub.cn/skills/zhaopintong/multi-search-engine), for ideas on saved search results, link tables and result reuse. Our local exporter is independently implemented; see the [research note](research/multi-search-engine.en.md).
 - [DDGS](https://github.com/deedy5/ddgs) and [open-webSearch](https://github.com/Aas-ee/open-webSearch), for reference designs around public search endpoints and multiple sources.
 - [LiteLLM](https://github.com/BerriAI/litellm), [OpenRouter](https://openrouter.ai/), and [Tavily Skills](https://github.com/tavily-ai/skills), for ideas on unified interfaces and Agent search workflows.
 - [agent-browser](https://github.com/vercel-labs/agent-browser), which supports the optional local browser search.
