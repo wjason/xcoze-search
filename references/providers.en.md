@@ -16,6 +16,9 @@
 | go-docs | https://pkg.go.dev/search | Standard-library package/symbol search, max 10 |
 | cninfo | https://www.cninfo.com.cn/new/fulltextSearch/full | Public disclosure full-text index; metadata and PDF links, max 10 |
 | nbs-search | https://api.so-gov.cn/query/s | NBS website-selected search backend; one page of 10, return up to requested count |
+| nea-archive | NEA published document / press JSON lists | Local title/summary matching, historical snapshot and date filters; up to 20 results |
+| ggzy-search | https://www.ggzy.gov.cn/information/pubTradingInfo/getTradList | Public notice query; provinces, dates, business/stage and one explicit page; up to 20 results |
+| csg | Southern Grid public tender / notice lists | One list page, local title/date/stage filters; up to 10 results |
 | github | https://api.github.com/search/repositories | [Public repositories](https://docs.github.com/en/rest/search/search), max 20; no code search; default README through fixed repos endpoint |
 | hackernews | https://hn.algolia.com/api/v1/search | Stories with optional start/end dates; [official single-item API](https://github.com/HackerNews/API) reads story/comment metadata and child IDs without traversal |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/) for public URLs; reading only, max 24000 characters with truncation flag |
@@ -40,6 +43,8 @@ Checked on 2026-11-02. These are the features exposed by this tool; account acce
 | `bocha` | POST Web Search | Unsupported | 50 | Adapter limit: 4096 characters | --site not exposed | oneDay/oneWeek/oneMonth/oneYear or dates |
 
 The 4096-character caps for Tavily, Exa, and Bocha are local validation policies, not guarantees from the providers. Exa's public numResults maximum can exceed this tool's 50-result cap. No automatic pagination, additional searches, or request expansion is performed to fill result counts. Use capabilities for machine-readable declarations.
+
+Energy/public procurement parameters and limits: [industry search](industry-search.en.md).
 
 ## DeepSeek
 

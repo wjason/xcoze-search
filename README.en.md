@@ -61,6 +61,12 @@ Find open-source industrial vision projects on GitHub and compare their purposes
 
 The Agent selects a suitable search or reading method for the task. You can also say “use xcoze search” or specify a source for a particular request.
 
+Energy research example:
+
+```text
+Find Guangdong energy storage procurement and construction tenders from the past month. Distinguish tender, award and correction notices and link to the originals.
+```
+
 ### Search preferences
 
 The default is **Smart**: use keyless sources when no key is configured; when keys are configured and enabled, prioritize search quality while also using appropriate public sources.
@@ -93,7 +99,7 @@ For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kub
 | Government policy | 5 | gov.cn, NDRC, MIIT, MOFCOM, U.S. Federal Register |
 | China statistics and energy | 3 | National Bureau of Statistics, National Energy Administration, People’s Bank of China |
 | Environment and emergencies | 2 | MEE, Ministry of Emergency Management |
-| Procurement and trading | 2 | China Government Procurement, National Public Resource Trading Platform |
+| Procurement and trading | 3 | China Government Procurement, National Public Resource Trading Platform, China Southern Power Grid notices |
 | Securities disclosures | 1 | CNINFO |
 | Securities regulation | 1 | China Securities Regulatory Commission |
 | China research and geology | 2 | Chinese Academy of Sciences, China Geological Survey |
@@ -108,6 +114,8 @@ For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kub
 | Optional browser search | 3 | 360 Search, Bing, Google |
 
 Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds and Xinhua uses its homepage. China public indexes scope searches to each website; coverage and freshness depend on the search engine’s index. Browser search requires additional local tools.
+
+For energy research, search NEA published documents and statistical releases. Procurement research can filter public trading notices by province, dates and notice stage, or search Southern Grid public list pages. CCGP itself remains limited to recent homepage notices. See [energy and procurement search](references/industry-search.en.md).
 
 [View all sources and capabilities →](references/sources.en.md) · [Support status and planned sources](references/source-status.en.md)
 
@@ -124,6 +132,8 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 [Latest keyless documentation and 100-question no-Exa checks](evaluations/reports/2026-11-16-keyless-search.en.md): includes observed quota limits, CAPTCHA restrictions and unresolved queries.
 
 [Kubernetes, Go, Rust and Chinese site-search checks](evaluations/reports/2026-11-16-native-search.en.md) include a 100-question run with both Exa and Parallel disabled.
+
+[Energy and procurement live checks](evaluations/reports/2026-11-16-energy-procurement.en.md) cover 27 real questions with Exa, Parallel and keyed services disabled, with original-page checks and access limitations retained.
 
 ## Configure API keys
 

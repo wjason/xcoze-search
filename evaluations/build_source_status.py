@@ -22,7 +22,10 @@ LABEL_EN = {'wikipedia':'Wikipedia (English / Chinese)', 'govcn':'China governme
 FETCH_EN = {'github':'GitHub README','hackernews':'Hacker News item','jina':'Jina Reader','exa-free':'Exa MCP page reading','community-python':'Python community post','community-rust':'Rust community post','community-v2ex':'V2EX community post'}
 LABEL_ZH = {'docs':'Python / pandas / SQLAlchemy 文档索引', 'mdn':'MDN 英文文档',
             'site-docs':'Kubernetes / Rust 官方文档索引', 'go-docs':'Go 标准库包与符号',
-            'cninfo':'巨潮资讯公告', 'nbs-search':'国家统计局站内搜索'}
+            'cninfo':'巨潮资讯公告', 'nbs-search':'国家统计局站内搜索',
+            'nea-archive':'国家能源局公开文件与发布档案', 'ggzy-search':'公共资源公告检索', 'csg':'南网公开采购列表'}
+LABEL_EN.update({'nea-archive':'NEA published document and release archives',
+                 'ggzy-search':'Public trading notice search', 'csg':'Southern Grid public procurement lists'})
 # When a candidate becomes supported, update this set along with its adapter.
 EXCLUDE = {'S007','S039','S040','S041','S042','S043','S044','S045','S046','S047','S048','S049','S050','S051','S052','S053','S054','S057','S062','S067','S073','S078','S116','S126','S131','S138','S139','S144','S145','S146','S147'}
 EXCLUDE.add('S021')  # Python documentation now has a tested index adapter.
@@ -33,10 +36,13 @@ def supplement_recent(by):
     for filename, section, field in (
         ('2026-11-16-keyless-search.data.json', 'acceptance', 'records'),
         ('2026-11-16-native-search.data.json', 'focused', 'cases'),
+        ('2026-11-16-energy-procurement.data.json', 'focused', 'cases'),
     ):
         path = ROOT / 'evaluations/reports' / filename
         if not path.exists(): continue
         report = json.loads(path.read_text(encoding='utf-8'))
+        for check in report.get('source_checks', []):
+            by[(check['kind'], check['id'])] = {**check, 'checked_at': report['checked_at']}
         groups = {}
         for row in report[section][field]:
             groups.setdefault(row.get('source') or row.get('provider'), []).append(row)
@@ -103,6 +109,8 @@ def main():
         suffix = '.en' if english else ''
         recent = f'../evaluations/reports/2026-11-16-native-search{suffix}.md'
         text += (f'\n[November 16 focused checks]({recent}) supplement the historical snapshot. Updated rows show their own check date.\n' if english else f'\n[11 月 16 日专项检查]({recent})补充历史快照，更新行单独标明检查日期。\n')
+        industry = f'../evaluations/reports/2026-11-16-energy-procurement{suffix}.md'
+        text += (f'\n[Energy and procurement checks]({industry}) cover NEA archives, trading queries and Southern Grid list pages without Exa or Parallel.\n' if english else f'\n[能源电力与招投标实测]({industry})覆盖能源局档案、公共资源查询和南网列表，运行时禁用 Exa、Parallel。\n')
         def table(title, items):
             nonlocal text
             text+='\n## '+title+'\n\n'+('| Source or action | Status |\n|---|---|\n' if english else '| 来源或能力 | 状态 |\n|---|---|\n')
@@ -123,6 +131,7 @@ def main():
         table('Browser search' if english else '浏览器搜索',[(n,'browser',n) for n in ('360','bing','google')])
         table('Services using your API key' if english else '使用自己 Key 的服务',[((LABEL_EN.get(n, REGISTRY[n].label) if english else REGISTRY[n].label),'keyed',n) for n in REGISTRY])
         table('Page reading with an API key' if english else '使用 Key 的网页读取',[((LABEL_EN.get(n, REGISTRY[n].label) if english else REGISTRY[n].label) + (' · Fetch/Extract' if english else ' · 网页读取'),'keyed_fetch',n) for n,p in REGISTRY.items() if p.fetch_endpoint])
+        text += ('\n## Pending industry capabilities\n\n| Capability | Status |\n|---|---|\n| CCGP full-site keyword search | Planned · Access-frequency warning in live check |\n| Southern Grid full-site keyword search | Planned · HTTP 403 in live check |\n| State Grid search | Planned · Not verified |\n\nPublic homepage/list capabilities remain listed separately above.\n' if english else '\n## 待支持的行业能力\n\n| 能力 | 状态 |\n|---|---|\n| 政府采购网全站关键词搜索 | 待支持 · 实测出现访问频繁提示 |\n| 南网全站关键词搜索 | 待支持 · 实测 HTTP 403 |\n| 国家电网搜索 | 待支持 · 尚未验证 |\n\n已支持的首页和公开列表能力在上方单独列出。\n')
         text+='\n## '+('Candidates' if english else '待支持的候选')+'\n\n'
         text+=('The following are research candidates, not a promise of support or availability. Items partially covered by existing adapters are omitted here; their current capabilities are listed above. [Full research](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md).\n' if english else '以下为调研候选，后续会根据价值和可行性逐步评估。已有部分搜索能力的来源不在此重复列出；当前能力见上表。[完整调研](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.md)。\n')
         for group,(zh,en) in GROUPS.items():

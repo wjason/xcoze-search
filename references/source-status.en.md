@@ -12,6 +12,8 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 
 [November 16 focused checks](../evaluations/reports/2026-11-16-native-search.en.md) supplement the historical snapshot. Updated rows show their own check date.
 
+[Energy and procurement checks](../evaluations/reports/2026-11-16-energy-procurement.en.md) cover NEA archives, trading queries and Southern Grid list pages without Exa or Parallel.
+
 ## Search sources
 
 | Source or action | Status |
@@ -27,6 +29,9 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 | Go standard library package and symbol search | Supported · Passed · 2026-11-16 |
 | CNINFO public disclosure search | Supported · Passed · 2026-11-16 |
 | National Bureau of Statistics site search | Supported · Passed · 2026-11-16 |
+| NEA published document and release archives | Supported · Passed · 2026-11-16 |
+| Public trading notice search | Supported · Passed · 2026-11-16 |
+| Southern Grid public procurement lists | Supported · Passed · 2026-11-16 |
 | GitHub public repositories | Supported · Passed |
 | Hacker News / Algolia | Supported · Passed |
 | Wikipedia (English / Chinese) | Supported · Passed |
@@ -57,7 +62,7 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 | National Public Resource Trading Platform notices | Supported · Passed |
 | Ministry of Commerce news | Supported · Passed |
 | China Securities Regulatory Commission information | Supported · Passed |
-| China Government Procurement notices | Supported · Passed |
+| China Government Procurement notices | Supported · Passed · 2026-11-16 |
 | Chinese Academy of Sciences research news | Supported · Passed |
 | China Geological Survey news | Supported · Passed |
 | Xinhua news | Supported · Passed |
@@ -145,6 +150,16 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 | DeepSeek · Fetch/Extract | Supported · Not tested |
 | Tavily · Fetch/Extract | Supported · Key needed |
 | Exa · Fetch/Extract | Supported · Key needed |
+
+## Pending industry capabilities
+
+| Capability | Status |
+|---|---|
+| CCGP full-site keyword search | Planned · Access-frequency warning in live check |
+| Southern Grid full-site keyword search | Planned · HTTP 403 in live check |
+| State Grid search | Planned · Not verified |
+
+Public homepage/list capabilities remain listed separately above.
 
 ## Candidates
 

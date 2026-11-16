@@ -18,6 +18,16 @@ This plans 100 free-mode searches without sending requests. Use a small Smart sa
 
 [100-question comparison with Exa disabled](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) records the new Parallel path, source coverage and browser usage.
 
+## Energy and procurement questions
+
+The [27-question corpus](energy-procurement-cases.json) includes Chinese/English questions with the same retrieval keywords and explicit filters. It covers NEA policies/statistics, public trading procurement/engineering notices, provincial/central/finance sources and Southern Grid list pages. [Live checks](reports/2026-11-16-energy-procurement.en.md) retain initial misses, corrections and original-page checks.
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/energy-procurement-cases.json --modes free --keyless --without-exa --without-parallel --browser off --live --limit 27 --max-requests 60 --timeout 10 --count 5 --output /tmp/xcoze-industry.json
+```
+
+Omit `--live` to plan offline. Custom region, dates, business, stage and page are forwarded without relaxation. One list page is not a complete archive. NEA filters use list dates; read originals for document dates. Trading links may lead to a directory that publishes a separate body link.
+
 ## Public source checks
 
 The [GitHub Actions workflow](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) runs weekly on Mondays at 11:23 Beijing time and can be started manually. Its run summary lists each action and differences from the November 5 snapshot. The JSON artifact is retained for 90 days. On November 9, [a local check](reports/2026-11-09-public-source-check.json) covered 75 actions. It recorded 67 passes, 5 limited and 3 with no hits. The workflow checks search, reading, feeds, trends and site scopes. API-key services and local browser engines remain separate checks.

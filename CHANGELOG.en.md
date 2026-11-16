@@ -4,6 +4,8 @@
 
 ## Unreleased
 
+- Add keyless NEA published archive search, public trading notice search and Southern Grid public list filtering. Preserve notice stages, province/date constraints and explicit bounded pagination. Publish 27-question checks with Exa and Parallel disabled; keep CCGP full-site search unsupported.
+
 - Add keyless Kubernetes/Rust index search, Go standard-library symbol search, CNINFO disclosures and NBS site search; preserve method receivers, markets and statistical periods. Add a dual Exa/Parallel outage benchmark.
 - Add direct Python, pandas, SQLAlchemy and MDN documentation search, plus lightweight 360 HTML fallback; prioritize Parallel in keyless web search and stop repeated CAPTCHA redirects.
 - Add anonymous Parallel Search as an independent fallback and publish a 100-question no-Exa comparison.

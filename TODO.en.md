@@ -6,6 +6,10 @@ Updated 2026-11-16. Focus: Agent web search and source reading. Default automati
 
 ## Latest keyless retrieval work
 
+- [x] NEA published historical lists, provincial/central/finance trading notices and Southern Grid public list filtering; verify 27 real questions without Exa or Parallel.
+- [ ] CCGP keyword search, Southern Grid keyword search and State Grid search: integrate only after anonymous retrieval succeeds.
+- [ ] Expand provincial procurement sources and energy industry reports using demonstrated query gaps.
+
 - [x] Direct Python, pandas, SQLAlchemy, MDN, Kubernetes, Go and Rust documentation routes.
 - [x] CNINFO disclosure search and NBS site search, with reporting periods and market metadata retained.
 - [x] Public 100-question comparison with Exa and Parallel both disabled.

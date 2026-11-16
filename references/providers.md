@@ -16,6 +16,9 @@
 | go-docs | https://pkg.go.dev/search | Go 标准库包/符号搜索，最多 10 条 |
 | cninfo | https://www.cninfo.com.cn/new/fulltextSearch/full | 公告全文索引，返回元数据与 PDF 链接，最多 10 条 |
 | nbs-search | https://api.so-gov.cn/query/s | 统计局网站选用的搜索后端；读取一页 10 条，按请求条数返回 |
+| nea-archive | 能源局文件 / 新闻发布公开 JSON 列表 | 本机标题/摘要匹配，有限历史记录和列表日期筛选，最多 20 条 |
+| ggzy-search | https://www.ggzy.gov.cn/information/pubTradingInfo/getTradList | 公告查询，省份、日期、业务/阶段及指定单页，最多 20 条 |
+| csg | 南网公开招标 / 公示列表 | 单页标题、日期和阶段筛选，最多 10 条 |
 | github | https://api.github.com/search/repositories | [公开仓库接口](https://docs.github.com/en/rest/search/search)，最多 20 条；不含代码搜索，默认 README 读取走固定 repos 接口 |
 | hackernews | https://hn.algolia.com/api/v1/search | 帖子检索，支持起止日期；[官方单条接口](https://github.com/HackerNews/API)读帖子/评论，保留子评论 ID 而不自动遍历 |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/)固定服务转取公开 URL；仅阅读、不搜索；最多返回 24000 字符并标明截断 |
@@ -40,6 +43,8 @@
 | `bocha` | POST Web Search | 不支持 | 50 | 本工具 4096 字符 | 未开放 --site | oneDay/oneWeek/oneMonth/oneYear，或日期范围 |
 
 Tavily、Exa、博查的 4096 字符是本工具校验策略，不表示平台承诺支持所有同长度查询。Exa 的公开 numResults 上限可高于本工具 50 条。本包不自动分页、追加搜索或为了补足条数提高请求次数。机器可读能力用 `capabilities` 获取。
+
+能源电力及招投标参数、日期含义和范围见[行业搜索](industry-search.md)。
 
 ## DeepSeek
 

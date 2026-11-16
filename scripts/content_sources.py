@@ -250,6 +250,8 @@ class ChinaOfficialIndex(GovCN):
         try: page = raw.decode('utf-8') if isinstance(raw, bytes) else raw
         except UnicodeError: raise bad_response() from None
         if not isinstance(page, str) or '<html' not in page.lower(): raise bad_response()
+        if re.search('访问过于频繁|您的访问过于频繁|人机验证|访问被拒绝', html_text(page)):
+            raise SearchError('access_challenge', 'Official website denied automated access or requires verification; no verification is attempted.', category='rate_limit')
         parser = OfficialListParser()
         try: parser.feed(page)
         except Exception: raise bad_response() from None

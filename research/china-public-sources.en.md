@@ -6,7 +6,7 @@
 
 This directory covers public portals for government, statistics, finance, science, weather and news. The Skill searches recent official listings, the DATA.GOV.HK update feed, and site-scoped web indexes. Results link back to their publishers; listing windows and index coverage vary. See [sources](../references/sources.en.md).
 
-The 30 links below returned HTTP 200 during a one-time homepage request on 2026-11-05 (Beijing time). This checks page response only, not that an API, search, data download, commercial use or future access works. The latest search checks returned results for each of the 30 entries through its listed search or feed path. Results vary over time and by network. [Page checks](china-public-sources-2026-11-05.json) · [Latest action checks](../evaluations/reports/2026-11-05-source-status.json).
+The November 5 historical checks covered 30 entry points, recording page responses separately from search/feed retrieval. November 16 adds Southern Grid public procurement lists and expands NEA and public trading search. See [current support status](../references/source-status.en.md), the [historical page checks](china-public-sources-2026-11-05.json) and [action-level checks](../evaluations/reports/2026-11-05-source-status.json).
 
 ## Policy and government
 
@@ -28,7 +28,7 @@ The 30 links below returned HTTP 200 during a one-time homepage request on 2026-
 
 | Source | Content | Integration | Test status |
 |---|---|---|---|
-| [National Energy Administration](https://www.nea.gov.cn/) | Energy news and notices | Homepage listing integrated | Supported · Passed |
+| [National Energy Administration](https://www.nea.gov.cn/) | Policies and statistical releases | [Published historical lists](../references/industry-search.en.md); homepage retained | Supported · Passed |
 | [Ministry of Ecology and Environment](https://www.mee.gov.cn/) | Environmental policy and public information | Current listing integrated | Supported · Passed |
 
 ## Weather and hazards
@@ -58,7 +58,8 @@ The 30 links below returned HTTP 200 during a one-time homepage request on 2026-
 | [National standards disclosure system](https://openstd.samr.gov.cn/) | National standards catalog and public content | Site-scoped search | Supported · Passed |
 | [National database of laws and regulations](https://flk.npc.gov.cn/) | Laws and regulations | Site-scoped search | Supported · Passed |
 | [China Government Procurement](https://www.ccgp.gov.cn/) | Government procurement notices | Current listing integrated | Supported · Passed |
-| [National public resource trading platform](https://www.ggzy.gov.cn/) | Public resource trading information | Current listing integrated | Supported · Passed |
+| [National public resource trading platform](https://www.ggzy.gov.cn/) | Government, engineering and central-enterprise notices | [Keyword, region, date and stage search](../references/industry-search.en.md) | Supported · Passed |
+| [Southern Grid notices](https://www.bidding.csg.cn/zbgg/index.jhtml) | Tenders, public notices and cancellations | One requested public list page | Supported · Passed |
 
 ## Research, space and geoscience
 
@@ -97,4 +98,4 @@ python3 scripts/xcoze_search.py search '价格' --platform nbs --strategy free
 python3 scripts/xcoze_search.py search '能源' --platform nea --strategy free
 ```
 
-Matching uses literal title terms in the current page. An empty result does not establish that no document exists. Displayed dates are listing dates, not necessarily effective dates; some NEA titles have no displayed date. Read the original to confirm dates, data definitions and content.
+Original recent-list adapters filter current titles. NEA published historical lists, NBS site search and trading queries have separate scopes. An empty result does not establish that no document exists. List dates can differ from original publication or effective dates; read originals for data definitions and project conditions.

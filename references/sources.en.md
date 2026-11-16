@@ -44,12 +44,15 @@ This page lists the sources and features already integrated into xcoze search. P
 | gov.cn | Search China's latest-policy listing | Supported · Passed |
 | NDRC | Filter titles on the current notices page | Supported · Passed |
 | National Bureau of Statistics | Filter titles on the current data releases page | Supported · Passed |
-| National Energy Administration | Filter recent homepage titles | Supported · Passed |
+| NEA published documents and releases | Search finite historical titles/summaries and filter displayed list dates | [Supported · Focused checks passed](industry-search.en.md) |
+| NEA original homepage list | Recent titles, explicit `--provider nea` | Supported · Passed |
 | Ministry of Industry and Information Technology | Recent public policy document titles | Supported · Passed |
 | Ministry of Ecology and Environment | Recent homepage news releases | Supported · Passed |
 | Ministry of Emergency Management | Recent disaster statistics releases | Supported · Passed |
 | People’s Bank of China | Recent financial statistics releases | Supported · Passed |
-| National Public Resource Trading Platform | Recent homepage trading notices | Supported · Passed |
+| National Public Resource Trading Platform search | Keywords, province, dates, business/stage and one requested page | [Supported · Focused checks passed](industry-search.en.md) |
+| Original public trading homepage list | Recent titles, explicit `--provider ggzy` | Supported · Passed |
+| Southern Grid public procurement lists | One requested tender/notice page with title/date/stage filtering | [Supported · Focused checks passed](industry-search.en.md) |
 | Ministry of Commerce | Recent homepage news | Supported · Passed |
 | China Securities Regulatory Commission | Public information on its homepage | Supported · Passed |
 | China Government Procurement | Recent homepage procurement notices | Supported · Passed |
@@ -63,7 +66,9 @@ This page lists the sources and features already integrated into xcoze search. P
 | USGS | Retrieve recent earthquake magnitude, location and event time | Supported · Passed |
 | Python and Rust community forums, V2EX | Read public topic posts | Python/Rust passed; V2EX limited |
 
-Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Research and book results are metadata or abstracts and do not imply full text was read; community search results do not imply the full discussion was read. The gov.cn listing does not cover all announcements in China. NDRC, NBS and NEA adapters filter titles on the current page, not full sites or historical databases; missing display dates remain unknown. A Federal Register publication date is not an effective date. NASA returns media metadata, not the media itself. World Bank observations are identified by year and are not live market prices. USGS earthquake data may be revised.
+Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Research and book results are metadata or abstracts and do not imply full text was read; community search results do not imply the full discussion was read. The gov.cn listing does not cover all announcements in China. Original recent-list adapters cover one displayed page. NBS, NEA and public trading automatic routes now prioritize site search, published historical lists and notice queries respectively; missing display dates remain unknown. A Federal Register publication date is not an effective date. NASA returns media metadata, not the media itself. World Bank observations are identified by year and are not live market prices. USGS earthquake data may be revised.
+
+See [energy and procurement search](industry-search.en.md) for filters and date semantics. NEA list dates can differ from original publication dates. CCGP remains a recent-homepage adapter; Southern Grid reads one requested list page. CCGP keyword search, Southern Grid full-site keyword search and State Grid search remain unsupported, separately from tested list capabilities.
 
 ### News and community trends
 

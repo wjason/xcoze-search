@@ -29,13 +29,14 @@ PLATFORMS = {"github": "github.com", "hackernews": "news.ycombinator.com", "zhih
              "cninfo": "cninfo.com.cn", "sse": "sse.com.cn", "szse": "szse.cn", "bse": "bse.cn",
              "china-standards": "openstd.samr.gov.cn", "china-laws": "flk.npc.gov.cn",
              "cnsa": "cnsa.gov.cn", "scidb": "scidb.cn", "ceic": "ceic.ac.cn", "nmefc": "nmefc.cn",
-             "hko": "hko.gov.hk"}
+             "hko": "hko.gov.hk", "csg": "bidding.csg.cn", "government-procurement": "ggzy.gov.cn"}
 NATIVE_PLATFORMS = {k: k for k in PLATFORMS if k in PUBLIC_REGISTRY and PUBLIC_REGISTRY[k].supports_search}
 PLATFORMS.update({'python-docs': 'docs.python.org', 'pandas-docs': 'pandas.pydata.org',
                   'sqlalchemy-docs': 'docs.sqlalchemy.org', 'mdn': 'developer.mozilla.org',
                   'kubernetes-docs': 'kubernetes.io', 'rust-docs': 'doc.rust-lang.org', 'go-docs': 'pkg.go.dev'})
 NATIVE_PLATFORMS.update({'python-docs': 'docs', 'pandas-docs': 'docs', 'sqlalchemy-docs': 'docs', 'mdn': 'mdn'})
 NATIVE_PLATFORMS.update({'kubernetes-docs': 'site-docs', 'rust-docs': 'site-docs', 'go-docs': 'go-docs', 'nbs': 'nbs-search'})
+NATIVE_PLATFORMS.update({'nea': 'nea-archive', 'ggzy': 'ggzy-search', 'government-procurement': 'ggzy-search'})
 
 
 def platform_catalog(platform=None):
@@ -47,7 +48,7 @@ def platform_catalog(platform=None):
         source = NATIVE_PLATFORMS.get(name)
         adapter = PUBLIC_REGISTRY.get(source)
         rows.append({"platform": name, "default_domain": domain, "native_provider": source,
-                     "coverage": "native_official_index" if source in ('docs', 'site-docs') else "native_site_search" if source in ('go-docs', 'cninfo', 'nbs-search') else "native_public_api" if source else "public_index_only",
+                     "coverage": "native_official_index" if source in ('docs', 'site-docs', 'nea-archive', 'csg') else "native_site_search" if source in ('go-docs', 'cninfo', 'nbs-search', 'ggzy-search') else "native_public_api" if source else "public_index_only",
                      "search_scope": adapter.capabilities()["search_scope"] if adapter else "public_web_index_not_site_search",
                      "native_fetch": bool(adapter and adapter.fetch_endpoint),
                      "generic_fetch_may_help": True, "comment_threads_integrated": False, "transcripts_integrated": False,
@@ -104,6 +105,10 @@ def scoped_args(args):
         if getattr(args, "site", None) and args.site != domain:
             invalid("--site conflicts with --platform; use one target scope.")
         scoped.site = domain
+        if platform == 'government-procurement':
+            if getattr(args, 'business', None) not in (None, 'government'):
+                invalid('--business conflicts with the government procurement platform.')
+            scoped.business = 'government'
     elif getattr(args, 'query', None) and not getattr(args, 'site', None) and getattr(args, 'provider', 'auto') == 'auto':
         # Recognize a named documentation project plus a concrete topic; broad
         # queries such as "Python documentation" retain the normal web route.
@@ -121,6 +126,12 @@ def scoped_args(args):
         if not getattr(scoped, 'site', None):
             if '国家统计局' in args.query: scoped.site = 'stats.gov.cn'
             elif '巨潮' in args.query and re.search(r'公告|年报|年度报告', args.query): scoped.site = 'cninfo.com.cn'
+            elif '国家能源局' in args.query: scoped.site = 'nea.gov.cn'
+            elif re.search('南方电网|南网', args.query) and re.search('招标|采购|中标', args.query): scoped.site = 'bidding.csg.cn'
+            elif '中国政府采购网' in args.query: scoped.site = 'ccgp.gov.cn'
+            elif re.search('公共资源交易|招标公告|中标公告|政府采购', args.query):
+                scoped.site = 'ggzy.gov.cn'
+                if '政府采购' in args.query and not getattr(scoped, 'business', None): scoped.business = 'government'
     return scoped
 
 
@@ -202,7 +213,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search'):
+        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp'):
             pause = pause_status(name)
             if pause:
                 unavailable.append({"provider": name, **pause})

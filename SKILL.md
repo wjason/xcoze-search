@@ -1,6 +1,6 @@
 ---
 name: xcoze-search
-description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持论文、软件包、模型、开源项目与社区资料的原生或公开索引检索，以及知乎、B 站、V2EX 公开热点快照。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
+description: 为 Agent 搜索最新公开资料、查找原始来源和读取网页；自动选择免 Key 或已配置的商用搜索源，支持能源电力、采购招标、论文、软件包、模型、开源项目与社区资料的原生或公开索引检索，以及知乎、B 站、V2EX 公开热点快照。用于需要联网检索与核对来源的任务，以及本技能的 Key 和搜索偏好配置。Search current public information and read sources with automatic keyless/keyed routing. 不用于本地文件检索、私有知识库或纯离线改写。
 metadata:
   author: XCoze
   version: "0.9.1"
@@ -35,6 +35,12 @@ Python、pandas、SQLAlchemy、Kubernetes、Go、Rust 和 MDN 文档可用 `--pl
 
 巨潮公告和统计局发布优先使用 `--platform cninfo|nbs`，见[国内站内检索](references/china-site-search.md)。巨潮检索公告全文索引，返回元数据和 PDF 链接，不代表已读报告或取得实时行情；保留证券代码、市场和报告年度。统计局通过其网站选用的搜索后端查询，区分标题中的统计期与发布日期。
 
+## 能源电力与招投标调研
+
+能源政策、装机和用电统计优先 `--platform nea`，按主题选择 `--energy-section policy|releases`；政府采购用 `--platform government-procurement`，工程招投标用 `--platform ggzy --business engineering`，南网公开列表用 `--platform csg`。将问题拆成短主题词与地区、起止日期、公告阶段，不要求用户选择参数。招标、中标、更正分别用 `--notice-type tender|award|correction`；南网列表还可筛选候选人、中止等标题。需要具体映射和翻页时读[行业搜索](references/industry-search.md)。
+
+能源局只检索发布的有限历史列表，保留栏目展示日期；它可能与原文发布日期不同，统计期和生效日期继续核验。南网每次只筛选一页，不是全站关键词搜索；采购网全站搜索未接入，公共资源平台的政府采购结果不能冒充采购网原生接口。公共资源链接可能先到目录页，继续读取页面实际给出的正文链接，不拼造地址。保留公告类型、地区和来源平台；采购人、项目编号、预算、截止时间未确认时保持未知。中标、候选人和中止公告不能当作仍可投标。
+
 ## 平台原生搜索和本机工具
 
 当前新闻/政策任务可先使用固定公开源，详见[新闻订阅、政府政策与社区原文](references/feeds.md)。`feed --source cns-scroll|cns-finance|bbc-world` 读取一个当前窗口，可用 --query 短关键词和 --start-date/--end-date 筛选；--query 是标题/摘录中全部空白分词的字面匹配，不是语义搜索。日期按 UTC+08:00 日历日包含首尾，未知日期不进入有日期条件的结果；不要改用检索时间填日期。历史问题、窗口过旧或没有命中时，按原有模式继续正常搜索，不宣称事件不存在。
@@ -50,7 +56,7 @@ Python/Rust 论坛和 V2EX 的标准 HTTPS 主帖根链接可用 fetch，自动�
 
 根据任务由 Agent 选择 `--platform wikipedia|stackexchange|arxiv|crossref|npm|crates|gitlab|europepmc|huggingface|openlibrary|datacite|zenodo|wikidata|nasa|federalregister|worldbank|usgs`，不让用户选择渠道。平台原生接口优先，失败或空结果才在既有预算内备用。语言、日期、范围不兼容时不静默删掉条件。`platforms` 离线列出原生/公开索引能力以及 agent-reach、yt-dlp、gh、agent-browser 是否在本机；存在不等于已配置或实测，不执行这些工具。
 
-国家发展改革委、国家统计局、国家能源局、工信部、生态环境部、应急管理部、人民银行、公共资源交易平台、商务部、证监会、政府采购网、中科院、地调局、新华网的近期栏目可分别用 `--platform ndrc|nbs|nea|miit|mee|mem|pbc|ggzy|mofcom|csrc|ccgp|cas|cgs|xinhua`。香港政府公开数据近期更新用 `feed --source hk-data`，只覆盖该 RSS 窗口。每个来源只对当前页面的标题做字面词筛选，不是全站或历史数据库；先用短关键词，未命中后按既有偏好搜索，不把空结果当没有文件。保留栏目显示日期；能源局首页部分条目无日期，不能从 URL 补造。需要正文、生效日期或统计口径时读取原文。
+其他官方近期栏目可用 `--platform ndrc|miit|mee|mem|pbc|mofcom|csrc|ccgp|cas|cgs|xinhua`。能源局、统计局、公共资源平台的原近期列表可显式用 `--provider nea|nbs|ggzy`。香港政府公开数据近期更新用 `feed --source hk-data`，只覆盖该 RSS 窗口。本段所述原近期列表只对当前页面的标题做字面词筛选，不是全站或历史数据库；先用短关键词，未命中后按既有偏好搜索，不把空结果当没有文件。保留栏目显示日期；能源局首页部分条目无日期，不能从 URL 补造。需要正文、生效日期或统计口径时读取原文。
 
 国内国家数据、气象中心、交易所、法规标准等平台可通过 `platforms` 查询其公开索引范围；这是域名限定网页搜索，不是原生接口或站内搜索，不能把链接当已读取正文、实时行情或已获下载许可。香港天文台的定向查询可能无命中，若结果不足应明确说明。
 

@@ -14,6 +14,13 @@ spec.loader.exec_module(b)
 
 
 class BenchmarkTests(unittest.TestCase):
+    def test_industry_case_preserves_filters_and_explicit_page_in_outage_mode(self):
+        a = b.query_args({'id': 'procurement', 'query': '储能', 'platform': 'government-procurement',
+                          'region': '广东', 'notice_type': 'tender', 'page': 2,
+                          'start_date': '2026-10-01', 'end_date': '2026-11-16'}, 'free')
+        self.assertEqual((a.region, a.notice_type, a.page), ('广东', 'tender', 2))
+        self.assertEqual((a.start_date, a.end_date), ('2026-10-01', '2026-11-16'))
+
     def test_parallel_outage_guard_rejects_dispatch_before_transport(self):
         def faulty(args, config, budget):
             return b.search.request_api('parallel-free', {}, '', budget=budget)

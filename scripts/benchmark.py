@@ -30,8 +30,8 @@ def query_args(case, mode, *, count=5, timeout=15):
             "--retries", "0", "--max-seconds", str(timeout * 2 + 1)]
     if case.get("platform"): argv.extend(["--platform", case["platform"]])
     if case.get("intent"): argv.extend(["--intent", case["intent"]])
-    for field in ("language", "site"):
-        if case.get(field): argv.extend(["--" + field, case[field]])
+    for field in ("language", "site", 'energy_section', 'region', 'notice_type', 'business', 'trading_source', 'page'):
+        if case.get(field) is not None: argv.extend(["--" + field.replace('_', '-'), str(case[field])])
     if mode == "browser":
         argv.extend(["--provider", "browser", "--strategy", "free"])
     elif mode == "deepseek":
@@ -98,6 +98,12 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False, 
         text = "\n".join(str(item.get(k) or "") for k in ("snippet", "summary", "content"))
         if item.get("highlights"): text += "\n" + "\n".join(item["highlights"])
         rows[-1].update(evidence_text=text[:1800], evidence_truncated=len(text) > 1800)
+        attributes = {k: v for k, v in item.get('provider_fields', {}).items() if k in (
+            'archive_section', 'publication_semantics', 'listed_at', 'original_publication_date_verified', 'region', 'region_code', 'source_platform',
+            'business_type', 'notice_type', 'notice_type_code', 'notice_stage', 'project_number',
+            'buyer', 'deadline', 'deadline_verified', 'open_for_bidding', 'publisher', 'title_truncated',
+            'page_body_read', 'trading_source')}
+        if attributes: rows[-1]['attributes'] = attributes
     return {"id": case["id"], "mode": mode, "query_sent": args.query, "ok": result["ok"],
             "expected_provider_returned": (any(r["provider"] == case["expected_provider"] for r in rows)
                                            if case.get("expected_provider") else None),
@@ -107,7 +113,10 @@ def run_cell(case, mode, config, budget, *, count=5, timeout=15, keyless=False, 
             "requests": [{k: r[k] for k in ("provider", "ok", "attempts", "elapsed_ms", "execution",
                          "browser_engine", "browser_navigation_attempts", "browser_commands", "browser_cleanup_verified",
                          "dropped_irrelevant_count", "shown_count", "returned_count",
-                         "browser_failure_stage", "browser_explicit_no_matches", "browser_stage_timings_ms") if k in r}
+                         "browser_failure_stage", "browser_explicit_no_matches", "browser_stage_timings_ms",
+                         'source_row_count', 'excluded_by_constraints', 'excluded_other_notice_stages',
+                         'default_time_window', 'date_semantics', 'archive_section', 'oldest_publication',
+                         'newest_publication', 'archive_complete', 'pagination_fetched', 'page') if k in r}
                          for r in result.get("requests", [])],
             "semantic_quality_assessed": False}
 

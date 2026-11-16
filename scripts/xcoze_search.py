@@ -763,6 +763,12 @@ def parser():
     search.add_argument("--count", type=int, default=10)
     search.add_argument("--site", help="One public domain; see each provider's supported semantics")
     search.add_argument("--platform", choices=tuple(PLATFORMS), help="Target platform; public-index coverage is not a native site search")
+    search.add_argument('--energy-section', choices=('policy', 'releases'), help='NEA published archive: policies or press/statistical releases')
+    search.add_argument('--region', help='Trading search province name or six-digit province code')
+    search.add_argument('--notice-type', choices=('tender', 'award', 'correction', 'contract', 'candidate', 'cancel', 'non-tender'), help='Source-specific notice stage; inspect capabilities')
+    search.add_argument('--business', choices=('engineering', 'government'), help='Trading search business category')
+    search.add_argument('--trading-source', choices=('province', 'central', 'finance'), help='Trading platform publication source; default province')
+    search.add_argument('--page', type=int, help='One requested result/list page, 1..100; no automatic pagination')
     search.add_argument("--intent", choices=("auto", "general", "reference", "current"), default="auto",
                         help="Agent task intent; quality reference/current may consult a complementary source within existing limits")
     search.add_argument("--browser", choices=("auto", "off"), help="Lazy fallback only; requires an existing agent-browser installation")

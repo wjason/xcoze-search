@@ -20,6 +20,8 @@ Official Python, pandas and SQLAlchemy scopes start with their static indexes; M
 
 Kubernetes and Rust scopes start with published navigation/item indexes; Go starts with standard-library symbol search. CNINFO scopes start with disclosure search, and NBS scopes use its website-selected search backend. Explicitly named NBS or CNINFO disclosure topics can select these scopes automatically. Source disables and per-request constraints still apply.
 
+Energy and procurement scopes prioritize `nea-archive`, `ggzy-search` and `csg`. `government-procurement` fixes the government purchasing category. Named energy-authority and procurement tasks may select their known scope automatically; explicit user scopes remain authoritative. Unsupported industry filters exclude fallback providers rather than being discarded. See [industry search](industry-search.en.md).
+
 ## Script and Agent responsibilities
 
 The script preflights constraints. Incompatible auto candidates appear in skipped_incompatible without dropping time/site conditions. Explicit multi-source calls fail preflight if any selected source is incompatible. Native freshness expressions are not translated to another provider's different semantics; use supported start/end dates or separate Agent queries when appropriate.

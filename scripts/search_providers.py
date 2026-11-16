@@ -9,7 +9,8 @@ import urllib.request
 from search_common import SearchError, invalid, public_url, text_field, text_list, validate_site
 
 SEARCH_OPTIONS = ("site", "freshness", "industry", "mode", "need_content", "start_date", "end_date",
-                  "country", "language", "extra_snippets", "highlights", "summary", "include_answer", "depth")
+                  "country", "language", "extra_snippets", "highlights", "summary", "include_answer", "depth",
+                  "energy_section", "region", "notice_type", "business", "trading_source", "page")
 
 
 def option(args, name):

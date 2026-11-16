@@ -51,6 +51,12 @@ SOURCE_EXTRA = ["tests/test_native_search.py", "tests/test_keyless_search.py", "
                 "tests/test_search.py", "tests/test_release.py", "tests/test_providers.py",
                 "tests/test_evaluation.py", "tests/test_routing.py", "scripts/evaluate.py", "evaluations/queries.json",
                 "evaluations/README.md"]
+RUNTIME_FILES += ['scripts/industry_search.py', 'references/industry-search.md', 'references/industry-search.en.md',
+                  'evaluations/energy-procurement-cases.json',
+                  'evaluations/reports/2026-11-16-energy-procurement.md',
+                  'evaluations/reports/2026-11-16-energy-procurement.en.md',
+                  'evaluations/reports/2026-11-16-energy-procurement.data.json']
+SOURCE_EXTRA += ['tests/test_industry_search.py']
 
 
 RUNTIME_FILES += ["README.en.md", "SKILL.en.md", "INSTALL.en.md", "TODO.en.md",

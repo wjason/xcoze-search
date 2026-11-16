@@ -21,6 +21,7 @@ INTERVALS.update({"bilibili-trending": 2, "zhihu-trending": 2, "v2ex-trending": 
 INTERVALS["parallel-free"] = 1
 INTERVALS.update({'so360': 2, 'docs': 1, 'mdn': 1})
 INTERVALS.update({'site-docs': 1, 'go-docs': 1, 'cninfo': 2, 'nbs-search': 2})
+INTERVALS.update({'nea-archive': 2, 'ggzy-search': 3, 'csg': 3})
 INTERVALS.update({"cns-scroll": 2, "cns-finance": 2, "bbc-world": 2, "govcn": 2, "ndrc": 2, "nbs": 2, "nea": 2, "miit": 2, "mee": 2, "mem": 2, "pbc": 2, "ggzy": 2, "mofcom": 2, "csrc": 2, "ccgp": 2, "cas": 2, "cgs": 2, "xinhua": 2, "hk-data": 2,
                   "community-v2ex": 2, "community-python": 2, "community-rust": 2})
 
@@ -140,7 +141,7 @@ def request_slot(name, url, *, max_wait=0):
     try:
         yield slot
     except urllib.error.HTTPError as error:
-        if name in ('site-docs', 'go-docs', 'cninfo', 'nbs-search') and error.code in (401, 403, 412): slot.defer(900)
+        if name in ('site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp') and error.code in (401, 403, 412): slot.defer(900)
         if name == 'so360' and error.code in (401, 403, 412): slot.defer(900)
         if name == 'so360' and error.code in (301, 302, 303, 307, 308):
             location = urllib.parse.urlsplit(error.headers.get('Location', '') if error.headers else '')
@@ -155,7 +156,8 @@ def request_slot(name, url, *, max_wait=0):
             slot.defer(60)
         raise
     except SearchError as error:
-        if name in ('site-docs', 'go-docs', 'cninfo', 'nbs-search') and error.status in (401, 403, 412): slot.defer(900)
+        if name in ('site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp') and error.status in (401, 403, 412): slot.defer(900)
+        if name in ('nea-archive', 'ggzy-search', 'csg', 'ccgp') and error.code in ('access_challenge', 'source_rate_limited'): slot.defer(900)
         if name == 'so360' and error.status in (401, 403, 412): slot.defer(900)
         if (name.endswith("-trending") or name.startswith("community-")) and error.status in (401, 403, 412): slot.defer(900)
         if error.status in (429, 503): slot.defer(900 if name in ("exa-free", "parallel-free") else 60)

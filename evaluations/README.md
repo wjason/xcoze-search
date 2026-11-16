@@ -18,6 +18,16 @@ python3 scripts/benchmark.py --corpus evaluations/agent-search-cases-v3.json --m
 
 [100 道题无 Exa 对照](../evaluations/reports/2026-11-10-parallel-no-exa.md)记录 Parallel 接入前后的来源覆盖、耗时与浏览器使用情况。
 
+## 能源电力与招投标题集
+
+[27 道题集](energy-procurement-cases.json)在同一文件中提供中英文问题、检索词和明确筛选条件，覆盖能源政策/统计、公共资源政府采购/工程公告、省平台/央企/财政部来源及南网公开列表。[实测报告](reports/2026-11-16-energy-procurement.md)保留初轮漏检、修正过程和原文核验。
+
+```bash
+python3 scripts/benchmark.py --corpus evaluations/energy-procurement-cases.json --modes free --keyless --without-exa --without-parallel --browser off --live --limit 27 --max-requests 60 --timeout 10 --count 5 --output /tmp/xcoze-industry.json
+```
+
+省略 `--live` 可离线查看计划。地区、日期、业务、公告阶段和页码原样传递，不自动放宽。单页列表不代表完整历史库；能源局按列表日期筛选，文件日期继续读原文。公共资源链接可能先到目录页，再由该页提供正文链接。
+
 ## 公开来源巡检
 
 [GitHub Actions 巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml)每周一北京时间 11:23 运行，也可手动触发。每次运行的摘要列出逐项状态以及与 11 月 5 日快照的差异，JSON 产物保留 90 天。11 月 9 日的[本地巡检](reports/2026-11-09-public-source-check.json)覆盖 75 项，67 项通过、5 项受限、3 项无命中。巡检覆盖公开检索、网页读取、订阅、热点及网站定向搜索。带 Key 服务和本地浏览器分别验证。
