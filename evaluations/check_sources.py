@@ -23,7 +23,7 @@ SEARCH = {
     'mdn': 'AbortController',
     'site-docs': 'NetworkPolicy ingress egress', 'go-docs': 'context.WithCancelCause',
     'cninfo': '贵州茅台 2024 年度报告', 'nbs-search': '国内生产总值',
-    'nea-archive': '储能', 'ggzy-search': '储能', 'csg': '电网',
+    'nea-archive': '储能', 'ggzy-search': '储能', 'csg': '电网', 'csg-search':'数字化',
     'bing': 'Python asyncio TaskGroup documentation',
     'duckduckgo': 'Python asyncio TaskGroup documentation',
     'exa-free': 'Python asyncio TaskGroup documentation',

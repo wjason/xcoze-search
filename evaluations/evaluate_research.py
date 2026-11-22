@@ -14,7 +14,7 @@ import xcoze_search as x
 from research_workflow import run_research
 
 
-def execute(cases,live=False,timeout=8):
+def execute(cases,live=False,timeout=8,review_output=None):
     commands=[]
     for c in cases:
         command=['research',c['query'],'--question',c['question'],'--strategy','free','--browser','off',
@@ -32,11 +32,13 @@ def execute(cases,live=False,timeout=8):
         return original(operation,payload,key,**kwargs)
     config={'schema_version':2,'providers':{},'search_preferences':{
         'strategy':'free','browser':'off','disabled_providers':['exa','exa-free','parallel-free']}}
-    records=[]
+    records=[];private_records=[]
     with patch.object(x,'request_api',side_effect=guard),patch.object(x,'read_config',side_effect=AssertionError('No credentials in audit')),patch.object(x,'run_browser_search',side_effect=AssertionError('No browser')):
         for c,a in zip(cases,commands):
             try:result=run_research(a,config,x)
             except x.SearchError as e:result={'ok':False,'error':e.data(),'documents':[],'coverage':{'gaps':['request_failed']},'results':[],'elapsed_ms':0}
+            if review_output is not None:
+                private_records.append({'id':c['id'],'question':c['question'],'result':json.loads(json.dumps(result))})
             # The public artifact contains markers and source links, never full originals.
             for doc in result.get('documents',[]):
                 doc['passage_markers']=[t for t in c['require_topic'] if any(t.casefold() in p['text'].casefold() for p in doc.get('passages',[]))]
@@ -49,6 +51,9 @@ def execute(cases,live=False,timeout=8):
                  'semantic_answer_accuracy_measured':False}
             records.append(row)
             print(json.dumps({'id':c['id'],'read':len(result.get('documents',[])),'gaps':result['coverage']['gaps'],'ms':result['elapsed_ms']},ensure_ascii=False),flush=True)
+    if review_output is not None:
+        review_output.parent.mkdir(parents=True,exist_ok=True)
+        review_output.write_text(json.dumps(private_records,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     positive=[r for r in records if not r['expected_gap']];negative=[r for r in records if r['expected_gap']]
     return {'ok':True,'schema_version':1,'live':True,'checked_at':datetime.now(timezone.utc).isoformat(),
         'version':x.VERSION,'conditions':{'keyless':True,'without_exa':True,'without_parallel':True,'browser':'off','host_search_used':False},
@@ -66,7 +71,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--live',action='store_true')
     p.add_argument('--corpus',type=Path,default=ROOT/'evaluations/research-cases.json');p.add_argument('--output',type=Path,required=True)
     p.add_argument('--timeout',type=int,choices=range(1,16),default=8)
-    args=p.parse_args();out=execute(json.loads(args.corpus.read_text(encoding='utf-8'))['cases'],args.live,args.timeout)
+    p.add_argument('--review-output',type=Path,help='Optional private local excerpts for manual answer review; do not publish full page text')
+    args=p.parse_args();out=execute(json.loads(args.corpus.read_text(encoding='utf-8'))['cases'],args.live,args.timeout,args.review_output)
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(out.get('summary',out),ensure_ascii=False))
 

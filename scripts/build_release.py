@@ -9,7 +9,7 @@ import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "0.10.0"
+VERSION = "0.10.1"
 RUNTIME_FILES = ["SKILL.md", "README.md", "INSTALL.zh-CN.md", "LICENSE", "agents/openai.yaml",
                  "scripts/xcoze_search.py", "scripts/setup.command", "references/setup.md",
                  "references/providers.md", "references/output.md", "VALIDATION.md",
@@ -95,6 +95,11 @@ SOURCE_EXTRA += ['tests/test_research.py','tests/test_manage_skill.py','tests/te
                  'evaluations/research-cases.json','evaluations/evaluate_research.py',
                  'evaluations/reports/2026-11-22-research.md','evaluations/reports/2026-11-22-research.en.md',
                  'evaluations/reports/2026-11-22-research.data.json']
+SOURCE_EXTRA += ['tests/test_answer_review.py','evaluations/review_research.py',
+                 'evaluations/research-cases-v2.json','evaluations/research-answer-reviews.json',
+                 'evaluations/reports/2026-11-22-answer-support.data.json',
+                 'evaluations/reports/2026-11-22-answer-support.md',
+                 'evaluations/reports/2026-11-22-answer-support.en.md']
 FULL_FILES = sorted(set(RUNTIME_FILES + SOURCE_EXTRA))
 # Historical evaluations and raw research belong to the source archive, not normal installation.
 RUNTIME_FILES = [p for p in RUNTIME_FILES if not p.startswith(('evaluations/','research/')) and p!='scripts/benchmark.py']

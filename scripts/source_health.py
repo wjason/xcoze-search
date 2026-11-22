@@ -14,13 +14,19 @@ def cache_path():
     return Path(os.environ.get('XDG_CACHE_HOME') or Path.home()/'.cache')/'xcoze-search/source-health.json'
 
 
+def snapshot_time(raw):
+    stamp=datetime.fromisoformat(raw.get('checked_at','').replace('Z','+00:00'))
+    if stamp.tzinfo is None:raise ValueError('Public status timestamp needs a timezone.')
+    return stamp.astimezone(timezone.utc)
+
+
 def load_snapshot(path=SNAPSHOT,now=None,max_age_days=7):
     now=now or datetime.now(timezone.utc)
     if Path(path)==SNAPSHOT:
         try:
             cached=json.loads(cache_path().read_text(encoding='utf-8'))
             bundled=json.loads(SNAPSHOT.read_text(encoding='utf-8'))
-            if cached.get('schema_version')==1 and cached.get('checked_at','')>bundled.get('checked_at',''):path=cache_path()
+            if cached.get('schema_version')==1 and isinstance(cached.get('results'),list) and snapshot_time(cached)>snapshot_time(bundled):path=cache_path()
         except (OSError,ValueError,TypeError,AttributeError):pass
     try:
         raw=json.loads(Path(path).read_text(encoding='utf-8'))

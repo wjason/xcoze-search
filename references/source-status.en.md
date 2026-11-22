@@ -8,7 +8,7 @@ Each row describes a specific action. **Supported · Passed** means the live sam
 
 Historical full snapshot: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
 
-Latest public check: 2026-11-22T20:51:29+08:00 · Samples expire after seven days. [Public snapshot](source-health.json).
+Latest public check: 2026-11-22T14:01:18.934662+00:00 · Samples expire after seven days. [Public snapshot](source-health.json).
 
 [Latest scheduled checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [November 9 local check](../evaluations/reports/2026-11-09-public-source-check.json). The tables below retain the full support snapshot, including browser and keyed actions.
 
@@ -68,6 +68,7 @@ Latest public check: 2026-11-22T20:51:29+08:00 · Samples expire after seven day
 | Chinese Academy of Sciences research news | Search results and source links | 2026-11-22 | Supported · Passed |
 | China Geological Survey news | Search results and source links | 2026-11-22 | Supported · Passed |
 | Xinhua news | Search results and source links | 2026-11-22 | Supported · Passed |
+| Southern Grid website keyword search | Search results and source links | 2026-11-22 | Supported · Passed |
 
 ## Page and community reading
 

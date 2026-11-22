@@ -2,6 +2,10 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.10.1 — 2026-11-22
+
+270 offline tests pass. With Exa, Parallel, keys, host search and browsers disabled, 30 real questions read originals. Manual passage review found 27 supported, two partial and one requiring an attachment. Three negative cases retained their expected gaps. The full run used 78 HTTP requests with a 1.30-second median; an MDN ordering replay is recorded separately. Keyword coverage is not answer correctness. The missed Southern Grid question now finds an original and bid deadline through the official keyword form. See [per-task review and limits](evaluations/reports/2026-11-22-answer-support.en.md).
+
 ## v0.10.0 — 2026-11-22
 
 257 offline tests pass. With Exa, Parallel, user keys, host search and browser disabled, 12 of 13 research tasks returned originals and required topic passages. The Southern Grid task still found no matches in the current two-page list window. Three date, topic and budget negative cases retained the expected gaps. The run used 36 HTTP requests, with a positive-task median of 1.56 seconds; one separate TaskGroup follow-up read was also made. Six tasks received manual review of factual support and reading scope. General answer accuracy was not measured.

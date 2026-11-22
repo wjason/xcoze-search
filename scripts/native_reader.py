@@ -37,11 +37,17 @@ class ArticleParser(HTMLParser):
         self.meta = {}; self.links = []; self.anchor = None; self.groups = []
         self.focus=focus;self.focused=False;self.focus_parts=[]
         self.ids=[]
+        self.in_focus=False;self.focus_depth=0;self.focus_tag=None
 
     def handle_starttag(self, tag, pairs):
         a = dict(pairs)
         if a.get('id'):self.ids.append(a['id'])
-        if self.focus and a.get('id')==self.focus: self.focused=True
+        if self.in_focus and self.focus.startswith('method.') and a.get('id','').startswith('method.') and a['id']!=self.focus:self.in_focus=False
+        if self.in_focus and ((self.focus_tag=='dt' and tag=='dt' and len(self.stack)+1<=self.focus_depth) or
+            (self.focus_tag in ('h1','h2','h3','h4','h5','h6') and tag in ('h1','h2','h3','h4','h5','h6') and tag<=self.focus_tag)):
+            self.in_focus=False
+        if self.focus and a.get('id')==self.focus:
+            self.focused=True;self.in_focus=True;self.focus_depth=len(self.stack)+1;self.focus_tag=tag
         if tag == 'meta':
             self.meta[(a.get('name') or a.get('property') or '').lower()] = a.get('content', '')
         hidden = bool(self.stack and self.stack[-1][1]) or tag in ('script','style','nav','footer','header','noscript','svg','form') or 'hidden' in a or a.get('aria-hidden') == 'true'
@@ -51,23 +57,24 @@ class ArticleParser(HTMLParser):
         if chosen: self.groups.append(len(self.selected))
         if tag in ('p','div','li','br','h1','h2','h3','pre','tr','section'):
             self.parts.append('\n'); self.selected.append('\n')
-            if self.focused: self.focus_parts.append('\n')
+            if self.in_focus: self.focus_parts.append('\n')
         if tag == 'a' and not hidden: self.anchor = [a.get('href',''), []]
 
     def handle_endtag(self, tag):
+        if self.in_focus and not self.focus.startswith('method.') and tag==self.focus_tag and self.focus_tag in ('section','article','div') and len(self.stack)==self.focus_depth:self.in_focus=False
         if tag == 'a' and self.anchor is not None:
             self.links.append((self.anchor[0], ''.join(self.anchor[1]).strip())); self.anchor = None
         for i in range(len(self.stack)-1, -1, -1):
             if self.stack[i][0] == tag: del self.stack[i:]; break
         if tag in ('p','div','li','h1','h2','h3','pre','tr','section'): self.parts.append('\n'); self.selected.append('\n')
-        if tag in ('p','div','li','h1','h2','h3','pre','tr','section') and self.focused: self.focus_parts.append('\n')
+        if tag in ('p','div','li','h1','h2','h3','pre','tr','section') and self.in_focus: self.focus_parts.append('\n')
 
     def handle_data(self, text):
         if self.stack and self.stack[-1][1]: return
         if any(t[0] == 'title' for t in self.stack): self.title.append(text); return
         if any(t[0] == 'head' for t in self.stack): return
         self.parts.append(text)
-        if self.focused: self.focus_parts.append(text)
+        if self.in_focus: self.focus_parts.append(text)
         if any(t[2] for t in self.stack): self.selected.append(text)
         if self.anchor is not None: self.anchor[1].append(text)
 
@@ -119,7 +126,7 @@ class NativeReader(Provider):
         if '<html' not in html.lower(): raise SearchError('invalid_response', 'Original is not recognizable HTML.')
         return {'html': html}
 
-    def normalize_fetch(self, raw, url, focus_terms=None):
+    def normalize_fetch(self, raw, url, focus_terms=None, question=''):
         source = checked_url(url)
         if 'pdf_text' in raw:
             return {'title': '', 'content': raw['pdf_text'], 'summary':'', 'highlights':[],
@@ -129,8 +136,16 @@ class NativeReader(Provider):
         html = raw['html']; fragment=urllib.parse.unquote(urllib.parse.urlsplit(url).fragment)
         parser = ArticleParser(fragment); parser.feed(html)
         anchor_basis='requested_url' if fragment else None
+        if not fragment and re.search(r'默认.*拒绝|default.*deny',question,re.I):
+            hints=['default','deny']+(['ingress'] if re.search('入站|入向|ingress',question,re.I) else ['egress'] if re.search('出站|出向|egress',question,re.I) else [])
+            matches=[i for i in parser.ids if all(h in i.casefold() for h in hints)]
+            if matches:
+                fragment=matches[0];parser=ArticleParser(fragment);parser.feed(html)
+                anchor_basis='published_heading_matched_question'
         if not fragment and focus_terms:
-            matches=[i for i in parser.ids for term in focus_terms if '_' in term and i.casefold() in (term,'method.'+term)]
+            matches=[i for i in parser.ids for term in focus_terms
+                     if i.casefold()=='method.'+term or
+                     urllib.parse.urlsplit(source).hostname=='pkg.go.dev' and len(term)>3 and i.casefold()==term.rsplit('.',1)[-1]]
             if matches:
                 fragment=matches[0];parser=ArticleParser(fragment);parser.feed(html)
                 anchor_basis='published_id_matched_focus_term'

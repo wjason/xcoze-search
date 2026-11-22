@@ -9,6 +9,13 @@ from source_health import refresh_snapshot
 
 
 class SourceHealthTests(unittest.TestCase):
+    def test_cached_and_bundled_dates_compare_instants_across_timezones(self):
+        with tempfile.TemporaryDirectory() as folder:
+            bundled=Path(folder)/'bundle.json';cached=Path(folder)/'cache.json'
+            pack_snapshot({'checked_at':'2026-11-22T20:00:00+08:00','results':[{'id':'bundle','kind':'search'}]},bundled)
+            pack_snapshot({'checked_at':'2026-11-22T13:00:00+00:00','results':[{'id':'newer','kind':'search'}]},cached)
+            with patch('source_health.SNAPSHOT',bundled),patch('source_health.cache_path',return_value=cached):
+                self.assertIn(('search','newer'),load_snapshot(path=bundled)['actions'])
     def test_explicit_refresh_writes_only_public_cache_and_preserves_it_on_invalid_data(self):
         with tempfile.TemporaryDirectory() as folder:
             target=Path(folder)/'cache.json'

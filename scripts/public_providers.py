@@ -1144,8 +1144,9 @@ from content_sources import GovCN, CommunityReader, NDRCIndex, NationalStatistic
 
 from documentation_search import OfficialDocs, MDN
 from native_search import NavigationDocs, GoDocs, CninfoSearch, StatisticsSearch
-from industry_search import EnergyArchive, TradingSearch, CSGNotices
+from industry_search import EnergyArchive, TradingSearch, CSGNotices, CSGSearch
 from native_reader import NativeReader
 
 PUBLIC_REGISTRY = {p.name: p for p in (BingRSS(), So360(), DuckDuckGo(), ExaFree(), ParallelFree(), OfficialDocs(), MDN(), NavigationDocs(), GoDocs(), CninfoSearch(), StatisticsSearch(), EnergyArchive(), TradingSearch(), CSGNotices(), GitHub(), HackerNews(), JinaReader(), *OPEN_SOURCES, Browser(), GovCN(), CommunityReader(), NDRCIndex(), NationalStatisticsIndex(), NationalEnergyIndex(), MIITIndex(), MEEIndex(), MEMIndex(), PBCIndex(), GGZYIndex(), MOFCOMIndex(), CSRCIndex(), CCGPIndex(), CASIndex(), CGSIndex(), XinhuaIndex())}
 PUBLIC_REGISTRY['native-reader'] = NativeReader()
+PUBLIC_REGISTRY['csg-search'] = CSGSearch()

@@ -2,6 +2,10 @@
 
 [简体中文](README.md) | **English**
 
+## Passage answer-support review
+
+The [33-case corpus](research-cases-v2.json) contains 30 real questions with explicit facts and three negative cases. The [report](reports/2026-11-22-answer-support.en.md) separates retrieval, literal coverage and support for answers from returned passages. The same Agent performed the review without independent blinding; [judgments](research-answer-reviews.json) retain missing requirements and passage references. `review_research.py` validates references and completeness, not semantic truth. New runs need new reviews.
+
 ## Research workflow evaluation
 
 The [research corpus](research-cases.json) includes 13 original-source tasks and three date, topic and budget negative cases. Checks cover original reads, required topics in returned passages, date constraints, HTTP requests, latency and unresolved gaps. The [2026-11-22 report](reports/2026-11-22-research.en.md) retains misses, per-task results and six manual reviews. Topic-marker coverage is not answer accuracy.

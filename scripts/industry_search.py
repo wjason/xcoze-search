@@ -1,6 +1,7 @@
 """Bounded, keyless searches of public energy and procurement publications."""
 from copy import copy
 from datetime import date, datetime, timedelta, timezone
+from html.parser import HTMLParser
 import re
 import urllib.parse
 import urllib.request
@@ -202,7 +203,9 @@ class TradingSearch(SiteSource):
                 raise SearchError('invalid_response', 'Trading result is outside the official publication scope.')
             title = plain(item.get('title')); published = day(item.get('publishTime'))
             start, end = dates(args)
+            stage=classify(title)
             if (not title_match(title, args.query) or
+                (option(args,'notice_type')=='award' and stage in ('candidate','cancel','correction')) or
                 ((start or end) and (not published or (start and published < start) or (end and published > end))) or
                 (payload.get('DEAL_PROVINCE') and item.get('province') != payload['DEAL_PROVINCE']) or
                 (payload.get('DEAL_STAGE') and item.get('informationType') != payload['DEAL_STAGE']) or
@@ -274,9 +277,13 @@ class CSGNotices(SiteSource):
                 # adjacent numbered badge would otherwise turn 2026-11-16 into ...161.
                 date_match = re.search(r'>\s*(20\d{2}-\d{2}-\d{2})\s*<', fragment)
                 publisher = next((plain(t) for a, t in parser.rows if 'Blue' in a.get('class', '') and not a.get('href')), None)
+                stage=classify(title)
+                category=next((plain(t) for a,t in parser.rows if re.fullmatch(r'/(?:zbgg|fzbgg|zbhxrgs)/index\.jhtml',a.get('href',''))),None)
+                if stage=='public_notice' and category=='招标公告':stage='tender'
                 entries.append({'title': title, 'url': 'https://www.bidding.csg.cn' + href,
                                 'snippet': '', 'published_at': day(date_match[1]) if date_match else None,
-                                'publisher': publisher, 'notice_stage': classify(title),
+                                'publisher': publisher, 'notice_stage': stage,
+                                'notice_stage_basis':'published_category' if classify(title)=='public_notice' else 'explicit_title',
                                 'title_truncated': title.endswith(('...', '…')), 'page_body_read': False,
                                 'project_number': None, 'buyer': None, 'deadline': None,
                                 'deadline_verified': False, 'open_for_bidding': None})
@@ -298,3 +305,75 @@ class CSGNotices(SiteSource):
                       'next_page':raw.get('next_page'),
                       'site_keyword_search': False, 'page_body_read': False,
                       'excluded_other_notice_stages': len(all_rows) - len(selected)}
+
+
+class SearchForm(HTMLParser):
+    def __init__(self):super().__init__();self.values={}
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag=='input' and a.get('name') in ('q','channelId'):self.values[a['name']]=a.get('value','')
+
+
+class CSGSearch(CSGNotices):
+    name,label='csg-search','南方电网官网关键词搜索'
+    endpoint='https://www.bidding.csg.cn/dbsearch.jspx'
+    search_scope='published_website_fulltext_search_one_page_original_verification_required'
+    CHANNEL_IDS={'zbgg':'52','fzbgg':'57','zbhxrgs':'310'}
+
+    def access_scope(self,payload):return 'csg'
+
+    def capabilities(self):
+        return {**super().capabilities(),'site_keyword_search':True,'query_sent_to_source':True,
+                'search_scope':self.search_scope,'date_filter_semantics':'returned_page_publication_dates_local_filter'}
+
+    def build_search(self,args):
+        payload=super().build_search(args)
+        if not args.query.strip() or len(args.query)>50:invalid('Southern Grid website queries must contain 1..50 characters.')
+        return {**payload,'query':args.query}
+
+    def build_request(self,payload,key,version,*,fetch=False):
+        if fetch:raise SearchError('unsupported_operation','Southern Grid search does not read originals.')
+        if payload.get('channel') not in self.CHANNEL_IDS or type(payload.get('page')) is not int or not 1<=payload['page']<=100:
+            invalid('Invalid Southern Grid search scope.')
+        query=payload.get('query')
+        if not isinstance(query,str) or not query.strip() or len(query)>50:invalid('Invalid Southern Grid query.')
+        fields={'channelId':self.CHANNEL_IDS[payload['channel']],'q':query,'types':'','org':'','pageNo':payload['page']}
+        return urllib.request.Request(self.endpoint+'?'+urllib.parse.urlencode(fields),headers={
+            'User-Agent':'xcoze-search/'+version,'Accept':'text/html'})
+
+    def decode_response(self,raw):
+        html=raw.decode('utf-8') if isinstance(raw,bytes) else raw
+        form=SearchForm();form.feed(html)
+        try:decoded=super().decode_response(html)
+        except SearchError as exc:
+            # An explicit zero-count result is different from an unrecognized shell.
+            if exc.code!='invalid_response' or not re.search(r'共\s*0\s*条记录',plain(html)):raise
+            decoded={'entries':[],'next_page':None}
+        decoded['search_form']=form.values
+        pager=re.search(r'共\s*(\d+)\s*条记录\s*(\d+)\s*/\s*(\d+)\s*页',plain(html))
+        decoded['current_page']=int(pager[2]) if pager else None
+        decoded['source_total']=int(pager[1]) if pager else None
+        return decoded
+
+    def normalize_search(self,raw,args):
+        payload=self.build_search(args);form=raw.get('search_form',{})
+        if form.get('q')!=payload['query'] or form.get('channelId')!=self.CHANNEL_IDS[payload['channel']]:
+            raise SearchError('constraint_not_applied','Southern Grid did not echo the requested query and notice channel.')
+        if raw.get('current_page') not in (None,payload['page']) or payload['page']>1 and raw.get('current_page')!=payload['page']:
+            raise SearchError('constraint_not_applied','Southern Grid did not return the requested search page.')
+        kind=option(args,'notice_type') or 'tender'
+        eligible=[r for r in raw['entries'] if kind=='non-tender' or r['notice_stage']==kind]
+        rows=[]
+        for i,item in enumerate(eligible,1):
+            mapped={**item,'query_match_basis':'website_fulltext_search_original_not_verified'}
+            row=result(self.name,i,mapped,published='published_at');row['content_kind']='procurement_notice';rows.append(row)
+        # The website searches beyond truncated titles. Preserve its candidates, then check originals.
+        date_args=copy(args);date_args.query=''
+        selected,meta=filter_snapshot(rows,date_args)
+        return selected,{**self.metadata({},rows,args.count),**meta,'query_sent_to_source':True,
+            'site_keyword_search':True,'page_body_read':False,'page':payload['page'],
+            'source_row_count':len(raw['entries']),'date_filter_semantics':'returned_page_publication_dates',
+            'query_match_basis':'website_fulltext_search_original_not_verified',
+            'filter_semantics':'website_fulltext_query_then_explicit_date_and_notice_stage_filters',
+            'source_total':raw.get('source_total'),
+            'pagination_fetched':False,'next_page':None,'window_complete':False}

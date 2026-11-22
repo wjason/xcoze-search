@@ -26,7 +26,7 @@ Python、pandas、SQLAlchemy 官方站点优先检索其静态索引，MDN 优�
 
 Kubernetes、Rust 范围优先已公布的导航/条目索引，Go 优先标准库符号搜索。巨潮范围优先公告检索，统计局范围优先其网站选用的搜索后端。明确点名统计局或巨潮公告时，也可自动选择已知范围；禁用来源和本次查询限制仍然有效。
 
-能源和招投标范围优先 `nea-archive`、`ggzy-search` 与 `csg`；`government-procurement` 固定政府采购业务。明确点名能源局、南网采购或招投标公告时可自动定位已知范围，用户显式条件优先。行业参数不兼容的备用来源会退出候选，不丢弃地区或公告阶段。见[行业搜索](industry-search.md)。
+能源和招投标范围优先 `nea-archive`、`ggzy-search` 与 `csg-search`；`government-procurement` 固定政府采购业务。明确点名能源局、南网采购或招投标公告时可自动定位已知范围，用户显式条件优先。行业参数不兼容的备用来源会退出候选，不丢弃地区或公告阶段。见[行业搜索](industry-search.md)。
 
 ## 脚本与 Agent 分工
 

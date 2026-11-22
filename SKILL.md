@@ -3,7 +3,7 @@ name: xcoze-search
 description: 为 Agent 调研公开资料、查找官方来源和读取原文。按任务选择免 Key 或已配置的搜索服务，支持技术文档、能源电力、政策、招投标、科研及开源项目。用于联网调研、事实与日期核对，以及本技能的搜索偏好和 Key 配置；不用于本地文件或私有知识库搜索。
 metadata:
   author: XCoze
-  version: "0.10.0"
+  version: "0.10.1"
 ---
 
 # xcoze search
@@ -31,11 +31,14 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://docs.python.org/3/l
 
 调研默认最多读取三份候选，仍受当前来源、HTTP 和时间预算约束；`--read-count`、`--max-requests`、`--max-seconds` 可调整。不要重新启动命令绕过整项任务预算。输出原文链接与必要日期，说明影响结论的缺口；不把 `ok:true` 或非空结果当成调研完成。详细字段和补搜规则见[调研流程](references/research.md)。
 
+作答前将问题拆成必须回答的事实点，逐一对照返回片段：条件与例外、执行步骤、数值与单位、日期类型、同一项目身份。`answer_review_required` 为真时，字面覆盖通过也不能替代这一步。只读到通知或目录、关键事实在附件、片段缺少前后关系时继续有界补读，仍不足则明确缺失项。
+
+
 ## 选源与策略
 
 本次明确要求优先，其次保存的偏好，再到 Smart。无 Key 使用免 Key 来源；有已启用 Key 时默认效果优先，任务原生来源可先定位官方资料。免费模式严禁带用户 Key 的请求；显式多源也不扩展到用户未指定的服务。不比较不同供应商的原始评分。
 
-官方技术文档用 `--platform python-docs|pandas-docs|sqlalchemy-docs|kubernetes-docs|go-docs|rust-docs|mdn`；能源政策和统计用 `nea`；政府采购用 `government-procurement`；工程公告用 `ggzy --business engineering`；南网公开列表用 `csg`。其他平台由 `platforms` 离线查询能力。不要把网站定向索引或单页列表说成完整站内搜索。
+官方技术文档用 `--platform python-docs|pandas-docs|sqlalchemy-docs|kubernetes-docs|go-docs|rust-docs|mdn`；能源政策和统计用 `nea`；政府采购用 `government-procurement`；工程公告用 `ggzy --business engineering`；南网官网关键词搜索用 `csg`。其他平台由 `platforms` 离线查询能力。不要把网站定向索引或单页列表说成完整站内搜索。
 
 [官方文档](references/documentation.md) · [能源与招投标](references/industry-search.md) · [国内站内检索](references/china-site-search.md) · [平台操作及边界](references/agent-workflows.md)
 

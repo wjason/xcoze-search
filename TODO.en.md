@@ -4,6 +4,13 @@
 
 Updated 2026-11-22. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
 
+## v0.10.1: original passages and Southern Grid search
+
+- [x] Website keyword form, truncated-title classification, original project and deadline checks.
+- [x] Thirty real questions and three negative cases, with explicit requirements, manual review and reference validation.
+- [ ] Improve AbortController request-parameter examples and complete AbortSignal error branches.
+- [ ] Provide explicit, bounded policy-PDF follow-up when an attachment is necessary, retaining page and source scope.
+
 ## v0.10.0: research workflow
 
 - [x] Version checks, verified update packages, backups and restore.
@@ -12,13 +19,13 @@ Updated 2026-11-22. Focus: Agent web search and source reading. Default automati
 - [x] Document deduplication, possible republications and cited passages.
 - [x] Dated public source snapshots, stale checks and scheduled bilingual status refresh.
 - [x] Research task evaluation with originals and deliberate negative cases.
-- [ ] Improve the remaining Southern Grid keyword/window miss without bulk scanning or bypassing verification.
+- [x] Add Southern Grid website keyword search and verify originals for the missed tender and non-tender tasks; retain lists and shared cooldown.
 - [ ] Extend semantic answer review beyond the current sample; literal coverage remains distinct.
 
 ## Latest keyless retrieval work
 
 - [x] NEA published historical lists, provincial/central/finance trading notices and Southern Grid public list filtering; verify 27 real questions without Exa or Parallel.
-- [ ] CCGP keyword search, Southern Grid keyword search and State Grid search: integrate only after anonymous retrieval succeeds.
+- [ ] CCGP keyword search and State Grid search: integrate only after anonymous retrieval succeeds.
 - [ ] Expand provincial procurement sources and energy industry reports using demonstrated query gaps.
 
 - [x] Direct Python, pandas, SQLAlchemy, MDN, Kubernetes, Go and Rust documentation routes.

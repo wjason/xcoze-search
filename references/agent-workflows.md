@@ -12,9 +12,9 @@ Python、pandas、SQLAlchemy、Kubernetes、Go、Rust 和 MDN 文档可用 `--pl
 
 ## 能源电力与招投标调研
 
-能源政策、装机和用电统计优先 `--platform nea`，按主题选择 `--energy-section policy|releases`；政府采购用 `--platform government-procurement`，工程招投标用 `--platform ggzy --business engineering`，南网公开列表用 `--platform csg`。将问题拆成短主题词与地区、起止日期、公告阶段，不要求用户选择参数。招标、中标、更正分别用 `--notice-type tender|award|correction`；南网列表还可筛选候选人、中止等标题。需要具体映射和翻页时读[行业搜索](industry-search.md)。
+能源政策、装机和用电统计优先 `--platform nea`，按主题选择 `--energy-section policy|releases`；政府采购用 `--platform government-procurement`，工程招投标用 `--platform ggzy --business engineering`，南网官网关键词搜索用 `--platform csg`。将问题拆成短主题词与地区、起止日期、公告阶段，不要求用户选择参数。招标、中标、更正分别用 `--notice-type tender|award|correction`；南网列表还可筛选候选人、中止等标题。需要具体映射和翻页时读[行业搜索](industry-search.md)。
 
-能源局只检索发布的有限历史列表，保留栏目展示日期；它可能与原文发布日期不同，统计期和生效日期继续核验。南网每次只筛选一页，不是全站关键词搜索；采购网全站搜索未接入，公共资源平台的政府采购结果不能冒充采购网原生接口。公共资源链接可能先到目录页，继续读取页面实际给出的正文链接，不拼造地址。保留公告类型、地区和来源平台；采购人、项目编号、预算、截止时间未确认时保持未知。中标、候选人和中止公告不能当作仍可投标。
+能源局只检索发布的有限历史列表，保留栏目展示日期；它可能与原文发布日期不同，统计期和生效日期继续核验。南网默认查询官网关键词表单，原列表方式用 `--provider csg`；每次读取一页，不扫描历史库；采购网全站搜索未接入，公共资源平台的政府采购结果不能冒充采购网原生接口。公共资源链接可能先到目录页，继续读取页面实际给出的正文链接，不拼造地址。保留公告类型、地区和来源平台；采购人、项目编号、预算、截止时间未确认时保持未知。中标、候选人和中止公告不能当作仍可投标。
 
 ## 平台原生搜索和本机工具
 

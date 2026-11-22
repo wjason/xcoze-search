@@ -45,17 +45,19 @@ python3 scripts/xcoze_search.py search '储能' --platform ggzy --business engin
 
 ## 南方电网采购公告
 
-南网适配读取已公开的公告列表，对本次页面的标题和日期进行筛选。每页约 10 条，默认读取招标公告第一页；它不是关键词站内搜索，不自动扫描历史页。
+`--platform csg` 使用南网官网页面公布的关键词搜索表单，将关键词和公告栏目提交到 `dbsearch.jspx`，读取一页结果，并按页面日期筛选。它不扫描历史列表。搜索可能匹配标题之外的正文内容，标题也可能被截断，因此候选仍需读取原文核验。
 
 ```bash
-python3 scripts/xcoze_search.py search '数字化' --platform csg --notice-type tender
-python3 scripts/xcoze_search.py search '云南' --platform csg --notice-type award
-python3 scripts/xcoze_search.py search '电网' --platform csg --notice-type tender --page 2
+python3 scripts/xcoze_search.py research '数字化' --platform csg --notice-type tender --question '找一个数字化公开招标项目，给出原文和投标截止时间。'
+python3 scripts/xcoze_search.py research '监理' --platform csg --notice-type non-tender --question '采购人是谁，响应文件什么时候截止？'
+python3 scripts/xcoze_search.py search '电网' --provider csg --notice-type tender --page 2
 ```
 
-`tender` 对应招标列表，`non-tender` 对应非招标列表。`award`、`candidate`、`correction`、`cancel` 在公示列表中分别筛选中标结果、候选人、更正和中止等标题；没有识别出阶段的标题不会冒充指定类型。公示栏目包含多种公告，不能把整栏视为已中标项目。列表若截断标题，会标明 `title_truncated`；发布单位不是已确认的采购人。
+`csg-search` 核对返回页面回显的查询、栏目和指定页码。`tender` 使用招标栏目，`non-tender` 使用非招标栏目；其他阶段在混合公示栏目中按明确标题筛选。日期条件作用于返回的这一页，不表示服务器已搜索完整历史区间。原来的 `--provider csg` 保留公开列表及指定页码方式；两条路径共享限频和访问拒绝后的冷却。
 
-来源：[招标公告](https://www.bidding.csg.cn/zbgg/index.jhtml)、[公示公告](https://www.bidding.csg.cn/zbhxrgs/index.jhtml)。南网关键词搜索本次返回 403，未接入；国家电网搜索仍待验证。
+标题被截断时可以使用页面明确公布的“招标公告”分类；若标题明确写了候选人、中止或中标，则以明确阶段为准。发布机构不自动当作采购人。项目、资格和时间继续读原文：文件获取、投标递交、响应文件递交和开标分别标注，不能只凭一个时间判断项目仍可投标。
+
+来源：[官网搜索表单](https://www.bidding.csg.cn/zbgg/index.jhtml)、[片段作答支持度实测](../evaluations/reports/2026-11-22-answer-support.md)。国家电网搜索仍待验证。
 
 ## 调研时如何使用
 

@@ -8,6 +8,13 @@ from search_quality import STOP
 TRACKING = frozenset(('fbclid','gclid','msclkid','spm'))
 
 
+def contains_term(text,term):
+    """Identifiers match tokens: abort is not evidence for AbortController's abort method."""
+    if re.fullmatch(r'[a-zA-Z][a-zA-Z0-9_.-]*',term):
+        return bool(re.search(r'(?<![a-zA-Z0-9_])'+re.escape(term)+r'(?![a-zA-Z0-9_])',text,re.I))
+    return term.casefold() in text.casefold()
+
+
 def canonical(url):
     p = urllib.parse.urlsplit(url)
     from native_reader import HOSTS
@@ -55,8 +62,8 @@ def assess(rows, documents, args):
     terms = required_terms(args.query, getattr(args,'require_topic',None))
     read = [d for d in documents if d.get('page_body_read') and d.get('content')]
     text = '\n'.join('\n'.join(p['text'] for p in d['passages']) if 'passages' in d else d.get('content','') for d in read).casefold()
-    matched = [t for t in terms if t in text]
-    missing = [t for t in terms if t not in text]
+    matched = [t for t in terms if contains_term(text,t)]
+    missing = [t for t in terms if not contains_term(text,t)]
     gaps = []
     if not rows: gaps.append('no_search_candidates')
     if not read: gaps.append('no_read_original')
@@ -81,6 +88,7 @@ def assess(rows, documents, args):
             'matched_terms':matched, 'missing_terms':missing,'read_documents':len(read),
             'date_confirmed_documents':dated, 'gaps':list(dict.fromkeys(gaps)),
             'enough_for_agent_review':bool(read) and not gaps, 'facts_verified':False,
+            'answer_support':'not_assessed','answer_review_required':True,
             'next_actions':(['Review the cited passages and verify the requested claim.'] if not gaps else
                 ['Use the preserved scope and filters to reformulate a short query or read another permitted original.'])}
 
@@ -89,14 +97,16 @@ def observations(content):
     """Explicit labels with adjacent dates, not inferred deadlines or active bid status."""
     content='\n'.join(line.strip() for line in content.splitlines() if line.strip())
     found=[]
-    pattern=r'(提交投标文件截止时间|递交截止时间|投标截止时间|响应文件提交截止时间)(?!\s*(?:当天|当日|前|后))(?:[^\d\n]{0,60}|[^\d]{0,40}\n\s*)(20\d{2})\s*[-年]\s*(\d{1,2})\s*[-月]\s*(\d{1,2})\s*日?([^\n。；]{0,55})'
+    pattern=r'(提交投标文件截止时间|(?:投标文件|响应文件)?递交截止时间|投标截止时间|响应文件提交截止时间|(?:招标|采购)文件(?:获取|发售)(?:截止|结束)时间|获取结束时间|发售结束时间)(?!\s*(?:当天|当日|前|后))(?:[^\d\n]{0,60}|[^\d]{0,40}\n\s*)(20\d{2})\s*[-年]\s*(\d{1,2})\s*[-月]\s*(\d{1,2})\s*日?([^\n。；]{0,55})'
     for match in re.finditer(pattern,content):
         try:stamp=date(int(match[2]),int(match[3]),int(match[4])).isoformat()
         except ValueError:continue
         clock=re.search(r'(\d{1,2})\s*[:时]\s*(\d{1,2})',match[5])
         if clock and int(clock[1])<24 and int(clock[2])<60:stamp+='T%02d:%02d'%(int(clock[1]),int(clock[2]))
-        if stamp in [f['value'] for f in found]:continue
-        found.append({'field':'bid_deadline','value':stamp,'basis':'explicit_labeled_original_text',
+        if match[1] in ('获取结束时间','发售结束时间') and not re.search('(?:招标|采购)文件',content[max(0,match.start()-180):match.start()]):continue
+        field='document_acquisition_deadline' if re.search('获取|发售',match[1]) else 'response_deadline' if '响应' in match[1] else 'bid_deadline'
+        if any(f['value']==stamp and f['field']==field for f in found):continue
+        found.append({'field':field,'value':stamp,'basis':'explicit_labeled_original_text',
             'text':match[0][:200],'line':content[:match.start()].count('\n')+1,
             'timezone':'Asia/Shanghai' if '北京时间' in content[max(0,match.start()-100):match.end()+100] else None,
             'open_for_bidding':None})
@@ -104,32 +114,72 @@ def observations(content):
     return found
 
 
+def question_cues(question):
+    """Bilingual extraction hints, not an answer or correctness classifier."""
+    patterns=(
+        (r'失败|异常|failure|exception|抛|panic',r'fail|exception|panic|propagat|cancel|raise|not |uninitialized'),
+        (r'取消|cancel|abort',r'cancel|abort|signal|reason|cause|not |remaining'),
+        (r'超时|捕获|timeout|catch',r'timeout|timeouterror|catch|outside|context manager|transform|cancel'),
+        (r'为什么|类型|key|why',r'must|should|because|avoid|comparable|collision|string|type|resource|leak'),
+        (r'阻塞|初始化|block|initializ',r'block|initializ|none|panic|already|returns|thread'),
+        (r'合并|多条|combined|additive',r'additive|union|multiple|both|combine|policies do not conflict'),
+        (r'默认.*拒绝|default.*deny',r'default.deny|podselector|policytypes|ingress|egress'),
+        (r'限制|控制|control|restrict',r'isolat|allowed|connection|both|policytypes'),
+        (r'用途|有什么|what.*do',r'gets|returns|initializ|value|cell'),
+        (r'金额|中标单位|winner|amount',r'中\s*标\s*人|中标单位|中标报价|中标价|中标金额|成交金额|成交供应商|万元'),
+        (r'采购人|谁|项目编号|buyer|project number',r'采购人|招标人|项目编号|联系人'),
+        (r'获取|发售|acquisition|招标文件.*截止',r'获取|发售|时间'),
+    )
+    return [signal for trigger,signal in patterns if re.search(trigger,question,re.I)]
+
+
 def passages(content, terms, *, count=4, characters=650, question=''):
     lines = [line.strip() for line in content.splitlines() if line.strip()]
-    candidates=[]
+    candidates=[];cues=question_cues(question)
     for index,line in enumerate(lines):
-        if not any(t in line.casefold() for t in terms):continue
-        start=max(0,index-2);end=min(len(lines),index+4)
+        if not any(contains_term(line,t) for t in terms) and not any(re.search(c,line,re.I) for c in cues):continue
+        start=max(0,index-2);end=min(len(lines),index+8)
         excerpt='\n'.join(lines[start:end])
         if len(excerpt)>characters:
             # Keep a matched term inside the clipped window rather than truncating it away.
-            positions=[excerpt.casefold().find(t) for t in terms if t in line.casefold() and t in excerpt.casefold()]
+            positions=[excerpt.casefold().find(t) for t in terms if contains_term(line,t) and t.casefold() in excerpt.casefold()]
             offset=max(0,min(positions or [0])-180);start+=excerpt[:offset].count('\n');excerpt=excerpt[offset:offset+characters]
-        matches={t for t in terms if t in excerpt.casefold()}
-        if matches:candidates.append((matches,start,start+excerpt.count('\n')+1,excerpt))
+        matches={t for t in terms if contains_term(excerpt,t)}
+        cue_score=sum(len(set(s.casefold() for s in re.findall(c,excerpt,re.I))) for c in cues)
+        if re.search('失败|异常|panic|fail|exception',question,re.I) and re.search(r'(?:first time|when|if).*?(?:fail|raise|exception|panic)',' '.join(lines[index:index+3]),re.I):cue_score+=10
+        if re.search('入站.*出站|ingress.*egress',question,re.I) and re.search(r'both.*(?:egress|ingress)',' '.join(lines[index:index+3]),re.I):cue_score+=10
+        # Prefer complete explanatory paragraphs over headings and isolate exceptional cases only when asked.
+        if re.search('KeyboardInterrupt|SystemExit',excerpt) and not re.search('KeyboardInterrupt|SystemExit',question):cue_score-=2
+        if matches or cue_score:candidates.append((matches,start,start+excerpt.count('\n')+1,excerpt,cue_score))
     selected=[];uncovered=set(terms)
+    # Keep the condition and its consequence together before generic term coverage fills the slots.
+    seed=None
+    for index,line in enumerate(lines):
+        if re.search('失败|异常|panic|fail|exception',question,re.I) and re.search(r'\bfirst time\b|\bif\b.*\bpanics?\b',line,re.I):seed=index;break
+        if re.search('入站.*出站|ingress.*egress',question,re.I) and re.search(r'For a connection from a source',line,re.I):seed=index;break
+    if seed is not None:
+        text='\n'.join(lines[seed:seed+14])[:characters]
+        matched=[t for t in terms if contains_term(text,t)]
+        selected.append({'text':text,'line':seed+1,'line_end':seed+text.count('\n')+1,
+                         'matched_terms':matched,'kind':'literal_excerpt_not_generated_answer'})
+        uncovered-=set(matched)
     if re.search('截止|deadline',question,re.I):
-        for fact in observations(content)[:1]:
+        facts=observations(content)
+        if not re.search('获取|发售|acquisition|招标文件.*截止',question,re.I):facts=[f for f in facts if f['field']!='document_acquisition_deadline']
+        for fact in facts[:2]:
             start=max(0,fact['line']-2);text='\n'.join(lines[start:start+4])[:characters]
             selected.append({'text':text,'line':start+1,'line_end':start+text.count('\n')+1,
-                             'matched_terms':[t for t in terms if t in text.casefold()],
+                             'matched_terms':[t for t in terms if contains_term(text,t)],
                              'kind':'literal_excerpt_not_generated_answer'})
-            uncovered-={t for t in terms if t in text.casefold()}
+            uncovered-={t for t in terms if contains_term(text,t)}
     while candidates and len(selected)<count:
-        best=max(candidates,key=lambda c:(len(c[0]&uncovered),len(c[0]),min(len(c[3]),400),-c[1]))
-        matches,start,end,excerpt=best;candidates.remove(best)
-        if not matches&uncovered and selected:break
-        if any(excerpt in p['text'] for p in selected):continue
+        best=max(candidates,key=lambda c:(len(c[0]&uncovered),c[4],len(c[0]),-c[1],min(len(c[3]),400)))
+        matches,start,end,excerpt,cue_score=best;candidates.remove(best)
+        if not matches&uncovered and cue_score<=0 and selected:continue
+        prior_words=set(re.findall(r'\w+',' '.join(p['text'] for p in selected).casefold()))
+        words=set(re.findall(r'\w+',excerpt.casefold()))
+        if selected and not matches&uncovered and len(words-prior_words)<min(6,len(words)/4):continue
+        if any(excerpt in p['text'] or max(0,min(end,p['line_end'])-max(start+1,p['line'])) > .8*min(end-start,p['line_end']-p['line']+1) for p in selected):continue
         selected.append({'text':excerpt,'line':start+1,'line_end':end,
                          'matched_terms':sorted(matches),'kind':'literal_excerpt_not_generated_answer'})
         uncovered-=matches

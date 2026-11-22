@@ -2,6 +2,13 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.10.1 — 2026-11-22
+
+- Add Southern Grid website keyword search, retain lists, classify truncated tender titles and share pacing/access-denial cooldowns.
+- Improve conditions, negations, method scope and deadline passages; separate acquisition, bid and response deadlines and exclude explicit candidate notices from award filtering.
+- Expand to 30 real research questions and three deliberate gaps, with per-question facts, manual answer-support review and passage-reference validation.
+- Update bilingual usage, source status and evaluation links.
+
 ## v0.10.0 — 2026-11-22
 
 - Add bounded research search, original reading, cited passages and evidence-gap handling under shared request/time limits.

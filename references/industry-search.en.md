@@ -45,17 +45,19 @@ Sources: [Public trading query](https://www.ggzy.gov.cn/deal/dealList.html), [Ch
 
 ## China Southern Power Grid notices
 
-The adapter reads public notice lists and filters titles and publication dates from the requested page. A page has about ten entries; the default is the first tender page. This is not keyword site search and does not automatically scan historical pages.
+`--platform csg` uses the keyword-search form published on the Southern Grid website. It sends the query and notice channel to `dbsearch.jspx`, reads one result page and filters its displayed dates locally. It does not scan the historical lists. Results can match text beyond a truncated title, so a search hit still needs original-source verification.
 
 ```bash
-python3 scripts/xcoze_search.py search '数字化' --platform csg --notice-type tender
-python3 scripts/xcoze_search.py search '云南' --platform csg --notice-type award
-python3 scripts/xcoze_search.py search '电网' --platform csg --notice-type tender --page 2
+python3 scripts/xcoze_search.py research '数字化' --platform csg --notice-type tender --question 'Find a digital-project tender and its bid deadline.'
+python3 scripts/xcoze_search.py research '监理' --platform csg --notice-type non-tender --question 'Who is the buyer and what is the response deadline?'
+python3 scripts/xcoze_search.py search '电网' --provider csg --notice-type tender --page 2
 ```
 
-`tender` selects the tender list; `non-tender` selects the non-tender list. `award`, `candidate`, `correction` and `cancel` filter the public-notice list by title stage. Unrecognized stages are not relabeled to satisfy a filter. The public-notice column mixes several stages and is not a list of completed awards. Truncated list titles carry `title_truncated`; a publishing organization is not a verified buyer.
+`csg-search` validates the echoed query, channel and requested page. `tender` uses the tender channel, `non-tender` the non-tender channel; other stages filter explicit titles in the mixed public-notice channel. Date filters apply to the returned page, not a server-side historical range query. The original `--provider csg` keeps the public-list route and its explicit page selection. Both share pacing and access-denial cooldowns.
 
-Sources: [Tenders](https://www.bidding.csg.cn/zbgg/index.jhtml), [Public notices](https://www.bidding.csg.cn/zbhxrgs/index.jhtml). Southern Grid keyword search returned 403 and is not integrated; State Grid search remains unverified.
+Published category labels can identify a truncated tender title; an explicit candidate, cancellation or award title takes precedence. Publishing organizations remain separate from verified buyers. Read the original for project identity and eligibility. Document acquisition, bid submission, response submission and opening times are separate fields, and none alone proves that bidding is currently open.
+
+Sources: [Official search form](https://www.bidding.csg.cn/zbgg/index.jhtml), [Live answer-support review](../evaluations/reports/2026-11-22-answer-support.en.md). State Grid search remains unverified.
 
 ## Research workflow
 

@@ -55,3 +55,9 @@ Offline `sources` separates adapter scope from action-level check dates and stal
 See [installation](../INSTALL.en.md) for version checks and upgrades. The normal package contains runtime code and usage documents; historical corpora, studies and evaluation data remain in the repository and source archive.
 
 Run `sources --refresh` explicitly to update the local cache with one public request. It reads no keys, changes no installed files and does not probe individual sources. Ordinary queries continue using an offline snapshot.
+
+## Check whether passages answer the question
+
+List the facts required by the question and verify that passages retain conditions, negations, units, project identity and date types. `coverage.answer_support` stays `not_assessed` with `answer_review_required`; literal checks do not generate answer-accuracy scores. Native method extraction stops before the next method or peer heading where possible, and keeps conditions with consequences.
+
+Southern Grid defaults to the website keyword form, `csg-search`. The bounded list pagination above applies only to explicit `--provider csg`. Observations distinguish acquisition, bid and non-tender response deadlines without inferring current bidding status.

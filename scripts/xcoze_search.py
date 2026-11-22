@@ -39,7 +39,7 @@ from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.10.0"
+VERSION = "0.10.1"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -276,7 +276,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
         try:
             if not budget.data()["remaining"]:
                 raise SearchError("budget_exhausted", "HTTP attempt budget exhausted; no further requests sent.")
-            slot_name = provider.access_scope(payload) if name in ("community", 'native-reader') else name
+            slot_name = provider.access_scope(payload) if name in ("community", 'native-reader','csg-search') else name
             with request_slot(slot_name, req.full_url, max_wait=min(3, max(0, timeout - 1))) as slot:
                 budget.consume(name)
                 with transport.open(req, timeout=max(1, timeout - (slot.waited_seconds if slot else 0))) as response:
@@ -440,14 +440,14 @@ def run_fetch(args, config, *, budget=None):
     raw, attempts = request_api(operation, payload, key, timeout=getattr(args, "timeout", 30),
                                 retries=getattr(args, "retries", 1), budget=budget)
     try:
-        data = provider.normalize_fetch(raw, args.url, focus_terms=getattr(args,'focus_terms',None)) if name=='native-reader' else provider.normalize_fetch(raw,args.url)
+        data = provider.normalize_fetch(raw, args.url, focus_terms=getattr(args,'focus_terms',None),question=getattr(args,'focus_question','')) if name=='native-reader' else provider.normalize_fetch(raw,args.url)
         if name == 'native-reader' and data.get('linked_body_url'):
             directory_url = data['source_url']; body_url = data['linked_body_url']
             remaining = getattr(args, 'timeout', 30) - (time.monotonic() - read_started)
             if remaining < 1: raise SearchError('budget_exhausted', 'No time remains to read the linked notice body.')
             raw, extra = request_api(operation, {'url':body_url}, '', timeout=remaining, retries=0, budget=budget)
             attempts += extra
-            data = provider.normalize_fetch(raw, body_url,focus_terms=getattr(args,'focus_terms',None))
+            data = provider.normalize_fetch(raw, body_url,focus_terms=getattr(args,'focus_terms',None),question=getattr(args,'focus_question',''))
             if data.get('linked_body_url'): raise SearchError('extraction_failed', 'Notice body is another directory; no recursive traversal.')
             data['directory_url'] = directory_url
     except SearchError as error:

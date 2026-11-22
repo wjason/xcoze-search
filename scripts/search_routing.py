@@ -36,6 +36,7 @@ PLATFORMS.update({'python-docs': 'docs.python.org', 'pandas-docs': 'pandas.pydat
                   'kubernetes-docs': 'kubernetes.io', 'rust-docs': 'doc.rust-lang.org', 'go-docs': 'pkg.go.dev'})
 NATIVE_PLATFORMS.update({'python-docs': 'docs', 'pandas-docs': 'docs', 'sqlalchemy-docs': 'docs', 'mdn': 'mdn'})
 NATIVE_PLATFORMS.update({'kubernetes-docs': 'site-docs', 'rust-docs': 'site-docs', 'go-docs': 'go-docs', 'nbs': 'nbs-search'})
+NATIVE_PLATFORMS['csg']='csg-search'
 NATIVE_PLATFORMS.update({'nea': 'nea-archive', 'ggzy': 'ggzy-search', 'government-procurement': 'ggzy-search'})
 
 
@@ -217,7 +218,7 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp', 'native-reader'):
+        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'csg-search', 'ccgp', 'native-reader'):
             pause = pause_status(provider.access_scope({'url':args.url}) if name=='native-reader' and fetch else name)
             if pause:
                 unavailable.append({"provider": name, **pause})

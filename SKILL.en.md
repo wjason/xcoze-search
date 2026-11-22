@@ -23,6 +23,9 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://docs.python.org/3/l
 
 Research reads up to three candidates by default within source, HTTP and time limits. Adjust `--read-count`, `--max-requests` or `--max-seconds` when warranted. Do not restart commands to evade the task budget. Cite originals and relevant dates, and explain material gaps. Nonempty results or `ok:true` do not mean research is complete. See [research workflow](references/research.en.md).
 
+Before answering, list the facts the question requires and check each against returned passages: conditions and exceptions, steps, numbers and units, date types and project identity. `answer_review_required` means literal coverage does not replace this review. Read more within the task budget when a notice, directory or excerpt lacks the needed detail; otherwise state the missing evidence.
+
+
 ## Sources and strategy
 
 Precedence: the current explicit request, saved preferences, then Smart. Without keys use keyless routes; enabled keys allow quality-first routing, with native task sources locating official material. Free mode forbids requests using user keys. Explicit source lists do not authorize unrelated services. Do not compare vendors' raw scores.

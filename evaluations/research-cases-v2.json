@@ -1,0 +1,662 @@
+{
+  "schema_version": 2,
+  "as_of": "2026-11-22",
+  "scope": "30 real research questions and 3 deliberate gaps; every positive case needs manual answer-support review",
+  "cases": [
+    {
+      "id": "R01",
+      "question": "TaskGroup 中一个任务失败后其他任务会怎样？",
+      "question_en": "How does TaskGroup handle a child task failure?",
+      "query": "asyncio TaskGroup",
+      "platform": "python-docs",
+      "require_topic": [
+        "TaskGroup",
+        "ExceptionGroup"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "State what happens to the remaining tasks after a non-cancellation child failure."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain waiting and exception aggregation without using only a special-case exception."
+        }
+      ]
+    },
+    {
+      "id": "R02",
+      "question": "Go WithCancelCause 怎么取得取消原因？",
+      "question_en": "How do Go contexts expose cancellation causes?",
+      "query": "context.WithCancelCause",
+      "platform": "go-docs",
+      "require_topic": [
+        "WithCancelCause",
+        "Cause"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain how cancel records a cause and how Cause(ctx) retrieves it."
+        }
+      ]
+    },
+    {
+      "id": "R03",
+      "question": "Rust OnceLock 的 get_or_init 有什么用途？",
+      "question_en": "What does Rust OnceLock get_or_init do?",
+      "query": "OnceLock get_or_init",
+      "platform": "rust-docs",
+      "require_topic": [
+        "OnceLock",
+        "get_or_init"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain initialization when unset and reuse of the stored value when already initialized."
+        }
+      ]
+    },
+    {
+      "id": "R04",
+      "question": "Kubernetes NetworkPolicy 如何限制入站和出站？",
+      "question_en": "How do Kubernetes NetworkPolicies control ingress and egress?",
+      "query": "NetworkPolicy ingress egress",
+      "platform": "kubernetes-docs",
+      "require_topic": [
+        "NetworkPolicy",
+        "ingress",
+        "egress"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain separate ingress and egress isolation."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain that both source egress and destination ingress must permit a connection."
+        }
+      ]
+    },
+    {
+      "id": "R05",
+      "question": "AbortController 如何取消网页请求？",
+      "question_en": "How does AbortController cancel web requests?",
+      "query": "AbortController",
+      "platform": "mdn",
+      "require_topic": [
+        "AbortController",
+        "abort"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain passing the controller signal to the asynchronous request."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain invoking abort to cancel the operation."
+        }
+      ]
+    },
+    {
+      "id": "R06",
+      "question": "asyncio timeout 如何报告超时？",
+      "question_en": "How does asyncio timeout report expiry?",
+      "query": "asyncio timeout",
+      "platform": "python-docs",
+      "require_topic": [
+        "timeout",
+        "TimeoutError"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain conversion of cancellation to TimeoutError in the timeout context manager."
+        }
+      ]
+    },
+    {
+      "id": "R07",
+      "question": "2025 年储能规模化建设行动方案的原文和日期是什么？",
+      "question_en": "Locate the 2025 energy storage action plan and its original date.",
+      "query": "新型储能 规模化",
+      "platform": "nea",
+      "require_topic": [
+        "储能",
+        "2025"
+      ],
+      "energy_section": "policy",
+      "start_date": "2025-01-01",
+      "end_date": "2025-12-31",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify the correct 2025–2027 plan notice."
+        },
+        {
+          "id": "2",
+          "criterion": "Distinguish original notice date from archive display date."
+        }
+      ]
+    },
+    {
+      "id": "R08",
+      "question": "2025 年电力辅助服务市场规则原文在哪里？",
+      "question_en": "Find the 2025 power ancillary services market rules.",
+      "query": "电力辅助服务 市场",
+      "platform": "nea",
+      "require_topic": [
+        "辅助服务",
+        "规则"
+      ],
+      "energy_section": "policy",
+      "start_date": "2025-01-01",
+      "end_date": "2025-12-31",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify the correct 2025 ancillary services rules original."
+        },
+        {
+          "id": "2",
+          "criterion": "State the scope read without treating an unread attachment as read."
+        }
+      ]
+    },
+    {
+      "id": "R09",
+      "question": "2025 年全年用电量发布原文及统计期是什么？",
+      "question_en": "Find the full-year 2025 electricity consumption release.",
+      "query": "全社会用电量",
+      "platform": "nea",
+      "require_topic": [
+        "2025",
+        "用电量"
+      ],
+      "energy_section": "releases",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-31",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify the original electricity release and the full-year 2025 statistical period."
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "question": "广东储能政府采购的招标文件截止时间在哪里？",
+      "question_en": "Locate the bid deadline in a Guangdong storage procurement original.",
+      "query": "储能",
+      "platform": "government-procurement",
+      "require_topic": [
+        "储能",
+        "截止时间"
+      ],
+      "notice_type": "tender",
+      "region": "广东",
+      "start_date": "2026-10-22",
+      "end_date": "2026-11-22",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Distinguish acquiring tender documents from submitting bids in the ambiguous question."
+        },
+        {
+          "id": "2",
+          "criterion": "Provide the applicable deadline or date range with an explicit label."
+        }
+      ]
+    },
+    {
+      "id": "R11",
+      "question": "储能工程中标结果原文能确认哪些项目？",
+      "question_en": "Read original energy storage engineering award notices.",
+      "query": "储能",
+      "platform": "ggzy",
+      "require_topic": [
+        "储能",
+        "中标"
+      ],
+      "business": "engineering",
+      "notice_type": "award",
+      "start_date": "2026-10-22",
+      "end_date": "2026-11-22",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify at least one confirmed award project rather than a candidate-only notice."
+        }
+      ]
+    },
+    {
+      "id": "R12",
+      "question": "南网数字化公开招标的原文与截止时间在哪里？",
+      "question_en": "Read a Southern Grid digitization tender and its deadline.",
+      "query": "数字化",
+      "platform": "csg",
+      "require_topic": [
+        "数字化",
+        "截止时间"
+      ],
+      "notice_type": "tender",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify an actual digital-project open-tender original."
+        },
+        {
+          "id": "2",
+          "criterion": "Give its bid submission deadline rather than acquisition or opening time."
+        }
+      ]
+    },
+    {
+      "id": "R13",
+      "question": "贵州茅台 2024 年报原文能否读取？",
+      "question_en": "Can the Kweichow Moutai 2024 annual report original be read?",
+      "query": "贵州茅台 2024 年度报告",
+      "platform": "cninfo",
+      "require_topic": [
+        "贵州茅台",
+        "2024"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Show company and report-year identity from readable original text."
+        },
+        {
+          "id": "2",
+          "criterion": "Limit the reading claim to the extracted PDF pages."
+        }
+      ]
+    },
+    {
+      "id": "R14",
+      "question": "asyncio.gather 的一个任务抛异常时，会自动取消其他任务吗？",
+      "question_en": "Does asyncio.gather cancel other tasks when one raises?",
+      "query": "asyncio gather",
+      "platform": "python-docs",
+      "require_topic": [
+        "gather",
+        "exception"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain immediate propagation under default return_exceptions=False."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain that other awaitables are not automatically cancelled."
+        }
+      ]
+    },
+    {
+      "id": "R15",
+      "question": "asyncio.timeout 引发的 TimeoutError 应该在上下文内还是外捕获？",
+      "question_en": "Where should TimeoutError from asyncio.timeout be caught?",
+      "query": "asyncio timeout",
+      "platform": "python-docs",
+      "require_topic": [
+        "timeout",
+        "TimeoutError"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "State that TimeoutError must be caught outside the timeout context manager."
+        }
+      ]
+    },
+    {
+      "id": "R16",
+      "question": "asyncio.to_thread 会把当前 contextvars 上下文传给工作线程吗？",
+      "question_en": "Does asyncio.to_thread propagate the current contextvars context?",
+      "query": "asyncio to_thread",
+      "platform": "python-docs",
+      "require_topic": [
+        "to_thread",
+        "contextvars"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain propagation of the current contextvars context into the thread."
+        }
+      ]
+    },
+    {
+      "id": "R17",
+      "question": "Go 创建可取消 context 后为什么要调用 CancelFunc？",
+      "question_en": "Why must Go callers invoke the returned CancelFunc?",
+      "query": "context WithCancel",
+      "platform": "go-docs",
+      "require_topic": [
+        "CancelFunc",
+        "cancel"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain resource release and the caller responsibility to invoke cancel."
+        }
+      ]
+    },
+    {
+      "id": "R18",
+      "question": "Go context.WithValue 的 key 应选什么类型，为什么不建议用字符串？",
+      "question_en": "What key types should context.WithValue use and why avoid strings?",
+      "query": "context WithValue",
+      "platform": "go-docs",
+      "require_topic": [
+        "WithValue",
+        "key"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "State that the key must be comparable."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain built-in key collisions and using a custom key type."
+        }
+      ]
+    },
+    {
+      "id": "R19",
+      "question": "Rust OnceLock::get 在值未初始化或正在初始化时会阻塞吗？",
+      "question_en": "Does OnceLock::get block before or during initialization?",
+      "query": "OnceLock get",
+      "platform": "rust-docs",
+      "require_topic": [
+        "OnceLock",
+        "get"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain None for uninitialized or initializing cells."
+        },
+        {
+          "id": "2",
+          "criterion": "State that get never blocks; do not use set semantics as the answer."
+        }
+      ]
+    },
+    {
+      "id": "R20",
+      "question": "OnceLock::get_or_init 的初始化闭包 panic 后，单元会保持什么状态？",
+      "question_en": "What happens to OnceLock when get_or_init initialization panics?",
+      "query": "OnceLock get_or_init",
+      "platform": "rust-docs",
+      "require_topic": [
+        "get_or_init",
+        "panic"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain panic propagation and the cell remaining uninitialized."
+        }
+      ]
+    },
+    {
+      "id": "R21",
+      "question": "同一个 Pod 匹配多条 NetworkPolicy 时，允许的流量如何合并？",
+      "question_en": "How are allowed traffic rules combined across NetworkPolicies?",
+      "query": "NetworkPolicy",
+      "platform": "kubernetes-docs",
+      "require_topic": [
+        "NetworkPolicy",
+        "policies"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Explain additive union rather than override or first-match evaluation."
+        }
+      ]
+    },
+    {
+      "id": "R22",
+      "question": "Kubernetes 如何创建默认拒绝所有入站流量的 NetworkPolicy？",
+      "question_en": "How do you create a default-deny ingress NetworkPolicy?",
+      "query": "NetworkPolicy",
+      "platform": "kubernetes-docs",
+      "require_topic": [
+        "NetworkPolicy",
+        "Ingress"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Show a policy selecting all pods with an empty podSelector."
+        },
+        {
+          "id": "2",
+          "criterion": "Show Ingress policyTypes with no allowed ingress rules."
+        }
+      ]
+    },
+    {
+      "id": "R23",
+      "question": "fetch 收到 HTTP 404 时 Promise 会 reject 吗，应该怎样检查？",
+      "question_en": "Does fetch reject on HTTP 404 and how should it be checked?",
+      "query": "Using Fetch",
+      "platform": "mdn",
+      "require_topic": [
+        "fetch",
+        "404"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "State that HTTP 404 does not itself reject the fetch promise."
+        },
+        {
+          "id": "2",
+          "criterion": "Explain checking response.ok or status."
+        }
+      ]
+    },
+    {
+      "id": "R24",
+      "question": "AbortSignal.timeout 的超时如何区别于用户手动取消？",
+      "question_en": "How do timeout and user abort errors differ with AbortSignal.timeout?",
+      "query": "AbortSignal timeout",
+      "platform": "mdn",
+      "require_topic": [
+        "TimeoutError",
+        "AbortError"
+      ],
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify TimeoutError for timeout."
+        },
+        {
+          "id": "2",
+          "criterion": "Identify AbortError for user abort from explicit returned context."
+        }
+      ]
+    },
+    {
+      "id": "R25",
+      "question": "2025—2027 储能规模化建设方案对 2027 年的装机规模目标是什么？",
+      "question_en": "What 2027 installed-capacity target does the 2025–2027 storage plan set?",
+      "query": "新型储能 规模化",
+      "platform": "nea",
+      "require_topic": [
+        "2027",
+        "装机"
+      ],
+      "energy_section": "policy",
+      "start_date": "2025-01-01",
+      "end_date": "2025-12-31",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Give the 2027 installed-capacity target from the plan itself, not only its cover notice."
+        }
+      ]
+    },
+    {
+      "id": "R26",
+      "question": "2025 年全年全社会用电量是多少，同比增长多少？",
+      "question_en": "What was full-year 2025 electricity use and its year-on-year growth?",
+      "query": "全社会用电量",
+      "platform": "nea",
+      "require_topic": [
+        "2025",
+        "同比"
+      ],
+      "energy_section": "releases",
+      "start_date": "2026-01-01",
+      "end_date": "2026-01-31",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Give the full-year 2025 electricity quantity with its unit."
+        },
+        {
+          "id": "2",
+          "criterion": "Give the corresponding year-on-year growth."
+        }
+      ]
+    },
+    {
+      "id": "R27",
+      "question": "南网 2026—2027 年数字化建设监理技术服务招标的项目编号和投标截止时间是什么？",
+      "question_en": "What are the project number and bid deadline for the Southern Grid digital construction supervision tender?",
+      "query": "数字化建设监理",
+      "platform": "csg",
+      "require_topic": [
+        "数字化",
+        "截止时间"
+      ],
+      "notice_type": "tender",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Give the project number for the named digital supervision project."
+        },
+        {
+          "id": "2",
+          "criterion": "Give the bid submission deadline for the same project."
+        }
+      ]
+    },
+    {
+      "id": "R28",
+      "question": "南网数字化项目的招标文件获取截止时间和投标截止时间是不是同一个时间？分别是什么？",
+      "question_en": "Are document-acquisition and bid deadlines the same for a Southern Grid digital tender?",
+      "query": "数字化建设监理",
+      "platform": "csg",
+      "require_topic": [
+        "截止",
+        "招标文件"
+      ],
+      "notice_type": "tender",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Give the document acquisition end time."
+        },
+        {
+          "id": "2",
+          "criterion": "Give the bid submission deadline and distinguish the two."
+        }
+      ]
+    },
+    {
+      "id": "R29",
+      "question": "南网非招标监理采购公告中，谁是采购人、响应文件什么时候截止？",
+      "question_en": "Who is the buyer and what is the response deadline in a Southern Grid non-tender supervision notice?",
+      "query": "监理",
+      "platform": "csg",
+      "require_topic": [
+        "监理",
+        "截止"
+      ],
+      "notice_type": "non-tender",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify the buyer for the non-tender supervision procurement."
+        },
+        {
+          "id": "2",
+          "criterion": "Give the response submission deadline for that procurement."
+        }
+      ]
+    },
+    {
+      "id": "R30",
+      "question": "储能工程中标公告中，中标单位和中标金额是什么？",
+      "question_en": "Who won an energy-storage engineering award and what was the amount?",
+      "query": "储能",
+      "platform": "ggzy",
+      "require_topic": [
+        "中标",
+        "金额"
+      ],
+      "business": "engineering",
+      "notice_type": "award",
+      "start_date": "2026-10-22",
+      "end_date": "2026-11-22",
+      "answer_requirements": [
+        {
+          "id": "1",
+          "criterion": "Identify the awarded organization or consortium, not just a candidate."
+        },
+        {
+          "id": "2",
+          "criterion": "Give the award price and unit for the same project, not prior performance contract values."
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "question": "仅限 2025 年 8 月 28 日至 9 月 30 日发布的储能方案。",
+      "question_en": "Require original publication within a narrow 2025 date range.",
+      "query": "新型储能 规模化",
+      "platform": "nea",
+      "require_topic": [
+        "储能"
+      ],
+      "energy_section": "policy",
+      "start_date": "2025-08-28",
+      "end_date": "2025-09-30",
+      "expected_gap": "original_publication_date_outside_range"
+    },
+    {
+      "id": "N02",
+      "question": "确认文档中是否包含一个不存在的精确标记。",
+      "question_en": "Check an intentionally absent exact marker.",
+      "query": "asyncio TaskGroup",
+      "platform": "python-docs",
+      "require_topic": [
+        "xcoze-nonexistent-marker-20261122"
+      ],
+      "expected_gap": "required_terms_not_in_read_text"
+    },
+    {
+      "id": "N03",
+      "question": "只允许一次 HTTP 时能否完成正文核验？",
+      "question_en": "Can the original be verified with only one HTTP request?",
+      "query": "asyncio TaskGroup",
+      "platform": "python-docs",
+      "require_topic": [
+        "TaskGroup"
+      ],
+      "max_requests": 1,
+      "expected_gap": "no_read_original"
+    }
+  ]
+}

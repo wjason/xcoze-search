@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-11-22T20:51:29+08:00",
-  "environment": "github-actions",
+  "checked_at": "2026-11-22T14:01:18.934662+00:00",
+  "environment": "mixed: previous github-actions samples and local csg-search check; action timestamps retained",
   "max_age_days": 7,
   "scope": "one public sample per action; not uptime or accuracy",
   "results": [
@@ -918,6 +918,16 @@
       "attempts": 1,
       "elapsed_ms": 1030,
       "checked_at": "2026-11-22T20:51:29+08:00",
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "csg-search",
+      "status": "passed",
+      "count": 10,
+      "attempts": 1,
+      "elapsed_ms": 2655,
+      "checked_at": "2026-11-22T14:01:18.934662+00:00",
       "errors": []
     }
   ]

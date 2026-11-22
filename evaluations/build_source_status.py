@@ -29,6 +29,8 @@ LABEL_EN.update({'nea-archive':'NEA published document and release archives',
                  'ggzy-search':'Public trading notice search', 'csg':'Southern Grid public procurement lists'})
 FETCH_ZH['native-reader']='官方站点原生读取'
 FETCH_EN['native-reader']='Native official-site original reader'
+LABEL_ZH['csg-search']='南网官网关键词搜索'
+LABEL_EN['csg-search']='Southern Grid website keyword search'
 # When a candidate becomes supported, update this set along with its adapter.
 EXCLUDE = {'S007','S039','S040','S041','S042','S043','S044','S045','S046','S047','S048','S049','S050','S051','S052','S053','S054','S057','S062','S067','S073','S078','S116','S126','S131','S138','S139','S144','S145','S146','S147'}
 EXCLUDE.add('S021')  # Python documentation now has a tested index adapter.

@@ -19,6 +19,7 @@
 | nea-archive | NEA published document / press JSON lists | Local title/summary matching, historical snapshot and date filters; up to 20 results |
 | ggzy-search | https://www.ggzy.gov.cn/information/pubTradingInfo/getTradList | Public notice query; provinces, dates, business/stage and one explicit page; up to 20 results |
 | csg | Southern Grid public tender / notice lists | One list page, local title/date/stage filters; up to 10 results |
+| csg-search | Southern Grid website keyword form | One page of full-text candidates; validate echoed scope and read originals |
 | github | https://api.github.com/search/repositories | [Public repositories](https://docs.github.com/en/rest/search/search), max 20; no code search; default README through fixed repos endpoint |
 | hackernews | https://hn.algolia.com/api/v1/search | Stories with optional start/end dates; [official single-item API](https://github.com/HackerNews/API) reads story/comment metadata and child IDs without traversal |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/) for public URLs; reading only, max 24000 characters with truncation flag |

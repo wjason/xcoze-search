@@ -31,6 +31,7 @@ INTERVALS.update({"cns-scroll": 2, "cns-finance": 2, "bbc-world": 2, "govcn": 2,
 
 def pause_status(name):
     """Read a source pause without creating files or accessing the network."""
+    if name=='csg-search':name='csg'
     path = cache_root() / (name + ".json")
     try:
         if not path.exists(): return None

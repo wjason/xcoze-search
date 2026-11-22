@@ -53,7 +53,7 @@ This page lists the sources and features already integrated into xcoze search. P
 | People’s Bank of China | Recent financial statistics releases | Supported · Passed |
 | National Public Resource Trading Platform search | Keywords, province, dates, business/stage and one requested page | [Supported · Focused checks passed](industry-search.en.md) |
 | Original public trading homepage list | Recent titles, explicit `--provider ggzy` | Supported · Passed |
-| Southern Grid public procurement lists | One requested tender/notice page with title/date/stage filtering | [Supported · Focused checks passed](industry-search.en.md) |
+| Southern Grid procurement | Website keyword form and explicit public-list page; read originals for project facts | [Supported · Focused checks passed](industry-search.en.md) |
 | Ministry of Commerce | Recent homepage news | Supported · Passed |
 | China Securities Regulatory Commission | Public information on its homepage | Supported · Passed |
 | China Government Procurement | Recent homepage procurement notices | Supported · Passed |
@@ -69,7 +69,7 @@ This page lists the sources and features already integrated into xcoze search. P
 
 Access to Bing RSS, DuckDuckGo HTML, and some community endpoints can change with the website or network. GitHub support covers repositories, not code search or private repositories. Research and book results are metadata or abstracts and do not imply full text was read; community search results do not imply the full discussion was read. The gov.cn listing does not cover all announcements in China. Original recent-list adapters cover one displayed page. NBS, NEA and public trading automatic routes now prioritize site search, published historical lists and notice queries respectively; missing display dates remain unknown. A Federal Register publication date is not an effective date. NASA returns media metadata, not the media itself. World Bank observations are identified by year and are not live market prices. USGS earthquake data may be revised.
 
-See [energy and procurement search](industry-search.en.md) for filters and date semantics. NEA list dates can differ from original publication dates. CCGP remains a recent-homepage adapter; Southern Grid reads one requested list page. CCGP keyword search, Southern Grid full-site keyword search and State Grid search remain unsupported, separately from tested list capabilities.
+See [energy and procurement search](industry-search.en.md) for filters and date semantics. NEA list dates can differ from original publication dates. CCGP remains a recent-homepage adapter; Southern Grid uses its website keyword form and retains the public-list route. CCGP keyword search and State Grid search remain unsupported, separately from tested list capabilities.
 
 ### News and community trends
 

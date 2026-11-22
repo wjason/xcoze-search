@@ -125,13 +125,13 @@ For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kub
 
 Counts describe the sources or platforms listed in each category. A source can appear in more than one category, so the counts should not be added into a total of unique sources. Platform-scoped searches use public web indexes. News is counted by publisher; China News Service provides two feeds and Xinhua uses its homepage. China public indexes scope searches to each website; coverage and freshness depend on the search engine’s index. Browser search requires additional local tools.
 
-For energy research, search NEA published documents and statistical releases. Procurement research can filter public trading notices by province, dates and notice stage, or search Southern Grid public list pages. CCGP itself remains limited to recent homepage notices. See [energy and procurement search](references/industry-search.en.md).
+For energy research, search NEA published documents and statistical releases. Procurement research can filter public trading notices by province, dates and notice stage, or use Southern Grid website keyword search. CCGP itself remains limited to recent homepage notices. See [energy and procurement search](references/industry-search.en.md).
 
 [View all sources and capabilities →](references/sources.en.md) · [Support status and planned sources](references/source-status.en.md)
 
 ## Search evaluation
 
-v0.10.0 adds tasks spanning search, original reading and evidence gaps. The evaluation records candidates, bodies, citation coverage, dates and latency separately rather than equating nonempty results with correct answers. [Research checks and unresolved cases](evaluations/reports/2026-11-22-research.en.md).
+The latest [33-case research evaluation](evaluations/reports/2026-11-22-answer-support.en.md) checks whether returned passages answer each question: mechanisms, conditions, numbers, units and deadlines. Retrieval and literal coverage remain separate from manual answer-support review.
 
 The benchmark now includes 100 questions with criteria for checking relevance, source identity and dates.
 

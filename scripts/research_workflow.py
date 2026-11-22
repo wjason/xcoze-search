@@ -52,6 +52,7 @@ def run_research(args,config,runtime):
                 '--max-characters',str(args.max_read_characters),'--retries','0'])
             fetch_args.timeout=min(args.timeout,remaining());fetch_args.max_seconds=max(1,int(remaining()))
             fetch_args.focus_terms=terms
+            fetch_args.focus_question=getattr(args,'question',None) or args.query
             try:
                 fetched=runtime.run_fetch(fetch_args,config,budget=budget)
                 seen.add(canonical(fetched.get('source_url') or row['url']))

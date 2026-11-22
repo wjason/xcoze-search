@@ -10,7 +10,7 @@ import urllib.parse
 from unittest.mock import patch
 
 from test_search import x, args, QueueTransport
-from industry_search import EnergyArchive, TradingSearch, CSGNotices, classify
+from industry_search import EnergyArchive, TradingSearch, CSGNotices, CSGSearch, classify
 from public_access import pause_status
 
 ENERGY = {'datasource': [
@@ -29,6 +29,39 @@ CSG = b'''<html><ul><li><span>2026-11-01</span><a class="Blue">Example Grid</a>
 
 
 class IndustrySearchTests(unittest.TestCase):
+    def test_csg_search_retains_truncated_fulltext_candidates_and_filters_real_stages(self):
+        html='''<input name="q" value="数字化"><input name="channelId" value="52">
+        <ul><li><span>2026-11-20</span><a href="/zbgg/index.jhtml">招标公告</a><a href="/zbgg/123.jhtml">信息平台建设...</a></li>
+        <li><span>2026-11-20</span><a href="/zbgg/index.jhtml">招标公告</a><a href="/zbgg/124.jhtml">数字化项目中标候选人公示</a></li></ul>共2条记录 1/1页'''
+        p=CSGSearch();raw=p.decode_response(html)
+        rows,meta=p.normalize_search(raw,args(query='数字化',notice_type='tender',start_date='2026-11-01',end_date='2026-11-30'))
+        self.assertEqual([r['url'].rsplit('/',1)[-1] for r in rows],['123.jhtml'])
+        self.assertTrue(meta['query_sent_to_source']);self.assertFalse(meta['page_body_read'])
+        self.assertEqual(rows[0]['provider_fields']['notice_stage_basis'],'published_category')
+        self.assertEqual(p.normalize_search(raw,args(query='数字化',start_date='2026-12-01'))[0],[])
+
+    def test_csg_search_validates_echo_and_zero_count_without_accepting_shells(self):
+        p=CSGSearch();raw=p.decode_response('<input name="q" value="不存在"><input name="channelId" value="52">共0条记录 1/1页')
+        self.assertEqual(p.normalize_search(raw,args(query='不存在'))[0],[])
+        for query in (args(query='different'),args(query='不存在',notice_type='non-tender'),args(query='不存在',page=2)):
+            with self.assertRaises(x.SearchError):p.normalize_search(raw,query)
+        for body in ('<html>empty shell</html>','<html>访问被拒绝</html>'):
+            with self.assertRaises(x.SearchError):p.decode_response(body)
+
+    def test_csg_search_uses_official_form_and_shared_cooldown_without_credentials(self):
+        p=CSGSearch();payload=p.build_search(args(query='数字化',page=2))
+        req=p.build_request(payload,'synthetic-secret','test');fields=urllib.parse.parse_qs(urllib.parse.urlsplit(req.full_url).query)
+        self.assertEqual(fields['channelId'],['52']);self.assertEqual(fields['pageNo'],['2'])
+        self.assertEqual(fields['q'],['数字化']);self.assertIsNone(req.get_header('Authorization'));self.assertIsNone(req.get_header('Cookie'))
+        t=QueueTransport(urllib.error.HTTPError('',403,'',{},io.BytesIO(b'denied')))
+        with self.assertRaises(x.SearchError):x.request_api('csg-search',payload,'',opener=t,retries=0)
+        self.assertIsNotNone(pause_status('csg'));self.assertIsNotNone(pause_status('csg-search'))
+
+    def test_trading_award_filter_rejects_candidates_even_when_website_category_says_award(self):
+        raw=copy.deepcopy(TRADING);item=raw['data']['records'][0]
+        item.update(title='储能项目中标候选人公示',businessTypeText='工程建设',informationType='0104')
+        rows,meta=TradingSearch().normalize_search(raw,args(query='储能',business='engineering',notice_type='award'))
+        self.assertEqual(rows,[]);self.assertEqual(meta['excluded_by_constraints'],1)
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.env = patch.dict(os.environ, {'XDG_CACHE_HOME': self.tmp.name}, clear=True); self.env.start()

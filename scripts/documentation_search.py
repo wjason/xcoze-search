@@ -118,7 +118,9 @@ class OfficialDocs(Provider):
                 hits = terms & components
                 if not hits: continue
                 focus_hit = any(term in full.casefold() for term in focus)
-                boost = 8 * len(hits) + 20 * (name.casefold() in terms) + 40 * focus_hit
+                # Sphinx can index Timeout and timeout on the same page. Retain the caller's spelling.
+                spelled=set(re.findall(r'[A-Za-z_][A-Za-z0-9_]*',args.query))
+                boost = 8 * len(hits) + 20 * (name.casefold() in terms) + 40 * focus_hit + 4*(name in spelled)
                 matched.setdefault(i, set()).update(hits)
                 if focus_hit: focus_docs.add(i)
                 if boost > best_objects.get(i, (0, '', ''))[0]:
@@ -179,3 +181,10 @@ class MDN(Provider):
                 raise SearchError('invalid_response', 'Invalid MDN document link.')
             rows.append(result(self.name, len(rows) + 1, {**item, 'url': 'https://developer.mozilla.org' + path}, snippet='summary'))
         return rows, self.metadata({'metadata': raw.get('metadata')}, rows, count)
+
+    def normalize_search(self,raw,args):
+        if isinstance(raw.get('documents'),list) and re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*',args.query.strip()):
+            symbol=args.query.strip().casefold()
+            raw={**raw,'documents':sorted(raw['documents'],key=lambda d:
+                (str(d.get('mdn_url','')).rstrip('/').rsplit('/',1)[-1].casefold()!=symbol,len(str(d.get('mdn_url','')))) if isinstance(d,dict) else (True,0))}
+        return self.normalize(raw,args.count)
