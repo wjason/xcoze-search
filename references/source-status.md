@@ -8,7 +8,7 @@
 
 历史完整快照：2026-11-05 19:22，北京时间。公开记录不包含凭据和账号专属错误详情。[查看脱敏测试结果](../evaluations/reports/2026-11-05-source-status.json)。
 
-最近公开巡检：2026-11-22T14:01:18.934662+00:00 · 样例七天后标记过期。[公开状态数据](source-health.json)。
+最近公开巡检：2026-11-22T22:06:31+08:00 · 样例七天后标记过期。[公开状态数据](source-health.json)。
 
 [查看持续巡检](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [11 月 9 日本地巡检](../evaluations/reports/2026-11-09-public-source-check.json)。下表保留完整支持快照，包括浏览器与带 Key 的能力。
 
