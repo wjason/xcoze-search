@@ -8,7 +8,7 @@ Each row describes a specific action. **Supported · Passed** means the live sam
 
 Historical full snapshot: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
 
-Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven days. [Public snapshot](source-health.json).
+Latest public check: 2026-11-22T20:51:29+08:00 · Samples expire after seven days. [Public snapshot](source-health.json).
 
 [Latest scheduled checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [November 9 local check](../evaluations/reports/2026-11-09-public-source-check.json). The tables below retain the full support snapshot, including browser and keyed actions.
 
@@ -21,8 +21,8 @@ Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven day
 | Source or action | Scope | Last checked | Status |
 |---|---|---|---|
 | Bing public RSS | Search results and source links | 2026-11-22 | Supported · Limited (irrelevant results) |
-| 360 public HTML search | Search results and source links | 2026-11-22 | Supported · Passed |
-| DuckDuckGo public HTML | Search results and source links | 2026-11-22 | Supported · Limited (cooldown) |
+| 360 public HTML search | Search results and source links | 2026-11-22 | Supported · Limited (access denied, HTTP 302) |
+| DuckDuckGo public HTML | Search results and source links | 2026-11-22 | Supported · Limited (access challenge, HTTP 202) |
 | Exa hosted MCP (keyless) | Search results and source links | 2026-11-22 | Supported · Passed |
 | Parallel Search MCP (anonymous) | Search results and source links | 2026-11-22 | Supported · Passed |
 | Official Sphinx documentation indexes | Official document navigation/index | 2026-11-22 | Supported · Passed |
@@ -64,9 +64,9 @@ Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven day
 | National Public Resource Trading Platform notices | Search results and source links | 2026-11-22 | Supported · No hits |
 | Ministry of Commerce news | Search results and source links | 2026-11-22 | Supported · Passed |
 | China Securities Regulatory Commission information | Search results and source links | 2026-11-22 | Supported · Passed |
-| China Government Procurement notices | Search results and source links | 2026-11-22 | Supported · Passed |
+| China Government Procurement notices | Search results and source links | 2026-11-22 | Supported · Limited (access denied, HTTP 403) |
 | Chinese Academy of Sciences research news | Search results and source links | 2026-11-22 | Supported · Passed |
-| China Geological Survey news | Search results and source links | 2026-11-22 | Supported · Limited (request failed) |
+| China Geological Survey news | Search results and source links | 2026-11-22 | Supported · Passed |
 | Xinhua news | Search results and source links | 2026-11-22 | Supported · Passed |
 
 ## Page and community reading
@@ -74,9 +74,9 @@ Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven day
 | Source or action | Scope | Last checked | Status |
 |---|---|---|---|
 | Exa MCP page reading | Original or single-post reading | 2026-11-22 | Supported · Passed |
-| GitHub README | Original or single-post reading | 2026-11-22 | Supported · Limited (access denied, HTTP 403) |
+| GitHub README | Original or single-post reading | 2026-11-22 | Supported · Passed |
 | Hacker News item | Original or single-post reading | 2026-11-22 | Supported · Passed |
-| Jina Reader | Original or single-post reading | 2026-11-22 | Supported · Limited (access denied, HTTP 401) |
+| Jina Reader | Original or single-post reading | 2026-11-22 | Supported · Passed |
 | Native official-site original reader | Original or single-post reading | 2026-11-22 | Supported · Passed |
 | Python community post | Original or single-post reading | 2026-11-22 | Supported · Passed |
 | Rust community post | Original or single-post reading | 2026-11-22 | Supported · Passed |
@@ -98,7 +98,7 @@ Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven day
 |---|---|---|---|
 | Bilibili public hotwords | Public trending snapshot | 2026-11-22 | Supported · Passed |
 | Zhihu public hot list | Public trending snapshot | 2026-11-22 | Supported · Passed |
-| V2EX public hot topics | Public trending snapshot | 2026-11-22 | Supported · Limited (request failed) |
+| V2EX public hot topics | Public trending snapshot | 2026-11-22 | Supported · Passed |
 
 ## Site-scoped web search
 

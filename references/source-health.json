@@ -1,19 +1,24 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-11-22T20:26:33+08:00",
-  "environment": "local",
+  "checked_at": "2026-11-22T20:51:29+08:00",
+  "environment": "github-actions",
   "max_age_days": 7,
   "scope": "one public sample per action; not uptime or accuracy",
   "results": [
     {
       "kind": "search",
       "id": "so360",
-      "status": "passed",
-      "count": 1,
+      "status": "limited",
+      "count": 0,
       "attempts": 1,
-      "elapsed_ms": 539,
-      "checked_at": "2026-11-22T20:25:14+08:00",
-      "errors": []
+      "elapsed_ms": 807,
+      "checked_at": "2026-11-22T20:50:10+08:00",
+      "errors": [
+        {
+          "code": "http_error",
+          "http_status": 302
+        }
+      ]
     },
     {
       "kind": "search",
@@ -21,8 +26,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 343,
-      "checked_at": "2026-11-22T20:25:15+08:00",
+      "elapsed_ms": 193,
+      "checked_at": "2026-11-22T20:50:10+08:00",
       "errors": []
     },
     {
@@ -31,8 +36,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 129,
-      "checked_at": "2026-11-22T20:25:15+08:00",
+      "elapsed_ms": 139,
+      "checked_at": "2026-11-22T20:50:10+08:00",
       "errors": []
     },
     {
@@ -41,8 +46,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 518,
-      "checked_at": "2026-11-22T20:25:15+08:00",
+      "elapsed_ms": 280,
+      "checked_at": "2026-11-22T20:50:11+08:00",
       "errors": []
     },
     {
@@ -51,8 +56,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 392,
-      "checked_at": "2026-11-22T20:25:16+08:00",
+      "elapsed_ms": 333,
+      "checked_at": "2026-11-22T20:50:11+08:00",
       "errors": []
     },
     {
@@ -61,8 +66,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 227,
-      "checked_at": "2026-11-22T20:25:16+08:00",
+      "elapsed_ms": 1058,
+      "checked_at": "2026-11-22T20:50:12+08:00",
       "errors": []
     },
     {
@@ -71,8 +76,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 711,
-      "checked_at": "2026-11-22T20:25:17+08:00",
+      "elapsed_ms": 2528,
+      "checked_at": "2026-11-22T20:50:15+08:00",
       "errors": []
     },
     {
@@ -81,8 +86,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 519,
-      "checked_at": "2026-11-22T20:25:17+08:00",
+      "elapsed_ms": 1312,
+      "checked_at": "2026-11-22T20:50:16+08:00",
       "errors": []
     },
     {
@@ -91,8 +96,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 236,
-      "checked_at": "2026-11-22T20:25:17+08:00",
+      "elapsed_ms": 1655,
+      "checked_at": "2026-11-22T20:50:18+08:00",
       "errors": []
     },
     {
@@ -101,8 +106,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 132,
-      "checked_at": "2026-11-22T20:25:17+08:00",
+      "elapsed_ms": 2048,
+      "checked_at": "2026-11-22T20:50:20+08:00",
       "errors": []
     },
     {
@@ -111,8 +116,8 @@
       "status": "limited",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 399,
-      "checked_at": "2026-11-22T20:25:18+08:00",
+      "elapsed_ms": 253,
+      "checked_at": "2026-11-22T20:50:20+08:00",
       "errors": [
         {
           "code": "irrelevant_results",
@@ -125,13 +130,13 @@
       "id": "duckduckgo",
       "status": "limited",
       "count": 0,
-      "attempts": 0,
-      "elapsed_ms": 8,
-      "checked_at": "2026-11-22T20:25:18+08:00",
+      "attempts": 1,
+      "elapsed_ms": 125,
+      "checked_at": "2026-11-22T20:50:20+08:00",
       "errors": [
         {
-          "code": "source_cooldown",
-          "http_status": null
+          "code": "access_challenge",
+          "http_status": 202
         }
       ]
     },
@@ -141,8 +146,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 509,
-      "checked_at": "2026-11-22T20:25:18+08:00",
+      "elapsed_ms": 335,
+      "checked_at": "2026-11-22T20:50:20+08:00",
       "errors": []
     },
     {
@@ -151,8 +156,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1097,
-      "checked_at": "2026-11-22T20:25:19+08:00",
+      "elapsed_ms": 692,
+      "checked_at": "2026-11-22T20:50:21+08:00",
       "errors": []
     },
     {
@@ -161,8 +166,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 571,
-      "checked_at": "2026-11-22T20:25:20+08:00",
+      "elapsed_ms": 273,
+      "checked_at": "2026-11-22T20:50:21+08:00",
       "errors": []
     },
     {
@@ -171,8 +176,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 513,
-      "checked_at": "2026-11-22T20:25:21+08:00",
+      "elapsed_ms": 288,
+      "checked_at": "2026-11-22T20:50:22+08:00",
       "errors": []
     },
     {
@@ -181,8 +186,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 695,
-      "checked_at": "2026-11-22T20:25:21+08:00",
+      "elapsed_ms": 249,
+      "checked_at": "2026-11-22T20:50:22+08:00",
       "errors": []
     },
     {
@@ -191,8 +196,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 370,
-      "checked_at": "2026-11-22T20:25:22+08:00",
+      "elapsed_ms": 95,
+      "checked_at": "2026-11-22T20:50:22+08:00",
       "errors": []
     },
     {
@@ -201,8 +206,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 129,
-      "checked_at": "2026-11-22T20:25:22+08:00",
+      "elapsed_ms": 110,
+      "checked_at": "2026-11-22T20:50:22+08:00",
       "errors": []
     },
     {
@@ -211,8 +216,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1766,
-      "checked_at": "2026-11-22T20:25:23+08:00",
+      "elapsed_ms": 433,
+      "checked_at": "2026-11-22T20:50:23+08:00",
       "errors": []
     },
     {
@@ -221,8 +226,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 174,
-      "checked_at": "2026-11-22T20:25:24+08:00",
+      "elapsed_ms": 153,
+      "checked_at": "2026-11-22T20:50:23+08:00",
       "errors": []
     },
     {
@@ -231,8 +236,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 587,
-      "checked_at": "2026-11-22T20:25:24+08:00",
+      "elapsed_ms": 261,
+      "checked_at": "2026-11-22T20:50:23+08:00",
       "errors": []
     },
     {
@@ -241,8 +246,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 627,
-      "checked_at": "2026-11-22T20:25:25+08:00",
+      "elapsed_ms": 342,
+      "checked_at": "2026-11-22T20:50:23+08:00",
       "errors": []
     },
     {
@@ -251,8 +256,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 2281,
-      "checked_at": "2026-11-22T20:25:27+08:00",
+      "elapsed_ms": 2675,
+      "checked_at": "2026-11-22T20:50:26+08:00",
       "errors": []
     },
     {
@@ -261,8 +266,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 371,
-      "checked_at": "2026-11-22T20:25:28+08:00",
+      "elapsed_ms": 83,
+      "checked_at": "2026-11-22T20:50:26+08:00",
       "errors": []
     },
     {
@@ -271,8 +276,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 4129,
-      "checked_at": "2026-11-22T20:25:32+08:00",
+      "elapsed_ms": 1996,
+      "checked_at": "2026-11-22T20:50:28+08:00",
       "errors": []
     },
     {
@@ -281,8 +286,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1010,
-      "checked_at": "2026-11-22T20:25:33+08:00",
+      "elapsed_ms": 518,
+      "checked_at": "2026-11-22T20:50:29+08:00",
       "errors": []
     },
     {
@@ -291,8 +296,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1992,
-      "checked_at": "2026-11-22T20:25:35+08:00",
+      "elapsed_ms": 592,
+      "checked_at": "2026-11-22T20:50:29+08:00",
       "errors": []
     },
     {
@@ -301,8 +306,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 628,
-      "checked_at": "2026-11-22T20:25:35+08:00",
+      "elapsed_ms": 187,
+      "checked_at": "2026-11-22T20:50:29+08:00",
       "errors": []
     },
     {
@@ -311,8 +316,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 435,
-      "checked_at": "2026-11-22T20:25:36+08:00",
+      "elapsed_ms": 143,
+      "checked_at": "2026-11-22T20:50:29+08:00",
       "errors": []
     },
     {
@@ -321,8 +326,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 722,
-      "checked_at": "2026-11-22T20:25:36+08:00",
+      "elapsed_ms": 139,
+      "checked_at": "2026-11-22T20:50:30+08:00",
       "errors": []
     },
     {
@@ -331,8 +336,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 206,
-      "checked_at": "2026-11-22T20:25:37+08:00",
+      "elapsed_ms": 121,
+      "checked_at": "2026-11-22T20:50:30+08:00",
       "errors": []
     },
     {
@@ -341,8 +346,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 575,
-      "checked_at": "2026-11-22T20:25:37+08:00",
+      "elapsed_ms": 72,
+      "checked_at": "2026-11-22T20:50:30+08:00",
       "errors": []
     },
     {
@@ -351,8 +356,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 374,
-      "checked_at": "2026-11-22T20:25:38+08:00",
+      "elapsed_ms": 788,
+      "checked_at": "2026-11-22T20:50:31+08:00",
       "errors": []
     },
     {
@@ -361,8 +366,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 216,
-      "checked_at": "2026-11-22T20:25:38+08:00",
+      "elapsed_ms": 1263,
+      "checked_at": "2026-11-22T20:50:32+08:00",
       "errors": []
     },
     {
@@ -371,8 +376,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 579,
-      "checked_at": "2026-11-22T20:25:38+08:00",
+      "elapsed_ms": 6391,
+      "checked_at": "2026-11-22T20:50:38+08:00",
       "errors": []
     },
     {
@@ -381,8 +386,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 497,
-      "checked_at": "2026-11-22T20:25:39+08:00",
+      "elapsed_ms": 622,
+      "checked_at": "2026-11-22T20:50:39+08:00",
       "errors": []
     },
     {
@@ -391,8 +396,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 358,
-      "checked_at": "2026-11-22T20:25:39+08:00",
+      "elapsed_ms": 2629,
+      "checked_at": "2026-11-22T20:50:41+08:00",
       "errors": []
     },
     {
@@ -401,8 +406,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 443,
-      "checked_at": "2026-11-22T20:25:40+08:00",
+      "elapsed_ms": 794,
+      "checked_at": "2026-11-22T20:50:42+08:00",
       "errors": []
     },
     {
@@ -411,8 +416,8 @@
       "status": "empty",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 351,
-      "checked_at": "2026-11-22T20:25:40+08:00",
+      "elapsed_ms": 1261,
+      "checked_at": "2026-11-22T20:50:44+08:00",
       "errors": []
     },
     {
@@ -421,8 +426,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 333,
-      "checked_at": "2026-11-22T20:25:40+08:00",
+      "elapsed_ms": 2790,
+      "checked_at": "2026-11-22T20:50:46+08:00",
       "errors": []
     },
     {
@@ -431,8 +436,8 @@
       "status": "empty",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 372,
-      "checked_at": "2026-11-22T20:25:41+08:00",
+      "elapsed_ms": 1269,
+      "checked_at": "2026-11-22T20:50:48+08:00",
       "errors": []
     },
     {
@@ -441,8 +446,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 167,
-      "checked_at": "2026-11-22T20:25:41+08:00",
+      "elapsed_ms": 1215,
+      "checked_at": "2026-11-22T20:50:49+08:00",
       "errors": []
     },
     {
@@ -451,188 +456,18 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 347,
-      "checked_at": "2026-11-22T20:25:41+08:00",
+      "elapsed_ms": 2724,
+      "checked_at": "2026-11-22T20:50:52+08:00",
       "errors": []
     },
     {
       "kind": "search",
       "id": "ccgp",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 466,
-      "checked_at": "2026-11-22T20:25:42+08:00",
-      "errors": []
-    },
-    {
-      "kind": "search",
-      "id": "cas",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 657,
-      "checked_at": "2026-11-22T20:25:42+08:00",
-      "errors": []
-    },
-    {
-      "kind": "search",
-      "id": "cgs",
       "status": "limited",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 8206,
-      "checked_at": "2026-11-22T20:25:51+08:00",
-      "errors": [
-        {
-          "code": "network_error",
-          "http_status": null
-        }
-      ]
-    },
-    {
-      "kind": "search",
-      "id": "xinhua",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 580,
-      "checked_at": "2026-11-22T20:25:51+08:00",
-      "errors": []
-    },
-    {
-      "kind": "documentation",
-      "id": "pandas-docs",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 427,
-      "checked_at": "2026-11-22T20:25:52+08:00",
-      "errors": []
-    },
-    {
-      "kind": "documentation",
-      "id": "sqlalchemy-docs",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 1550,
-      "checked_at": "2026-11-22T20:25:53+08:00",
-      "errors": []
-    },
-    {
-      "kind": "documentation",
-      "id": "rust-docs",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 308,
-      "checked_at": "2026-11-22T20:25:53+08:00",
-      "errors": []
-    },
-    {
-      "kind": "feed",
-      "id": "cns-scroll",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 207,
-      "checked_at": "2026-11-22T20:25:54+08:00",
-      "errors": []
-    },
-    {
-      "kind": "feed",
-      "id": "cns-finance",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 79,
-      "checked_at": "2026-11-22T20:25:54+08:00",
-      "errors": []
-    },
-    {
-      "kind": "feed",
-      "id": "hk-data",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 1218,
-      "checked_at": "2026-11-22T20:25:55+08:00",
-      "errors": []
-    },
-    {
-      "kind": "feed",
-      "id": "bbc-world",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 1256,
-      "checked_at": "2026-11-22T20:25:56+08:00",
-      "errors": []
-    },
-    {
-      "kind": "feed",
-      "id": "govcn",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 322,
-      "checked_at": "2026-11-22T20:25:57+08:00",
-      "errors": []
-    },
-    {
-      "kind": "trending",
-      "id": "bilibili",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 162,
-      "checked_at": "2026-11-22T20:25:57+08:00",
-      "errors": []
-    },
-    {
-      "kind": "trending",
-      "id": "zhihu",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 286,
-      "checked_at": "2026-11-22T20:25:57+08:00",
-      "errors": []
-    },
-    {
-      "kind": "trending",
-      "id": "v2ex",
-      "status": "limited",
-      "count": 0,
-      "attempts": 1,
-      "elapsed_ms": 8379,
-      "checked_at": "2026-11-22T20:26:05+08:00",
-      "errors": [
-        {
-          "code": "network_error",
-          "http_status": null
-        }
-      ]
-    },
-    {
-      "kind": "fetch",
-      "id": "native-reader",
-      "status": "passed",
-      "count": 1,
-      "attempts": 1,
-      "elapsed_ms": 252,
-      "checked_at": "2026-11-22T20:26:06+08:00",
-      "errors": []
-    },
-    {
-      "kind": "fetch",
-      "id": "github",
-      "status": "limited",
-      "count": 0,
-      "attempts": 1,
-      "elapsed_ms": 230,
-      "checked_at": "2026-11-22T20:26:06+08:00",
+      "elapsed_ms": 1909,
+      "checked_at": "2026-11-22T20:50:53+08:00",
       "errors": [
         {
           "code": "http_error",
@@ -641,29 +476,184 @@
       ]
     },
     {
+      "kind": "search",
+      "id": "cas",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 3127,
+      "checked_at": "2026-11-22T20:50:57+08:00",
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "cgs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1180,
+      "checked_at": "2026-11-22T20:50:58+08:00",
+      "errors": []
+    },
+    {
+      "kind": "search",
+      "id": "xinhua",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 570,
+      "checked_at": "2026-11-22T20:50:58+08:00",
+      "errors": []
+    },
+    {
+      "kind": "documentation",
+      "id": "pandas-docs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 133,
+      "checked_at": "2026-11-22T20:50:58+08:00",
+      "errors": []
+    },
+    {
+      "kind": "documentation",
+      "id": "sqlalchemy-docs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1103,
+      "checked_at": "2026-11-22T20:51:00+08:00",
+      "errors": []
+    },
+    {
+      "kind": "documentation",
+      "id": "rust-docs",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 253,
+      "checked_at": "2026-11-22T20:51:00+08:00",
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "cns-scroll",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 865,
+      "checked_at": "2026-11-22T20:51:01+08:00",
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "cns-finance",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 74,
+      "checked_at": "2026-11-22T20:51:01+08:00",
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "hk-data",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1863,
+      "checked_at": "2026-11-22T20:51:03+08:00",
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "bbc-world",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 206,
+      "checked_at": "2026-11-22T20:51:03+08:00",
+      "errors": []
+    },
+    {
+      "kind": "feed",
+      "id": "govcn",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 272,
+      "checked_at": "2026-11-22T20:51:03+08:00",
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "bilibili",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 439,
+      "checked_at": "2026-11-22T20:51:04+08:00",
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "zhihu",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 1043,
+      "checked_at": "2026-11-22T20:51:05+08:00",
+      "errors": []
+    },
+    {
+      "kind": "trending",
+      "id": "v2ex",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 141,
+      "checked_at": "2026-11-22T20:51:05+08:00",
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "native-reader",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 107,
+      "checked_at": "2026-11-22T20:51:05+08:00",
+      "errors": []
+    },
+    {
+      "kind": "fetch",
+      "id": "github",
+      "status": "passed",
+      "count": 1,
+      "attempts": 1,
+      "elapsed_ms": 180,
+      "checked_at": "2026-11-22T20:51:05+08:00",
+      "errors": []
+    },
+    {
       "kind": "fetch",
       "id": "hackernews",
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 503,
-      "checked_at": "2026-11-22T20:26:06+08:00",
+      "elapsed_ms": 162,
+      "checked_at": "2026-11-22T20:51:05+08:00",
       "errors": []
     },
     {
       "kind": "fetch",
       "id": "jina",
-      "status": "limited",
-      "count": 0,
+      "status": "passed",
+      "count": 1,
       "attempts": 1,
-      "elapsed_ms": 387,
-      "checked_at": "2026-11-22T20:26:07+08:00",
-      "errors": [
-        {
-          "code": "http_error",
-          "http_status": 401
-        }
-      ]
+      "elapsed_ms": 998,
+      "checked_at": "2026-11-22T20:51:06+08:00",
+      "errors": []
     },
     {
       "kind": "fetch",
@@ -671,8 +661,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 546,
-      "checked_at": "2026-11-22T20:26:07+08:00",
+      "elapsed_ms": 209,
+      "checked_at": "2026-11-22T20:51:06+08:00",
       "errors": []
     },
     {
@@ -681,8 +671,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1056,
-      "checked_at": "2026-11-22T20:26:08+08:00",
+      "elapsed_ms": 309,
+      "checked_at": "2026-11-22T20:51:07+08:00",
       "errors": []
     },
     {
@@ -691,8 +681,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 2350,
-      "checked_at": "2026-11-22T20:26:11+08:00",
+      "elapsed_ms": 433,
+      "checked_at": "2026-11-22T20:51:07+08:00",
       "errors": []
     },
     {
@@ -701,8 +691,8 @@
       "status": "limited",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 1075,
-      "checked_at": "2026-11-22T20:26:12+08:00",
+      "elapsed_ms": 277,
+      "checked_at": "2026-11-22T20:51:07+08:00",
       "errors": [
         {
           "code": "extraction_failed",
@@ -716,8 +706,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 495,
-      "checked_at": "2026-11-22T20:26:12+08:00",
+      "elapsed_ms": 323,
+      "checked_at": "2026-11-22T20:51:08+08:00",
       "errors": []
     },
     {
@@ -726,8 +716,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1016,
-      "checked_at": "2026-11-22T20:26:13+08:00",
+      "elapsed_ms": 1047,
+      "checked_at": "2026-11-22T20:51:09+08:00",
       "errors": []
     },
     {
@@ -736,8 +726,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1046,
-      "checked_at": "2026-11-22T20:26:14+08:00",
+      "elapsed_ms": 940,
+      "checked_at": "2026-11-22T20:51:10+08:00",
       "errors": []
     },
     {
@@ -746,8 +736,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1048,
-      "checked_at": "2026-11-22T20:26:15+08:00",
+      "elapsed_ms": 1050,
+      "checked_at": "2026-11-22T20:51:11+08:00",
       "errors": []
     },
     {
@@ -756,8 +746,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1009,
-      "checked_at": "2026-11-22T20:26:16+08:00",
+      "elapsed_ms": 982,
+      "checked_at": "2026-11-22T20:51:12+08:00",
       "errors": []
     },
     {
@@ -766,8 +756,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 930,
-      "checked_at": "2026-11-22T20:26:17+08:00",
+      "elapsed_ms": 1093,
+      "checked_at": "2026-11-22T20:51:13+08:00",
       "errors": []
     },
     {
@@ -776,8 +766,8 @@
       "status": "empty",
       "count": 0,
       "attempts": 1,
-      "elapsed_ms": 1099,
-      "checked_at": "2026-11-22T20:26:18+08:00",
+      "elapsed_ms": 1000,
+      "checked_at": "2026-11-22T20:51:14+08:00",
       "errors": []
     },
     {
@@ -786,8 +776,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 956,
-      "checked_at": "2026-11-22T20:26:19+08:00",
+      "elapsed_ms": 998,
+      "checked_at": "2026-11-22T20:51:15+08:00",
       "errors": []
     },
     {
@@ -796,8 +786,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 997,
-      "checked_at": "2026-11-22T20:26:20+08:00",
+      "elapsed_ms": 905,
+      "checked_at": "2026-11-22T20:51:16+08:00",
       "errors": []
     },
     {
@@ -806,8 +796,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 928,
-      "checked_at": "2026-11-22T20:26:21+08:00",
+      "elapsed_ms": 932,
+      "checked_at": "2026-11-22T20:51:17+08:00",
       "errors": []
     },
     {
@@ -816,8 +806,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1121,
-      "checked_at": "2026-11-22T20:26:22+08:00",
+      "elapsed_ms": 979,
+      "checked_at": "2026-11-22T20:51:18+08:00",
       "errors": []
     },
     {
@@ -826,8 +816,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 889,
-      "checked_at": "2026-11-22T20:26:23+08:00",
+      "elapsed_ms": 1098,
+      "checked_at": "2026-11-22T20:51:19+08:00",
       "errors": []
     },
     {
@@ -836,8 +826,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1023,
-      "checked_at": "2026-11-22T20:26:24+08:00",
+      "elapsed_ms": 924,
+      "checked_at": "2026-11-22T20:51:20+08:00",
       "errors": []
     },
     {
@@ -846,8 +836,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 978,
-      "checked_at": "2026-11-22T20:26:25+08:00",
+      "elapsed_ms": 1028,
+      "checked_at": "2026-11-22T20:51:21+08:00",
       "errors": []
     },
     {
@@ -856,8 +846,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 927,
-      "checked_at": "2026-11-22T20:26:26+08:00",
+      "elapsed_ms": 966,
+      "checked_at": "2026-11-22T20:51:22+08:00",
       "errors": []
     },
     {
@@ -866,8 +856,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1145,
-      "checked_at": "2026-11-22T20:26:27+08:00",
+      "elapsed_ms": 997,
+      "checked_at": "2026-11-22T20:51:23+08:00",
       "errors": []
     },
     {
@@ -876,8 +866,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 949,
-      "checked_at": "2026-11-22T20:26:28+08:00",
+      "elapsed_ms": 993,
+      "checked_at": "2026-11-22T20:51:24+08:00",
       "errors": []
     },
     {
@@ -886,8 +876,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 951,
-      "checked_at": "2026-11-22T20:26:29+08:00",
+      "elapsed_ms": 1105,
+      "checked_at": "2026-11-22T20:51:25+08:00",
       "errors": []
     },
     {
@@ -896,8 +886,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1052,
-      "checked_at": "2026-11-22T20:26:30+08:00",
+      "elapsed_ms": 899,
+      "checked_at": "2026-11-22T20:51:26+08:00",
       "errors": []
     },
     {
@@ -906,8 +896,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1004,
-      "checked_at": "2026-11-22T20:26:31+08:00",
+      "elapsed_ms": 1026,
+      "checked_at": "2026-11-22T20:51:27+08:00",
       "errors": []
     },
     {
@@ -916,8 +906,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 1007,
-      "checked_at": "2026-11-22T20:26:32+08:00",
+      "elapsed_ms": 931,
+      "checked_at": "2026-11-22T20:51:28+08:00",
       "errors": []
     },
     {
@@ -926,8 +916,8 @@
       "status": "passed",
       "count": 1,
       "attempts": 1,
-      "elapsed_ms": 989,
-      "checked_at": "2026-11-22T20:26:33+08:00",
+      "elapsed_ms": 1030,
+      "checked_at": "2026-11-22T20:51:29+08:00",
       "errors": []
     }
   ]
