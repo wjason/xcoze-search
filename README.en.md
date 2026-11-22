@@ -91,6 +91,8 @@ The default is **Smart**: use keyless sources when no key is configured; when ke
 
 A preference for future searches is saved; a request for “this search” applies only once. Free mode does not call services that require your API key. Configure a service before selecting it.
 
+Research can read necessary linked PDFs and complete published examples within the same task budget. PDF evidence includes page numbers; notices, attachments and example pages retain their relationship.
+
 ## Supported sources
 
 For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kubernetes and Rust indexes directly, or use Go and MDN site search. Keyless web search starts with Parallel, with Exa and public HTML fallbacks. 360 HTML runs without a browser. See [documentation search](references/documentation.en.md).
@@ -131,7 +133,7 @@ For energy research, search NEA published documents and statistical releases. Pr
 
 ## Search evaluation
 
-The latest [33-case research evaluation](evaluations/reports/2026-11-22-answer-support.en.md) checks whether returned passages answer each question: mechanisms, conditions, numbers, units and deadlines. Retrieval and literal coverage remain separate from manual answer-support review.
+The latest [33-case research evaluation](evaluations/reports/2026-11-22-followups.en.md) checks whether returned passages answer each question: mechanisms, conditions, numbers, units and deadlines. Retrieval and literal coverage remain separate from manual answer-support review.
 
 The benchmark now includes 100 questions with criteria for checking relevance, source identity and dates.
 

@@ -19,7 +19,7 @@ def execute(cases,live=False,timeout=8,review_output=None):
     for c in cases:
         command=['research',c['query'],'--question',c['question'],'--strategy','free','--browser','off',
                  '--timeout',str(timeout),'--count','3','--read-count','3','--max-seconds','35','--max-requests',str(c.get('max_requests',8))]
-        for key in ('platform','energy_section','notice_type','business','region','start_date','end_date'):
+        for key in ('platform','energy_section','notice_type','business','region','start_date','end_date','attachments','context_links'):
             if c.get(key):command.extend(['--'+key.replace('_','-'),c[key]])
         for term in c['require_topic']:command.extend(['--require-topic',term])
         commands.append(x.parser().parse_args(command))
@@ -42,7 +42,7 @@ def execute(cases,live=False,timeout=8,review_output=None):
             # The public artifact contains markers and source links, never full originals.
             for doc in result.get('documents',[]):
                 doc['passage_markers']=[t for t in c['require_topic'] if any(t.casefold() in p['text'].casefold() for p in doc.get('passages',[]))]
-                doc['passages']=[{'line':p['line'],'matched_terms':p['matched_terms']} for p in doc.get('passages',[])]
+                doc['passages']=[{k:p[k] for k in ('line','line_end','matched_terms','kind','context_complete','pdf_pages') if k in p} for p in doc.get('passages',[])]
             for row in result.get('results',[]):
                 for field in ('content','snippet','summary','provider_fields','highlights'):row.pop(field,None)
             expected_gap=c.get('expected_gap')

@@ -8,8 +8,8 @@ Updated 2026-11-22. Focus: Agent web search and source reading. Default automati
 
 - [x] Website keyword form, truncated-title classification, original project and deadline checks.
 - [x] Thirty real questions and three negative cases, with explicit requirements, manual review and reference validation.
-- [ ] Improve AbortController request-parameter examples and complete AbortSignal error branches.
-- [ ] Provide explicit, bounded policy-PDF follow-up when an attachment is necessary, retaining page and source scope.
+- [x] Improve AbortController request-parameter examples and complete AbortSignal error branches.
+- [x] Add necessary bounded policy-PDF follow-up, retaining pages, parent notices and source scope.
 
 ## v0.10.0: research workflow
 

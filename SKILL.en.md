@@ -26,6 +26,8 @@ Research reads up to three candidates by default within source, HTTP and time li
 Before answering, list the facts the question requires and check each against returned passages: conditions and exceptions, steps, numbers and units, date types and project identity. `answer_review_required` means literal coverage does not replace this review. Read more within the task budget when a notice, directory or excerpt lacks the needed detail; otherwise state the missing evidence.
 
 
+Research can follow at most one necessary published same-host PDF and one delegated example, sharing read-count, HTTP and time budgets without recursion. Sufficient passages avoid attachment downloads; `--attachments off` and `--context-links off` disable them separately. Check relationships, parent documents, follow-up status and PDF pages. A notice date is not the attachment publication date. Preserve published code blocks and their branches without inventing omitted source content.
+
 ## Sources and strategy
 
 Precedence: the current explicit request, saved preferences, then Smart. Without keys use keyless routes; enabled keys allow quality-first routing, with native task sources locating official material. Free mode forbids requests using user keys. Explicit source lists do not authorize unrelated services. Do not compare vendors' raw scores.

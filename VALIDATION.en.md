@@ -2,6 +2,10 @@
 
 [简体中文](VALIDATION.md) | **English**
 
+## v0.10.2 — 2026-11-22
+
+279 offline tests pass. The three outstanding tasks now return the complete example, error branches and policy target on PDF page 1; English replays also pass. With Exa, Parallel, keys, host search and browsers blocked, all 30 real tasks in the 33-case run have passages supporting their requirements, while three negative cases retain gaps. The full run uses 79 HTTP requests with a 1.42-second median; disabled/budget controls are separate. This is targeted same-Agent review, not independent blinding or universal accuracy. See [records and references](evaluations/reports/2026-11-22-followups.en.md).
+
 ## v0.10.1 — 2026-11-22
 
 270 offline tests pass. With Exa, Parallel, keys, host search and browsers disabled, 30 real questions read originals. Manual passage review found 27 supported, two partial and one requiring an attachment. Three negative cases retained their expected gaps. The full run used 78 HTTP requests with a 1.30-second median; an MDN ordering replay is recorded separately. Keyword coverage is not answer correctness. The missed Southern Grid question now finds an original and bid deadline through the official keyword form. See [per-task review and limits](evaluations/reports/2026-11-22-answer-support.en.md).

@@ -68,11 +68,15 @@ def assess(rows, documents, args):
     if not rows: gaps.append('no_search_candidates')
     if not read: gaps.append('no_read_original')
     if missing: gaps.append('required_terms_not_in_read_text')
+    for doc in read:
+        for follow in doc.get('follow_up_reads',[]):
+            if follow['status'] in ('disabled','not_read'):gaps.append(follow['relationship']+'_follow_up_not_read')
     minimum = getattr(args,'min_documents',1)
     if len({canonical(d.get('source_url') or d['url']) for d in read}) < minimum:
         gaps.append('insufficient_distinct_documents')
     start,end = getattr(args,'start_date',None),getattr(args,'end_date',None)
     dated = 0
+    primary_ids={d['document_id'] for d in read if not d.get('relationship') and d.get('document_id')}
     for doc in read:
         if doc.get('requested_anchor') and not doc.get('anchor_found'):gaps.append('requested_anchor_not_found')
         stamp = doc.get('publication_date')
@@ -80,6 +84,9 @@ def assess(rows, documents, args):
             try: date.fromisoformat(stamp)
             except ValueError: stamp = None
         if start or end:
+            # These filters selected the notice, not an independently dated attachment.
+            if doc.get('parent_document_id') in primary_ids and doc.get('relationship') in ('attachment','example'):
+                continue
             if not stamp:
                 gaps.append('original_publication_date_unknown')
             elif (start and stamp < start) or (end and stamp > end): gaps.append('original_publication_date_outside_range')
@@ -133,7 +140,7 @@ def question_cues(question):
     return [signal for trigger,signal in patterns if re.search(trigger,question,re.I)]
 
 
-def passages(content, terms, *, count=4, characters=650, question=''):
+def passages(content, terms, *, count=4, characters=650, question='',code_blocks=None,pdf_page_spans=None):
     lines = [line.strip() for line in content.splitlines() if line.strip()]
     candidates=[];cues=question_cues(question)
     for index,line in enumerate(lines):
@@ -152,6 +159,14 @@ def passages(content, terms, *, count=4, characters=650, question=''):
         if re.search('KeyboardInterrupt|SystemExit',excerpt) and not re.search('KeyboardInterrupt|SystemExit',question):cue_score-=2
         if matches or cue_score:candidates.append((matches,start,start+excerpt.count('\n')+1,excerpt,cue_score))
     selected=[];uncovered=set(terms)
+    if re.search('如何|怎么|怎样|取消|区别|超时|示例|how|abort|timeout|example|differ',question,re.I):
+        eligible=[b for b in code_blocks or [] if b.get('complete') and len(b['text'])<=1800 and any(contains_term(b['text'],t) for t in terms)]
+        if eligible:
+            best=max(eligible,key=lambda b:(sum(contains_term(b['text'],t) for t in terms),sum(bool(re.search(c,b['text'],re.I)) for c in cues)))
+            matched=[t for t in terms if contains_term(best['text'],t)]
+            selected.append({'text':best['text'],'line':best['line'],'line_end':best['line_end'],
+                             'matched_terms':matched,'kind':'literal_code_block','context_complete':True})
+            uncovered-=set(matched)
     # Keep the condition and its consequence together before generic term coverage fills the slots.
     seed=None
     for index,line in enumerate(lines):
@@ -183,4 +198,7 @@ def passages(content, terms, *, count=4, characters=650, question=''):
         selected.append({'text':excerpt,'line':start+1,'line_end':end,
                          'matched_terms':sorted(matches),'kind':'literal_excerpt_not_generated_answer'})
         uncovered-=matches
-    return selected
+    for item in selected:
+        pages=[span['page'] for span in pdf_page_spans or [] if span['line']<=item['line_end'] and span['line_end']>=item['line']]
+        if pages:item['pdf_pages']=pages
+    return selected[:count]

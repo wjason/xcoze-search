@@ -1,6 +1,12 @@
-# Output contract v0.9.0
+# Output contract
 
 [简体中文](output.md) | **English**
+
+## Follow-ups, code and PDF citations
+
+Documents with relationship attachment or example retain parent_document_id and parent_url. date_context records the parent date without inventing a child publication_date. follow_up_reads retains read, disabled and not_read; attachments_read indicates retrieved text for listed attachments, with scope still governed by pages and truncated. read_attachments lists the URLs read.
+
+Code passages use kind literal_code_block with context_complete:true only for complete retained published blocks, not runnable-program guarantees. pdf_pages_extracted and passages.pdf_pages retain page numbers. coverage.gaps can include attachment_follow_up_not_read or example_follow_up_not_read. All follow-ups share the original task budget.
 
 ## Research and native originals
 

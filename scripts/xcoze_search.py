@@ -39,7 +39,7 @@ from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.10.1"
+VERSION = "0.10.2"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -458,6 +458,9 @@ def run_fetch(args, config, *, budget=None):
         text = data["content"]
         data.update(content=text[:limit], max_characters=limit, returned_characters=min(len(text), limit),
                     truncated=data.get("truncated", False) or len(text) > limit or (name == "exa-free" and len(text) >= limit))
+        if name=='native-reader':
+            from native_reader import cleaned
+            data['code_blocks']=[b for b in data.get('code_blocks',[]) if cleaned(b['text']) in data['content']]
     return {"ok": True, "operation": "fetch", "provider": name, "url": args.url, **data,
             "empty": not data["content"].strip(), "attempts": attempts, "budget": budget.data(),
             "provider_metadata": provider.metadata(raw, [], 0),
@@ -823,6 +826,8 @@ def parser():
     research.add_argument('--require-topic', action='append', help='Key term required in read evidence; repeat for multiple terms')
     research.add_argument('--read-count', type=int, choices=range(1,6), default=3, metavar='1..5')
     research.add_argument('--min-documents', type=int, choices=(1,2,3), default=1)
+    research.add_argument('--attachments',choices=('auto','off'),default='auto',help='Read at most one relevant published PDF when evidence is missing; shares task budgets')
+    research.add_argument('--context-links',choices=('auto','off'),default='auto',help='Follow at most one published same-host example link for procedural questions')
     research.add_argument('--page-count',type=int,choices=(1,2,3),default=2,help='CSG: bounded published next-page fallback on an empty current window')
     research.add_argument('--max-read-characters', type=int, choices=range(1000,24001), default=12000, metavar='1000..24000')
     return root

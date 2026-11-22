@@ -1,0 +1,788 @@
+{
+  "final": {
+    "reviews": [
+      {
+        "id": "R01",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "普通非取消异常会取消剩余任务；等待结束后合并异常。",
+        "finding_en": "A non-cancellation child failure cancels remaining tasks; exceptions are grouped after completion.",
+        "evidence": [
+          {
+            "document_id": "8648139190e53478",
+            "passage": 1
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 2
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 3
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R02",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "非空 cause 由 cancel 记录，通过 Cause(ctx) 获取。",
+        "finding_en": "cancel records a non-nil cause, retrieved with Cause(ctx).",
+        "evidence": [
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 1
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 2
+          }
+        ]
+      },
+      {
+        "id": "R03",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "未初始化时运行初始化闭包，后续复用已有值；方法说明和两次调用示例互相支持。",
+        "finding_en": "The method initializes an unset cell and reuses its stored value; prose and repeated-call examples support this.",
+        "evidence": [
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 1
+          },
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 2
+          },
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 3
+          }
+        ]
+      },
+      {
+        "id": "R04",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "入站、出站分别隔离；源 Pod 出站和目标 Pod 入站必须都允许连接。",
+        "finding_en": "Ingress and egress isolation are separate; source egress and destination ingress must both allow the connection.",
+        "evidence": [
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 1
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 2
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 3
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R05",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "沿发布页面的同站示例链接补读，代码明确创建控制器、把 signal 传入 fetch，并调用 controller.abort()；两个作答要求均有原文支持。",
+        "finding_en": "The linked same-host example explicitly creates a controller, passes signal to fetch and calls controller.abort(); both answer requirements are supported.",
+        "evidence": [
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 1
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 2
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 3
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R06",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "timeout 上下文把 CancelledError 转换成 TimeoutError。",
+        "finding_en": "The timeout context manager transforms CancelledError into TimeoutError.",
+        "evidence": [
+          {
+            "document_id": "8648139190e53478",
+            "passage": 1
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 2
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 3
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R07",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "定位到对应方案通知，原文制发日期 2025-08-27，档案展示为 2025-09-12。",
+        "finding_en": "The matching notice has an original issuance date of 2025-08-27, distinct from its 2025-09-12 archive date.",
+        "evidence": [
+          {
+            "document_id": "a12a761a0f2f2d60",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R08",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "定位到发改能源规〔2025〕411号通知；附件仍标为未读，不据此解读全部规则。",
+        "finding_en": "The original notice is identified as document 411; unread attachments remain unread, so the complete rules are not interpreted.",
+        "evidence": [
+          {
+            "document_id": "392415244712ae1a",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R09",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "原文统计期是 2025 全年；页面日期和正文提及的发布事件日期分别保留。",
+        "finding_en": "The original covers full-year 2025; the page date and release event mentioned in its text remain distinct.",
+        "evidence": [
+          {
+            "document_id": "8463f56690f2ed5c",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R10",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "片段同时给出招标文件获取期 11月5日至12日和投标递交截止 11月26日09:00；原问题用词有歧义，需要明确标签。",
+        "finding_en": "Passages give document acquisition on November 5–12 and bid submission on November 26 at 09:00; the ambiguous question needs explicit labels.",
+        "evidence": [
+          {
+            "document_id": "733b381158f7b580",
+            "passage": 1
+          },
+          {
+            "document_id": "733b381158f7b580",
+            "passage": 2
+          },
+          {
+            "document_id": "733b381158f7b580",
+            "passage": 3
+          },
+          {
+            "document_id": "733b381158f7b580",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R11",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "找到郑东新区龙湖电化学储能 EPC 中标结果公告，排除了候选人标题。",
+        "finding_en": "The Zhengdong Longhu storage EPC award original is found after excluding candidate-only titles.",
+        "evidence": [
+          {
+            "document_id": "552f426821536f8c",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R12",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "原题读到三维数字化建模技术服务公开招标；投标文件截止 2026-12-11 09:00。",
+        "finding_en": "The missed task finds an open tender for digital modeling services; bids are due 2026-12-11 at 09:00.",
+        "evidence": [
+          {
+            "document_id": "d8b32847e00bc203",
+            "passage": 1
+          },
+          {
+            "document_id": "d8b32847e00bc203",
+            "passage": 2
+          }
+        ]
+      },
+      {
+        "id": "R13",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "首页确认贵州茅台、600519、2024 年年度报告；只提取前十页，不是全部143页。",
+        "finding_en": "The cover confirms Kweichow Moutai, 600519 and the 2024 annual report; only the first ten of 143 pages are extracted.",
+        "evidence": [
+          {
+            "document_id": "8f184867d0ab755a",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R14",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "默认 return_exceptions=False 时首个异常立即传播，其他 awaitables 不自动取消。",
+        "finding_en": "With return_exceptions=False, the first exception propagates immediately and other awaitables are not automatically cancelled.",
+        "evidence": [
+          {
+            "document_id": "8648139190e53478",
+            "passage": 1
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 2
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 3
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R15",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "明确说明 TimeoutError 只能在 timeout 上下文外捕获。",
+        "finding_en": "The passage explicitly places TimeoutError handling outside the timeout context manager.",
+        "evidence": [
+          {
+            "document_id": "8648139190e53478",
+            "passage": 1
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 2
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 3
+          },
+          {
+            "document_id": "8648139190e53478",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R16",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "明确说明当前 contextvars.Context 从事件循环线程传播到工作线程。",
+        "finding_en": "The current contextvars.Context propagates from the event-loop thread into the worker thread.",
+        "evidence": [
+          {
+            "document_id": "8648139190e53478",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R17",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "取消会释放 context 关联资源，操作完成应调用 cancel；示例也说明避免 goroutine 泄漏。",
+        "finding_en": "Cancellation releases context resources and callers should cancel after operations finish; the example also explains goroutine leaks.",
+        "evidence": [
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 1
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 2
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 3
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R18",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "key 必须可比较；避免字符串等内置类型造成跨包冲突，使用自定义类型。",
+        "finding_en": "Keys must be comparable; custom types avoid cross-package collisions from built-in types such as strings.",
+        "evidence": [
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 1
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 2
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 3
+          },
+          {
+            "document_id": "752511d5a6de50d6",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R19",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "get 对未初始化或初始化中的单元返回 None，并明确永不阻塞；没有拿 set 的行为代替。",
+        "finding_en": "get returns None before or during initialization and never blocks; set semantics are excluded.",
+        "evidence": [
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R20",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "闭包 panic 会传播给调用者，单元保持未初始化。",
+        "finding_en": "Initializer panic propagates to the caller and leaves the cell uninitialized.",
+        "evidence": [
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 1
+          },
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 2
+          },
+          {
+            "document_id": "e3ec9de8a6a3335d",
+            "passage": 3
+          }
+        ]
+      },
+      {
+        "id": "R21",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "多条策略按允许集合取并集，不覆盖，也不依赖求值顺序。",
+        "finding_en": "Policies combine their allowed connections by union, without override or evaluation-order dependence.",
+        "evidence": [
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 1
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 2
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 3
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R22",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "返回 YAML 的 podSelector: {}、policyTypes: Ingress 以及不允许任何入站的说明。",
+        "finding_en": "The YAML and prose show podSelector: {}, Ingress policyTypes and no allowed ingress rules.",
+        "evidence": [
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 1
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 2
+          },
+          {
+            "document_id": "953450b4076f7de4",
+            "passage": 3
+          }
+        ]
+      },
+      {
+        "id": "R23",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "HTTP 404 不会自行 reject，需要检查响应状态或 ok。",
+        "finding_en": "HTTP 404 does not itself reject fetch; the response status or ok must be checked.",
+        "evidence": [
+          {
+            "document_id": "f10cc26ad8cc531b",
+            "passage": 1
+          },
+          {
+            "document_id": "f10cc26ad8cc531b",
+            "passage": 2
+          }
+        ]
+      },
+      {
+        "id": "R24",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "完整发布代码块保留 TimeoutError 和 AbortError 两侧分支；该示例将前者用于超时、后者用于浏览器停止等用户操作。",
+        "finding_en": "The complete published block retains both TimeoutError and AbortError branches; this example identifies timeout versus user actions such as browser stop.",
+        "evidence": [
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 1
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 2
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 3
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R25",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "按需读取通知实际链接的 PDF，第1页明确2027年全国新型储能装机规模达到1.8亿千瓦以上；提取到第1至7页文本，未把通知日期当作PDF发布日期。",
+        "finding_en": "The necessary linked PDF states on page 1 that nationwide new energy-storage capacity should reach at least 180 million kW in 2027. Text was extracted from pages 1–7 without assigning the notice date to the PDF.",
+        "evidence": [
+          {
+            "document_id": "1bc453b24d5ba5e5",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R26",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "原文给出 103682 亿千瓦时、同比增长 5.0%，均属于 2025 全年。",
+        "finding_en": "The original gives 103682 hundred-million kWh and 5.0% growth for full-year 2025.",
+        "evidence": [
+          {
+            "document_id": "8463f56690f2ed5c",
+            "passage": 1
+          }
+        ]
+      },
+      {
+        "id": "R27",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "项目编号 CG2600022002404187，投标截止 2026-12-11 08:40，来自同一项目。",
+        "finding_en": "The same project has ID CG2600022002404187 and bid deadline 2026-12-11 at 08:40.",
+        "evidence": [
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 1
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 2
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 3
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R28",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "获取结束 2026-11-26 18:00，投标截止 2026-12-11 08:40；不是同一时间。",
+        "finding_en": "Document acquisition ends 2026-11-26 at 18:00; bids close 2026-12-11 at 08:40, a different time.",
+        "evidence": [
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 1
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 2
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 3
+          },
+          {
+            "document_id": "2370422bff69e79d",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R29",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "采购人为南方电网澜湄国际能源有限责任公司，响应截止 2026-11-24 09:00。",
+        "finding_en": "The buyer is Southern Grid Lancang-Mekong International Energy; responses close 2026-11-24 at 09:00.",
+        "evidence": [
+          {
+            "document_id": "f32b11b292042307",
+            "passage": 1
+          },
+          {
+            "document_id": "f32b11b292042307",
+            "passage": 2
+          },
+          {
+            "document_id": "f32b11b292042307",
+            "passage": 3
+          },
+          {
+            "document_id": "f32b11b292042307",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R30",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "同一项目中标联合体为中国电建华东院和中铁电气化局第三工程公司，中标报价 194687771.00 元；不使用其他公告的候选价或历史合同价。",
+        "finding_en": "The award consortium is POWERCHINA Huadong and China Railway Electrification Third Engineering, at CNY 194687771.00; candidate bids and historical contracts are excluded.",
+        "evidence": [
+          {
+            "document_id": "552f426821536f8c",
+            "passage": 1
+          },
+          {
+            "document_id": "552f426821536f8c",
+            "passage": 2
+          }
+        ]
+      }
+    ]
+  },
+  "baseline_focus": {
+    "reviews": [
+      {
+        "id": "R05",
+        "covered_requirements": [
+          "2"
+        ],
+        "finding": "能确认 signal 用于通信、abort 中止 fetch；仍缺把 signal 传入具体请求的操作片段，不补造完整示例。",
+        "finding_en": "The passages explain signal communication and aborting fetch, but lack the concrete step of passing signal to the request.",
+        "evidence": [
+          {
+            "document_id": "5bc2943c6bc558bf",
+            "passage": 1
+          },
+          {
+            "document_id": "5bc2943c6bc558bf",
+            "passage": 2
+          },
+          {
+            "document_id": "5bc2943c6bc558bf",
+            "passage": 3
+          },
+          {
+            "document_id": "5bc2943c6bc558bf",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R24",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "片段明确超时产生 TimeoutError，但代码截在 AbortError 分支处，缺少说明其代表用户取消的完整上下文。",
+        "finding_en": "TimeoutError is explicit, but the excerpt cuts at the AbortError branch and lacks full context establishing user cancellation.",
+        "evidence": [
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 1
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 2
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 3
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R25",
+        "covered_requirements": [],
+        "finding": "只读到方案通知，装机目标位于未读 PDF；片段不能回答目标值。",
+        "finding_en": "Only the plan notice is read; the installed-capacity target is in an unread PDF, so the passages cannot answer it.",
+        "evidence": []
+      }
+    ]
+  },
+  "english": {
+    "reviews": [
+      {
+        "id": "R05-en",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "沿发布页面的同站示例链接补读，代码明确创建控制器、把 signal 传入 fetch，并调用 controller.abort()；两个作答要求均有原文支持。",
+        "finding_en": "The linked same-host example explicitly creates a controller, passes signal to fetch and calls controller.abort(); both answer requirements are supported.",
+        "evidence": [
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 1
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 2
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 3
+          },
+          {
+            "document_id": "9ea51d901a9ccdf0",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R24-en",
+        "covered_requirements": [
+          "1",
+          "2"
+        ],
+        "finding": "完整发布代码块保留 TimeoutError 和 AbortError 两侧分支；该示例将前者用于超时、后者用于浏览器停止等用户操作。",
+        "finding_en": "The complete published block retains both TimeoutError and AbortError branches; this example identifies timeout versus user actions such as browser stop.",
+        "evidence": [
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 1
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 2
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 3
+          },
+          {
+            "document_id": "6a4908a35c21a0fe",
+            "passage": 4
+          }
+        ]
+      },
+      {
+        "id": "R25-en",
+        "covered_requirements": [
+          "1"
+        ],
+        "finding": "按需读取通知实际链接的 PDF，第1页明确2027年全国新型储能装机规模达到1.8亿千瓦以上；提取到第1至7页文本，未把通知日期当作PDF发布日期。",
+        "finding_en": "The necessary linked PDF states on page 1 that nationwide new energy-storage capacity should reach at least 180 million kW in 2027. Text was extracted from pages 1–7 without assigning the notice date to the PDF.",
+        "evidence": [
+          {
+            "document_id": "1bc453b24d5ba5e5",
+            "passage": 1
+          }
+        ]
+      }
+    ]
+  }
+}

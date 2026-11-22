@@ -2,6 +2,10 @@
 
 [简体中文](README.md) | **English**
 
+## Attachment and context regression
+
+The [latest report](reports/2026-11-22-followups.en.md) uses the same 33 cases, adding complete examples, error branches and an attached policy target, with English and disabled/budget controls. [Reviews](research-followup-reviews.json) retain requirements and references for all 30 real tasks. Live PDF checks use existing pdftotext; they do not claim PDF extraction without it.
+
 ## Passage answer-support review
 
 The [33-case corpus](research-cases-v2.json) contains 30 real questions with explicit facts and three negative cases. The [report](reports/2026-11-22-answer-support.en.md) separates retrieval, literal coverage and support for answers from returned passages. The same Agent performed the review without independent blinding; [judgments](research-answer-reviews.json) retain missing requirements and passage references. `review_research.py` validates references and completeness, not semantic truth. New runs need new reviews.

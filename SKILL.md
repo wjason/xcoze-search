@@ -3,7 +3,7 @@ name: xcoze-search
 description: 为 Agent 调研公开资料、查找官方来源和读取原文。按任务选择免 Key 或已配置的搜索服务，支持技术文档、能源电力、政策、招投标、科研及开源项目。用于联网调研、事实与日期核对，以及本技能的搜索偏好和 Key 配置；不用于本地文件或私有知识库搜索。
 metadata:
   author: XCoze
-  version: "0.10.1"
+  version: "0.10.2"
 ---
 
 # xcoze search
@@ -33,6 +33,8 @@ python3 "<skill_dir>/scripts/xcoze_search.py" fetch 'https://docs.python.org/3/l
 
 作答前将问题拆成必须回答的事实点，逐一对照返回片段：条件与例外、执行步骤、数值与单位、日期类型、同一项目身份。`answer_review_required` 为真时，字面覆盖通过也不能替代这一步。只读到通知或目录、关键事实在附件、片段缺少前后关系时继续有界补读，仍不足则明确缺失项。
 
+
+默认按需补读页面实际公布的同站 PDF 和示例链接，各最多一份，与搜索共享 `--read-count`、HTTP 和时间预算，不递归展开。已有片段足够时不下载附件；`--attachments off`、`--context-links off` 可分别关闭。核对 `relationship`、父文档、补读状态和 PDF 页码；通知日期不能当作附件发布日期。代码块保留原样及完整分支，不补造源文省略的部分。
 
 ## 选源与策略
 

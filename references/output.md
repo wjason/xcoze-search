@@ -1,6 +1,12 @@
-# 输出契约 v0.9.0
+# 输出契约
 
 **简体中文** | [English](output.en.md)
+
+## 补读、代码与 PDF 引用
+
+`documents.relationship` 为 attachment 或 example 时，用 parent_document_id/parent_url 追溯父页面。date_context 仅说明父页面日期，不填造子文档 publication_date。follow_up_reads 保留 read、disabled、not_read；attachments_read 表示列出的附件已取到文本，读取范围仍以页码、truncated 为准。read_attachments 给出实际读取的 URL。
+
+代码片段 kind 为 literal_code_block，context_complete:true 仅用于完整保留的发布代码块；不保证代码可直接运行。pdf_pages_extracted、passages.pdf_pages 记录实际页码。附件或示例未补读时，coverage.gaps 可含 attachment_follow_up_not_read / example_follow_up_not_read。它们均与原文共享预算。
 
 ## 调研与原文读取
 

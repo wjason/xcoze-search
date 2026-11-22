@@ -2,6 +2,10 @@
 
 **简体中文** | [English](README.en.md)
 
+## 附件与上下文回归
+
+[最新报告](reports/2026-11-22-followups.md)沿用33道原题，补齐示例、错误分支和附件目标值，并加入英文复测及关闭/预算控制。[复核记录](research-followup-reviews.json)保留全部30道真实题的要求与引用。评测使用已有pdftotext读取PDF，不宣称无提取工具时也可读取。
+
 ## 片段作答支持度
 
 [33 道题与事实要求](research-cases-v2.json)包含 30 道真实问题和 3 道负例。[逐题报告](reports/2026-11-22-answer-support.md)分别记录检索、字面覆盖和返回片段的作答支持度。复核由本轮 Agent 完成，未独立盲审；[复核结论](research-answer-reviews.json)保留缺失要求与引用位置。`review_research.py` 只校验引用和完整性，不自动判断事实正确。新一轮结果必须重新复核。

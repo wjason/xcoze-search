@@ -22,11 +22,11 @@ python3 scripts/xcoze_search.py research '储能' --platform government-procurem
 
 | 参数 | 默认或范围 |
 |---|---|
-| `--read-count` | 最多三份候选；可设 1–5 |
+| `--read-count` | 最多三次原文或补读尝试；可设 1–5 |
 | `--min-documents` | 至少一份不同文档；可设 1–3，不代表来源已相互独立 |
 | `--require-topic` | 可重复的关键主题；省略时从短检索词提取 |
 | `--max-read-characters` | 每份返回文本上限 12000 字符；可设 1000–24000 |
-| `--max-requests` | 整项调研共享，默认 12 次；搜索、目录和正文均计入 |
+| `--max-requests` | 整项调研共享，默认 12 次；搜索、目录、正文与补读均计入 |
 | `--max-seconds` | 默认 45 秒，每次请求受剩余时间限制；不是底层 DNS 的硬截止 |
 | `--page-count` | 南网当前页无命中时最多查两页；可设 1–3，仅跟随页面公布的下一页 |
 
@@ -61,3 +61,15 @@ PDF 使用本机已有的 `pdftotext`，最多请求前十页。没有该工具�
 先列出问题必须回答的事实点，再检查片段是否保留条件、否定、单位、项目身份和日期类型。`coverage.answer_support` 默认为 `not_assessed`，`answer_review_required` 始终保留；字面检查不生成答案准确率。原生方法读取尽量停止在下一方法或同级标题之前，条件与后果优先一起返回。
 
 南网默认走 `csg-search` 官网关键词表单；上面的有限列表翻页仅适用于显式 `--provider csg`。文件获取截止、投标截止与非招标响应截止分别保存在 observations，不据此推断在招状态。
+
+## 按需附件与完整示例
+
+问题需要通知中没有的细节时，可以补读发布者实际链接的一份相关 PDF；操作类问题的示例被明确放在其他页面时，可以再读一个已公布的示例链接。只允许原生阅读范围内的同站链接，不展开外站、带凭据的 URL、递归链接或无关附件。
+
+补读共用当前 `--read-count`（默认三次）、HTTP 预算和剩余时间，分别用 `--attachments off`、`--context-links off` 关闭。只定位出处、或已有片段足以提供主题与数值时不下载附件。片段是否回答了所需事实，仍由 Agent 核对。
+
+补读文档保留 `relationship`、`parent_document_id`、`parent_url`、`follow_up_reason` 和 `date_context`；父文档记录 `follow_up_reads` 及已读取的附件 URL。关闭、失败或预算不足会保留明确缺口。发布日期筛选继续作用于通知，不能把通知日期补成 PDF 的发布日期。
+
+PDF 使用已有的 `pdftotext`，请求第 1–10 页。`pdf_pages_extracted` 列出实际返回文本的页，`passages.pdf_pages` 标记引用所在页，不表示已读取整份文件。缺少工具、扫描件或访问拒绝时保留通知及缺口，不自动安装或改走付费阅读。
+
+代码优先保留发布页面中的完整 HTML 代码块，上限 1800 字符，保留缩进和错误分支两侧。超出返回文本范围的代码块不标记完整。`context_complete` 只说明保留了对应的发布代码块，不代表整套程序完整或回答已被核实。

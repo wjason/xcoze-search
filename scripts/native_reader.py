@@ -25,7 +25,7 @@ def checked_url(url):
     p = urllib.parse.urlsplit(url)
     if p.hostname not in HOSTS or p.port not in (None, 80, 443):
         raise SearchError('unsupported_operation', 'This URL is outside the fixed native-reader sites.')
-    if p.query and re.search(r'(?:token|key|auth|signature|password)=', p.query, re.I):
+    if any(re.search(r'(?:token|key|auth|signature|password)$',name,re.I) for name,value in urllib.parse.parse_qsl(p.query,keep_blank_values=True)):
         raise SearchError('invalid_input', 'Do not submit credential-bearing URLs.')
     # Preserve the published path; transport uses HTTPS, never an arbitrary host.
     return urllib.parse.urlunsplit(('https', p.hostname, p.path or '/', p.query, ''))
@@ -38,6 +38,7 @@ class ArticleParser(HTMLParser):
         self.focus=focus;self.focused=False;self.focus_parts=[]
         self.ids=[]
         self.in_focus=False;self.focus_depth=0;self.focus_tag=None
+        self.code_blocks=[];self.code_parts=None
 
     def handle_starttag(self, tag, pairs):
         a = dict(pairs)
@@ -54,6 +55,7 @@ class ArticleParser(HTMLParser):
         marker = (a.get('id','') + ' ' + a.get('class','')).lower()
         chosen = not hidden and (tag in ('main','article') or bool(re.search(r'\b(?:trs_editor|ucap-content|article-content|articlebody|contentbody|detail-content|markdown-body|document|wyzw|zoom|content-main)\b', marker)))
         if tag not in VOID: self.stack.append((tag, hidden, chosen))
+        if tag=='pre' and not hidden:self.code_parts=[]
         if chosen: self.groups.append(len(self.selected))
         if tag in ('p','div','li','br','h1','h2','h3','pre','tr','section'):
             self.parts.append('\n'); self.selected.append('\n')
@@ -61,6 +63,8 @@ class ArticleParser(HTMLParser):
         if tag == 'a' and not hidden: self.anchor = [a.get('href',''), []]
 
     def handle_endtag(self, tag):
+        if tag=='pre' and self.code_parts is not None:
+            self.code_blocks.append(''.join(self.code_parts).strip('\n'));self.code_parts=None
         if self.in_focus and not self.focus.startswith('method.') and tag==self.focus_tag and self.focus_tag in ('section','article','div') and len(self.stack)==self.focus_depth:self.in_focus=False
         if tag == 'a' and self.anchor is not None:
             self.links.append((self.anchor[0], ''.join(self.anchor[1]).strip())); self.anchor = None
@@ -71,6 +75,7 @@ class ArticleParser(HTMLParser):
 
     def handle_data(self, text):
         if self.stack and self.stack[-1][1]: return
+        if self.code_parts is not None:self.code_parts.append(text)
         if any(t[0] == 'title' for t in self.stack): self.title.append(text); return
         if any(t[0] == 'head' for t in self.stack): return
         self.parts.append(text)
@@ -118,9 +123,15 @@ class NativeReader(Provider):
                         capture_output=True, timeout=10, check=False, env={k:v for k,v in __import__('os').environ.items() if k in ('PATH','SYSTEMROOT','WINDIR','LANG','TMPDIR','TEMP','TMP')})
                 except (OSError, subprocess.TimeoutExpired): raise SearchError('extraction_failed', 'Bounded PDF extraction failed.') from None
                 if job.returncode or len(job.stdout) > 2_000_000: raise SearchError('extraction_failed', 'PDF text could not be extracted within limits.')
-                text = cleaned(job.stdout.decode('utf-8','replace'))
+                pages=[cleaned(page) for page in job.stdout.decode('utf-8','replace').split('\f')]
+                while pages and not pages[-1]:pages.pop()
+                spans=[];line=1
+                for i,page in enumerate(pages,1):
+                    if page:
+                        size=page.count('\n')+1;spans.append({'page':i,'line':line,'line_end':line+size-1});line+=size
+                text='\n'.join(page for page in pages if page)
             if len(text) < 100: raise SearchError('extraction_failed', 'PDF has insufficient readable text; it may require OCR.')
-            return {'pdf_text': text}
+            return {'pdf_text': text,'pdf_page_spans':spans,'pdf_pages_extracted':[p['page'] for p in spans]}
         try: html = raw.decode('utf-8-sig')
         except UnicodeError: raise SearchError('invalid_response', 'Original is not supported UTF-8 HTML.') from None
         if '<html' not in html.lower(): raise SearchError('invalid_response', 'Original is not recognizable HTML.')
@@ -132,6 +143,7 @@ class NativeReader(Provider):
             return {'title': '', 'content': raw['pdf_text'], 'summary':'', 'highlights':[],
                 'source_url': source, 'content_kind':'pdf_text', 'page_body_read':True,
                 'pdf_pages_requested':[1,10], 'completeness_verified':False, 'truncated':True,
+                'pdf_page_spans':raw.get('pdf_page_spans',[]),'pdf_pages_extracted':raw.get('pdf_pages_extracted',[]),
                 'publication_date':None, 'publication_date_basis':None}
         html = raw['html']; fragment=urllib.parse.unquote(urllib.parse.urlsplit(url).fragment)
         parser = ArticleParser(fragment); parser.feed(html)
@@ -180,6 +192,14 @@ class NativeReader(Provider):
         links = [{'url':urllib.parse.urljoin(source,href),'title':text} for href,text in parser.links
                  if public_url(urllib.parse.urljoin(source,href))]
         attachments=[link for link in links if re.search(r'\.(?:pdf|docx?|xlsx?)(?:$|\?)',link['url'],re.I)][:10]
+        examples=[link for link in links if urllib.parse.urlsplit(link['url']).fragment.casefold() in ('examples','example')]
+        blocks=[]
+        for code in parser.code_blocks:
+            normalized=cleaned(code);offset=body.find(normalized)
+            if normalized and offset>=0 and len(code)<=1800:
+                start=body[:offset].count('\n')+1
+                blocks.append({'text':code,'line':start,'line_end':start+normalized.count('\n'),'complete':True})
+            if len(blocks)>=16:break
         return {'title':title, 'content':body, 'summary':'', 'highlights':[], 'source_url':source,
                 'content_kind':'official_original', 'page_body_read':True, 'completeness_verified':False,
                 'extraction_scope':'requested_anchor_on_page' if parser.focused else 'article_container' if len(selected)>=100 else 'visible_page',
@@ -187,6 +207,7 @@ class NativeReader(Provider):
                 'anchor_basis':anchor_basis,
                 'publication_date':stamp, 'publication_date_basis':basis, 'outbound_links':(attachments+links)[:40],
                 'attachments':attachments,'attachments_read':False,
+                'related_reading':examples[:6],'code_blocks':blocks,
                 **({'source_url':source+'#'+urllib.parse.quote(fragment,safe='.:_-')} if parser.focused else {})}
 
     def metadata(self, raw, rows, count):

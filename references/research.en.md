@@ -22,11 +22,11 @@ These are literal evidence checks, not semantic scoring or fact verification. A 
 
 | Option | Default or range |
 |---|---|
-| `--read-count` | Up to three candidates; 1–5 |
+| `--read-count` | Up to three original/follow-up read attempts; 1–5 |
 | `--min-documents` | At least one distinct document; 1–3, not a claim of source independence |
 | `--require-topic` | Repeat essential terms; otherwise derive them from short query terms |
 | `--max-read-characters` | 12000 characters per read; 1000–24000 |
-| `--max-requests` | Shared task limit, default 12; search, directory and body requests all count |
+| `--max-requests` | Shared task limit, default 12; search, directory, body and follow-up requests all count |
 | `--max-seconds` | Default 45; requests use remaining time, not a hard underlying DNS deadline |
 | `--page-count` | Up to two Southern Grid pages on an empty window; 1–3, published next links only |
 
@@ -61,3 +61,15 @@ Run `sources --refresh` explicitly to update the local cache with one public req
 List the facts required by the question and verify that passages retain conditions, negations, units, project identity and date types. `coverage.answer_support` stays `not_assessed` with `answer_review_required`; literal checks do not generate answer-accuracy scores. Native method extraction stops before the next method or peer heading where possible, and keeps conditions with consequences.
 
 Southern Grid defaults to the website keyword form, `csg-search`. The bounded list pagination above applies only to explicit `--provider csg`. Observations distinguish acquisition, bid and non-tender response deadlines without inferring current bidding status.
+
+## Attachments and complete examples
+
+When a question needs details missing from a notice, research can read one relevant PDF linked by the publisher. For procedural questions, it can also follow one published example link when the current page delegates examples elsewhere. Only the same host on the native reader's supported list is eligible. External hosts, credential-bearing URLs, recursive links and unrelated attachments are not followed.
+
+Both follow-ups use the current `--read-count` (default three), HTTP budget and remaining time. `--attachments off` and `--context-links off` turn them off separately. Plain source-location questions and notices already containing sufficient topic/value evidence do not download attachments. The Agent still checks whether the excerpts answer the facts required.
+
+A child document carries `relationship`, `parent_document_id`, `parent_url`, `follow_up_reason` and `date_context`. The parent retains `follow_up_reads` and the URLs of read attachments. Disabled, failed or budget-limited reads remain explicit gaps. Publication filters keep their notice-date meaning; they never manufacture a publication date for an attached PDF.
+
+PDF text uses an existing `pdftotext`, requesting pages 1–10. `pdf_pages_extracted` lists pages with returned text and `passages.pdf_pages` locates the evidence. This does not prove full-file extraction. Missing tools, scanned documents or access denials keep the notice and the gap, without installing software or switching to a paid reader.
+
+For code, research prefers a complete published HTML code block of at most 1800 characters, retaining indentation and both sides of error branches. Blocks outside the returned text limit are not labeled complete. `context_complete` describes the retained published block, not the completeness of the whole program or the truth of an answer.

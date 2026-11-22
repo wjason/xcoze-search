@@ -2,6 +2,13 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
+## v0.10.2 — 2026-11-22
+
+- Read one necessary published same-host PDF and one delegated example at most, without recursion and within shared reading, HTTP and time budgets.
+- Preserve complete published code/error branches, actual PDF pages and parent relationships; notice dates do not become attachment publication dates.
+- Add explicit controls and gaps for disabled, budget-limited, denied or dependency-missing follow-ups.
+- Retest the three outstanding questions and regress the research corpus; update bilingual usage and per-question reviews.
+
 ## v0.10.1 — 2026-11-22
 
 - Add Southern Grid website keyword search, retain lists, classify truncated tender titles and share pacing/access-denial cooldowns.
