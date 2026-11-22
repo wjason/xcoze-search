@@ -5,9 +5,9 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**xcoze search 是为 AI Agent 打造的智能聚合搜索，让 Agent 搜得更广、找得更准。**
+**xcoze search 是面向 AI Agent 的调研搜索组件：选择来源、查找资料、读取原文并保留可核验的证据。**
 
-它汇集多种公开信息源和搜索服务，覆盖网页、新闻、政策、论文、开源项目和公共数据。Agent 可以根据问题选择合适的渠道，查找信息、阅读原文并提供来源链接。
+它聚合公开信息源和可选搜索服务，覆盖技术文档、政策、能源电力、招投标、论文和开源项目。需要深入调研时，Agent 可以在同一预算内搜索、读原文、整理引用，并识别还缺哪些证据。
 
 安装后即可使用免费搜索，也可以接入自己选择的搜索服务，按需要切换搜索方式。
 
@@ -65,6 +65,16 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“请用 xcoze search”来明确指定这个 Skill，或者指定本次要用的来源。
 
+### 从资料到证据
+
+查一条链接时直接搜索；需要解释、比较或核对事实时，Agent 可使用调研流程，按需读原文并返回引用片段。已适配官方站点优先直接读取，公共资源目录会继续读取其公布的正文链接。重复网页归并，未知日期和未读内容保持明确。
+
+```text
+查阅 TaskGroup 的官方原文，解释一个任务失败后其他任务会怎样，给出支持结论的段落。
+```
+
+[调研流程与预算](references/research.md) · [查看逐项支持状态](references/source-status.md)
+
 ### 搜索偏好
 
 默认使用 **Smart**：没有配置 Key 时使用免 Key 来源；配置并启用 Key 后，优先考虑搜索效果，也会使用合适的公开来源。
@@ -87,7 +97,7 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 |---|---:|---|
 | 通用网页搜索 | 5 | Parallel Search MCP、Exa MCP、360 HTML、Bing RSS、DuckDuckGo HTML |
 | 官方文档 | 7 | Python、pandas、SQLAlchemy、MDN Web Docs、Kubernetes、Go、Rust |
-| 网页阅读 | 2 | Jina Reader、Exa MCP |
+| 网页阅读 | 3 | 官方站点原生读取、Jina Reader、Exa MCP |
 | 开源项目、软件包与模型 | 5 | GitHub、GitLab.com、npm、crates.io、Hugging Face |
 | 论文与科研 | 5 | arXiv、Crossref、Europe PMC、DataCite、Zenodo |
 | 百科、知识库与问答 | 3 | Wikipedia、Wikidata、Stack Exchange |
@@ -119,6 +129,8 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 
 ## 搜索评测
 
+v0.10.0 增加从搜索到原文与证据缺口的调研题集，分别记录候选、正文、引用覆盖、日期和耗时，不以非空结果代表答对。[调研实测与未命中记录](evaluations/reports/2026-11-22-research.md)。
+
 公开题集已扩至 100 道，每道题附有来源、相关性或日期的核验条件。
 
 2026-11-09 免费模式基线中，100 道题均返回候选。99 道预设域名的题中，有 97 道在前五条命中，检索耗时中位数为 966 毫秒。
@@ -132,6 +144,16 @@ Agent 会根据问题选择合适的搜索或阅读方式。你也可以说“�
 [Kubernetes、Go、Rust 与国内站内检索实测](evaluations/reports/2026-11-16-native-search.md)，包含同时禁用 Exa 和 Parallel 的 100 题记录。
 
 [能源电力与招投标专项实测](evaluations/reports/2026-11-16-energy-procurement.md)包含 27 道真实问题，在关闭 Exa、Parallel 和带 Key 服务的条件下运行，并记录原文核验与访问限制。
+
+## 更新
+
+可以直接告诉 Agent：
+
+```text
+检查并更新 xcoze search，保留我的 Key 和搜索偏好。
+```
+
+更新会校验安装包，备份旧安装；失败时保留原安装，配置目录独立保存。正常安装包不再携带历史评测数据，需要时可在仓库或源码包中查看。[版本检查、离线更新与恢复](INSTALL.zh-CN.md#升级与卸载)。
 
 ## 配置 API Key
 

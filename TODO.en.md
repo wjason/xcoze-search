@@ -2,7 +2,18 @@
 
 [简体中文](TODO.md) | **English**
 
-Updated 2026-11-16. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
+Updated 2026-11-22. Focus: Agent web search and source reading. Default automatic routing, public access without keys, quality-first with keys. Implementation, live access and search quality are recorded separately.
+
+## v0.10.0: research workflow
+
+- [x] Version checks, verified update packages, backups and restore.
+- [x] Native official reading, published body links, PDF/anchor bounds and explicit dates.
+- [x] Shared search/read budgets and evidence-gap-driven bounded continuation.
+- [x] Document deduplication, possible republications and cited passages.
+- [x] Dated public source snapshots, stale checks and scheduled bilingual status refresh.
+- [x] Research task evaluation with originals and deliberate negative cases.
+- [ ] Improve the remaining Southern Grid keyword/window miss without bulk scanning or bypassing verification.
+- [ ] Extend semantic answer review beyond the current sample; literal coverage remains distinct.
 
 ## Latest keyless retrieval work
 
@@ -59,7 +70,7 @@ Updated 2026-11-16. Focus: Agent web search and source reading. Default automati
 - [x] Survey 165 free/public candidates/exclusions, six MCP protocol/query paths and ten public APIs. [Evidence](https://github.com/wjason/xcoze-search/blob/main/research/free-sources-2026-11.en.md) is not integration.
 - [x] Add anonymous Parallel search and test it without Exa. [100-question comparison](evaluations/reports/2026-11-10-parallel-no-exa.en.md).
 - [ ] Track the anonymous MCP migration and quotas. Evaluate Parallel fetch separately.
-- [ ] Prioritize task-specific Microsoft Learn, MDN and searchcode. Validate Cloudflare Docs tails and grep.app hits before enabling.
+- [ ] Prioritize task-specific Microsoft Learn and searchcode. Validate Cloudflare Docs tails and grep.app hits before enabling.
 - [ ] Extend NDRC/NEA/NBS public originals/date parsing without claiming complete notice coverage.
 
 - [x] v0.8.0: integrate and live-check Zhihu hot questions, Bilibili hotwords and V2EX hot topics, separately from keyword search/bodies/comments.

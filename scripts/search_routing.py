@@ -42,12 +42,14 @@ NATIVE_PLATFORMS.update({'nea': 'nea-archive', 'ggzy': 'ggzy-search', 'governmen
 def platform_catalog(platform=None):
     """Declarations only: do not execute another program, read credentials or probe a site."""
     import shutil
+    from source_health import sample_health
     rows = []
     for name, domain in PLATFORMS.items():
         if platform and name != platform: continue
         source = NATIVE_PLATFORMS.get(name)
         adapter = PUBLIC_REGISTRY.get(source)
         rows.append({"platform": name, "default_domain": domain, "native_provider": source,
+                     'availability':sample_health(source or name,'search' if source else 'scope'),
                      "coverage": "native_official_index" if source in ('docs', 'site-docs', 'nea-archive', 'csg') else "native_site_search" if source in ('go-docs', 'cninfo', 'nbs-search', 'ggzy-search') else "native_public_api" if source else "public_index_only",
                      "search_scope": adapter.capabilities()["search_scope"] if adapter else "public_web_index_not_site_search",
                      "native_fetch": bool(adapter and adapter.fetch_endpoint),
@@ -186,6 +188,8 @@ def plan(args, config, credential, *, fetch=False):
         if fetch:
             from urllib.parse import urlsplit
             host = urlsplit(args.url).hostname
+            from native_reader import HOSTS
+            if host in HOSTS: specialized = 'native-reader'
             if host == "github.com" and len(urlsplit(args.url).path.strip("/").split("/")) == 2:
                 specialized = "github"
             elif host == "news.ycombinator.com": specialized = "hackernews"
@@ -213,14 +217,14 @@ def plan(args, config, credential, *, fetch=False):
     eligible, skipped, unavailable = [], [], []
     for name in candidates:
         provider = ALL[name]
-        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp'):
-            pause = pause_status(name)
+        if not explicit and name in ("exa-free", "parallel-free", "so360", "duckduckgo", "browser", 'site-docs', 'go-docs', 'cninfo', 'nbs-search', 'nea-archive', 'ggzy-search', 'csg', 'ccgp', 'native-reader'):
+            pause = pause_status(provider.access_scope({'url':args.url}) if name=='native-reader' and fetch else name)
             if pause:
                 unavailable.append({"provider": name, **pause})
                 continue
         try:
             if fetch:
-                if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free", "community"):
+                if getattr(args, "max_characters", None) is not None and name not in ("jina", "exa-free", "community", 'native-reader'):
                     raise SearchError("unsupported_option", "Source does not support adjustable reading length.")
                 if not provider.fetch_endpoint:
                     raise SearchError("unsupported_operation", "Source does not read URLs.")

@@ -36,6 +36,30 @@ npx skills add wjason/xcoze-search --skill xcoze-search
 
 ## 升级与卸载
 
+可以让 Agent 检查并更新已安装的 Skill，无需寻找配置文件。默认包含已发布的预览版；加 `--stable` 只查稳定版，不会自动降级较新的安装。
+
+```bash
+python3 "<skill_dir>/scripts/manage_skill.py" check
+python3 "<skill_dir>/scripts/manage_skill.py" update
+python3 "<skill_dir>/scripts/manage_skill.py" check --offline
+```
+
+旧版如果还没有更新工具，由 Agent 从新 Release 获取 Skill ZIP，核对 `SHA256SUMS.txt` 后，使用新包中的工具更新原目录：
+
+```bash
+python3 "<new_package>/scripts/manage_skill.py" install --source /path/xcoze-search-skill-v0.10.0.zip --target /path/to/skills/xcoze-search
+```
+
+更新工具在替换前校验包内每个文件，并把旧目录及本地修改备份到技能发现目录之外；配置目录中的 Key 和偏好不变。输出会给出备份路径，可以恢复：
+
+```bash
+python3 "<skill_dir>/scripts/manage_skill.py" restore --source /path/to/backup --target /path/to/skills/xcoze-search
+```
+
+更新后重新加载 Agent 或新建会话。网络、限流或校验失败不会删除原安装；GitHub 下载受限时可以使用已核验的离线 ZIP。不要安装不可信来源的压缩包。
+
+
+
 升级时替换 Skill 目录，不会覆盖用户配置目录中的 Key。若需要降级旧版本，请先阅读[配置迁移说明](references/setup.md#存储与迁移)：旧版本可能无法读取新配置，迁移备份也不包含之后更换的 Key。
 
 卸载时删除 Agent 的 Skill 目录。如需同时清理凭据，还需删除本地配置及备份、清除相应环境变量，并按需在服务商处撤销 Key。

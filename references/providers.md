@@ -22,6 +22,7 @@
 | github | https://api.github.com/search/repositories | [公开仓库接口](https://docs.github.com/en/rest/search/search)，最多 20 条；不含代码搜索，默认 README 读取走固定 repos 接口 |
 | hackernews | https://hn.algolia.com/api/v1/search | 帖子检索，支持起止日期；[官方单条接口](https://github.com/HackerNews/API)读帖子/评论，保留子评论 ID 而不自动遍历 |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/)固定服务转取公开 URL；仅阅读、不搜索；最多返回 24000 字符并标明截断 |
+| native-reader | 固定官方文档、能源/统计、公共资源、南网与巨潮 PDF 域名 | 直接原文读取；公告正文链接最多跟随一层，PDF 依赖已有 pdftotext，最多前十页 |
 
 所有免 Key 适配器不读取或发送其他凭据。它们仍向外部服务发送查询或 URL；公开页面、匿名额度与可用性没有 SLA。DNS 与页面访问由固定上游服务处理，脚本不直连任意用户目标地址。过滤不支持时拒绝或在自动计划中排除该来源，不能静默忽略条件。自动规则见 [调度](routing.md)。
 

@@ -5,7 +5,7 @@
 [![Tests](https://github.com/wjason/xcoze-search/actions/workflows/test.yml/badge.svg)](https://github.com/wjason/xcoze-search/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**xcoze search is intelligent aggregated search for AI agents, helping them search more broadly and find more relevant results.**
+**xcoze search is a research search component for AI Agents: choose sources, find material, read originals and retain verifiable evidence.**
 
 It brings together public information sources and search services across the web, news, policy, research papers, open-source projects, and public data. Agents can choose suitable sources for a question, find information, read original pages, and provide source links.
 
@@ -67,6 +67,16 @@ Energy research example:
 Find Guangdong energy storage procurement and construction tenders from the past month. Distinguish tender, award and correction notices and link to the originals.
 ```
 
+### From sources to evidence
+
+Use search to locate a link. For explanations, comparisons and fact checks, the Agent can search and read originals within one budget, returning cited passages and gaps. Adapted official sites use direct reading; public trading directories lead to their published body links. Duplicate documents are grouped; unknown dates and unread material remain explicit.
+
+```text
+Read the TaskGroup official original and explain what happens to other tasks when one task fails. Cite the supporting passages.
+```
+
+[Research workflow and budgets](references/research.en.md) · [Action-level support status](references/source-status.en.md)
+
 ### Search preferences
 
 The default is **Smart**: use keyless sources when no key is configured; when keys are configured and enabled, prioritize search quality while also using appropriate public sources.
@@ -89,7 +99,7 @@ For official documentation, the Agent can search Python, pandas, SQLAlchemy, Kub
 |---|---:|---|
 | General web search | 5 | Parallel Search MCP, Exa MCP, 360 HTML, Bing RSS, DuckDuckGo HTML |
 | Official documentation | 7 | Python, pandas, SQLAlchemy, MDN Web Docs, Kubernetes, Go, Rust |
-| Page reading | 2 | Jina Reader, Exa MCP |
+| Page reading | 3 | Native official-site reading, Jina Reader, Exa MCP |
 | Open-source projects, packages and models | 5 | GitHub, GitLab.com, npm, crates.io, Hugging Face |
 | Research | 5 | arXiv, Crossref, Europe PMC, DataCite, Zenodo |
 | Encyclopedias, knowledge and Q&A | 3 | Wikipedia, Wikidata, Stack Exchange |
@@ -121,6 +131,8 @@ For energy research, search NEA published documents and statistical releases. Pr
 
 ## Search evaluation
 
+v0.10.0 adds tasks spanning search, original reading and evidence gaps. The evaluation records candidates, bodies, citation coverage, dates and latency separately rather than equating nonempty results with correct answers. [Research checks and unresolved cases](evaluations/reports/2026-11-22-research.en.md).
+
 The benchmark now includes 100 questions with criteria for checking relevance, source identity and dates.
 
 In the November 9, 2026 free baseline, all 100 questions returned candidates. Among 99 questions with expected domains, 97 found one in the top five. The median retrieval time was 966 ms.
@@ -134,6 +146,16 @@ In the November 9, 2026 free baseline, all 100 questions returned candidates. Am
 [Kubernetes, Go, Rust and Chinese site-search checks](evaluations/reports/2026-11-16-native-search.en.md) include a 100-question run with both Exa and Parallel disabled.
 
 [Energy and procurement live checks](evaluations/reports/2026-11-16-energy-procurement.en.md) cover 27 real questions with Exa, Parallel and keyed services disabled, with original-page checks and access limitations retained.
+
+## Updating
+
+Tell your Agent:
+
+```text
+Check and update xcoze search while preserving my keys and search preferences.
+```
+
+Updates verify packages and back up the previous installation. Failures retain the installed copy, and configuration remains separate. Historical evaluation data stays in the repository and source archive. See [version checks, offline updates and restore](INSTALL.en.md#upgrade-and-uninstall).
 
 ## Configure API keys
 

@@ -281,7 +281,8 @@ class CSGNotices(SiteSource):
                                 'project_number': None, 'buyer': None, 'deadline': None,
                                 'deadline_verified': False, 'open_for_bidding': None})
         if not entries: raise SearchError('invalid_response', 'Public list has no recognized procurement entries; not treated as an empty search.')
-        return {'entries': entries}
+        following=re.search(r'<a\b[^>]*href=[\"\']index_(\d+)\.jhtml[\"\'][^>]*>\s*下一页',html,re.I)
+        return {'entries': entries,'next_page':int(following[1]) if following else None}
 
     def normalize_search(self, raw, args):
         payload = self.build_search(args); kind = option(args, 'notice_type') or 'tender'
@@ -294,5 +295,6 @@ class CSGNotices(SiteSource):
         return rows, {**self.metadata({}, all_rows, args.count), **meta,
                       'source_row_count': len(all_rows), 'notice_type': kind, 'page': payload['page'],
                       'query_sent_to_source': False, 'pagination_fetched': False,
+                      'next_page':raw.get('next_page'),
                       'site_keyword_search': False, 'page_body_read': False,
                       'excluded_other_notice_stages': len(all_rows) - len(selected)}

@@ -2,24 +2,16 @@
 
 [简体中文](CHANGELOG.md) | **English**
 
-## Unreleased
+## v0.10.0 — 2026-11-22
 
-- Add keyless NEA published archive search, public trading notice search and Southern Grid public list filtering. Preserve notice stages, province/date constraints and explicit bounded pagination. Publish 27-question checks with Exa and Parallel disabled; keep CCGP full-site search unsupported.
-
-- Add keyless Kubernetes/Rust index search, Go standard-library symbol search, CNINFO disclosures and NBS site search; preserve method receivers, markets and statistical periods. Add a dual Exa/Parallel outage benchmark.
-- Add direct Python, pandas, SQLAlchemy and MDN documentation search, plus lightweight 360 HTML fallback; prioritize Parallel in keyless web search and stop repeated CAPTCHA redirects.
-- Add anonymous Parallel Search as an independent fallback and publish a 100-question no-Exa comparison.
-- Add a reproducible Exa outage test, share a short cooldown across anonymous search and reading after transport errors, and document independent fallbacks.
-- Run the 100-question free baseline and improve exact DOI and Federal Register searches.
-- Publish a bilingual 100-question benchmark with eight new groups and per-question review criteria.
-- Expand the Agent benchmark to 20 questions, verify against original sources and add a weekly public-source audit.
-- Add a bilingual Agent search benchmark and live report, keyless benchmark isolation, and query guidance for repositories and disclosures.
-- Add per-source, per-action support status and live-check records, with pending candidates listed separately.
-- Add 11 recent official China listings, DATA.GOV.HK update RSS, and 14 public-index scopes; scoped indexes are not native APIs.
-- Add recent public NDRC, National Bureau of Statistics and National Energy Administration listings; document additional Chinese public sources.
-- Add public NASA media, U.S. Federal Register, World Bank indicator and recent USGS earthquake sources.
-- Add public metadata search for Open Library, DataCite, Zenodo and Wikidata.
-- Check supported keyless sources with live requests and record access limits.
+- Add bounded research search, original reading, cited passages and evidence-gap handling under shared request/time limits.
+- Add native reading for fixed official sites, published notice-body links, existing method anchors and optional first-ten-page PDF extraction; preserve original/list date differences.
+- Merge document tracking duplicates while preserving versions and provider provenance; flag possible republications and extract deadlines only from explicit original labels.
+- Add version checks, integrity manifests, backup-preserving updates and restore. Reduce normal package and entry instructions; keep historical evaluations in the repository/source archive.
+- Separate source scope, check date and current availability with seven-day expiry; weekly checks update the public snapshot and bilingual status pages.
+- Integrate Python, pandas, SQLAlchemy, MDN, Kubernetes, Go and Rust documentation, plus NEA archives, NBS site search, CNINFO, public trading and Southern Grid lists.
+- Fix valueless image alt attributes aborting public checks; retain per-action progress and failures.
+- Add research tasks and deliberate gap cases measuring retrieval, originals, passages, dates, recovery and latency without calling term coverage answer accuracy.
 
 ## v0.9.1 — 2026-11-05
 

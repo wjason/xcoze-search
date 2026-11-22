@@ -2,6 +2,17 @@
 
 **简体中文** | [English](README.en.md)
 
+## 调研流程评测
+
+[调研题集](research-cases.json)包含 13 道原文与事实问题，以及 3 道日期、主题和预算负例。除候选命中外，还检查原文读取、返回片段的必要主题、日期范围、HTTP 次数、耗时和未解决缺口。[2026-11-22 报告](reports/2026-11-22-research.md)保留漏检、逐题结果和六题人工复核。主题标记覆盖不等于答案准确。
+
+```bash
+python3 evaluations/evaluate_research.py --output /tmp/xcoze-research-plan.json
+python3 evaluations/evaluate_research.py --live --output /tmp/xcoze-research-results.json
+```
+
+默认仅生成离线计划。实测在发送前禁用 Exa、Parallel、带 Key 来源、宿主搜索和浏览器，不读取用户配置；公开产物保存来源、主题标记和状态，不保存整页原文。每周来源巡检会回写 `references/source-health.json` 和中英文支持状态页。安装后的 `sources` 默认离线；`sources --refresh` 用一次公开请求更新本机状态缓存，不试搜所有来源。
+
 语料日期：2026-11-02。`queries.json` 包含 12 个中英文搜索查询和 3 个正文提取 URL，覆盖技术文档、原始规范、内容类型、固定日期新闻、版本差异和冲突信息。它用于复现、比较返回内容及辅助人工阅读，不是通用准确率评测。
 
 ## Agent 搜索题集

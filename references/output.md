@@ -2,6 +2,14 @@
 
 **简体中文** | [English](output.en.md)
 
+## 调研与原文读取
+
+`research` 返回 results、documents、coverage、events、budget 和 stop_reason。results 按文档归并，保留 retrieved_by、document_id、原生评分和 research_rank；不比较不同服务的分数。documents 区分正文、引用片段、原文日期与检索日期；page_body_read、truncated、pdf_pages_requested 和 extraction_scope 表示读取范围。
+
+coverage 是字面引用覆盖，enough_for_agent_review 不等于答案已验证。缺口保留在 gaps 中，facts_verified:false、complete:false 要求 Agent 继续核验。observations 仅记录明确标签支持的字段；bid_deadline 不等于 open_for_bidding。
+
+`sources` 完全离线，分别返回声明的支持范围和按动作记录的最近可用性，超过七天的检查标为 stale。`native-reader` 读取固定官方域名的正文，目录到正文的两次请求均计入同一预算，HTTP 拒绝按站点独立冷却。详见[调研说明](research.md)。
+
 ## 官方文档结果
 
 `documentation_index` 通过固定官方索引定位页面和符号，返回标题、链接及命中词，不包含正文或发布日期。请求元数据有 `query_sent_to_source:false`、`page_body_read:false` 和 `index_documents`。MDN 返回的站点摘要仍标为 `search_summary`。用法见[官方文档搜索](documentation.md)。

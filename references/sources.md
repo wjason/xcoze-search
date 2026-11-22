@@ -26,6 +26,7 @@
 | 统计局站内搜索 | 通过网站选用的搜索后端查询已发布页面 | [支持 · 适配通过](china-site-search.md) |
 | MDN Web Docs | MDN 英文文档站内搜索 | [支持 · 适配通过](documentation.md) |
 | Jina Reader | 读取网页内容 | 支持 · 本次受限 |
+| 官方站点原生读取 | 读取已适配文档、能源、统计、公告正文和可选 PDF 前十页 | [支持 · 读取范围](research.md) |
 | GitHub | 搜索公开仓库、读取仓库 README | 搜索通过；README 受限 |
 | GitLab.com | 搜索公开项目 | 支持 · 适配通过 |
 | Hacker News | 搜索帖子、读取单条帖子或评论 | 支持 · 适配通过 |

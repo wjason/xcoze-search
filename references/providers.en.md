@@ -22,6 +22,7 @@
 | github | https://api.github.com/search/repositories | [Public repositories](https://docs.github.com/en/rest/search/search), max 20; no code search; default README through fixed repos endpoint |
 | hackernews | https://hn.algolia.com/api/v1/search | Stories with optional start/end dates; [official single-item API](https://github.com/HackerNews/API) reads story/comment metadata and child IDs without traversal |
 | jina | https://r.jina.ai/ | [Reader](https://jina.ai/reader/) for public URLs; reading only, max 24000 characters with truncation flag |
+| native-reader | Fixed official documentation, energy/statistics, public trading, Southern Grid and CNINFO PDF hosts | Direct original reading; one published body link, optional existing pdftotext for up to ten PDF pages |
 
 Keyless adapters neither load nor send other credentials. Queries/URLs still go to external services; public pages, anonymous quotas and availability have no SLA. Fixed upstream services perform target resolution/fetching; the script does not connect to arbitrary user-supplied target hosts. Unsupported constraints fail or exclude the source from auto plans rather than being ignored. See [routing](routing.en.md).
 

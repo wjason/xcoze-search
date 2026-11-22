@@ -2,15 +2,21 @@
 
 [简体中文](VALIDATION.md) | **English**
 
-## Energy and procurement — 2026-11-16 (unreleased)
+## v0.10.0 — 2026-11-22
+
+257 offline tests pass. With Exa, Parallel, user keys, host search and browser disabled, 12 of 13 research tasks returned originals and required topic passages. The Southern Grid task still found no matches in the current two-page list window. Three date, topic and budget negative cases retained the expected gaps. The run used 36 HTTP requests, with a positive-task median of 1.56 seconds; one separate TaskGroup follow-up read was also made. Six tasks received manual review of factual support and reading scope. General answer accuracy was not measured.
+
+A complete public-source check covered 89 actions: 79 passed, seven were limited and three returned no matches. Adapter scope and recent availability are shown separately, with dated stale samples and weekly public status updates. See the [per-task results and limits](evaluations/reports/2026-11-22-research.en.md).
+
+## Energy and procurement — 2026-11-16 (included in v0.10.0)
 
 234 offline tests pass. Twenty-seven real questions returned expected-source candidates with Exa, Parallel, keys, host search and browser disabled. Fourteen result pages and five separately linked notice bodies were checked. Additional government-contract and Southern Grid non-tender samples passed. CCGP and Southern Grid full-site keyword searches remain unsupported; NEA list dates can differ from original publication dates. See the [report](evaluations/reports/2026-11-16-energy-procurement.en.md).
 
-## Native documentation and Chinese site search — 2026-11-16 (unreleased)
+## Native documentation and Chinese site search — 2026-11-16 (included in v0.10.0)
 
 223 offline tests pass. Seventeen focused retrieval cases found expected pages or disclosures; sixteen originals were checked for API/topic markers, including two report covers. In a 100-question run with Exa, Parallel, user keys, host search and browser disabled, 65 questions returned candidates and 63/99 hit an expected domain in the top five. Unresolved questions and intermediate failures remain in the [report](evaluations/reports/2026-11-16-native-search.en.md).
 
-## Keyless documentation search — 2026-11-16 (unreleased)
+## Keyless documentation search — 2026-11-16 (included in v0.10.0)
 
 211 offline tests pass. New official Sphinx and MDN adapters passed 7 focused documentation cases. 360 HTML returned locally accepted candidates on 6 of 8 Chinese scoped cases; batching later reached CAPTCHA, now classified and paused. Five original pages contained expected topic markers. A complete 100-question run with Exa, keys, host search and browser disabled returned candidates on 67 questions; this is not an answer-accuracy score. See the [report and raw data](evaluations/reports/2026-11-16-keyless-search.en.md).
 

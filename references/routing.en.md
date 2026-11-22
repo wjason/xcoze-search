@@ -2,6 +2,12 @@
 
 [简体中文](routing.md) | **English**
 
+## Gap-driven research
+
+Use `research` when original-source evidence is needed; ordinary `search` keeps its quick discovery behavior. Research shares one HTTP and time budget, reads candidate originals, then checks required topics in returned passages, original dates, document count and missing scope. Missing evidence advances to another compatible source. It stops when ready for Agent review or when the budget is exhausted. Explicit sources stay explicit, and free mode never calls keyed APIs.
+
+Known official hosts prefer `native-reader`, without Exa, Parallel or browsers. Matching links merge into documents while preserving retrieval provenance; same-title pages on other sites are only possible republications. `coverage` checks literal terms and scope. The Agent still judges factual support, contradictions and source independence. See the [research workflow](research.en.md).
+
 ## Defaults and overrides
 
 Normal questions trigger the Skill without a mode choice. Search defaults to provider auto. Precedence: explicit current source/strategy, saved preferences, then Smart. A named source overrides a saved mode; an explicit free strategy together with a keyed source is rejected.

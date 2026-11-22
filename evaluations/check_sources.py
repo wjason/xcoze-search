@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import xcoze_search as search
 from content_sources import FEEDS
 from public_trends import TRENDING
+from source_health import pack_snapshot
 
 BEIJING = timezone(timedelta(hours=8))
 SEARCH = {
@@ -51,6 +52,7 @@ SCOPES = {
     'scidb': '气候 数据集', 'ceic': '地震 速报', 'nmefc': '海洋 预报', 'hko': '天文台 天气',
 }
 FETCH = {
+    'native-reader': 'https://docs.python.org/3/library/asyncio-task.html',
     'github': 'https://github.com/microsoft/markitdown',
     'hackernews': 'https://news.ycombinator.com/item?id=27016630',
     'jina': 'https://docs.python.org/3/library/asyncio-task.html',
@@ -84,8 +86,11 @@ def check(kind, source, argv, timeout):
         argv = argv + ['--strategy', 'free', '--max-requests', '1', '--retries', '0']
     args = search.parser().parse_args(argv + ['--timeout', str(timeout)])
     original = search.request_api
+    active_budget=None
 
     def public_request(operation, payload, key, **options):
+        nonlocal active_budget
+        active_budget=options.get('budget')
         name = operation.removesuffix('_fetch')
         if operation == 'fetch' or key or search.get_provider(name).requires_key:
             raise AssertionError('Keyed request blocked by public-source audit.')
@@ -116,6 +121,9 @@ def check(kind, source, argv, timeout):
         attempts = result.get('budget', {}).get('attempts', result.get('attempts', 0))
     except search.SearchError as exc:
         count, errors, attempts = 0, [exc.data()], exc.attempts
+    except Exception:
+        # One broken adapter must remain visible without losing every other source check.
+        count,errors,attempts=0,[{'code':'adapter_check_failed'}],getattr(active_budget,'used',0)
     state = 'limited' if errors else 'passed' if count else 'empty'
     return {'kind': kind, 'id': source, 'status': state, 'count': count,
             'attempts': attempts, 'elapsed_ms': round(1000 * (time.monotonic() - started)),
@@ -152,17 +160,26 @@ def main():
     parser.add_argument('--baseline', type=Path, default=ROOT / 'evaluations/reports/2026-11-05-source-status.json')
     parser.add_argument('--timeout', type=int, choices=range(1, 16), default=8, metavar='1..15')
     parser.add_argument('--environment', choices=('local', 'github-actions'), default='local')
+    parser.add_argument('--health-output', type=Path, help='Write a sanitized public availability snapshot when live')
     args = parser.parse_args()
     started = datetime.now(BEIJING).isoformat(timespec='seconds')
     cases = list(probes())
     baseline = json.loads(args.baseline.read_text(encoding='utf-8')) if args.summary and args.live else None
-    rows = [check(kind, source, command, args.timeout) for kind, source, command in cases] if args.live else []
     report = {'schema_version': 1, 'live': args.live, 'environment': args.environment,
               'started_at': started, 'checked_at': datetime.now(BEIJING).isoformat(timespec='seconds'),
-              'planned_actions': len(cases), 'http_attempts': sum(r['attempts'] for r in rows),
-              'results': rows}
+              'planned_actions': len(cases), 'http_attempts':0,'results':[], 'in_progress':bool(args.live)}
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    rows=report['results']
+    if args.live:
+        for kind,source,command in cases:
+            row=check(kind,source,command,args.timeout)
+            row['checked_at']=datetime.now(BEIJING).isoformat(timespec='seconds');rows.append(row)
+            report['http_attempts']=sum(r['attempts'] for r in rows)
+            checkpoint=args.output.with_suffix('.checkpoint.json')
+            checkpoint.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8');checkpoint.replace(args.output)
+    report['checked_at']=datetime.now(BEIJING).isoformat(timespec='seconds');report['in_progress']=False
     args.output.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    if args.health_output and args.live: pack_snapshot(report,args.health_output)
     if baseline is not None:
         with args.summary.open('a', encoding='utf-8') as stream:
             stream.write(summary(report, baseline))

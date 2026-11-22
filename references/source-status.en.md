@@ -6,7 +6,9 @@
 
 Each row describes a specific action. **Supported · Passed** means the live sample returned content in this environment; it is not an uptime or accuracy guarantee. Limited, no hits and key needed retain supported status but were not verified successfully. Searches and page reading are checked separately.
 
-Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
+Historical full snapshot: 2026-11-05 19:22 (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../evaluations/reports/2026-11-05-source-status.json).
+
+Latest public check: 2026-11-22T20:26:33+08:00 · Samples expire after seven days. [Public snapshot](source-health.json).
 
 [Latest scheduled checks](https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml) · [November 9 local check](../evaluations/reports/2026-11-09-public-source-check.json). The tables below retain the full support snapshot, including browser and keyed actions.
 
@@ -16,140 +18,141 @@ Checked: 2026-11-05 19:22 (Beijing time). Account-specific details and credentia
 
 ## Search sources
 
-| Source or action | Status |
-|---|---|
-| Bing public RSS | Supported · Limited (irrelevant results) |
-| 360 public HTML search | Supported · Limited (irrelevant results) · 2026-11-16 |
-| DuckDuckGo public HTML | Supported · Limited (access challenge, HTTP 202) |
-| Exa hosted MCP (keyless) | Supported · Passed |
-| Parallel Search MCP (anonymous) | [Supported · Passed Nov 10](../evaluations/reports/2026-11-10-parallel-no-exa.en.md) |
-| Official Sphinx documentation indexes | Supported · Passed · 2026-11-16 |
-| MDN Web Docs public search | Supported · Passed · 2026-11-16 |
-| Kubernetes and Rust official documentation indexes | Supported · Passed · 2026-11-16 |
-| Go standard library package and symbol search | Supported · Passed · 2026-11-16 |
-| CNINFO public disclosure search | Supported · Passed · 2026-11-16 |
-| National Bureau of Statistics site search | Supported · Passed · 2026-11-16 |
-| NEA published document and release archives | Supported · Passed · 2026-11-16 |
-| Public trading notice search | Supported · Passed · 2026-11-16 |
-| Southern Grid public procurement lists | Supported · Passed · 2026-11-16 |
-| GitHub public repositories | Supported · Passed |
-| Hacker News / Algolia | Supported · Passed |
-| Wikipedia (English / Chinese) | Supported · Passed |
-| Stack Exchange questions | Supported · Passed |
-| arXiv preprints | Supported · Passed |
-| Crossref DOI metadata | Supported · Passed |
-| npm public package registry | Supported · Passed |
-| crates.io Rust packages | Supported · Passed |
-| GitLab.com public projects | Supported · Passed |
-| Europe PMC literature | Supported · Passed |
-| Hugging Face public models | Supported · Passed |
-| Open Library books | Supported · Passed |
-| DataCite research records | Supported · Passed |
-| Zenodo research records | Supported · Passed |
-| Wikidata entities | Supported · Passed |
-| NASA Image and Video Library | Supported · Passed |
-| U.S. Federal Register | Supported · Passed |
-| World Bank indicators | Supported · Passed |
-| USGS recent earthquake feed | Supported · Passed |
-| China government latest policy | Supported · Passed |
-| NDRC notices | Supported · Passed |
-| National Bureau of Statistics releases | Supported · Passed |
-| National Energy Administration news | Supported · Passed |
-| Ministry of Industry and Information Technology notices | Supported · Passed |
-| Ministry of Ecology and Environment news | Supported · Passed |
-| Ministry of Emergency Management statistics | Supported · Passed |
-| People’s Bank of China statistics | Supported · Passed |
-| National Public Resource Trading Platform notices | Supported · Passed |
-| Ministry of Commerce news | Supported · Passed |
-| China Securities Regulatory Commission information | Supported · Passed |
-| China Government Procurement notices | Supported · Passed · 2026-11-16 |
-| Chinese Academy of Sciences research news | Supported · Passed |
-| China Geological Survey news | Supported · Passed |
-| Xinhua news | Supported · Passed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| Bing public RSS | Search results and source links | 2026-11-22 | Supported · Limited (irrelevant results) |
+| 360 public HTML search | Search results and source links | 2026-11-22 | Supported · Passed |
+| DuckDuckGo public HTML | Search results and source links | 2026-11-22 | Supported · Limited (cooldown) |
+| Exa hosted MCP (keyless) | Search results and source links | 2026-11-22 | Supported · Passed |
+| Parallel Search MCP (anonymous) | Search results and source links | 2026-11-22 | Supported · Passed |
+| Official Sphinx documentation indexes | Official document navigation/index | 2026-11-22 | Supported · Passed |
+| MDN Web Docs public search | Search results and source links | 2026-11-22 | Supported · Passed |
+| Kubernetes and Rust official documentation indexes | Official document navigation/index | 2026-11-22 | Supported · Passed |
+| Go standard library package and symbol search | Search results and source links | 2026-11-22 | Supported · Passed |
+| CNINFO public disclosure search | Search results and source links | 2026-11-22 | Supported · Passed |
+| National Bureau of Statistics site search | Search results and source links | 2026-11-22 | Supported · Passed |
+| NEA published document and release archives | Finite archive / requested list page | 2026-11-22 | Supported · Passed |
+| Public trading notice search | Search results and source links | 2026-11-22 | Supported · Passed |
+| Southern Grid public procurement lists | Finite archive / requested list page | 2026-11-22 | Supported · Passed |
+| GitHub public repositories | Search results and source links | 2026-11-22 | Supported · Passed |
+| Hacker News / Algolia | Search results and source links | 2026-11-22 | Supported · Passed |
+| Wikipedia (English / Chinese) | Search results and source links | 2026-11-22 | Supported · Passed |
+| Stack Exchange questions | Search results and source links | 2026-11-22 | Supported · Passed |
+| arXiv preprints | Search results and source links | 2026-11-22 | Supported · Passed |
+| Crossref DOI metadata | Search results and source links | 2026-11-22 | Supported · Passed |
+| npm public package registry | Search results and source links | 2026-11-22 | Supported · Passed |
+| crates.io Rust packages | Search results and source links | 2026-11-22 | Supported · Passed |
+| GitLab.com public projects | Search results and source links | 2026-11-22 | Supported · Passed |
+| Europe PMC literature | Search results and source links | 2026-11-22 | Supported · Passed |
+| Hugging Face public models | Search results and source links | 2026-11-22 | Supported · Passed |
+| Open Library books | Search results and source links | 2026-11-22 | Supported · Passed |
+| DataCite research records | Search results and source links | 2026-11-22 | Supported · Passed |
+| Zenodo research records | Search results and source links | 2026-11-22 | Supported · Passed |
+| Wikidata entities | Search results and source links | 2026-11-22 | Supported · Passed |
+| NASA Image and Video Library | Search results and source links | 2026-11-22 | Supported · Passed |
+| U.S. Federal Register | Search results and source links | 2026-11-22 | Supported · Passed |
+| World Bank indicators | Search results and source links | 2026-11-22 | Supported · Passed |
+| USGS recent earthquake feed | Search results and source links | 2026-11-22 | Supported · Passed |
+| China government latest policy | Search results and source links | 2026-11-22 | Supported · Passed |
+| NDRC notices | Search results and source links | 2026-11-22 | Supported · Passed |
+| National Bureau of Statistics releases | Search results and source links | 2026-11-22 | Supported · Passed |
+| National Energy Administration news | Search results and source links | 2026-11-22 | Supported · Passed |
+| Ministry of Industry and Information Technology notices | Search results and source links | 2026-11-22 | Supported · Passed |
+| Ministry of Ecology and Environment news | Search results and source links | 2026-11-22 | Supported · Passed |
+| Ministry of Emergency Management statistics | Search results and source links | 2026-11-22 | Supported · No hits |
+| People’s Bank of China statistics | Search results and source links | 2026-11-22 | Supported · Passed |
+| National Public Resource Trading Platform notices | Search results and source links | 2026-11-22 | Supported · No hits |
+| Ministry of Commerce news | Search results and source links | 2026-11-22 | Supported · Passed |
+| China Securities Regulatory Commission information | Search results and source links | 2026-11-22 | Supported · Passed |
+| China Government Procurement notices | Search results and source links | 2026-11-22 | Supported · Passed |
+| Chinese Academy of Sciences research news | Search results and source links | 2026-11-22 | Supported · Passed |
+| China Geological Survey news | Search results and source links | 2026-11-22 | Supported · Limited (request failed) |
+| Xinhua news | Search results and source links | 2026-11-22 | Supported · Passed |
 
 ## Page and community reading
 
-| Source or action | Status |
-|---|---|
-| Exa MCP page reading | Supported · Passed |
-| GitHub README | Supported · Limited (access denied, HTTP 403) |
-| Hacker News item | Supported · Passed |
-| Jina Reader | Supported · Limited (access denied, HTTP 401) |
-| Python community post | Supported · Passed |
-| Rust community post | Supported · Passed |
-| V2EX community post | Supported · Limited (content unavailable) |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| Exa MCP page reading | Original or single-post reading | 2026-11-22 | Supported · Passed |
+| GitHub README | Original or single-post reading | 2026-11-22 | Supported · Limited (access denied, HTTP 403) |
+| Hacker News item | Original or single-post reading | 2026-11-22 | Supported · Passed |
+| Jina Reader | Original or single-post reading | 2026-11-22 | Supported · Limited (access denied, HTTP 401) |
+| Native official-site original reader | Original or single-post reading | 2026-11-22 | Supported · Passed |
+| Python community post | Original or single-post reading | 2026-11-22 | Supported · Passed |
+| Rust community post | Original or single-post reading | 2026-11-22 | Supported · Passed |
+| V2EX community post | Original or single-post reading | 2026-11-22 | Supported · Limited (content unavailable) |
 
 ## Feeds and snapshots
 
-| Source or action | Status |
-|---|---|
-| China News Service latest RSS | Supported · Passed |
-| China News Service finance RSS | Supported · Passed |
-| DATA.GOV.HK updates RSS | Supported · Passed |
-| BBC World RSS | Supported · Passed |
-| China government latest policy | Supported · Passed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| China News Service latest RSS | Current feed window | 2026-11-22 | Supported · Passed |
+| China News Service finance RSS | Current feed window | 2026-11-22 | Supported · Passed |
+| DATA.GOV.HK updates RSS | Current feed window | 2026-11-22 | Supported · Passed |
+| BBC World RSS | Current feed window | 2026-11-22 | Supported · Passed |
+| China government latest policy | Current feed window | 2026-11-22 | Supported · Passed |
 
 ## Community trends
 
-| Source or action | Status |
-|---|---|
-| Bilibili public hotwords | Supported · Passed |
-| Zhihu public hot list | Supported · Passed |
-| V2EX public hot topics | Supported · Passed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| Bilibili public hotwords | Public trending snapshot | 2026-11-22 | Supported · Passed |
+| Zhihu public hot list | Public trending snapshot | 2026-11-22 | Supported · Passed |
+| V2EX public hot topics | Public trending snapshot | 2026-11-22 | Supported · Limited (request failed) |
 
 ## Site-scoped web search
 
-| Source or action | Status |
-|---|---|
-| zhihu (`zhihu.com`) | Supported · Passed |
-| xiaohongshu (`xiaohongshu.com`) | Supported · Passed |
-| weibo (`weibo.com`) | Supported · Passed |
-| youtube (`youtube.com`) | Supported · Passed |
-| bilibili (`bilibili.com`) | Supported · Passed |
-| reddit (`reddit.com`) | Supported · Passed |
-| twitter (`x.com`) | Supported · No hits |
-| v2ex (`v2ex.com`) | Supported · Passed |
-| douban (`douban.com`) | Supported · Passed |
-| china-data (`data.stats.gov.cn`) | Supported · Passed |
-| cma-data (`data.cma.cn`) | Supported · Passed |
-| china-weather (`weather.com.cn`) | Supported · Passed |
-| sse (`sse.com.cn`) | Supported · Passed |
-| szse (`szse.cn`) | Supported · Passed |
-| bse (`bse.cn`) | Supported · Passed |
-| china-standards (`openstd.samr.gov.cn`) | Supported · Passed |
-| china-laws (`flk.npc.gov.cn`) | Supported · Passed |
-| cnsa (`cnsa.gov.cn`) | Supported · Passed |
-| scidb (`scidb.cn`) | Supported · Passed |
-| ceic (`ceic.ac.cn`) | Supported · Passed |
-| nmefc (`nmefc.cn`) | Supported · Passed |
-| hko (`hko.gov.hk`) | Supported · Passed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| zhihu (`zhihu.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| xiaohongshu (`xiaohongshu.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| weibo (`weibo.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| youtube (`youtube.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| bilibili (`bilibili.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| reddit (`reddit.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| twitter (`x.com`) | Public site index | 2026-11-22 | Supported · No hits |
+| v2ex (`v2ex.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| douban (`douban.com`) | Public site index | 2026-11-22 | Supported · Passed |
+| china-data (`data.stats.gov.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| cma-data (`data.cma.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| china-weather (`weather.com.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| sse (`sse.com.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| szse (`szse.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| bse (`bse.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| china-standards (`openstd.samr.gov.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| china-laws (`flk.npc.gov.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| cnsa (`cnsa.gov.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| scidb (`scidb.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| ceic (`ceic.ac.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| nmefc (`nmefc.cn`) | Public site index | 2026-11-22 | Supported · Passed |
+| hko (`hko.gov.hk`) | Public site index | 2026-11-22 | Supported · Passed |
 
 ## Browser search
 
-| Source or action | Status |
-|---|---|
-| 360 | Supported · Passed |
-| bing | Supported · Limited (no usable results) |
-| google | Supported · Limited (access challenge) |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| 360 | Optional local browser | 2026-11-05 | Supported · Passed |
+| bing | Optional local browser | 2026-11-05 | Supported · Limited (no usable results) |
+| google | Optional local browser | 2026-11-05 | Supported · Limited (access challenge) |
 
 ## Services using your API key
 
-| Source or action | Status |
-|---|---|
-| DeepSeek | Supported · Limited |
-| Tencent Yuanbao | Supported · Key needed |
-| Tavily | Supported · Key needed |
-| Exa | Supported · Key needed |
-| Brave Search | Supported · Key needed |
-| Bocha | Supported · Key needed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| DeepSeek | Requires this service key | 2026-11-05 | Supported · Limited |
+| Tencent Yuanbao | Requires this service key | 2026-11-05 | Supported · Key needed |
+| Tavily | Requires this service key | 2026-11-05 | Supported · Key needed |
+| Exa | Requires this service key | 2026-11-05 | Supported · Key needed |
+| Brave Search | Requires this service key | 2026-11-05 | Supported · Key needed |
+| Bocha | Requires this service key | 2026-11-05 | Supported · Key needed |
 
 ## Page reading with an API key
 
-| Source or action | Status |
-|---|---|
-| DeepSeek · Fetch/Extract | Supported · Not tested |
-| Tavily · Fetch/Extract | Supported · Key needed |
-| Exa · Fetch/Extract | Supported · Key needed |
+| Source or action | Scope | Last checked | Status |
+|---|---|---|---|
+| DeepSeek · Fetch/Extract | Keyed original reading | 2026-11-05 | Supported · Not tested |
+| Tavily · Fetch/Extract | Keyed original reading | 2026-11-05 | Supported · Key needed |
+| Exa · Fetch/Extract | Keyed original reading | 2026-11-05 | Supported · Key needed |
 
 ## Pending industry capabilities
 

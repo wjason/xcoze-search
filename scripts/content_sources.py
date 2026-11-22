@@ -32,7 +32,7 @@ def html_text(value):
             if self.hidden: return
             if tag in ("p", "div", "br", "pre", "blockquote", "li"): self.parts.append("\n")
             if tag == "a": self.links.append(dict(attrs).get("href", ""))
-            if tag == "img": self.parts.append(dict(attrs).get("alt", ""))
+            if tag == "img": self.parts.append(dict(attrs).get("alt") or "")
         def handle_endtag(self, tag):
             if tag in ("script", "style"): self.hidden = max(0, self.hidden - 1); return
             if self.hidden: return

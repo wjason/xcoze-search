@@ -13,6 +13,7 @@ from search_providers import REGISTRY
 from content_sources import FEEDS
 from public_trends import TRENDING
 from search_routing import PLATFORMS, NATIVE_PLATFORMS
+from source_health import SNAPSHOT, load_snapshot
 
 AUDIT = ROOT / 'evaluations/reports/2026-11-05-source-status.json'
 CANDIDATES = ROOT / 'research/free-sources-2026-11.data.json'
@@ -26,6 +27,8 @@ LABEL_ZH = {'docs':'Python / pandas / SQLAlchemy 文档索引', 'mdn':'MDN 英�
             'nea-archive':'国家能源局公开文件与发布档案', 'ggzy-search':'公共资源公告检索', 'csg':'南网公开采购列表'}
 LABEL_EN.update({'nea-archive':'NEA published document and release archives',
                  'ggzy-search':'Public trading notice search', 'csg':'Southern Grid public procurement lists'})
+FETCH_ZH['native-reader']='官方站点原生读取'
+FETCH_EN['native-reader']='Native official-site original reader'
 # When a candidate becomes supported, update this set along with its adapter.
 EXCLUDE = {'S007','S039','S040','S041','S042','S043','S044','S045','S046','S047','S048','S049','S050','S051','S052','S053','S054','S057','S062','S067','S073','S078','S116','S126','S131','S138','S139','S144','S145','S146','S147'}
 EXCLUDE.add('S021')  # Python documentation now has a tested index adapter.
@@ -78,11 +81,16 @@ def label_status(row, english=False):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--audit', type=Path, default=AUDIT, help='Sanitized audit JSON inside the repository')
+    parser.add_argument('--latest', type=Path, default=SNAPSHOT, help='Latest sanitized public check; historical keyed checks remain separate')
     args=parser.parse_args()
     audit_path=args.audit.resolve()
     audit_rel=audit_path.relative_to(ROOT)
     audit=json.loads(audit_path.read_text()); by={(r['kind'],r['id']):r for r in audit['results']}
     supplement_recent(by)
+    health=load_snapshot(args.latest)
+    for key,row in health['actions'].items():
+        existing=by.get(key,{})
+        if (row.get('checked_at') or '') >= (existing.get('checked_at') or audit['checked_at']): by[key]=row
     checked=datetime.fromisoformat(audit['checked_at']).strftime('%Y-%m-%d %H:%M')
     candidates=json.loads(CANDIDATES.read_text())['entries']
     pending=[e for e in candidates if e.get('integration')=='candidate' and e['id'] not in EXCLUDE and e['category'] in GROUPS]
@@ -95,11 +103,13 @@ def main():
         if english:
             text='# Source support status\n\n[简体中文](source-status.md) | **English**\n\n[Back to sources](sources.en.md)\n\n'
             text+='Each row describes a specific action. **Supported · Passed** means the live sample returned content in this environment; it is not an uptime or accuracy guarantee. Limited, no hits and key needed retain supported status but were not verified successfully. Searches and page reading are checked separately.\n\n'
-            text+='Checked: '+checked+' (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../'+str(audit_rel)+').\n'
+            text+='Historical full snapshot: '+checked+' (Beijing time). Account-specific details and credentials are not published. [Sanitized test results](../'+str(audit_rel)+').\n'
         else:
             text='# 来源支持状态\n\n**简体中文** | [English](source-status.en.md)\n\n[返回来源列表](sources.md)\n\n'
             text+='每行对应一项具体能力。**支持 · 适配通过**表示本次环境中的实际样例返回了内容；它不是持续可用或准确率保证。受限、无命中和待配置仍表示已支持，但本次未验证成功。搜索与阅读分别记录。\n\n'
-            text+='检查时间：'+checked+'，北京时间。公开记录不包含凭据和账号专属错误详情。[查看脱敏测试结果](../'+str(audit_rel)+')。\n'
+            text+='历史完整快照：'+checked+'，北京时间。公开记录不包含凭据和账号专属错误详情。[查看脱敏测试结果](../'+str(audit_rel)+')。\n'
+        if health['checked_at']:
+            text+=('\nLatest public check: ' if english else '\n最近公开巡检：')+health['checked_at']+(' · Samples expire after seven days. ' if english else ' · 样例七天后标记过期。')+('[Public snapshot](source-health.json).\n' if english else '[公开状态数据](source-health.json)。\n')
         workflow = 'https://github.com/wjason/xcoze-search/actions/workflows/source-check.yml'
         local_check = '../evaluations/reports/2026-11-09-public-source-check.json'
         if english:
@@ -113,16 +123,24 @@ def main():
         text += (f'\n[Energy and procurement checks]({industry}) cover NEA archives, trading queries and Southern Grid list pages without Exa or Parallel.\n' if english else f'\n[能源电力与招投标实测]({industry})覆盖能源局档案、公共资源查询和南网列表，运行时禁用 Exa、Parallel。\n')
         def table(title, items):
             nonlocal text
-            text+='\n## '+title+'\n\n'+('| Source or action | Status |\n|---|---|\n' if english else '| 来源或能力 | 状态 |\n|---|---|\n')
+            text+='\n## '+title+'\n\n'+('| Source or action | Scope | Last checked | Status |\n|---|---|---|---|\n' if english else '| 来源或能力 | 适配范围 | 最近检查 | 状态 |\n|---|---|---|---|\n')
             for title_,kind,name in items:
                 row = by.get((kind, name))
                 status = label_status(row, english)
-                if row and row.get('checked_at'): status += ' · ' + row['checked_at'][:10]
+                stamp=(row.get('checked_at') or audit['checked_at'])[:10] if row else '—'
+                if row and row.get('stale'): status += ' · ' + ('Check expired' if english else '检查已过期')
                 if row is None and (kind, name) == ('search', 'parallel-free'):
                     suffix = '.en' if english else ''
                     label = 'Supported · Passed Nov 10' if english else '支持 · 11 月 10 日实测通过'
                     status = f'[{label}](../evaluations/reports/2026-11-10-parallel-no-exa{suffix}.md)'
-                text+='| '+title_.replace('|','&#124;')+' | '+status+' |\n'
+                scope={'fetch':('原文或单帖读取','Original or single-post reading'), 'feed':('当前订阅窗口','Current feed window'),
+                       'trending':('公开榜单快照','Public trending snapshot'), 'scope':('网站公开索引','Public site index'),
+                       'search':('搜索结果与来源链接','Search results and source links'),
+                       'keyed':('需配置对应服务 Key','Requires this service key'), 'keyed_fetch':('需配置 Key 的正文读取','Keyed original reading'),
+                       'browser':('本机可选浏览器','Optional local browser')}.get(kind,('见来源说明','See source guide'))[int(english)]
+                if name in ('nea-archive','csg'): scope=('有限档案/指定列表页','Finite archive / requested list page')[int(english)]
+                if name in ('docs','site-docs'): scope=('官方文档目录与索引','Official document navigation/index')[int(english)]
+                text+='| '+title_.replace('|','&#124;')+' | '+scope+' | '+stamp+' | '+status+' |\n'
         table('Search sources' if english else '搜索来源',[((LABEL_EN.get(n, PUBLIC_REGISTRY[n].label) if english else LABEL_ZH.get(n, PUBLIC_REGISTRY[n].label)),'search',n) for n in searches])
         table('Page and community reading' if english else '网页与社区阅读',[((FETCH_EN if english else FETCH_ZH).get(n, PUBLIC_REGISTRY[n].label if n in PUBLIC_REGISTRY else n),'fetch',n) for n in readers])
         table('Feeds and snapshots' if english else '订阅与栏目',[((LABEL_EN.get(n, FEEDS[n].label) if english else FEEDS[n].label),'feed',n) for n in FEEDS])

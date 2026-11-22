@@ -11,7 +11,7 @@ on:
       - 'evaluations/check_sources.py'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: public-source-check
@@ -24,14 +24,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Check public sources
         run: |
-          XDG_CACHE_HOME="$RUNNER_TEMP" python evaluations/check_sources.py --live --environment github-actions --output source-check.json --summary "$GITHUB_STEP_SUMMARY"
+          XDG_CACHE_HOME="$RUNNER_TEMP" python evaluations/check_sources.py --live --environment github-actions --output source-check.json --health-output references/source-health.json --summary "$GITHUB_STEP_SUMMARY"
+          python evaluations/build_source_status.py
+      - name: Update public support snapshot
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add references/source-health.json references/source-status.md references/source-status.en.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh public source availability"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: public-source-check
           path: source-check.json

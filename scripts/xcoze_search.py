@@ -39,7 +39,7 @@ from browser_search import search as run_browser_search
 from search_routing import (ALL as ALL_REGISTRY, STRATEGIES, PLATFORMS, preferences,
                             validate_preferences, scoped_args, plan, public_plan, platform_catalog)
 
-VERSION = "0.9.1"
+VERSION = "0.10.0"
 PROVIDERS = tuple(REGISTRY)
 ALL_PROVIDERS = tuple(ALL_REGISTRY)
 ENDPOINTS = {name: provider.endpoint for name, provider in ALL_REGISTRY.items() if provider.supports_search and provider.method != "LOCAL_BROWSER"}
@@ -276,7 +276,7 @@ def request_api(operation, payload, key, *, timeout=30, retries=1, opener=None, 
         try:
             if not budget.data()["remaining"]:
                 raise SearchError("budget_exhausted", "HTTP attempt budget exhausted; no further requests sent.")
-            slot_name = provider.access_scope(payload) if name == "community" else name
+            slot_name = provider.access_scope(payload) if name in ("community", 'native-reader') else name
             with request_slot(slot_name, req.full_url, max_wait=min(3, max(0, timeout - 1))) as slot:
                 budget.consume(name)
                 with transport.open(req, timeout=max(1, timeout - (slot.waited_seconds if slot else 0))) as response:
@@ -427,22 +427,33 @@ def run_fetch(args, config, *, budget=None):
     if getattr(args, "strategy", None) == "free":
         plan(args, config, credential, fetch=True)
     provider = get_provider(name)
-    if limit is not None and name not in ("jina", "exa-free", "community"):
+    if limit is not None and name not in ("jina", "exa-free", "community", 'native-reader'):
         raise SearchError("unsupported_option", "--max-characters is supported by Jina, keyless Exa and community readers only.")
     if not provider.fetch_endpoint:
         raise SearchError("unsupported_operation", provider.label + " does not support fetch.")
     payload = provider.fetch_payload(args)
     key, _ = credential(name, config)
     budget = budget or RequestBudget(getattr(args, "max_requests", 3))
+    fetch_budget_before = budget.used
     operation = "fetch" if name == "deepseek" else name + "_fetch"
+    read_started = time.monotonic()
     raw, attempts = request_api(operation, payload, key, timeout=getattr(args, "timeout", 30),
                                 retries=getattr(args, "retries", 1), budget=budget)
     try:
-        data = provider.normalize_fetch(raw, args.url)
+        data = provider.normalize_fetch(raw, args.url, focus_terms=getattr(args,'focus_terms',None)) if name=='native-reader' else provider.normalize_fetch(raw,args.url)
+        if name == 'native-reader' and data.get('linked_body_url'):
+            directory_url = data['source_url']; body_url = data['linked_body_url']
+            remaining = getattr(args, 'timeout', 30) - (time.monotonic() - read_started)
+            if remaining < 1: raise SearchError('budget_exhausted', 'No time remains to read the linked notice body.')
+            raw, extra = request_api(operation, {'url':body_url}, '', timeout=remaining, retries=0, budget=budget)
+            attempts += extra
+            data = provider.normalize_fetch(raw, body_url,focus_terms=getattr(args,'focus_terms',None))
+            if data.get('linked_body_url'): raise SearchError('extraction_failed', 'Notice body is another directory; no recursive traversal.')
+            data['directory_url'] = directory_url
     except SearchError as error:
-        error.attempts = attempts
+        error.attempts = budget.used - fetch_budget_before
         raise
-    if name in ("jina", "exa-free", "community"):
+    if name in ("jina", "exa-free", "community", 'native-reader'):
         limit = getattr(args, "max_characters", None) or 24000
         text = data["content"]
         data.update(content=text[:limit], max_characters=limit, returned_characters=min(len(text), limit),
@@ -497,7 +508,7 @@ def run_routed(args, config, *, budget=None, fetch=False):
         except SearchError as exc:
             errors.append({"provider": name, **exc.data()})
             requests.append({"provider": name, "ok": False, "attempts": budget.used - before})
-            if name == "community" and (exc.status in (401, 403, 412) or exc.code in ("source_cooldown", "source_busy")):
+            if name in ("community", 'native-reader') and (exc.status in (401, 403, 412) or exc.code in ("source_cooldown", "source_busy", 'access_challenge')):
                 requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
                 break  # Do not fan out other readers after this platform's access denial/pause.
         requests[-1]["elapsed_ms"] = round((time.monotonic() - call_started) * 1000, 2)
@@ -725,6 +736,8 @@ def parser():
     root.add_argument("--version", action="version", version=VERSION)
     sub = root.add_subparsers(dest="command", required=True)
     sub.add_parser("status", help="Local-only credential status; never prints keys")
+    sources=sub.add_parser('sources',help='Offline source support and dated public availability; optional explicit refresh')
+    sources.add_argument('--refresh',action='store_true',help='Fetch the latest public check metadata once; no queries, keys or source probes')
     sub.add_parser("migrate-config", help="Back up and explicitly migrate v1 config to v2")
     prefs = sub.add_parser("preferences", help="Show/save strategy without network calls or exposing keys")
     prefs.add_argument("--strategy", choices=STRATEGIES)
@@ -805,12 +818,30 @@ def parser():
     for command in (search, fetch):
         command.add_argument("--retries", type=int, choices=(0, 1, 2), default=1)
     sub.add_parser("plan", parents=[search], add_help=False, help="Preview a search route offline; uses local credential presence only")
+    research = sub.add_parser('research', parents=[search], add_help=False, help='Bounded search, original reading and explicit evidence gaps')
+    research.add_argument('--question', help='Original user question, kept separately from short search keywords')
+    research.add_argument('--require-topic', action='append', help='Key term required in read evidence; repeat for multiple terms')
+    research.add_argument('--read-count', type=int, choices=range(1,6), default=3, metavar='1..5')
+    research.add_argument('--min-documents', type=int, choices=(1,2,3), default=1)
+    research.add_argument('--page-count',type=int,choices=(1,2,3),default=2,help='CSG: bounded published next-page fallback on an empty current window')
+    research.add_argument('--max-read-characters', type=int, choices=range(1000,24001), default=12000, metavar='1000..24000')
     return root
 
 
 def main(argv=None):
     args = parser().parse_args(argv)
     try:
+        if args.command=='sources':
+            from source_health import public_health,refresh_snapshot
+            refresh=None
+            if args.refresh:
+                try:refresh=refresh_snapshot()
+                except (OSError,ValueError):
+                    raise SearchError('source_status_refresh_failed','Cannot refresh public status; keep using the existing dated snapshot.',category='network') from None
+            print(json.dumps({'ok':True,'operation':'sources','version':VERSION,'network_requests':1 if refresh else 0,
+                'support':[{ 'provider':name, 'search':p.supports_search,'fetch':bool(p.fetch_endpoint),
+                             'requires_key':p.requires_key,'scope':p.capabilities().get('search_scope')} for name,p in ALL_REGISTRY.items()],
+                'availability':public_health(),'refresh':refresh},ensure_ascii=False,indent=2));return 0
         if args.command == "feeds":
             print(json.dumps({"ok": True, "operation": "feeds", "network_requests": 0,
                               "sources": [{"source": p.name, "label": p.label, "endpoint": p.endpoint,
@@ -843,6 +874,9 @@ def main(argv=None):
         elif args.command == "plan":
             result = {"ok": True, "operation": "plan", "network_requests": 0,
                       "routing": public_plan(plan(args, config, credential))}
+        elif args.command == 'research':
+            from research_workflow import run_research
+            result = run_research(args,config,sys.modules[__name__])
         elif args.command == "setup":
             result = setup(args, config)
         elif args.command == "doctor":

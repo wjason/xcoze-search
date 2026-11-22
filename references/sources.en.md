@@ -26,6 +26,7 @@ This page lists the sources and features already integrated into xcoze search. P
 | NBS site search | Search published NBS pages through its website-selected backend | [Supported · Passed](china-site-search.en.md) |
 | MDN Web Docs | English MDN site search | [Supported · Passed](documentation.en.md) |
 | Jina Reader | Read web pages | Supported · Limited |
+| Native official-site reader | Adapted documents, energy/statistics/notice originals, optional first-ten-page PDF text | [Supported · Reading scope](research.en.md) |
 | GitHub | Search public repositories and read their READMEs | Search passed; README limited |
 | GitLab.com | Search public projects | Supported · Passed |
 | Hacker News | Search stories and read individual stories or comments | Supported · Passed |

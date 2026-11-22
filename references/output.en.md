@@ -2,6 +2,14 @@
 
 [简体中文](output.md) | **English**
 
+## Research and native originals
+
+`research` returns results, documents, coverage, events, budget and stop_reason. Results are grouped by document with retrieved_by, document_id, native scores and research_rank; vendor scores are not compared. Documents separate bodies, literal citations, original and search dates. page_body_read, truncated, pdf_pages_requested and extraction_scope describe the reading boundary.
+
+Coverage is literal passage coverage, not verified answer accuracy. Gaps remain explicit; facts_verified:false and complete:false leave final review to the Agent. Observations require labeled original evidence; a bid_deadline does not establish open_for_bidding.
+
+Offline `sources` separates declared support from action-level availability, marking checks older than seven days stale. The fixed-host native reader counts both directory and body requests in one budget, with per-host denial cooldowns. See [research](research.en.md).
+
 ## Official documentation results
 
 `documentation_index` rows locate pages and symbols from fixed official search indexes. They contain titles, URLs and matched terms, not page bodies or publication dates. Request metadata includes `query_sent_to_source:false`, `page_body_read:false` and `index_documents`. MDN returns site-provided summaries as `search_summary`. See [documentation search](documentation.en.md).

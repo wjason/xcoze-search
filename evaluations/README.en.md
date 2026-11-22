@@ -2,6 +2,17 @@
 
 [简体中文](README.md) | **English**
 
+## Research workflow evaluation
+
+The [research corpus](research-cases.json) includes 13 original-source tasks and three date, topic and budget negative cases. Checks cover original reads, required topics in returned passages, date constraints, HTTP requests, latency and unresolved gaps. The [2026-11-22 report](reports/2026-11-22-research.en.md) retains misses, per-task results and six manual reviews. Topic-marker coverage is not answer accuracy.
+
+```bash
+python3 evaluations/evaluate_research.py --output /tmp/xcoze-research-plan.json
+python3 evaluations/evaluate_research.py --live --output /tmp/xcoze-research-results.json
+```
+
+The default only plans offline. Live checks block Exa, Parallel, keyed sources, host search and browsers before transmission and do not read user configuration. Public artifacts retain sources, topic markers and status rather than full originals. Weekly source checks update `references/source-health.json` and bilingual status pages. Installed `sources` is offline by default; `sources --refresh` makes one public request to update the local status cache without probing every source.
+
 Corpus date: 2026-11-02. `queries.json` contains 12 Chinese/English search queries and three extraction URLs, covering technical docs, original standards, content types, dated news, versions, and conflicting information. It supports reproduction, result comparison, and manual reading; it is not a universal accuracy benchmark.
 
 ## Agent search question set
